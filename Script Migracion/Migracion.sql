@@ -197,8 +197,9 @@ INSERT INTO Facturas (id_factura,fecha,total_factura)
 INSERT INTO Consumibles (id_consumible, descripcion, precio)
 (SELECT DISTINCT Consumible_Codigo, Consumible_Descripcion, Consumible_Precio FROM gd_esquema.Maestra WHERE(Consumible_Codigo IS NOT NULL))
 
-INSERT INTO Items (cantidad_prod,monto_item, fk_factura)
-(SELECT DISTINCT Item_Factura_Cantidad, Item_Factura_Monto, Factura_Nro FROM gd_esquema.Maestra WHERE (Factura_Nro IS NOT NULL))
+INSERT INTO Items (cantidad_prod,monto_item, fk_factura, fk_consumible)
+(SELECT DISTINCT Item_Factura_Cantidad, Item_Factura_Monto, Factura_Nro, Consumible_Codigo FROM gd_esquema.Maestra WHERE (Factura_Nro IS NOT NULL AND Consumible_Codigo IS NOT NULL))
+
 
 INSERT INTO Reservas (fk_habitacion,fecha_inicio,cant_noches,fk_regimen,fk_cliente)
 SELECT ha.id_habitacion, m.Reserva_Fecha_Inicio, m.Reserva_Cant_Noches, r.id_regimen, c.id_cliente
