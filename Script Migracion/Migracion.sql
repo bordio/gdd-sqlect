@@ -20,10 +20,7 @@ if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Usuarios'
     drop table Usuarios;
     
 if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Clientes')
-	BEGIN
-		drop table Clientes;
-		drop trigger trigInsertCli
-	END
+	drop table Clientes
     
 if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Habitaciones')
     drop table Habitaciones;
@@ -58,8 +55,8 @@ if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Inconsist
 
 CREATE TABLE Hoteles (
 	id_hotel integer PRIMARY KEY identity(1,1),
-	ciudad varchar(255),
-	calle varchar(255),
+	ciudad varchar(30),
+	calle varchar(60),
 	nro_calle integer,
 	cant_estrellas tinyint,
 	recarga_estrella smallint,
@@ -78,7 +75,7 @@ CREATE TABLE Habitaciones (
 	fk_hotel integer REFERENCES Hoteles(id_hotel),
 	nro_habitacion int,
 	piso tinyint,
-	frente varchar(50),
+	frente char(1),
 	tipo_habitacion int REFERENCES Tipos_Habitaciones(id_tipo_habitacion),
 	estado_habitacion tinyint DEFAULT 1 
 )
@@ -86,7 +83,7 @@ CREATE TABLE Habitaciones (
 
 CREATE TABLE Regimenes(
   id_regimen tinyint PRIMARY KEY identity(1,1),
-  descripcion varchar(60),
+  descripcion varchar(90),
   precio decimal(6,2),
 )
 
@@ -116,14 +113,14 @@ CREATE TABLE Facturas (
     id_factura INTEGER PRIMARY KEY,
     fecha DATETIME,
     total_factura INTEGER,
-    forma_pago VARCHAR(50),
+    forma_pago VARCHAR(30),
     detalle_forma_pago VARCHAR(120),
     fk_reserva integer
 )
 
 CREATE TABLE Consumibles(
     id_consumible INTEGER PRIMARY KEY,
-    descripcion VARCHAR(100),
+    descripcion VARCHAR(60),
     precio INTEGER
 )
 
@@ -169,7 +166,7 @@ INSERT INTO Roles(nombre,descripcion) VALUES ('Guest','Guest')
 
 CREATE TABLE Usuarios (
 	id_usuario integer PRIMARY KEY identity(1,1),
-	usr_name varchar(30) NOT NULL,
+	usr_name varchar(30) NOT NULL UNIQUE,
 	pssword varchar(30) NOT NULL,
 	nombre varchar(30),
 	apellido varchar(60),
@@ -189,8 +186,8 @@ CREATE TABLE Roles_Usuarios (
 
 CREATE TABLE Funcionalidades (
 	id_funcion smallint PRIMARY KEY identity(1,1),
-	nombre varchar(50),
-	descripicion varchar(255),
+	nombre varchar(30),
+	descripicion varchar(120),
 	estado_func tinyint
 )
 
@@ -203,9 +200,11 @@ CREATE TABLE Inconsistencias(
 	id_inconsistencia integer primary key identity(1,1),
 	tabla varchar(30),
 	fk_registro integer,
-	descripcion varchar(255)
+	descripcion varchar(90)
 )
 
+
+/*
 GO
 CREATE TRIGGER trigInsertCli
 ON Clientes
@@ -259,6 +258,7 @@ BEGIN
   
 END;
 GO
+*/
 
 
 INSERT INTO Hoteles(ciudad,calle,nro_calle,cant_estrellas,recarga_estrella)
