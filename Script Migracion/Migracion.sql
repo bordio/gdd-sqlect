@@ -20,7 +20,10 @@ if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Usuarios'
     drop table Usuarios;
     
 if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Clientes')
-    drop table Clientes;
+	BEGIN
+		drop table Clientes;
+		drop trigger trigInsertCli
+	END
     
 if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Habitaciones')
     drop table Habitaciones;
@@ -48,6 +51,9 @@ if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Consumibl
     
 if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Habitaciones_Reservas')
     drop table Habitaciones_Reservas;
+
+if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Inconsistencias')
+    drop table Inconsistencias;
 
 
 CREATE TABLE Hoteles (
@@ -92,16 +98,18 @@ CREATE TABLE Regimenes_Hoteles (
 
 CREATE TABLE Clientes (
     id_cliente INTEGER PRIMARY KEY IDENTITY(1,1),
-    nombre VARCHAR(255),
-    apellido VARCHAR(255),
+    nombre VARCHAR(60),
+    apellido VARCHAR(60),
     mail VARCHAR(255),
-    dom_Calle VARCHAR(255),
+    dom_Calle VARCHAR(90),
     nro_Calle INTEGER,
     piso TINYINT,
-    depto VARCHAR(50),
+    depto VARCHAR(5),
     fecha_Nac DATETIME,
-    nacionalidad VARCHAR(255),
+    nacionalidad VARCHAR(60),
     pasaporte_Nro INTEGER,
+    inconsistente TINYINT DEFAULT 0,
+    habilitado TINYINT DEFAULT 1
 )
 
 CREATE TABLE Facturas (
@@ -112,7 +120,6 @@ CREATE TABLE Facturas (
     detalle_forma_pago VARCHAR(120),
     fk_reserva integer
 )
-
 
 CREATE TABLE Consumibles(
     id_consumible INTEGER PRIMARY KEY,
@@ -192,6 +199,68 @@ CREATE TABLE Funcionalidades_Roles (
   fk_rol tinyint references Roles(id_rol),
 )
 
+CREATE TABLE Inconsistencias(
+	id_inconsistencia integer primary key identity(1,1),
+	tabla varchar(30),
+	fk_registro integer,
+	descripcion varchar(255)
+)
+
+GO
+CREATE TRIGGER trigInsertCli
+ON Clientes
+INSTEAD OF INSERT
+AS
+BEGIN
+	DECLARE InsertCursor CURSOR FOR
+	SELECT nombre,apellido,mail,dom_Calle,nro_Calle,piso,depto,fecha_Nac,nacionalidad,pasaporte_Nro FROM inserted
+	DECLARE @nombre varchar(60), @apellido varchar(60), @mail varchar(255),
+		@dom_calle varchar(90), @nro_calle integer, @piso tinyint, @depto varchar(5),
+		@fecha_nac datetime,@nacionalidad varchar(60),@pasaporte_nro integer 
+
+  OPEN InsertCursor;
+
+  FETCH NEXT FROM InsertCursor INTO @nombre,@apellido,@mail,@dom_calle,@nro_calle,@piso,@depto,@fecha_nac,@nacionalidad,@pasaporte_nro
+
+  WHILE @@FETCH_STATUS = 0
+  BEGIN
+	DECLARE @es_inconsistente tinyint = 0
+	DECLARE @id_ultima_inconsistencia_mail integer = 0
+	DECLARE @id_ultima_inconsistencia_pasaporte integer = 0
+	DECLARE @id_cliente_inconsistente integer
+	IF EXISTS (SELECT id_cliente FROM Clientes WHERE @mail=mail)
+		BEGIN
+			SET @es_inconsistente = 1;
+			INSERT INTO Inconsistencias(tabla,descripcion) VALUES ('Clientes','Ya fue registrado un cliente con ese email')
+			SET @id_ultima_inconsistencia_mail = SCOPE_IDENTITY()
+		END
+	IF EXISTS (SELECT id_cliente FROM Clientes WHERE @pasaporte_nro=pasaporte_Nro)
+		BEGIN
+			SET @es_inconsistente = 1;
+			INSERT INTO Inconsistencias(tabla,descripcion) VALUES ('Clientes','Ya fue registrado un cliente con ese numero de pasaporte')
+			SET @id_ultima_inconsistencia_pasaporte = SCOPE_IDENTITY()
+		END
+	INSERT INTO Clientes(nombre,apellido,mail,dom_Calle,nro_Calle,piso,depto,fecha_Nac,nacionalidad,pasaporte_Nro,inconsistente)
+		VALUES (@nombre,@apellido,@mail,@dom_calle,@nro_calle,@piso,@depto,@fecha_nac,@nacionalidad,@pasaporte_nro,@es_inconsistente)
+	SET @id_cliente_inconsistente = SCOPE_IDENTITY()
+	IF (@id_ultima_inconsistencia_mail>0) 
+		BEGIN
+			UPDATE Inconsistencias SET fk_registro=@id_cliente_inconsistente WHERE id_inconsistencia=@id_ultima_inconsistencia_mail
+		END;
+	IF (@id_ultima_inconsistencia_pasaporte>0) 
+		BEGIN
+			UPDATE Inconsistencias SET fk_registro=@id_cliente_inconsistente WHERE id_inconsistencia=@id_ultima_inconsistencia_pasaporte
+		END;
+	FETCH NEXT FROM InsertCursor INTO @nombre,@apellido,@mail,@dom_calle,@nro_calle,@piso,@depto,@fecha_nac,@nacionalidad,@pasaporte_nro
+  END;
+
+  CLOSE InsertCursor;
+  DEALLOCATE InsertCursor;
+  
+END;
+GO
+
+
 INSERT INTO Hoteles(ciudad,calle,nro_calle,cant_estrellas,recarga_estrella)
 	SELECT DISTINCT Hotel_Ciudad,Hotel_Calle,Hotel_Nro_Calle,Hotel_CantEstrella,Hotel_Recarga_Estrella
 	FROM gd_esquema.Maestra ORDER BY Hotel_Ciudad;
@@ -250,3 +319,12 @@ INSERT INTO Habitaciones_Reservas (fk_habitacion,fk_reserva)
 	FROM Hoteles ho JOIN gd_esquema.Maestra m ON (ho.calle=m.Hotel_Calle AND ho.ciudad=m.Hotel_Ciudad AND ho.nro_calle=m.Hotel_Nro_Calle AND ho.cant_estrellas=m.Hotel_CantEstrella)
 				   JOIN Habitaciones ha ON (ha.fk_hotel = ho.id_hotel AND ha.frente=m.Habitacion_Frente AND ha.nro_habitacion=m.Habitacion_Numero AND ha.piso=m.Habitacion_Piso AND ha.tipo_habitacion=m.Habitacion_Tipo_Codigo)
 	WHERE m.Estadia_Fecha_Inicio IS NULL
+
+
+/*
+SELECT COUNT(pasaporte_Nro),mail
+FROM Clientes
+GROUP BY mail
+HAVING COUNT(pasaporte_Nro)>1
+ORDER BY 1 DESC 
+*/
