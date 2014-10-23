@@ -60,7 +60,15 @@ CREATE TABLE Hoteles (
 	nro_calle integer,
 	cant_estrellas tinyint,
 	recarga_estrella smallint,
-	estado_hotel tinyint DEFAULT 1 
+	estado_hotel tinyint DEFAULT 1
+)
+
+CREATE TABLE Bajas_por_hotel(
+	id_baja_hotel integer PRIMARY KEY identity(1,1),
+	fk_hotel integer REFERENCES Hoteles(id_hotel),
+	fecha_inicio DATETIME,
+	fecha_fin DATETIME,
+	motivo varchar(100)
 )
 
 CREATE TABLE Tipos_Habitaciones(
