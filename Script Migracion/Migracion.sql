@@ -20,10 +20,7 @@ if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Usuarios'
     drop table Usuarios;
     
 if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Clientes')
-	BEGIN
-		drop table Clientes;
-		drop trigger trigInsertCli
-	END
+	drop table Clientes;
     
 if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Habitaciones')
     drop table Habitaciones;
@@ -205,7 +202,7 @@ CREATE TABLE Inconsistencias(
 	fk_registro integer,
 	descripcion varchar(255)
 )
-
+/*
 GO
 CREATE TRIGGER trigInsertCli
 ON Clientes
@@ -259,7 +256,7 @@ BEGIN
   
 END;
 GO
-
+*/
 
 INSERT INTO Hoteles(ciudad,calle,nro_calle,cant_estrellas,recarga_estrella)
 	SELECT DISTINCT Hotel_Ciudad,Hotel_Calle,Hotel_Nro_Calle,Hotel_CantEstrella,Hotel_Recarga_Estrella
@@ -320,11 +317,39 @@ INSERT INTO Habitaciones_Reservas (fk_habitacion,fk_reserva)
 				   JOIN Habitaciones ha ON (ha.fk_hotel = ho.id_hotel AND ha.frente=m.Habitacion_Frente AND ha.nro_habitacion=m.Habitacion_Numero AND ha.piso=m.Habitacion_Piso AND ha.tipo_habitacion=m.Habitacion_Tipo_Codigo)
 	WHERE m.Estadia_Fecha_Inicio IS NULL
 
-
-/*
-SELECT COUNT(pasaporte_Nro),mail
+GO
+CREATE PROC procLalala
+AS
+BEGIN
+	UPDATE Clientes SET inconsistente = 1
+		WHERE	pasaporte_Nro IN (SELECT c.pasaporte_Nro
+								FROM Clientes c
+								GROUP BY c.pasaporte_Nro
+								HAVING COUNT(c.mail)>1 )
+				OR mail IN		(SELECT c.mail
+								FROM Clientes c
+								GROUP BY c.mail
+								HAVING COUNT(c.pasaporte_Nro)>1 )
+END;
+GO
+							
+EXEC procLalala
+/*							
+SELECT COUNT(pasaporte_Nro), mail
 FROM Clientes
+WHERE inconsistente = 1
 GROUP BY mail
 HAVING COUNT(pasaporte_Nro)>1
-ORDER BY 1 DESC 
+ORDER BY COUNT(pasaporte_Nro) DESC 
+
+SELECT COUNT(mail), pasaporte_Nro
+FROM Clientes
+WHERE inconsistente = 1
+GROUP BY pasaporte_Nro
+HAVING COUNT(mail)>1
+ORDER BY COUNT(mail) DESC 
+							
+
+
+SELECT * from Clientes where inconsistente = 1 order by mail DESC, pasaporte_Nro DESC
 */
