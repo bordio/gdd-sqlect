@@ -181,10 +181,10 @@ CREATE TABLE Usuarios (
 	estado_usr tinyint DEFAULT 1
  )  
 
-
 CREATE TABLE Roles_Usuarios (
    fk_rol tinyint references Roles (id_rol),
-   fk_usuario integer references Usuarios (id_usuario)
+   fk_usuario integer references Usuarios (id_usuario),
+   fk_hotel integer references Hoteles(id_hotel)
 )
 
  CREATE TABLE Usuarios_Hoteles (
@@ -336,3 +336,7 @@ GROUP BY mail
 HAVING COUNT(pasaporte_Nro)>1
 ORDER BY 1 DESC 
 */
+
+SELECT * FROM gd_esquema.Maestra
+
+SELECT Factura_Nro,Factura_Fecha,Factura_Total FROM gd_esquema.Maestra WHERE (Factura_Nro IS NOT NULL)
