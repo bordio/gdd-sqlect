@@ -338,5 +338,3 @@ ORDER BY 1 DESC
 */
 
 SELECT * FROM gd_esquema.Maestra
-
-SELECT Factura_Nro,Factura_Fecha,Factura_Total FROM gd_esquema.Maestra WHERE (Factura_Nro IS NOT NULL)
