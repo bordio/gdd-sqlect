@@ -138,12 +138,14 @@ CREATE TABLE Items(
 CREATE TABLE Reservas (
   id_reserva integer PRIMARY KEY,
   fecha_inicio datetime,
+  fecha_cancelacion datetime DEFAULT NULL,
+  motivo_cancelacion varchar(25) DEFAULT '' ,
   cant_noches integer,
   fk_usuario_reserva integer,
   fk_usuario_ultima_modificacion integer,
   fk_regimen tinyint references Regimenes(id_regimen),
   fk_cliente integer references Clientes(id_cliente),
-  estado_reserva tinyint,
+  estado_reserva varchar(40),
   cant_noches_estadia tinyint
 )
 
@@ -232,8 +234,8 @@ INSERT INTO Clientes (nombre,apellido,mail,dom_Calle,nro_Calle,piso,depto,fecha_
 	Cliente_Fecha_Nac, Cliente_Nacionalidad, Cliente_Pasaporte_Nro 
 	FROM gd_esquema.Maestra)
 
-INSERT INTO Facturas (id_factura,fecha,total_factura,fk_reserva) 
-	(SELECT DISTINCT Factura_Nro, Factura_Fecha, Factura_Total, Reserva_Codigo
+INSERT INTO Facturas (id_factura,fecha,total_factura,fk_reserva,forma_pago,detalle_forma_pago)
+	(SELECT DISTINCT Factura_Nro, Factura_Fecha, Factura_Total, Reserva_Codigo,'Efectivo','Pago en efectivo'
 	 FROM gd_esquema.Maestra WHERE(Factura_Nro IS NOT NULL))
 
 INSERT INTO Consumibles (id_consumible, descripcion, precio)
@@ -299,3 +301,32 @@ ORDER BY COUNT(mail) DESC
 
 SELECT * from Clientes where inconsistente = 1 order by mail DESC, pasaporte_Nro DESC
 */
+
+
+
+
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'procEstadoReserva' AND type = 'P')
+ DROP PROCEDURE procEstadoReserva
+
+GO
+CREATE PROCEDURE procEstadoReserva
+ AS
+   BEGIN
+	   UPDATE Reservas 
+		SET estado_reserva= 'Reserva con ingreso'
+		  WHERE id_reserva IN 
+			  (SELECT r.id_reserva FROM Facturas f JOIN Reservas r ON (r.id_reserva=f.fk_reserva)
+							)
+	  UPDATE Reservas
+		SET estado_reserva='Reserva correcta'
+		 WHERE id_reserva NOT IN
+			  (SELECT r.id_reserva FROM Facturas f JOIN Reservas r ON (r.id_reserva=f.fk_reserva))
+	  UPDATE Reservas
+	    SET estado_reserva='Reserva cancelada'
+	     WHERE fecha_cancelacion IS NOT NULL  
+   END;	        
+ GO
+ 
+EXECUTE procEstadoReserva 
+ 
+
