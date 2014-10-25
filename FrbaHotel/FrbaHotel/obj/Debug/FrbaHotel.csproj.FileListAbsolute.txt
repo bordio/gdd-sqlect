@@ -7,3 +7,12 @@ C:\Documents and Settings\UsuarioAdmin\Escritorio\Enunciado\Aplicacion Desktop\F
 C:\Documents and Settings\UsuarioAdmin\Escritorio\Enunciado\Aplicacion Desktop\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.pdb
 C:\TP\gdd-sqlect\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.exe
 C:\TP\gdd-sqlect\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.pdb
+<<<<<<< HEAD
+=======
+C:\TP\gdd-sqlect\FrbaHotel\FrbaHotel\obj\Debug\ResolveAssemblyReference.cache
+C:\TP\gdd-sqlect\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.Properties.Resources.resources
+C:\TP\gdd-sqlect\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.csproj.GenerateResource.Cache
+C:\TP\gdd-sqlect\FrbaHotel\FrbaHotel\bin\Debug\FrbaHotel.exe.config
+C:\TP\gdd-sqlect\FrbaHotel\FrbaHotel\bin\Debug\FrbaHotel.exe
+C:\TP\gdd-sqlect\FrbaHotel\FrbaHotel\bin\Debug\FrbaHotel.pdb
+>>>>>>> e173a82791947126fbf965c6b6fb43f51c051131
