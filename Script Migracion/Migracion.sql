@@ -97,14 +97,14 @@ CREATE TABLE Clientes (
     id_cliente INTEGER PRIMARY KEY IDENTITY(1,1),
     nombre VARCHAR(60),
     apellido VARCHAR(60),
-    mail VARCHAR(255),
+    mail VARCHAR(255) UNIQUE,
     dom_Calle VARCHAR(90),
     nro_Calle INTEGER,
     piso TINYINT,
     depto VARCHAR(5),
     fecha_Nac DATETIME,
     nacionalidad VARCHAR(60),
-    pasaporte_Nro INTEGER,
+    pasaporte_Nro INTEGER UNIQUE,
     inconsistente TINYINT DEFAULT 0,
     habilitado TINYINT DEFAULT 1
 )
