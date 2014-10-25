@@ -13,14 +13,19 @@ if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Roles')
 if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Usuarios_Hoteles')
     drop table Usuarios_Hoteles;
     
+if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Reservas_Canceladas')
+    drop table Reservas_Canceladas;
+    
 if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Reservas')
     drop table Reservas;
     
+
 if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Usuarios')
     drop table Usuarios;
     
 if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Clientes')
 	drop table Clientes
+	drop table Clientes;
     
 if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Habitaciones')
     drop table Habitaciones;
@@ -61,6 +66,7 @@ CREATE TABLE Hoteles (
 	cant_estrellas tinyint,
 	recarga_estrella smallint,
 	estado_hotel tinyint DEFAULT 1
+	estado_hotel tinyint DEFAULT 1 
 )
 
 CREATE TABLE Bajas_por_hotel(
@@ -74,6 +80,7 @@ CREATE TABLE Bajas_por_hotel(
 CREATE TABLE Tipos_Habitaciones(
   id_tipo_habitacion int PRIMARY KEY,
   descripcion varchar(100),
+  descripcion varchar(60),
   porcentual decimal(4,2)
 )
 
@@ -92,6 +99,7 @@ CREATE TABLE Habitaciones (
 CREATE TABLE Regimenes(
   id_regimen tinyint PRIMARY KEY identity(1,1),
   descripcion varchar(90),
+  descripcion varchar(60),
   precio decimal(6,2),
 )
 
@@ -147,12 +155,22 @@ CREATE TABLE Reservas (
   id_reserva integer PRIMARY KEY,
   fecha_inicio datetime,
   cant_noches integer,
+  motivo_cancelacion varchar(25) DEFAULT '' ,
+  cant_noches_reserva tinyint,
+  cant_noches_estadia tinyint,
   fk_usuario_reserva integer,
   fk_usuario_ultima_modificacion integer,
   fk_regimen tinyint references Regimenes(id_regimen),
   fk_cliente integer references Clientes(id_cliente),
   estado_reserva tinyint,
   cant_noches_estadia tinyint
+  estado_reserva tinyint
+)
+
+CREATE TABLE Reservas_Canceladas (
+	fk_reserva integer PRIMARY KEY REFERENCES Reservas(id_reserva),
+	motivo varchar(120),
+	fecha_cancelacion datetime
 )
 
 CREATE TABLE Habitaciones_Reservas (
@@ -181,10 +199,12 @@ CREATE TABLE Usuarios (
 	estado_usr tinyint DEFAULT 1
  )  
 
+
 CREATE TABLE Roles_Usuarios (
    fk_rol tinyint references Roles (id_rol),
    fk_usuario integer references Usuarios (id_usuario),
    fk_hotel integer references Hoteles(id_hotel)
+   fk_usuario integer references Usuarios (id_usuario)
 )
 
  CREATE TABLE Usuarios_Hoteles (
@@ -202,6 +222,7 @@ CREATE TABLE Funcionalidades (
 CREATE TABLE Funcionalidades_Roles (
   fk_funcion smallint references Funcionalidades(id_funcion),
   fk_rol tinyint references Roles(id_rol),
+  fk_rol tinyint references Roles(id_rol)
 )
 
 CREATE TABLE Inconsistencias(
@@ -305,6 +326,8 @@ INSERT INTO Clientes (nombre,apellido,mail,dom_Calle,nro_Calle,piso,depto,fecha_
 
 INSERT INTO Facturas (id_factura,fecha,total_factura,fk_reserva) 
 	(SELECT DISTINCT Factura_Nro, Factura_Fecha, Factura_Total, Reserva_Codigo
+INSERT INTO Facturas (id_factura,fecha,total_factura,fk_reserva,forma_pago,detalle_forma_pago)
+	(SELECT DISTINCT Factura_Nro, Factura_Fecha, Factura_Total, Reserva_Codigo,'Efectivo','Pago en efectivo'
 	 FROM gd_esquema.Maestra WHERE(Factura_Nro IS NOT NULL))
 
 INSERT INTO Consumibles (id_consumible, descripcion, precio)
@@ -317,6 +340,7 @@ INSERT INTO Items (cantidad_prod,monto_item, fk_factura, fk_consumible)
 	 FROM gd_esquema.Maestra WHERE (Factura_Nro IS NOT NULL AND Consumible_Codigo IS NOT NULL))
 
 INSERT INTO Reservas (id_reserva,fecha_inicio,cant_noches,fk_regimen,fk_cliente)
+INSERT INTO Reservas (id_reserva,fecha_inicio,cant_noches_reserva,fk_regimen,fk_cliente)
 	SELECT m.Reserva_Codigo, m.Reserva_Fecha_Inicio, m.Reserva_Cant_Noches, r.id_regimen, c.id_cliente
 	FROM gd_esquema.Maestra m JOIN Regimenes r ON (m.Regimen_Descripcion = r.descripcion) AND (m.Regimen_Precio = r.precio)
 							  JOIN Clientes c ON (m.Cliente_Fecha_Nac = c.fecha_Nac) AND (m.Cliente_Pasaporte_Nro = c.pasaporte_Nro)
@@ -331,10 +355,154 @@ INSERT INTO Habitaciones_Reservas (fk_habitacion,fk_reserva)
 
 /*
 SELECT COUNT(pasaporte_Nro),mail
+
+GO
+CREATE PROC procInconsistenciasClientes
+AS
+BEGIN
+	UPDATE Clientes SET inconsistente = 1
+		WHERE	pasaporte_Nro IN (SELECT c.pasaporte_Nro
+								FROM Clientes c
+								GROUP BY c.pasaporte_Nro
+								HAVING COUNT(c.mail)>1 )
+				OR mail IN		(SELECT c.mail
+								FROM Clientes c
+								GROUP BY c.mail
+								HAVING COUNT(c.pasaporte_Nro)>1 )
+END;
+GO
+							
+EXEC procInconsistenciasClientes
+
+DROP PROCEDURE procInconsistenciasClientes
+
+
+/*							
+SELECT COUNT(pasaporte_Nro), mail
 FROM Clientes
+WHERE inconsistente = 1
 GROUP BY mail
 HAVING COUNT(pasaporte_Nro)>1
 ORDER BY 1 DESC 
+ORDER BY COUNT(pasaporte_Nro) DESC 
+
+SELECT COUNT(mail), pasaporte_Nro
+FROM Clientes
+WHERE inconsistente = 1
+GROUP BY pasaporte_Nro
+HAVING COUNT(mail)>1
+ORDER BY COUNT(mail) DESC 
+							
+
+
+SELECT * from Clientes where inconsistente = 1 order by mail DESC, pasaporte_Nro DESC
 */
 
 SELECT * FROM gd_esquema.Maestra
+
+SELECT Factura_Nro,Factura_Fecha,Factura_Total FROM gd_esquema.Maestra WHERE (Factura_Nro IS NOT NULL)
+
+
+
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'procEstadoReserva' AND type = 'P')
+ DROP PROCEDURE procEstadoReserva
+
+GO
+CREATE PROCEDURE procEstadoReserva
+ AS
+   BEGIN
+	   UPDATE Reservas 
+		SET	estado_reserva= 5,
+			cant_noches_estadia = (	select m.Estadia_Cant_Noches
+									from gd_esquema.Maestra m
+									where m.Reserva_Codigo = id_reserva AND
+									m.Estadia_Fecha_Inicio IS NOT NULL AND
+									m.Factura_Nro IS NULL)
+		  WHERE id_reserva IN 
+			  (SELECT r.id_reserva FROM Facturas f JOIN Reservas r ON (r.id_reserva=f.fk_reserva)
+							)
+	  UPDATE Reservas
+		SET estado_reserva = 0
+		 WHERE id_reserva NOT IN
+			  (SELECT r.id_reserva FROM Facturas f JOIN Reservas r ON (r.id_reserva=f.fk_reserva))
+-- FALTA UPDATE DE RESERVAS CANCELADAS POR NO SHOW AL TIEMPO DE LA MIGRACION (NECESITAMOS CONSEGUIR LA FECHA DEL TXT) 
+   END;	        
+ GO
+ 
+EXECUTE procEstadoReserva
+	WHERE m.Estadia_Fecha_Inicio IS NULL
+
+
+
+GO
+CREATE PROC procInconsistenciasClientes
+AS
+BEGIN
+	UPDATE Clientes SET inconsistente = 1
+		WHERE	pasaporte_Nro IN (SELECT c.pasaporte_Nro
+								FROM Clientes c
+								GROUP BY c.pasaporte_Nro
+								HAVING COUNT(c.mail)>1 )
+				OR mail IN		(SELECT c.mail
+								FROM Clientes c
+								GROUP BY c.mail
+								HAVING COUNT(c.pasaporte_Nro)>1 )
+END;
+GO
+							
+EXEC procInconsistenciasClientes
+
+DROP PROCEDURE procInconsistenciasClientes
+
+
+/*							
+SELECT COUNT(pasaporte_Nro), mail
+FROM Clientes
+WHERE inconsistente = 1
+GROUP BY mail
+HAVING COUNT(pasaporte_Nro)>1
+ORDER BY COUNT(pasaporte_Nro) DESC 
+
+SELECT COUNT(mail), pasaporte_Nro
+FROM Clientes
+WHERE inconsistente = 1
+GROUP BY pasaporte_Nro
+HAVING COUNT(mail)>1
+ORDER BY COUNT(mail) DESC 
+							
+
+
+SELECT * from Clientes where inconsistente = 1 order by mail DESC, pasaporte_Nro DESC
+*/
+
+SELECT * FROM gd_esquema.Maestra
+
+SELECT Factura_Nro,Factura_Fecha,Factura_Total FROM gd_esquema.Maestra WHERE (Factura_Nro IS NOT NULL)
+
+
+
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'procEstadoReserva' AND type = 'P')
+ DROP PROCEDURE procEstadoReserva
+
+GO
+CREATE PROCEDURE procEstadoReserva
+ AS
+   BEGIN
+	   UPDATE Reservas 
+		SET	estado_reserva= 5,
+			cant_noches_estadia = (	select m.Estadia_Cant_Noches
+									from gd_esquema.Maestra m
+									where m.Reserva_Codigo = id_reserva AND
+									m.Estadia_Fecha_Inicio IS NOT NULL AND
+									m.Factura_Nro IS NULL)
+		  WHERE id_reserva IN 
+			  (SELECT r.id_reserva FROM Facturas f JOIN Reservas r ON (r.id_reserva=f.fk_reserva)
+							)
+	  UPDATE Reservas
+		SET estado_reserva = 0
+		 WHERE id_reserva NOT IN
+			  (SELECT r.id_reserva FROM Facturas f JOIN Reservas r ON (r.id_reserva=f.fk_reserva))
+-- FALTA UPDATE DE RESERVAS CANCELADAS POR NO SHOW AL TIEMPO DE LA MIGRACION (NECESITAMOS CONSEGUIR LA FECHA DEL TXT) 
+   END;	        
+ GO
+ 
