@@ -24,7 +24,7 @@ if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Usuarios'
     drop table Usuarios;
     
 if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Clientes')
-	drop table Clientes
+
 	drop table Clientes;
     
 if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Habitaciones')
@@ -65,7 +65,6 @@ CREATE TABLE Hoteles (
 	nro_calle integer,
 	cant_estrellas tinyint,
 	recarga_estrella smallint,
-	estado_hotel tinyint DEFAULT 1
 	estado_hotel tinyint DEFAULT 1 
 )
 
@@ -98,7 +97,6 @@ CREATE TABLE Habitaciones (
 
 CREATE TABLE Regimenes(
   id_regimen tinyint PRIMARY KEY identity(1,1),
-  descripcion varchar(90),
   descripcion varchar(60),
   precio decimal(6,2),
 )
@@ -162,8 +160,7 @@ CREATE TABLE Reservas (
   fk_usuario_ultima_modificacion integer,
   fk_regimen tinyint references Regimenes(id_regimen),
   fk_cliente integer references Clientes(id_cliente),
-  estado_reserva tinyint,
-  cant_noches_estadia tinyint
+
   estado_reserva tinyint
 )
 
@@ -221,73 +218,12 @@ CREATE TABLE Funcionalidades (
 
 CREATE TABLE Funcionalidades_Roles (
   fk_funcion smallint references Funcionalidades(id_funcion),
-  fk_rol tinyint references Roles(id_rol),
   fk_rol tinyint references Roles(id_rol)
 )
 
-CREATE TABLE Inconsistencias(
-	id_inconsistencia integer primary key identity(1,1),
-	tabla varchar(30),
-	fk_registro integer,
-	descripcion varchar(90)
-)
 
 
-/*
-GO
-CREATE TRIGGER trigInsertCli
-ON Clientes
-INSTEAD OF INSERT
-AS
-BEGIN
-	DECLARE InsertCursor CURSOR FOR
-	SELECT nombre,apellido,mail,dom_Calle,nro_Calle,piso,depto,fecha_Nac,nacionalidad,pasaporte_Nro FROM inserted
-	DECLARE @nombre varchar(60), @apellido varchar(60), @mail varchar(255),
-		@dom_calle varchar(90), @nro_calle integer, @piso tinyint, @depto varchar(5),
-		@fecha_nac datetime,@nacionalidad varchar(60),@pasaporte_nro integer 
 
-  OPEN InsertCursor;
-
-  FETCH NEXT FROM InsertCursor INTO @nombre,@apellido,@mail,@dom_calle,@nro_calle,@piso,@depto,@fecha_nac,@nacionalidad,@pasaporte_nro
-
-  WHILE @@FETCH_STATUS = 0
-  BEGIN
-	DECLARE @es_inconsistente tinyint = 0
-	DECLARE @id_ultima_inconsistencia_mail integer = 0
-	DECLARE @id_ultima_inconsistencia_pasaporte integer = 0
-	DECLARE @id_cliente_inconsistente integer
-	IF EXISTS (SELECT id_cliente FROM Clientes WHERE @mail=mail)
-		BEGIN
-			SET @es_inconsistente = 1;
-			INSERT INTO Inconsistencias(tabla,descripcion) VALUES ('Clientes','Ya fue registrado un cliente con ese email')
-			SET @id_ultima_inconsistencia_mail = SCOPE_IDENTITY()
-		END
-	IF EXISTS (SELECT id_cliente FROM Clientes WHERE @pasaporte_nro=pasaporte_Nro)
-		BEGIN
-			SET @es_inconsistente = 1;
-			INSERT INTO Inconsistencias(tabla,descripcion) VALUES ('Clientes','Ya fue registrado un cliente con ese numero de pasaporte')
-			SET @id_ultima_inconsistencia_pasaporte = SCOPE_IDENTITY()
-		END
-	INSERT INTO Clientes(nombre,apellido,mail,dom_Calle,nro_Calle,piso,depto,fecha_Nac,nacionalidad,pasaporte_Nro,inconsistente)
-		VALUES (@nombre,@apellido,@mail,@dom_calle,@nro_calle,@piso,@depto,@fecha_nac,@nacionalidad,@pasaporte_nro,@es_inconsistente)
-	SET @id_cliente_inconsistente = SCOPE_IDENTITY()
-	IF (@id_ultima_inconsistencia_mail>0) 
-		BEGIN
-			UPDATE Inconsistencias SET fk_registro=@id_cliente_inconsistente WHERE id_inconsistencia=@id_ultima_inconsistencia_mail
-		END;
-	IF (@id_ultima_inconsistencia_pasaporte>0) 
-		BEGIN
-			UPDATE Inconsistencias SET fk_registro=@id_cliente_inconsistente WHERE id_inconsistencia=@id_ultima_inconsistencia_pasaporte
-		END;
-	FETCH NEXT FROM InsertCursor INTO @nombre,@apellido,@mail,@dom_calle,@nro_calle,@piso,@depto,@fecha_nac,@nacionalidad,@pasaporte_nro
-  END;
-
-  CLOSE InsertCursor;
-  DEALLOCATE InsertCursor;
-  
-END;
-GO
-*/
 
 
 INSERT INTO Hoteles(ciudad,calle,nro_calle,cant_estrellas,recarga_estrella)
@@ -324,8 +260,7 @@ INSERT INTO Clientes (nombre,apellido,mail,dom_Calle,nro_Calle,piso,depto,fecha_
 	Cliente_Fecha_Nac, Cliente_Nacionalidad, Cliente_Pasaporte_Nro 
 	FROM gd_esquema.Maestra)
 
-INSERT INTO Facturas (id_factura,fecha,total_factura,fk_reserva) 
-	(SELECT DISTINCT Factura_Nro, Factura_Fecha, Factura_Total, Reserva_Codigo
+
 INSERT INTO Facturas (id_factura,fecha,total_factura,fk_reserva,forma_pago,detalle_forma_pago)
 	(SELECT DISTINCT Factura_Nro, Factura_Fecha, Factura_Total, Reserva_Codigo,'Efectivo','Pago en efectivo'
 	 FROM gd_esquema.Maestra WHERE(Factura_Nro IS NOT NULL))
@@ -339,7 +274,7 @@ INSERT INTO Items (cantidad_prod,monto_item, fk_factura, fk_consumible)
 	(SELECT DISTINCT Item_Factura_Cantidad, Item_Factura_Monto, Factura_Nro, Consumible_Codigo
 	 FROM gd_esquema.Maestra WHERE (Factura_Nro IS NOT NULL AND Consumible_Codigo IS NOT NULL))
 
-INSERT INTO Reservas (id_reserva,fecha_inicio,cant_noches,fk_regimen,fk_cliente)
+
 INSERT INTO Reservas (id_reserva,fecha_inicio,cant_noches_reserva,fk_regimen,fk_cliente)
 	SELECT m.Reserva_Codigo, m.Reserva_Fecha_Inicio, m.Reserva_Cant_Noches, r.id_regimen, c.id_cliente
 	FROM gd_esquema.Maestra m JOIN Regimenes r ON (m.Regimen_Descripcion = r.descripcion) AND (m.Regimen_Precio = r.precio)
@@ -353,8 +288,8 @@ INSERT INTO Habitaciones_Reservas (fk_habitacion,fk_reserva)
 	WHERE m.Estadia_Fecha_Inicio IS NULL
 
 
-/*
-SELECT COUNT(pasaporte_Nro),mail
+
+
 
 GO
 CREATE PROC procInconsistenciasClientes
@@ -398,86 +333,6 @@ ORDER BY COUNT(mail) DESC
 SELECT * from Clientes where inconsistente = 1 order by mail DESC, pasaporte_Nro DESC
 */
 
-SELECT * FROM gd_esquema.Maestra
-
-SELECT Factura_Nro,Factura_Fecha,Factura_Total FROM gd_esquema.Maestra WHERE (Factura_Nro IS NOT NULL)
-
-
-
-IF EXISTS (SELECT name FROM sysobjects WHERE name = 'procEstadoReserva' AND type = 'P')
- DROP PROCEDURE procEstadoReserva
-
-GO
-CREATE PROCEDURE procEstadoReserva
- AS
-   BEGIN
-	   UPDATE Reservas 
-		SET	estado_reserva= 5,
-			cant_noches_estadia = (	select m.Estadia_Cant_Noches
-									from gd_esquema.Maestra m
-									where m.Reserva_Codigo = id_reserva AND
-									m.Estadia_Fecha_Inicio IS NOT NULL AND
-									m.Factura_Nro IS NULL)
-		  WHERE id_reserva IN 
-			  (SELECT r.id_reserva FROM Facturas f JOIN Reservas r ON (r.id_reserva=f.fk_reserva)
-							)
-	  UPDATE Reservas
-		SET estado_reserva = 0
-		 WHERE id_reserva NOT IN
-			  (SELECT r.id_reserva FROM Facturas f JOIN Reservas r ON (r.id_reserva=f.fk_reserva))
--- FALTA UPDATE DE RESERVAS CANCELADAS POR NO SHOW AL TIEMPO DE LA MIGRACION (NECESITAMOS CONSEGUIR LA FECHA DEL TXT) 
-   END;	        
- GO
- 
-EXECUTE procEstadoReserva
-	WHERE m.Estadia_Fecha_Inicio IS NULL
-
-
-
-GO
-CREATE PROC procInconsistenciasClientes
-AS
-BEGIN
-	UPDATE Clientes SET inconsistente = 1
-		WHERE	pasaporte_Nro IN (SELECT c.pasaporte_Nro
-								FROM Clientes c
-								GROUP BY c.pasaporte_Nro
-								HAVING COUNT(c.mail)>1 )
-				OR mail IN		(SELECT c.mail
-								FROM Clientes c
-								GROUP BY c.mail
-								HAVING COUNT(c.pasaporte_Nro)>1 )
-END;
-GO
-							
-EXEC procInconsistenciasClientes
-
-DROP PROCEDURE procInconsistenciasClientes
-
-
-/*							
-SELECT COUNT(pasaporte_Nro), mail
-FROM Clientes
-WHERE inconsistente = 1
-GROUP BY mail
-HAVING COUNT(pasaporte_Nro)>1
-ORDER BY COUNT(pasaporte_Nro) DESC 
-
-SELECT COUNT(mail), pasaporte_Nro
-FROM Clientes
-WHERE inconsistente = 1
-GROUP BY pasaporte_Nro
-HAVING COUNT(mail)>1
-ORDER BY COUNT(mail) DESC 
-							
-
-
-SELECT * from Clientes where inconsistente = 1 order by mail DESC, pasaporte_Nro DESC
-*/
-
-SELECT * FROM gd_esquema.Maestra
-
-SELECT Factura_Nro,Factura_Fecha,Factura_Total FROM gd_esquema.Maestra WHERE (Factura_Nro IS NOT NULL)
 
 
 
