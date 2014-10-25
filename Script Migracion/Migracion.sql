@@ -303,8 +303,6 @@ SELECT * from Clientes where inconsistente = 1 order by mail DESC, pasaporte_Nro
 */
 
 
-
-
 IF EXISTS (SELECT name FROM sysobjects WHERE name = 'procEstadoReserva' AND type = 'P')
  DROP PROCEDURE procEstadoReserva
 
@@ -328,5 +326,3 @@ CREATE PROCEDURE procEstadoReserva
  GO
  
 EXECUTE procEstadoReserva 
- 
-
