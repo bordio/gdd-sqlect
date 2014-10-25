@@ -5,3 +5,5 @@ C:\Documents and Settings\UsuarioAdmin\Escritorio\Enunciado\Aplicacion Desktop\F
 C:\Documents and Settings\UsuarioAdmin\Escritorio\Enunciado\Aplicacion Desktop\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.csproj.GenerateResource.Cache
 C:\Documents and Settings\UsuarioAdmin\Escritorio\Enunciado\Aplicacion Desktop\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.exe
 C:\Documents and Settings\UsuarioAdmin\Escritorio\Enunciado\Aplicacion Desktop\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.pdb
+C:\TP\gdd-sqlect\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.exe
+C:\TP\gdd-sqlect\FrbaHotel\FrbaHotel\obj\Debug\FrbaHotel.pdb
