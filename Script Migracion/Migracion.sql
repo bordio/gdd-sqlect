@@ -69,6 +69,14 @@ CREATE TABLE Hoteles (
 	estado_hotel tinyint DEFAULT 1 
 )
 
+CREATE TABLE Bajas_por_hotel(
+	id_baja_hotel integer PRIMARY KEY identity(1,1),
+	fk_hotel integer REFERENCES Hoteles(id_hotel),
+	fecha_inicio DATETIME,
+	fecha_fin DATETIME,
+	motivo varchar(100)
+)
+
 CREATE TABLE Tipos_Habitaciones(
   id_tipo_habitacion int PRIMARY KEY,
   descripcion varchar(60),
@@ -184,6 +192,7 @@ CREATE TABLE Roles (
 	descripcion varchar(90),
 	estado_rol tinyint DEFAULT 1
  ) 
+
 
 INSERT INTO Roles(nombre,descripcion) VALUES ('Administrador General','Administra todos los aspectos de la aplicación')
 INSERT INTO Roles(nombre,descripcion) VALUES ('Recepcionista','Poseé funcionalidades de atención al público')

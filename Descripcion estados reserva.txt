@@ -1,0 +1,6 @@
+0 - Pendiente de ingreso
+1 - Modificada
+2 - Cancelada por recepción
+3 - Cancelada por cliente
+4 - Cancelada por no No-Show
+5 - Efectivizada
