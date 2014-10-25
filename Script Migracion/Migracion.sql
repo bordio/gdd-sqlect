@@ -37,6 +37,9 @@ if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Tipos_Hab
 if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Regimenes_Hoteles')
     drop table Regimenes_Hoteles;
     
+if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Bajas_por_hotel')
+    drop table Bajas_por_hotel;
+    
 if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Hoteles')
     drop table Hoteles;
     
@@ -54,9 +57,6 @@ if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Consumibl
     
 if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Habitaciones_Reservas')
     drop table Habitaciones_Reservas;
-
-if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'Inconsistencias')
-    drop table Inconsistencias;
 
 
 CREATE TABLE Hoteles (
@@ -373,7 +373,7 @@ CREATE PROCEDURE procEstadoReserva
  AS
    BEGIN
 	   UPDATE Reservas 
-		SET	estado_reserva= 5,
+		SET	estado_reserva= 5,   /*Efectivizada*/
 			cant_noches_estadia = (	select m.Estadia_Cant_Noches
 									from gd_esquema.Maestra m
 									where m.Reserva_Codigo = id_reserva AND
@@ -383,11 +383,13 @@ CREATE PROCEDURE procEstadoReserva
 			  (SELECT r.id_reserva FROM Facturas f JOIN Reservas r ON (r.id_reserva=f.fk_reserva)
 							)
 	  UPDATE Reservas
-		SET estado_reserva = 0
+		SET estado_reserva = 4 /* Cancelada por No-Show*/
 		 WHERE id_reserva NOT IN
-			  (SELECT r.id_reserva FROM Facturas f JOIN Reservas r ON (r.id_reserva=f.fk_reserva))
--- FALTA UPDATE DE RESERVAS CANCELADAS POR NO SHOW AL TIEMPO DE LA MIGRACION (NECESITAMOS CONSEGUIR LA FECHA DEL TXT) 
+			  (SELECT r.id_reserva FROM Facturas f JOIN Reservas r ON (r.id_reserva=f.fk_reserva)
    END;	        
  GO
  
 EXECUTE procEstadoReserva
+
+SELECT * FROM Reservas
+ order by estado_reserva, fecha_inicio  DESC
