@@ -194,10 +194,6 @@ CREATE TABLE Roles (
  ) 
 
 
-INSERT INTO Roles(nombre,descripcion) VALUES ('Administrador General','Administra todos los aspectos de la aplicación')
-INSERT INTO Roles(nombre,descripcion) VALUES ('Recepcionista','Poseé funcionalidades de atención al público')
-INSERT INTO Roles(nombre,descripcion) VALUES ('Guest','Permite realizar reservas')
-
 CREATE TABLE Usuarios (
 	id_usuario integer PRIMARY KEY identity(1,1),
 	usr_name varchar(30) NOT NULL UNIQUE,
@@ -206,17 +202,13 @@ CREATE TABLE Usuarios (
 	estado_usr tinyint DEFAULT 1
  )
 
-INSERT INTO Usuarios(usr_name, pssword) VALUES('admin','w23e')
-INSERT INTO Usuarios(usr_name, pssword) VALUES('guest','guest')
-
 
 CREATE TABLE Roles_Usuarios (
    fk_rol tinyint references Roles (id_rol),
    fk_usuario integer references Usuarios (id_usuario)
 )
 
-INSERT INTO Roles_Usuarios(fk_usuario, fk_rol) VALUES(1,1)
-INSERT INTO Roles_Usuarios(fk_usuario, fk_rol) VALUES(2,3)
+
 
  CREATE TABLE Usuarios_Hoteles (
    fk_hotel integer references Hoteles(id_hotel),
@@ -230,6 +222,22 @@ CREATE TABLE Funcionalidades (
 	estado_func tinyint DEFAULT 1
 )
 
+CREATE TABLE Funcionalidades_Roles (
+  fk_rol tinyint references Roles(id_rol),
+  fk_funcion smallint references Funcionalidades(id_funcion)
+)
+
+	/* Migración de datos */
+INSERT INTO Roles(nombre,descripcion) VALUES ('Administrador General','Administra todos los aspectos de la aplicación')
+INSERT INTO Roles(nombre,descripcion) VALUES ('Recepcionista','Poseé funcionalidades de atención al público')
+INSERT INTO Roles(nombre,descripcion) VALUES ('Guest','Permite realizar reservas')
+
+INSERT INTO Usuarios(usr_name, pssword) VALUES('admin','w23e') /*El pssword debe ir con SHA256*/
+INSERT INTO Usuarios(usr_name, pssword) VALUES('guest','guest')
+
+INSERT INTO Roles_Usuarios(fk_usuario, fk_rol) VALUES(1,1)
+INSERT INTO Roles_Usuarios(fk_usuario, fk_rol) VALUES(2,3)
+
 INSERT INTO Funcionalidades(nombre, descripicion) VALUES('Gestionar roles','Permite operaciones de alta, baja, y modificaciones de ROLES')
 INSERT INTO Funcionalidades(nombre, descripicion) VALUES('Gestionar usuarios','Permite operaciones de alta, baja, y modificaciones de USUARIOS')
 INSERT INTO Funcionalidades(nombre, descripicion) VALUES('Gestionar clientes','Permite operaciones de alta, baja, y modificaciones de CLIENTES')
@@ -239,11 +247,6 @@ INSERT INTO Funcionalidades(nombre, descripicion) VALUES('Gestionar reservas','P
 INSERT INTO Funcionalidades(nombre, descripicion) VALUES('Gestionar consumibles','Permite operaciones de alta, baja, y modificaciones de CONSUMIBLES')
 INSERT INTO Funcionalidades(nombre, descripicion) VALUES('Facturación','Permite registrar facturas')
 INSERT INTO Funcionalidades(nombre, descripicion) VALUES('Listado estadístico','Permite acceder a datos estadísticos, y emitir informes')
-
-CREATE TABLE Funcionalidades_Roles (
-  fk_rol tinyint references Roles(id_rol),
-  fk_funcion smallint references Funcionalidades(id_funcion)
-)
 
 INSERT INTO Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,1)
 INSERT INTO Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,2)
@@ -321,6 +324,10 @@ INSERT INTO Habitaciones_Reservas (fk_habitacion,fk_reserva)
 
 
 
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'procInconsistenciasClientes' AND type = 'P')
+ DROP PROCEDURE procInconsistenciasClientes
+
+
 GO
 CREATE PROC procInconsistenciasClientes
 AS
@@ -336,10 +343,8 @@ BEGIN
 								HAVING COUNT(c.pasaporte_Nro)>1 )
 END;
 GO
-							
-EXEC procInconsistenciasClientes
 
-DROP PROCEDURE procInconsistenciasClientes
+EXECUTE procInconsistenciasClientes
 
 
 /*							
@@ -385,11 +390,9 @@ CREATE PROCEDURE procEstadoReserva
 	  UPDATE Reservas
 		SET estado_reserva = 4 /* Cancelada por No-Show*/
 		 WHERE id_reserva NOT IN
-			  (SELECT r.id_reserva FROM Facturas f JOIN Reservas r ON (r.id_reserva=f.fk_reserva)
+			  (SELECT r.id_reserva FROM Facturas f JOIN Reservas r ON (r.id_reserva=f.fk_reserva))
    END;	        
  GO
  
 EXECUTE procEstadoReserva
 
-SELECT * FROM Reservas
- order by estado_reserva, fecha_inicio  DESC
