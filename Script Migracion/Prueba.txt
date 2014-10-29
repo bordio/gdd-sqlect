@@ -1,7 +1,0 @@
-CREATE TABLE Habitaciones_Reservas (
-
-   fk_habitacion integer,
-   fk_reserva smallint,
-   PRIMARY KEY (fk_habitacion,fk_reserva)
-
-  )
