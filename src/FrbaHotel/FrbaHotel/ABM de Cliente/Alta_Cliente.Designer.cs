@@ -1,5 +1,5 @@
 ﻿namespace FrbaHotel.ABM_de_Cliente
-{
+{/*
     partial class Alta_Cliente
     {
         /// <summary>
@@ -323,4 +323,5 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DateTimePicker dtFechaNac;
     }
+  * */
 }

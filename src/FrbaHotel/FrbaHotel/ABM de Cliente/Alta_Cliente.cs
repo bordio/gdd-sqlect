@@ -9,6 +9,7 @@ using System.Windows.Forms;
 
 namespace FrbaHotel.ABM_de_Cliente
 {
+    /*
     public partial class Alta_Cliente : Form
     {
         private AppModel_Alta_Cliente appModel = new AppModel_Alta_Cliente();
@@ -31,4 +32,5 @@ namespace FrbaHotel.ABM_de_Cliente
             }
         }
     }
+   */
 }

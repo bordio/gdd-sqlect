@@ -10,6 +10,7 @@ namespace FrbaHotel.ABM_de_Cliente
 {
 class AppModel_Alta_Cliente
 {
+    /*
     private Conexion sqlconexion = Conexion.Instance;
 
     public bool altaCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, DateTime fecha_Nac, string nacionalidad, string pasaporte_Nro)
@@ -60,13 +61,14 @@ class AppModel_Alta_Cliente
 
         }
 
-    /*    List<string> campos = new List<string>();
+       List<string> campos = new List<string>();
         campos = [nombre, apellido, mail, dom_Calle, nro_Calle, piso, depto, nacionalidad, pasaporte_Nro);
         validarCamposVacios(List<string>; 
-        validarNotFilled(campos);*/
+        validarNotFilled(campos);
     }
     
-    /*validarNotFilled(string campos){
-    }*/
+    validarNotFilled(string campos){
+    }
+    */
 }
 }
