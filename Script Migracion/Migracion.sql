@@ -324,6 +324,8 @@ INSERT INTO Habitaciones_Reservas (fk_habitacion,fk_reserva)
 
 
 
+/* Creación de Procedimientos */
+
 IF EXISTS (SELECT name FROM sysobjects WHERE name = 'procInconsistenciasClientes' AND type = 'P')
  DROP PROCEDURE procInconsistenciasClientes
 
@@ -396,3 +398,108 @@ CREATE PROCEDURE procEstadoReserva
  
 EXECUTE procEstadoReserva
 
+
+/*TOP 5 Reservas canceladas*/
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'top5HotelesReservasCanceladas'))
+DROP procedure top5HotelesReservasCanceladas
+
+GO
+CREATE PROCEDURE top5HotelesReservasCanceladas(@año int,@inicioTri int,@finTri int)
+ AS
+  BEGIN
+SELECT TOP 5 ho.id_hotel'Id',COUNT(r.id_reserva)'Reservas canceladas' 
+  FROM Hoteles ho JOIN Habitaciones ha ON (ho.id_hotel=ha.fk_hotel)
+                  JOIN Habitaciones_Reservas hr ON (ha.id_habitacion=hr.fk_habitacion)
+                  JOIN Reservas r ON (r.id_reserva=hr.fk_reserva)
+    WHERE (r.estado_reserva IN (2,3,4)) AND (YEAR(r.fecha_inicio)=@año) AND (MONTH(r.fecha_inicio) BETWEEN @inicioTri AND @finTri)
+      GROUP BY ho.id_hotel
+		ORDER BY 2 DESC
+
+  END
+  GO
+     
+ /* TOP 5 Consumibles Facturados*/   
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'top5HotelesConsumiblesFacturados'))
+DROP procedure top5HotelesConsumiblesFacturados
+
+GO
+CREATE PROCEDURE top5HotelesConsumiblesFacturados(@año int,@inicioTri int,@finTri int)
+ AS
+  BEGIN
+SELECT TOP 5 ho.id_hotel'Id',SUM(i.cantidad_prod)'Consumibles facturados'
+  FROM Hoteles ho JOIN Habitaciones ha ON (ho.id_hotel=ha.fk_hotel)
+                  JOIN Habitaciones_Reservas hr ON (ha.id_habitacion=hr.fk_habitacion)
+                  JOIN Reservas r ON (r.id_reserva=hr.fk_reserva)
+                  JOIN Facturas f ON (f.fk_reserva=r.id_reserva)
+                  JOIN Items i ON (i.fk_factura=f.id_factura)
+                  JOIN Consumibles c ON (i.fk_consumible=c.id_consumible)
+    WHERE ( (YEAR(f.fecha)=@año) AND (MONTH(f.fecha) BETWEEN @inicioTri AND @finTri))
+	GROUP BY ho.id_hotel
+		ORDER BY 2 DESC
+  END	
+GO
+
+/* TOP 5 Hoteles fuera de Servicio */
+
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'top5HotelesFueraDeServicio'))
+DROP procedure top5HotelesFueraDeServicio
+
+GO
+CREATE PROCEDURE top5HotelesFueraDeServicio (@año int, @inicioTri int, @finTri int)
+AS
+
+ BEGIN
+SELECT TOP 5 b.fk_hotel'Id',SUM(DATEDIFF(day,b.fecha_fin,b.fecha_inicio))'Días fuera de servicio'
+   FROM Bajas_por_hotel b
+    WHERE ( (YEAR(b.fecha_inicio)=YEAR(b.fecha_fin)) AND (MONTH(b.fecha_inicio) >= @inicioTri AND MONTH(b.fecha_fin)<= @finTri) )
+    
+    GROUP BY b.fk_hotel
+		ORDER BY 2 DESC
+  END
+GO  		
+		
+
+ /* TOP 5 Habitaciones más ocupadas */
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'top5HabitacionesMasOcupadas'))
+DROP procedure top5HabitacionesMasOcupadas
+
+GO
+CREATE PROCEDURE top5HabitacionesMasOcupadas (@año int,@inicioTri int, @finTri int)
+AS
+BEGIN
+SELECT TOP 5 ha.id_habitacion'Id', ha.fk_hotel'Id de hotel',SUM(r.cant_noches_estadia)'Días ocupada'
+  FROM Reservas r JOIN Habitaciones_Reservas hr ON (r.id_reserva=hr.fk_reserva)
+                  JOIN Habitaciones ha ON (ha.id_habitacion=hr.fk_habitacion)
+    WHERE ( (YEAR(r.fecha_inicio)=@año) AND (MONTH(r.fecha_inicio) BETWEEN @inicioTri AND @finTri) )
+    GROUP BY ha.id_habitacion,ha.fk_hotel
+		ORDER BY 3 DESC
+ END
+ GO	
+
+/* TOP 5 Clientes mejores puntuados*/
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'top5ClientesMejoresPuntuados'))
+DROP procedure top5ClientesMejoresPuntuados
+
+GO
+CREATE PROCEDURE top5ClientesMejoresPuntuados (@año int,@inicioTri int, @finTri int)
+AS
+BEGIN
+
+SELECT TOP 5 cl.id_cliente'Id',cl.nombre'Nombre',cl.apellido'Apellido',SUM( ((re.precio*r.cant_noches_estadia)/10)+((i.cantidad_prod*c.precio)/5) )'Puntos'
+  FROM Clientes cl JOIN Reservas r ON (r.fk_cliente=cl.id_cliente)
+				   JOIN Regimenes re ON (r.fk_regimen=re.id_regimen)
+				   JOIN Facturas f ON (r.id_reserva=f.fk_reserva)
+				   JOIN Items i ON (i.fk_factura=f.id_factura)
+				   JOIN Consumibles c ON (c.id_consumible=i.fk_consumible)
+	WHERE ( (YEAR(f.fecha)=@año) AND (MONTH(f.fecha) BETWEEN @inicioTri AND @finTri) )
+	
+	GROUP BY cl.id_cliente,cl.nombre,cl.apellido
+		ORDER BY 4 DESC
+
+ END
+ GO 
