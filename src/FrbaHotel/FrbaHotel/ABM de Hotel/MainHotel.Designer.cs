@@ -33,8 +33,10 @@
             this.baja = new System.Windows.Forms.Button();
             this.modificar = new System.Windows.Forms.Button();
             this.cerrar = new System.Windows.Forms.Button();
-            this.lstHoteles = new System.Windows.Forms.ListBox();
+            this.lstHoteles = new System.Windows.Forms.DataGridView();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lstHoteles)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -52,16 +54,17 @@
             // 
             // agregar
             // 
-            this.agregar.Location = new System.Drawing.Point(266, 229);
+            this.agregar.Location = new System.Drawing.Point(262, 219);
             this.agregar.Name = "agregar";
             this.agregar.Size = new System.Drawing.Size(75, 23);
             this.agregar.TabIndex = 3;
             this.agregar.Text = "Agregar";
             this.agregar.UseVisualStyleBackColor = true;
+            this.agregar.Click += new System.EventHandler(this.agregar_Click);
             // 
             // baja
             // 
-            this.baja.Location = new System.Drawing.Point(147, 229);
+            this.baja.Location = new System.Drawing.Point(146, 219);
             this.baja.Name = "baja";
             this.baja.Size = new System.Drawing.Size(75, 23);
             this.baja.TabIndex = 2;
@@ -70,12 +73,13 @@
             // 
             // modificar
             // 
-            this.modificar.Location = new System.Drawing.Point(31, 229);
+            this.modificar.Location = new System.Drawing.Point(31, 219);
             this.modificar.Name = "modificar";
             this.modificar.Size = new System.Drawing.Size(75, 23);
             this.modificar.TabIndex = 1;
             this.modificar.Text = "Modificar";
             this.modificar.UseVisualStyleBackColor = true;
+            this.modificar.Click += new System.EventHandler(this.modificar_Click);
             // 
             // cerrar
             // 
@@ -89,24 +93,36 @@
             // 
             // lstHoteles
             // 
-            this.lstHoteles.FormattingEnabled = true;
-            this.lstHoteles.Location = new System.Drawing.Point(15, 19);
-            this.lstHoteles.MultiColumn = true;
+            this.lstHoteles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.lstHoteles.Location = new System.Drawing.Point(31, 29);
             this.lstHoteles.Name = "lstHoteles";
-            this.lstHoteles.Size = new System.Drawing.Size(347, 199);
-            this.lstHoteles.TabIndex = 3;
+            this.lstHoteles.Size = new System.Drawing.Size(340, 171);
+            this.lstHoteles.TabIndex = 4;
+            this.lstHoteles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.lstHoteles_CellContentClick);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(43, 283);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(150, 38);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "Mostrar Hoteles";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // MainHotel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(402, 333);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.cerrar);
             this.Controls.Add(this.groupBox1);
             this.Name = "MainHotel";
             this.Text = "MainHotel";
             this.Load += new System.EventHandler(this.MainHotel_Load);
             this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.lstHoteles)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -118,6 +134,7 @@
         private System.Windows.Forms.Button baja;
         private System.Windows.Forms.Button agregar;
         private System.Windows.Forms.Button cerrar;
-        private System.Windows.Forms.ListBox lstHoteles;
+        private System.Windows.Forms.DataGridView lstHoteles;
+        private System.Windows.Forms.Button button1;
     }
 }
