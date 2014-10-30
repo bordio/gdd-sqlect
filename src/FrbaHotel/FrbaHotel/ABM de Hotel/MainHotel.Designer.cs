@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lstHoteles = new System.Windows.Forms.DataGridView();
             this.agregar = new System.Windows.Forms.Button();
             this.baja = new System.Windows.Forms.Button();
             this.modificar = new System.Windows.Forms.Button();
             this.cerrar = new System.Windows.Forms.Button();
-            this.lstHoteles = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lstHoteles)).BeginInit();
@@ -51,6 +51,22 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Hoteles";
+            // 
+            // lstHoteles
+            // 
+            this.lstHoteles.AllowUserToAddRows = false;
+            this.lstHoteles.AllowUserToDeleteRows = false;
+            this.lstHoteles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.lstHoteles.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.lstHoteles.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.lstHoteles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.lstHoteles.Location = new System.Drawing.Point(17, 19);
+            this.lstHoteles.MultiSelect = false;
+            this.lstHoteles.Name = "lstHoteles";
+            this.lstHoteles.ReadOnly = true;
+            this.lstHoteles.Size = new System.Drawing.Size(340, 171);
+            this.lstHoteles.TabIndex = 4;
+            this.lstHoteles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.lstHoteles_CellContentClick);
             // 
             // agregar
             // 
@@ -91,15 +107,6 @@
             this.cerrar.UseVisualStyleBackColor = true;
             this.cerrar.Click += new System.EventHandler(this.cerrar_Click_1);
             // 
-            // lstHoteles
-            // 
-            this.lstHoteles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.lstHoteles.Location = new System.Drawing.Point(31, 29);
-            this.lstHoteles.Name = "lstHoteles";
-            this.lstHoteles.Size = new System.Drawing.Size(340, 171);
-            this.lstHoteles.TabIndex = 4;
-            this.lstHoteles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.lstHoteles_CellContentClick);
-            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(43, 283);
@@ -114,6 +121,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(402, 333);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.cerrar);
