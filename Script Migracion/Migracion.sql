@@ -326,6 +326,32 @@ INSERT INTO Habitaciones_Reservas (fk_habitacion,fk_reserva)
 
 /* Creación de Procedimientos */
 
+
+/*------------------------------------ABM CLIENTE--------------------------------------------------*/
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'altaCliente'))
+DROP PROCEDURE altaCliente
+
+GO
+CREATE PROCEDURE altaCliente (@Nombre VARCHAR(60), @Apellido VARCHAR(60), @Mail VARCHAR(255), @Dom_Calle VARCHAR(90), @Nro_Calle INTEGER, @Piso TINYINT, @Depto VARCHAR(5), @Fecha_Nac DATETIME, @Nacionalidad VARCHAR(60), @Pasaporte_Nro INTEGER)
+AS
+BEGIN
+
+	DECLARE @UserId INT
+	DECLARE @PersonalDataId INT
+	
+	SELECT * FROM Clientes C WHERE C.pasaporte_Nro=@Pasaporte_Nro OR C.mail=@Mail
+	IF (@@ROWCOUNT >0)
+	BEGIN
+		RETURN @@ROWCOUNT
+	END
+
+	INSERT INTO Clientes (nombre,apellido,mail,dom_Calle,nro_Calle,piso,depto,fecha_Nac,nacionalidad,pasaporte_Nro)
+	VALUES (@Nombre, @Apellido, @Mail, @Dom_Calle, @Nro_Calle, @Piso, @Depto, @Fecha_Nac, @Nacionalidad, @Pasaporte_Nro)
+END
+GO
+/*-----------------------------------ABM CLIENTE FIN----------------------------------------------------*/
+
 IF EXISTS (SELECT name FROM sysobjects WHERE name = 'procInconsistenciasClientes' AND type = 'P')
  DROP PROCEDURE procInconsistenciasClientes
 

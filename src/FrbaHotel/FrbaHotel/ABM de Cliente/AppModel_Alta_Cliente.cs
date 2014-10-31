@@ -10,65 +10,58 @@ namespace FrbaHotel.ABM_de_Cliente
 {
 class AppModel_Alta_Cliente
 {
-    /*
     private Conexion sqlconexion = Conexion.Instance;
 
     public bool altaCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, DateTime fecha_Nac, string nacionalidad, string pasaporte_Nro)
     {
         if (nombre == "" || apellido == "" || mail == "" || dom_Calle == "" || nro_Calle == "" || piso == "" || depto == "" || nacionalidad == null || pasaporte_Nro == null)
         {
-            MessageBox.Show("Error: Se intentó dar de alta con datos en blanco", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show("Error: Se intentó crear un cliente con datos en blanco", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return false;
         }
         else{
-
+            /*
+             Agregar validaciones
+             */
+            
             Conexion conexion = Conexion.Instance;
-            System.Data.SqlClient.SqlCommand comando1 = new System.Data.SqlClient.SqlCommand();
-            comando1.CommandType = CommandType.StoredProcedure;
+            System.Data.SqlClient.SqlCommand comandoACliente = new System.Data.SqlClient.SqlCommand();
+            comandoACliente.CommandType = CommandType.StoredProcedure;
 
-            comando1.Parameters.Add("@Name", SqlDbType.NVarChar);
-            comando1.Parameters.Add("@Surname", SqlDbType.NVarChar);
-            comando1.Parameters.Add("@Dni", SqlDbType.BigInt);
-            comando1.Parameters.Add("@Email", SqlDbType.NVarChar);
-            comando1.Parameters.Add("@PhoneNumber", SqlDbType.BigInt);
-            comando1.Parameters.Add("@Address", SqlDbType.NVarChar);
-            comando1.Parameters.Add("@PostalCode", SqlDbType.NVarChar);
-            comando1.Parameters.Add("@Birthday", SqlDbType.DateTime);
+            comandoACliente.Parameters.Add("@Nombre", SqlDbType.VarChar);
+            comandoACliente.Parameters.Add("@Apellido", SqlDbType.VarChar);
+            comandoACliente.Parameters.Add("@Mail", SqlDbType.VarChar);
+            comandoACliente.Parameters.Add("@Dom_Calle", SqlDbType.VarChar);
+            comandoACliente.Parameters.Add("@Nro_Calle", SqlDbType.Int);
+            comandoACliente.Parameters.Add("@Piso", SqlDbType.TinyInt);
+            comandoACliente.Parameters.Add("@Depto", SqlDbType.VarChar);
+            comandoACliente.Parameters.Add("@Fecha_Nac", SqlDbType.DateTime);
+            comandoACliente.Parameters.Add("@Nacionalidad", SqlDbType.VarChar);
+            comandoACliente.Parameters.Add("@Pasaporte_Nro", SqlDbType.Int);
 
-            comando1.Parameters[0].Value = name;
-            comando1.Parameters[1].Value = surname;
-            comando1.Parameters[2].Value = dni;
-            comando1.Parameters[3].Value = email;
-            comando1.Parameters[4].Value = phone;
-            comando1.Parameters[5].Value = address;
-            comando1.Parameters[6].Value = postalcode;
-            comando1.Parameters[7].Value = birthday;
+            comandoACliente.Parameters[0].Value = nombre;
+            comandoACliente.Parameters[1].Value = apellido;
+            comandoACliente.Parameters[3].Value = mail;
+            comandoACliente.Parameters[2].Value = dom_Calle;
+            comandoACliente.Parameters[4].Value = nro_Calle;
+            comandoACliente.Parameters[5].Value = piso;
+            comandoACliente.Parameters[6].Value = depto;
+            comandoACliente.Parameters[7].Value = fecha_Nac;
+            comandoACliente.Parameters[8].Value = nacionalidad;
+            comandoACliente.Parameters[9].Value = pasaporte_Nro;
 
-            comando1.CommandText = "TRANSA_SQL.altaCliente";
-            conexion.ejecutarQueryConSP(comando1);
-
-            StringBuilder sentence = new StringBuilder();
-            sentence.AppendFormat("SELECT C.CustomerId FROM TRANSA_SQL.Customer C WHERE C.Dni={0}", dni);
-            int customerId = (int)connSql.ejecutarQuery(sentence.ToString()).Rows[0][0];
-
-            System.Data.SqlClient.SqlCommand comando2 = new System.Data.SqlClient.SqlCommand();
-            comando2.CommandType = CommandType.StoredProcedure;
-
-            comando2.Parameters.Add("@CustomerId", SqlDbType.Int);
-            comando2.Parameters.Add("@CityName", SqlDbType.NVarChar);
-            comando2.CommandText = "TRANSA_SQL.insertarCiudad";
-            comando2.Parameters[0].Value = customerId;
+            comandoACliente.CommandText = "altaCliente";
+            conexion.ejecutarQueryConSP(comandoACliente);
 
         }
-
-       List<string> campos = new List<string>();
+        return true;
+       /*List<string> campos = new List<string>();
         campos = [nombre, apellido, mail, dom_Calle, nro_Calle, piso, depto, nacionalidad, pasaporte_Nro);
         validarCamposVacios(List<string>; 
-        validarNotFilled(campos);
+        validarNotFilled(campos);*/
     }
     
-    validarNotFilled(string campos){
-    }
-    */
+   /* validarNotFilled(string campos){
+    }*/
 }
 }

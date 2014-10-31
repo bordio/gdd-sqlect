@@ -1,5 +1,5 @@
 ﻿namespace FrbaHotel.ABM_de_Cliente
-{/*
+{
     partial class Alta_Cliente
     {
         /// <summary>
@@ -52,6 +52,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dtFechaNac = new System.Windows.Forms.DateTimePicker();
+            this.btVolver = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -102,7 +103,6 @@
             this.label3.Size = new System.Drawing.Size(32, 13);
             this.label3.TabIndex = 8;
             this.label3.Text = "Email";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // textPisoDom
             // 
@@ -110,7 +110,6 @@
             this.textPisoDom.Name = "textPisoDom";
             this.textPisoDom.Size = new System.Drawing.Size(199, 20);
             this.textPisoDom.TabIndex = 16;
-            this.textPisoDom.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
             // 
             // label5
             // 
@@ -120,7 +119,6 @@
             this.label5.Size = new System.Drawing.Size(27, 13);
             this.label5.TabIndex = 15;
             this.label5.Text = "Piso";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // textNumDom
             // 
@@ -128,7 +126,6 @@
             this.textNumDom.Name = "textNumDom";
             this.textNumDom.Size = new System.Drawing.Size(199, 20);
             this.textNumDom.TabIndex = 14;
-            this.textNumDom.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
             // 
             // label6
             // 
@@ -138,7 +135,6 @@
             this.label6.Size = new System.Drawing.Size(44, 13);
             this.label6.TabIndex = 13;
             this.label6.Text = "Número";
-            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // textCalleDom
             // 
@@ -146,7 +142,6 @@
             this.textCalleDom.Name = "textCalleDom";
             this.textCalleDom.Size = new System.Drawing.Size(199, 20);
             this.textCalleDom.TabIndex = 12;
-            this.textCalleDom.TextChanged += new System.EventHandler(this.textBox6_TextChanged);
             // 
             // label7
             // 
@@ -156,7 +151,6 @@
             this.label7.Size = new System.Drawing.Size(30, 13);
             this.label7.TabIndex = 11;
             this.label7.Text = "Calle";
-            this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
             // textDtoDom
             // 
@@ -260,11 +254,21 @@
             this.dtFechaNac.Size = new System.Drawing.Size(200, 20);
             this.dtFechaNac.TabIndex = 0;
             // 
+            // btVolver
+            // 
+            this.btVolver.Location = new System.Drawing.Point(291, 393);
+            this.btVolver.Name = "btVolver";
+            this.btVolver.Size = new System.Drawing.Size(75, 23);
+            this.btVolver.TabIndex = 29;
+            this.btVolver.Text = "Volver";
+            this.btVolver.UseVisualStyleBackColor = true;
+            // 
             // Alta_Cliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(378, 422);
+            this.Controls.Add(this.btVolver);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btLimpiar);
             this.Controls.Add(this.btAceptar);
@@ -322,6 +326,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DateTimePicker dtFechaNac;
+        private System.Windows.Forms.Button btVolver;
     }
-  * */
+  
 }
