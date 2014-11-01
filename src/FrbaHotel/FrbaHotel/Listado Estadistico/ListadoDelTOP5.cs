@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -38,7 +43,7 @@ namespace FrbaHotel.Listado_Estadistico
                 MessageBox.Show("No existe el top 5 de esta opción");
                 this.Close();
             }
-            
+
         }
     }
 }
