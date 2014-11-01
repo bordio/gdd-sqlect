@@ -2,6 +2,7 @@
 USE GD2C2014
 
 BEGIN TRANSACTION;
+ 
   /* Creamos el esquema */
 IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = N'SQLECT')  
 EXEC sys.sp_executesql N'CREATE SCHEMA [SQLECT] AUTHORIZATION [gd]'
@@ -69,10 +70,8 @@ DROP TABLE SQLECT.Habitaciones_Reservas
 
 
 
-
-
-
 /* Creamos las tablas */
+
 CREATE TABLE SQLECT.Hoteles (
 	id_hotel integer PRIMARY KEY identity(1,1),
 	ciudad varchar(30),
@@ -92,9 +91,9 @@ CREATE TABLE SQLECT.Bajas_por_hotel(
 )
 
 CREATE TABLE SQLECT.Tipos_Habitaciones(
-  id_tipo_habitacion int PRIMARY KEY,
-  descripcion varchar(60),
-  porcentual decimal(4,2)
+	id_tipo_habitacion int PRIMARY KEY,
+	descripcion varchar(60),
+	porcentual decimal(4,2)
 )
 
 
@@ -109,10 +108,10 @@ CREATE TABLE SQLECT.Habitaciones (
 )
 
 
-CREATE TABLE SQLECT.Regimenes(
-  id_regimen tinyint PRIMARY KEY identity(1,1),
-  descripcion varchar(60),
-  precio decimal(6,2),
+CREATE TABLE SQLECT.Regimenes (
+	id_regimen tinyint PRIMARY KEY identity(1,1),
+	descripcion varchar(60),
+	precio decimal(6,2),
 )
 
 CREATE TABLE SQLECT.Regimenes_Hoteles (
@@ -164,15 +163,15 @@ CREATE TABLE SQLECT.Items(
 )
 
 CREATE TABLE SQLECT.Reservas (
-  id_reserva integer PRIMARY KEY,
-  fecha_inicio datetime,
-  cant_noches_reserva tinyint,
-  cant_noches_estadia tinyint,
-  fk_usuario_reserva integer,
-  fk_usuario_ultima_modificacion integer,
-  fk_regimen tinyint references SQLECT.Regimenes(id_regimen),
-  fk_cliente integer references SQLECT.Clientes(id_cliente),
-  estado_reserva tinyint DEFAULT 0
+	id_reserva integer PRIMARY KEY,
+	fecha_inicio datetime,
+	cant_noches_reserva tinyint,
+	cant_noches_estadia tinyint,
+	fk_usuario_reserva integer,
+	fk_usuario_ultima_modificacion integer,
+	fk_regimen tinyint references SQLECT.Regimenes(id_regimen),
+	fk_cliente integer references SQLECT.Clientes(id_cliente),
+	estado_reserva tinyint DEFAULT 0
 )
 
 CREATE TABLE SQLECT.Reservas_Canceladas (
@@ -182,9 +181,9 @@ CREATE TABLE SQLECT.Reservas_Canceladas (
 )
 
 CREATE TABLE SQLECT.Habitaciones_Reservas (
-  fk_habitacion integer,
-  fk_reserva integer,
-  PRIMARY KEY (fk_habitacion,fk_reserva)
+	fk_habitacion integer,
+	fk_reserva integer,
+	PRIMARY KEY (fk_habitacion,fk_reserva)
 )
 
 CREATE TABLE SQLECT.Empleados (
@@ -218,15 +217,15 @@ CREATE TABLE SQLECT.Usuarios (
 
 
 CREATE TABLE SQLECT.Roles_Usuarios (
-   fk_rol tinyint references SQLECT.Roles (id_rol),
-   fk_usuario integer references SQLECT.Usuarios (id_usuario)
+    fk_rol tinyint references SQLECT.Roles (id_rol),
+    fk_usuario integer references SQLECT.Usuarios (id_usuario)
 )
 
 
 
  CREATE TABLE SQLECT.Usuarios_Hoteles (
-   fk_hotel integer references SQLECT.Hoteles(id_hotel),
-   fk_usuario integer references SQLECT.Usuarios(id_usuario)
+    fk_hotel integer references SQLECT.Hoteles(id_hotel),
+    fk_usuario integer references SQLECT.Usuarios(id_usuario)
 )
 
 CREATE TABLE SQLECT.Funcionalidades (
@@ -237,8 +236,8 @@ CREATE TABLE SQLECT.Funcionalidades (
 )
 
 CREATE TABLE SQLECT.Funcionalidades_Roles (
-  fk_rol tinyint references SQLECT.Roles(id_rol),
-  fk_funcion smallint references SQLECT.Funcionalidades(id_funcion)
+    fk_rol tinyint references SQLECT.Roles(id_rol),
+    fk_funcion smallint references SQLECT.Funcionalidades(id_funcion)
 )
 
 	/* Migración de datos */
@@ -246,11 +245,10 @@ INSERT INTO SQLECT.Roles(nombre,descripcion) VALUES ('Administrador General','Ad
 INSERT INTO SQLECT.Roles(nombre,descripcion) VALUES ('Recepcionista','Poseé funcionalidades de atención al público')
 INSERT INTO SQLECT.Roles(nombre,descripcion) VALUES ('Guest','Permite realizar reservas')
 
-INSERT INTO SQLECT.Usuarios(usr_name, pssword) VALUES('admin','e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7') /*El pssword debe ir con SHA256*/
-INSERT INTO SQLECT.Usuarios(usr_name, pssword) VALUES('guest','84983c60f7daadc1cb8698621f802c0d9f9a3c3c295c810748fb048115c186ec')
+INSERT INTO SQLECT.Usuarios(usr_name, pssword) VALUES('admin','e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7') /*Pass Hasheada*/
 
 INSERT INTO SQLECT.Roles_Usuarios(fk_usuario, fk_rol) VALUES(1,1)
-INSERT INTO SQLECT.Roles_Usuarios(fk_usuario, fk_rol) VALUES(2,3)
+
 
 INSERT INTO SQLECT.Funcionalidades(nombre, descripicion) VALUES('Gestionar roles','Permite operaciones de alta, baja, y modificaciones de ROLES')
 INSERT INTO SQLECT.Funcionalidades(nombre, descripicion) VALUES('Gestionar usuarios','Permite operaciones de alta, baja, y modificaciones de USUARIOS')
@@ -544,5 +542,21 @@ SELECT TOP 5 cl.id_cliente'Id',cl.nombre'Nombre',cl.apellido'Apellido',SUM( ((re
  END
  GO 
  
+/*Compruebo si se loguea correctamente*/
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.validarUsuarioLogin'))
+DROP PROCEDURE SQLECT.validarUsuarioLogin
+
+GO
+CREATE PROCEDURE SQLECT.validarUsuarioLogin (@usuario varchar(30),@password char(64),@rol varchar(30))
+AS
+BEGIN
+ SELECT * FROM SQLECT.Usuarios u JOIN SQLECT.Roles_Usuarios ru ON (u.id_usuario=ru.fk_usuario)
+								 JOIN SQLECT.Roles r ON (r.id_rol=ru.fk_rol)
+		WHERE r.nombre=@rol AND u.usr_name=@usuario AND u.pssword=@password AND u.estado_usr=1 AND r.estado_rol=1
+END
+GO
+ 
+
  
  
