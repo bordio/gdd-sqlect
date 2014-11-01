@@ -75,7 +75,7 @@ DROP TABLE SQLECT.Habitaciones_Reservas
 CREATE TABLE SQLECT.Hoteles (
 	id_hotel integer PRIMARY KEY identity(1,1),
 	nombre varchar(60),
-	mail varchar(100),
+	mail varchar(255),
 	fecha_creacion datetime,
 	pais varchar(50),
 	ciudad varchar(30),

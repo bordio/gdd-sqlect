@@ -14,7 +14,7 @@ namespace FrbaHotel.ABM_de_Hotel
 
         public bool altaHotel(string nombre, string email, int cant_estrellas, DateTime fecha_creacion, bool all_inclusive, bool all_inclusive_moderado, bool pension_completa, bool media_pension, string pais, string ciudad, string calle, int nro_calle)
         {
-            if (nombre == "" || email == "" || cant_estrellas == null || fecha_creacion == null || all_inclusive == null || all_inclusive_moderado == null || pension_completa == null || media_pension == null || pais == "" || ciudad == "" || nro_calle < 0)
+            if (nombre == "" || email == "" || cant_estrellas == null || fecha_creacion == null || pais == "" || ciudad == "" || nro_calle < 0)
             {
                 MessageBox.Show("Error: No debe dejar campos en blanco", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
@@ -42,6 +42,10 @@ namespace FrbaHotel.ABM_de_Hotel
                     comando1.Parameters.Add("@ciudad", SqlDbType.VarChar);
                     comando1.Parameters.Add("@calle", SqlDbType.VarChar);
                     comando1.Parameters.Add("@nro_calle", SqlDbType.Int);
+                    comando1.Parameters.Add("@all_inclusive", SqlDbType.Int);
+                    comando1.Parameters.Add("@all_inclusive_moderado", SqlDbType.Int);
+                    comando1.Parameters.Add("@pension_completa", SqlDbType.Int);
+                    comando1.Parameters.Add("@media_pension", SqlDbType.Int);
 
                     comando1.Parameters[0].Value = nombre;
                     comando1.Parameters[1].Value = email;
@@ -51,11 +55,13 @@ namespace FrbaHotel.ABM_de_Hotel
                     comando1.Parameters[5].Value = ciudad;
                     comando1.Parameters[6].Value = calle;
                     comando1.Parameters[7].Value = nro_calle;
+                    comando1.Parameters[8].Value = (all_inclusive ? 1 : 0);
+                    comando1.Parameters[9].Value = (all_inclusive_moderado ? 1 : 0);
+                    comando1.Parameters[10].Value = (pension_completa ? 1 : 0);
+                    comando1.Parameters[11].Value = (media_pension ? 1 : 0);
 
                     comando1.CommandText = "SQLECT.altaHotel";
                     cnn.ejecutarQueryConSP(comando1);
-
-                    //TO DO: INSERTS de la relacion regimenes_hoteles
 
                     return true;
                 }
@@ -69,7 +75,7 @@ namespace FrbaHotel.ABM_de_Hotel
             return this.connSql.ejecutarQuery(sentece.ToString()).Rows.Count > 0;
         }
 
-
+        /*
         public void validarSoloNumeros(KeyPressEventArgs e)
         {
             if (Char.IsDigit(e.KeyChar))
@@ -169,5 +175,6 @@ namespace FrbaHotel.ABM_de_Hotel
                 e.Handled = true;
             }
         }
+         */
     }
 }
