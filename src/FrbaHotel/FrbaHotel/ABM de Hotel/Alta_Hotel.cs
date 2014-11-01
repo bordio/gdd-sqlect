@@ -12,8 +12,10 @@ namespace FrbaHotel.ABM_de_Hotel
     public partial class Alta_Hotel : Form
     {
         private AltaHotelApplicationModel appModel = new AltaHotelApplicationModel();
-        public Alta_Hotel()
+        private DataGridView listaHoteles;
+        public Alta_Hotel(DataGridView lsHoteles)
         {
+            listaHoteles = lsHoteles;
             InitializeComponent();
         }
 
@@ -39,8 +41,8 @@ namespace FrbaHotel.ABM_de_Hotel
 
         private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
         {
-            txtFechaCreacion.Clear();
-            txtFechaCreacion.AppendText(monthCalendar1.SelectionStart.ToShortDateString());
+            Fecha_creacion.Clear();
+            Fecha_creacion.AppendText(monthCalendar1.SelectionStart.ToShortDateString());
             monthCalendar1.Visible = false;
         }
 
@@ -56,14 +58,14 @@ namespace FrbaHotel.ABM_de_Hotel
 
         private void button1_Click(object sender, EventArgs e)
         {
-            txtNombre.ResetText();
-            txtEmail.ResetText();
-            txtFechaCreacion.ResetText();
-            txtCalle.ResetText();
-            txtNroCalle.ResetText();
-            txtPais.ResetText();
-            txtCiudad.ResetText();
-            txtCantEstrellas.ResetText();
+            Nombre.ResetText();
+            Email.ResetText();
+            Fecha_creacion.ResetText();
+            Calle.ResetText();
+            Nro_calle.ResetText();
+            Pais.ResetText();
+            Ciudad.ResetText();
+            Cantidad_Estrellas.ResetText();
             ckAllInclusive.Checked = false;
             ckAllInclusiveModerado.Checked = false;
             ckMediaPension.Checked = false;
@@ -72,14 +74,22 @@ namespace FrbaHotel.ABM_de_Hotel
 
         private void btAlta_Click(object sender, EventArgs e)
         {
-            bool retValue = this.appModel.altaHotel(this.txtNombre.Text, this.txtEmail.Text, Int32.Parse(this.txtCantEstrellas.Text),
-                DateTime.Parse(this.txtFechaCreacion.Text), this.ckAllInclusive.Checked, this.ckAllInclusiveModerado.Checked, this.ckMediaPension.Checked,
-                this.ckPensionCompleta.Checked, this.txtPais.Text, this.txtCiudad.Text, this.txtCalle.Text, Int32.Parse(this.txtNroCalle.Text));
+            StringBuilder errores = new StringBuilder();
+            bool retValue = this.appModel.altaHotel(Nombre, Email, Cantidad_Estrellas, Fecha_creacion,
+                this.ckAllInclusive.Checked, this.ckAllInclusiveModerado.Checked, this.ckMediaPension.Checked,
+                this.ckPensionCompleta.Checked, Pais, Ciudad, Calle, Nro_calle, errores);
 
             if (retValue)
             {
                 MessageBox.Show("Alta exitosa", "Alta de Hotel", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.listaHoteles.DataSource = ABM_de_Hotel.MainHotel.cargar_lista().DefaultView;
+                this.listaHoteles.AllowUserToAddRows = false;
                 this.Close();
+            }
+            else
+            {
+                MessageBox.Show(errores.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                errores = null;
             }
         }
     }

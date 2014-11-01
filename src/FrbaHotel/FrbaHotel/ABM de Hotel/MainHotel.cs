@@ -20,11 +20,16 @@ namespace FrbaHotel.ABM_de_Hotel
 
         private void MainHotel_Load(object sender, EventArgs e)
         {
+            lstHoteles.DataSource = cargar_lista().DefaultView;
+            lstHoteles.AllowUserToAddRows = false;
+        }
+
+        public static DataTable cargar_lista()
+        {
             StringBuilder sentence = new StringBuilder().AppendFormat("SELECT ciudad 'Ciudad', calle + ' ' + CONVERT(varchar,nro_calle,10) 'Direccion' FROM SQLECT.Hoteles");
             DataTable tabla = Conexion.Instance.ejecutarQuery(sentence.ToString());
 
-            lstHoteles.DataSource = tabla.DefaultView;
-            lstHoteles.AllowUserToAddRows = false;
+            return tabla;
         }
 
         private void cerrar_Click_1(object sender, EventArgs e)
@@ -44,9 +49,8 @@ namespace FrbaHotel.ABM_de_Hotel
 
         private void agregar_Click(object sender, EventArgs e)
         {
-            Alta_Hotel formAlta = new Alta_Hotel();
+            Alta_Hotel formAlta = new Alta_Hotel(this.lstHoteles);
             formAlta.Show();
-            
         }
     }
 }

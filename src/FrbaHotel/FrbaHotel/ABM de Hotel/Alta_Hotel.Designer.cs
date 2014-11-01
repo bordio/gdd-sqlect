@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.txtCalle = new System.Windows.Forms.TextBox();
+            this.Calle = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.txtNroCalle = new System.Windows.Forms.TextBox();
+            this.Nro_calle = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -43,20 +43,26 @@
             this.ckAllInclusiveModerado = new System.Windows.Forms.CheckBox();
             this.ckAllInclusive = new System.Windows.Forms.CheckBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.txtFechaCreacion = new System.Windows.Forms.TextBox();
+            this.Fecha_creacion = new System.Windows.Forms.TextBox();
             this.btSeleccionarFecha = new System.Windows.Forms.Button();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.label9 = new System.Windows.Forms.Label();
-            this.txtNombre = new System.Windows.Forms.TextBox();
-            this.txtEmail = new System.Windows.Forms.TextBox();
-            this.txtCantEstrellas = new System.Windows.Forms.TextBox();
+            this.Nombre = new System.Windows.Forms.TextBox();
+            this.Email = new System.Windows.Forms.TextBox();
+            this.Cantidad_Estrellas = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.txtCiudad = new System.Windows.Forms.TextBox();
-            this.txtPais = new System.Windows.Forms.TextBox();
+            this.Ciudad = new System.Windows.Forms.TextBox();
+            this.Pais = new System.Windows.Forms.TextBox();
             this.btAlta = new System.Windows.Forms.Button();
             this.btVolver = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -71,12 +77,12 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Calle";
             // 
-            // txtCalle
+            // Calle
             // 
-            this.txtCalle.Location = new System.Drawing.Point(111, 83);
-            this.txtCalle.Name = "txtCalle";
-            this.txtCalle.Size = new System.Drawing.Size(156, 20);
-            this.txtCalle.TabIndex = 1;
+            this.Calle.Location = new System.Drawing.Point(111, 83);
+            this.Calle.Name = "Calle";
+            this.Calle.Size = new System.Drawing.Size(156, 20);
+            this.Calle.TabIndex = 25;
             // 
             // label2
             // 
@@ -88,13 +94,13 @@
             this.label2.Text = "Nro de Calle";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
-            // txtNroCalle
+            // Nro_calle
             // 
-            this.txtNroCalle.Location = new System.Drawing.Point(278, 83);
-            this.txtNroCalle.Name = "txtNroCalle";
-            this.txtNroCalle.Size = new System.Drawing.Size(67, 20);
-            this.txtNroCalle.TabIndex = 3;
-            this.txtNroCalle.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.Nro_calle.Location = new System.Drawing.Point(278, 83);
+            this.Nro_calle.Name = "Nro_calle";
+            this.Nro_calle.Size = new System.Drawing.Size(67, 20);
+            this.Nro_calle.TabIndex = 26;
+            this.Nro_calle.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label3
             // 
@@ -161,7 +167,7 @@
             this.ckMediaPension.Location = new System.Drawing.Point(202, 44);
             this.ckMediaPension.Name = "ckMediaPension";
             this.ckMediaPension.Size = new System.Drawing.Size(95, 17);
-            this.ckMediaPension.TabIndex = 3;
+            this.ckMediaPension.TabIndex = 22;
             this.ckMediaPension.Text = "Media pension";
             this.ckMediaPension.UseVisualStyleBackColor = true;
             // 
@@ -171,7 +177,7 @@
             this.ckPensionCompleta.Location = new System.Drawing.Point(202, 21);
             this.ckPensionCompleta.Name = "ckPensionCompleta";
             this.ckPensionCompleta.Size = new System.Drawing.Size(110, 17);
-            this.ckPensionCompleta.TabIndex = 2;
+            this.ckPensionCompleta.TabIndex = 21;
             this.ckPensionCompleta.Text = "Pension completa";
             this.ckPensionCompleta.UseVisualStyleBackColor = true;
             // 
@@ -181,7 +187,7 @@
             this.ckAllInclusiveModerado.Location = new System.Drawing.Point(22, 44);
             this.ckAllInclusiveModerado.Name = "ckAllInclusiveModerado";
             this.ckAllInclusiveModerado.Size = new System.Drawing.Size(131, 17);
-            this.ckAllInclusiveModerado.TabIndex = 1;
+            this.ckAllInclusiveModerado.TabIndex = 20;
             this.ckAllInclusiveModerado.Text = "All inclusive moderado";
             this.ckAllInclusiveModerado.UseVisualStyleBackColor = true;
             // 
@@ -191,7 +197,7 @@
             this.ckAllInclusive.Location = new System.Drawing.Point(22, 21);
             this.ckAllInclusive.Name = "ckAllInclusive";
             this.ckAllInclusive.Size = new System.Drawing.Size(81, 17);
-            this.ckAllInclusive.TabIndex = 0;
+            this.ckAllInclusive.TabIndex = 19;
             this.ckAllInclusive.Text = "All inclusive";
             this.ckAllInclusive.UseVisualStyleBackColor = true;
             // 
@@ -204,20 +210,20 @@
             this.label8.TabIndex = 10;
             this.label8.Text = "Fecha de Creacion:";
             // 
-            // txtFechaCreacion
+            // Fecha_creacion
             // 
-            this.txtFechaCreacion.Location = new System.Drawing.Point(128, 89);
-            this.txtFechaCreacion.Name = "txtFechaCreacion";
-            this.txtFechaCreacion.ReadOnly = true;
-            this.txtFechaCreacion.Size = new System.Drawing.Size(98, 20);
-            this.txtFechaCreacion.TabIndex = 12;
+            this.Fecha_creacion.Location = new System.Drawing.Point(128, 89);
+            this.Fecha_creacion.Name = "Fecha_creacion";
+            this.Fecha_creacion.ReadOnly = true;
+            this.Fecha_creacion.Size = new System.Drawing.Size(98, 20);
+            this.Fecha_creacion.TabIndex = 12;
             // 
             // btSeleccionarFecha
             // 
             this.btSeleccionarFecha.Location = new System.Drawing.Point(232, 87);
             this.btSeleccionarFecha.Name = "btSeleccionarFecha";
             this.btSeleccionarFecha.Size = new System.Drawing.Size(75, 23);
-            this.btSeleccionarFecha.TabIndex = 13;
+            this.btSeleccionarFecha.TabIndex = 18;
             this.btSeleccionarFecha.Text = "Seleccionar";
             this.btSeleccionarFecha.UseVisualStyleBackColor = true;
             this.btSeleccionarFecha.Click += new System.EventHandler(this.btSeleccionarFecha_Click);
@@ -239,41 +245,44 @@
             this.label9.TabIndex = 15;
             this.label9.Text = "Cantidad de estrellas:";
             // 
-            // txtNombre
+            // Nombre
             // 
-            this.txtNombre.Location = new System.Drawing.Point(128, 16);
-            this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(100, 20);
-            this.txtNombre.TabIndex = 16;
+            this.Nombre.Location = new System.Drawing.Point(128, 16);
+            this.Nombre.Name = "Nombre";
+            this.Nombre.Size = new System.Drawing.Size(100, 20);
+            this.Nombre.TabIndex = 16;
             // 
-            // txtEmail
+            // Email
             // 
-            this.txtEmail.Location = new System.Drawing.Point(128, 41);
-            this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(101, 20);
-            this.txtEmail.TabIndex = 17;
+            this.Email.Location = new System.Drawing.Point(128, 41);
+            this.Email.Name = "Email";
+            this.Email.Size = new System.Drawing.Size(101, 20);
+            this.Email.TabIndex = 17;
             // 
-            // txtCantEstrellas
+            // Cantidad_Estrellas
             // 
-            this.txtCantEstrellas.Location = new System.Drawing.Point(128, 65);
-            this.txtCantEstrellas.Name = "txtCantEstrellas";
-            this.txtCantEstrellas.Size = new System.Drawing.Size(100, 20);
-            this.txtCantEstrellas.TabIndex = 18;
+            this.Cantidad_Estrellas.Location = new System.Drawing.Point(128, 65);
+            this.Cantidad_Estrellas.Name = "Cantidad_Estrellas";
+            this.Cantidad_Estrellas.Size = new System.Drawing.Size(100, 20);
+            this.Cantidad_Estrellas.TabIndex = 18;
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label12);
+            this.groupBox2.Controls.Add(this.label11);
+            this.groupBox2.Controls.Add(this.label10);
             this.groupBox2.Controls.Add(this.monthCalendar1);
             this.groupBox2.Controls.Add(this.groupBox3);
             this.groupBox2.Controls.Add(this.groupBox1);
             this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Controls.Add(this.txtCantEstrellas);
+            this.groupBox2.Controls.Add(this.Cantidad_Estrellas);
             this.groupBox2.Controls.Add(this.btSeleccionarFecha);
-            this.groupBox2.Controls.Add(this.txtFechaCreacion);
+            this.groupBox2.Controls.Add(this.Fecha_creacion);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Controls.Add(this.txtEmail);
+            this.groupBox2.Controls.Add(this.Email);
             this.groupBox2.Controls.Add(this.label9);
-            this.groupBox2.Controls.Add(this.txtNombre);
+            this.groupBox2.Controls.Add(this.Nombre);
             this.groupBox2.Location = new System.Drawing.Point(23, 12);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(501, 339);
@@ -283,14 +292,17 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.txtCiudad);
-            this.groupBox3.Controls.Add(this.txtPais);
-            this.groupBox3.Controls.Add(this.txtCalle);
+            this.groupBox3.Controls.Add(this.label15);
+            this.groupBox3.Controls.Add(this.label14);
+            this.groupBox3.Controls.Add(this.label13);
+            this.groupBox3.Controls.Add(this.Ciudad);
+            this.groupBox3.Controls.Add(this.Pais);
+            this.groupBox3.Controls.Add(this.Calle);
             this.groupBox3.Controls.Add(this.label1);
             this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Controls.Add(this.txtNroCalle);
+            this.groupBox3.Controls.Add(this.Nro_calle);
             this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Location = new System.Drawing.Point(17, 209);
             this.groupBox3.Name = "groupBox3";
@@ -299,26 +311,26 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Locacion";
             // 
-            // txtCiudad
+            // Ciudad
             // 
-            this.txtCiudad.Location = new System.Drawing.Point(111, 46);
-            this.txtCiudad.Name = "txtCiudad";
-            this.txtCiudad.Size = new System.Drawing.Size(234, 20);
-            this.txtCiudad.TabIndex = 21;
+            this.Ciudad.Location = new System.Drawing.Point(111, 46);
+            this.Ciudad.Name = "Ciudad";
+            this.Ciudad.Size = new System.Drawing.Size(234, 20);
+            this.Ciudad.TabIndex = 24;
             // 
-            // txtPais
+            // Pais
             // 
-            this.txtPais.Location = new System.Drawing.Point(111, 21);
-            this.txtPais.Name = "txtPais";
-            this.txtPais.Size = new System.Drawing.Size(234, 20);
-            this.txtPais.TabIndex = 20;
+            this.Pais.Location = new System.Drawing.Point(111, 21);
+            this.Pais.Name = "Pais";
+            this.Pais.Size = new System.Drawing.Size(234, 20);
+            this.Pais.TabIndex = 23;
             // 
             // btAlta
             // 
             this.btAlta.Location = new System.Drawing.Point(285, 372);
             this.btAlta.Name = "btAlta";
             this.btAlta.Size = new System.Drawing.Size(115, 33);
-            this.btAlta.TabIndex = 20;
+            this.btAlta.TabIndex = 27;
             this.btAlta.Text = "Guardar";
             this.btAlta.UseVisualStyleBackColor = true;
             this.btAlta.Click += new System.EventHandler(this.btAlta_Click);
@@ -328,7 +340,7 @@
             this.btVolver.Location = new System.Drawing.Point(409, 372);
             this.btVolver.Name = "btVolver";
             this.btVolver.Size = new System.Drawing.Size(115, 33);
-            this.btVolver.TabIndex = 21;
+            this.btVolver.TabIndex = 28;
             this.btVolver.Text = "Volver";
             this.btVolver.UseVisualStyleBackColor = true;
             this.btVolver.Click += new System.EventHandler(this.btVolver_Click);
@@ -338,10 +350,70 @@
             this.button1.Location = new System.Drawing.Point(26, 372);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(115, 33);
-            this.button1.TabIndex = 22;
+            this.button1.TabIndex = 29;
             this.button1.Text = "Limpiar";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.ForeColor = System.Drawing.Color.Red;
+            this.label10.Location = new System.Drawing.Point(250, 19);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(64, 13);
+            this.label10.TabIndex = 20;
+            this.label10.Text = "* Obligatorio";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.ForeColor = System.Drawing.Color.Red;
+            this.label11.Location = new System.Drawing.Point(250, 44);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(64, 13);
+            this.label11.TabIndex = 21;
+            this.label11.Text = "* Obligatorio";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.ForeColor = System.Drawing.Color.Red;
+            this.label12.Location = new System.Drawing.Point(250, 68);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(64, 13);
+            this.label12.TabIndex = 22;
+            this.label12.Text = "* Obligatorio";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.ForeColor = System.Drawing.Color.Red;
+            this.label13.Location = new System.Drawing.Point(366, 24);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(64, 13);
+            this.label13.TabIndex = 23;
+            this.label13.Text = "* Obligatorio";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.ForeColor = System.Drawing.Color.Red;
+            this.label14.Location = new System.Drawing.Point(366, 49);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(64, 13);
+            this.label14.TabIndex = 27;
+            this.label14.Text = "* Obligatorio";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.ForeColor = System.Drawing.Color.Red;
+            this.label15.Location = new System.Drawing.Point(366, 86);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(64, 13);
+            this.label15.TabIndex = 28;
+            this.label15.Text = "* Obligatorio";
             // 
             // Alta_Hotel
             // 
@@ -367,9 +439,9 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtCalle;
+        private System.Windows.Forms.TextBox Calle;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtNroCalle;
+        private System.Windows.Forms.TextBox Nro_calle;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
@@ -381,20 +453,26 @@
         private System.Windows.Forms.CheckBox ckAllInclusiveModerado;
         private System.Windows.Forms.CheckBox ckAllInclusive;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox txtFechaCreacion;
+        private System.Windows.Forms.TextBox Fecha_creacion;
         private System.Windows.Forms.Button btSeleccionarFecha;
         private System.Windows.Forms.MonthCalendar monthCalendar1;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox txtNombre;
-        private System.Windows.Forms.TextBox txtEmail;
-        private System.Windows.Forms.TextBox txtCantEstrellas;
+        private System.Windows.Forms.TextBox Nombre;
+        private System.Windows.Forms.TextBox Email;
+        private System.Windows.Forms.TextBox Cantidad_Estrellas;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox txtPais;
+        private System.Windows.Forms.TextBox Pais;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.TextBox txtCiudad;
+        private System.Windows.Forms.TextBox Ciudad;
         private System.Windows.Forms.Button btAlta;
         private System.Windows.Forms.Button btVolver;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
 
     }
 }
