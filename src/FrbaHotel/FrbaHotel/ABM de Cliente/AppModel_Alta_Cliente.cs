@@ -50,7 +50,7 @@ class AppModel_Alta_Cliente
             comandoACliente.Parameters[8].Value = nacionalidad;
             comandoACliente.Parameters[9].Value = pasaporte_Nro;
 
-            comandoACliente.CommandText = "altaCliente";
+            comandoACliente.CommandText = "SQLECT.altaCliente";
             conexion.ejecutarQueryConSP(comandoACliente);
 
         }

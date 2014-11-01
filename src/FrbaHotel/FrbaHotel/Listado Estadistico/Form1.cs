@@ -19,7 +19,7 @@ namespace FrbaHotel.Listado_Estadistico
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT DISTINCT YEAR(Reservas.fecha_inicio) FROM Reservas");
+            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT DISTINCT YEAR(Reservas.fecha_inicio) FROM SQLECT.Reservas");
             DataTable tabla = Conexion.Instance.ejecutarQuery(sentence.ToString());
 
             foreach (DataRow dat in tabla.Rows)
@@ -163,15 +163,15 @@ namespace FrbaHotel.Listado_Estadistico
             string nombreDelProcedure = "";
             switch (nombre)
             {
-                case "Hoteles con mayor cantidad de reservas canceladas": nombreDelProcedure = "top5HotelesReservasCanceladas";
+                case "Hoteles con mayor cantidad de reservas canceladas": nombreDelProcedure = "SQLECT.top5HotelesReservasCanceladas";
                     break;
-                case "Hoteles con mayor cantidad de consumibles facturados": nombreDelProcedure = "top5HotelesConsumiblesFacturados";
+                case "Hoteles con mayor cantidad de consumibles facturados": nombreDelProcedure = "SQLECT.top5HotelesConsumiblesFacturados";
                     break;
-                case "Hoteles con mayor cantidad de días fuera de servicio": nombreDelProcedure = "top5HotelesFueraDeServicio";
+                case "Hoteles con mayor cantidad de días fuera de servicio": nombreDelProcedure = "SQLECT.top5HotelesFueraDeServicio";
                     break;
-                case "Habitaciones que mas se ocuparon": nombreDelProcedure = "top5HabitacionesMasOcupadas";
+                case "Habitaciones que mas se ocuparon": nombreDelProcedure = "SQLECT.top5HabitacionesMasOcupadas";
                     break;
-                case "Clientes mejores puntuados": nombreDelProcedure = "top5ClientesMejoresPuntuados";
+                case "Clientes mejores puntuados": nombreDelProcedure = "SQLECT.top5ClientesMejoresPuntuados";
                     break;
             }
             return nombreDelProcedure;
