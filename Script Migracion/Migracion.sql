@@ -1,4 +1,3 @@
-
 USE GD2C2014
 
 BEGIN TRANSACTION;
@@ -75,6 +74,10 @@ DROP TABLE SQLECT.Habitaciones_Reservas
 /* Creamos las tablas */
 CREATE TABLE SQLECT.Hoteles (
 	id_hotel integer PRIMARY KEY identity(1,1),
+	nombre varchar(60),
+	mail varchar(100),
+	fecha_creacion datetime,
+	pais varchar(50),
 	ciudad varchar(30),
 	calle varchar(60),
 	nro_calle integer,
@@ -543,5 +546,3 @@ SELECT TOP 5 cl.id_cliente'Id',cl.nombre'Nombre',cl.apellido'Apellido',SUM( ((re
 
  END
  GO 
- 
- 

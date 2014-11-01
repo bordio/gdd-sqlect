@@ -20,15 +20,11 @@ namespace FrbaHotel.ABM_de_Hotel
 
         private void MainHotel_Load(object sender, EventArgs e)
         {
-           /* StringBuilder sentence = new StringBuilder().AppendFormat("SELECT ciudad,calle,nro_calle FROM Hoteles");
+            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT ciudad 'Ciudad', calle + ' ' + CONVERT(varchar,nro_calle,10) 'Direccion' FROM SQLECT.Hoteles");
             DataTable tabla = Conexion.Instance.ejecutarQuery(sentence.ToString());
 
-            for (int i = 0; i < tabla.Rows.Count; i++)
-            {
-                this.lstHoteles.Items.Add(tabla.Rows[i][0].ToString());
-                this.lstHoteles.Items.Add(tabla.Rows[i][1].ToString());
-                this.lstHoteles.Items.Add(tabla.Rows[i][2].ToString());
-            }*/
+            lstHoteles.DataSource = tabla.DefaultView;
+            lstHoteles.AllowUserToAddRows = false;
         }
 
         private void cerrar_Click_1(object sender, EventArgs e)
@@ -48,25 +44,9 @@ namespace FrbaHotel.ABM_de_Hotel
 
         private void agregar_Click(object sender, EventArgs e)
         {
-         
+            Alta_Hotel formAlta = new Alta_Hotel();
+            formAlta.Show();
             
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT ciudad 'Ciudad',calle'Calle',nro_calle'Número de calle' FROM Hoteles");
-            DataTable tabla = Conexion.Instance.ejecutarQuery(sentence.ToString());
-
-            /* lstHoteles.ColumnCount = 3;
-             lstHoteles.ColumnHeadersVisible = true;*/
-
-
-
-            lstHoteles.DataSource = tabla.DefaultView;
-            lstHoteles.AllowUserToAddRows = false;
-
-
-
-        }
-        }
     }
+}
