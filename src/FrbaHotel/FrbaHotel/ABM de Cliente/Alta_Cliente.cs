@@ -40,6 +40,8 @@ namespace FrbaHotel.ABM_de_Cliente
             this.appModel_Alta.validarNumerico(Pasaporte, mensajeValidacion);
             //Email repetido
             this.appModel_Alta.validarEmail(Email, mensajeValidacion);
+            //Pasaporte repetido
+            this.appModel_Alta.validarPasaporte(Pasaporte, mensajeValidacion);
 
             if(mensajeValidacion != null){
                 validaciones = false;

@@ -47,6 +47,7 @@
             this.btCancelar = new System.Windows.Forms.Button();
             this.Numero = new System.Windows.Forms.TextBox();
             this.Email = new System.Windows.Forms.TextBox();
+            this.Fecha = new System.Windows.Forms.TextBox();
             this.groupBoxDatosPersonales.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -191,7 +192,7 @@
             // 
             // btGuardar
             // 
-            this.btGuardar.Location = new System.Drawing.Point(13, 392);
+            this.btGuardar.Location = new System.Drawing.Point(23, 393);
             this.btGuardar.Name = "btGuardar";
             this.btGuardar.Size = new System.Drawing.Size(75, 23);
             this.btGuardar.TabIndex = 25;
@@ -201,7 +202,7 @@
             // 
             // btLimpiar
             // 
-            this.btLimpiar.Location = new System.Drawing.Point(94, 393);
+            this.btLimpiar.Location = new System.Drawing.Point(107, 393);
             this.btLimpiar.Name = "btLimpiar";
             this.btLimpiar.Size = new System.Drawing.Size(75, 23);
             this.btLimpiar.TabIndex = 26;
@@ -220,6 +221,7 @@
             // 
             // groupBoxDatosPersonales
             // 
+            this.groupBoxDatosPersonales.Controls.Add(this.Fecha);
             this.groupBoxDatosPersonales.Controls.Add(this.labelObligatorio5);
             this.groupBoxDatosPersonales.Controls.Add(this.labelObligatorio4);
             this.groupBoxDatosPersonales.Controls.Add(this.labelObligatorio3);
@@ -228,7 +230,7 @@
             this.groupBoxDatosPersonales.Controls.Add(this.dtFechaNac);
             this.groupBoxDatosPersonales.Location = new System.Drawing.Point(7, 12);
             this.groupBoxDatosPersonales.Name = "groupBoxDatosPersonales";
-            this.groupBoxDatosPersonales.Size = new System.Drawing.Size(459, 373);
+            this.groupBoxDatosPersonales.Size = new System.Drawing.Size(431, 373);
             this.groupBoxDatosPersonales.TabIndex = 28;
             this.groupBoxDatosPersonales.TabStop = false;
             this.groupBoxDatosPersonales.Text = "Datos Personales";
@@ -287,14 +289,14 @@
             // dtFechaNac
             // 
             this.dtFechaNac.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtFechaNac.Location = new System.Drawing.Point(110, 108);
+            this.dtFechaNac.Location = new System.Drawing.Point(222, 108);
             this.dtFechaNac.Name = "dtFechaNac";
-            this.dtFechaNac.Size = new System.Drawing.Size(200, 20);
+            this.dtFechaNac.Size = new System.Drawing.Size(88, 20);
             this.dtFechaNac.TabIndex = 0;
             // 
             // btCancelar
             // 
-            this.btCancelar.Location = new System.Drawing.Point(291, 393);
+            this.btCancelar.Location = new System.Drawing.Point(349, 393);
             this.btCancelar.Name = "btCancelar";
             this.btCancelar.Size = new System.Drawing.Size(75, 23);
             this.btCancelar.TabIndex = 29;
@@ -316,11 +318,19 @@
             this.Email.Size = new System.Drawing.Size(199, 20);
             this.Email.TabIndex = 9;
             // 
+            // Fecha
+            // 
+            this.Fecha.Enabled = false;
+            this.Fecha.Location = new System.Drawing.Point(110, 108);
+            this.Fecha.Name = "Fecha";
+            this.Fecha.Size = new System.Drawing.Size(106, 20);
+            this.Fecha.TabIndex = 6;
+            // 
             // Alta_Cliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(478, 422);
+            this.ClientSize = new System.Drawing.Size(449, 422);
             this.Controls.Add(this.btCancelar);
             this.Controls.Add(this.labelNombre);
             this.Controls.Add(this.btLimpiar);
@@ -386,6 +396,7 @@
         private System.Windows.Forms.Label labelObligatorio2;
         private System.Windows.Forms.Label labelObligatorio5;
         private System.Windows.Forms.TextBox Email;
+        private System.Windows.Forms.TextBox Fecha;
     }
   
 }

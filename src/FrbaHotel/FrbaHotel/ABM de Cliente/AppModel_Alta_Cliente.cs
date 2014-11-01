@@ -84,9 +84,19 @@ namespace FrbaHotel.ABM_de_Cliente
         public void validarEmail(Control mail, StringBuilder mensajeValidacion)
         {
             StringBuilder query = new StringBuilder();
-            query.AppendFormat("SELECT * FROM SQLECT.Cliente c WHERE c.mail='{0}'", mail.Text);
+            query.AppendFormat("SELECT * FROM SQLECT.Clientes c WHERE c.mail='{0}'", mail.Text);
             if (this.sqlconexion.ejecutarQuery(query.ToString()).Rows.Count > 0) {
-                mensajeValidacion.AppendLine(string.Format(" El email {0} ya existe.", mail.Name));
+                mensajeValidacion.AppendLine(string.Format(" El email {0} ya existe.", mail.Text));
+            };
+        }
+
+        public void validarPasaporte(Control pasaporte, StringBuilder mensajeValidacion)
+        {
+            StringBuilder query = new StringBuilder();
+            query.AppendFormat("SELECT * FROM SQLECT.Clientes c WHERE c.pasaporte_Nro='{0}'", pasaporte.Text);
+            if (this.sqlconexion.ejecutarQuery(query.ToString()).Rows.Count > 0)
+            {
+                mensajeValidacion.AppendLine(string.Format(" El pasaporte {0} ya existe.", pasaporte.Text));
             };
         }
     }
