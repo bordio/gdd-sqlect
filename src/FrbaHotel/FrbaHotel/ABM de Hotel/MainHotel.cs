@@ -26,7 +26,7 @@ namespace FrbaHotel.ABM_de_Hotel
 
         public static DataTable cargar_lista()
         {
-            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT ciudad 'Ciudad', calle + ' ' + CONVERT(varchar,nro_calle,10) 'Direccion' FROM SQLECT.Hoteles");
+            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT nombre 'Nombre', pais 'Pais', ciudad 'Ciudad', calle + ' ' + CONVERT(varchar,nro_calle,10) 'Direccion', cant_estrellas 'Cantidad de estrellas' FROM SQLECT.Hoteles");
             DataTable tabla = Conexion.Instance.ejecutarQuery(sentence.ToString());
 
             return tabla;

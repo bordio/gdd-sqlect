@@ -77,7 +77,7 @@ CREATE TABLE SQLECT.Hoteles (
 	nombre varchar(60),
 	mail varchar(255),
 	fecha_creacion datetime,
-	pais varchar(50),
+	pais varchar(50) DEFAULT 'Argentina',
 	ciudad varchar(30),
 	calle varchar(60),
 	nro_calle integer,
@@ -546,3 +546,34 @@ SELECT TOP 5 cl.id_cliente'Id',cl.nombre'Nombre',cl.apellido'Apellido',SUM( ((re
 
  END
  GO 
+
+/* ABM Hoteles */
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.altaCliente'))
+DROP PROCEDURE SQLECT.altaCliente
+
+GO
+CREATE PROCEDURE SQLECT.altaHotel (@nombre VARCHAR(60), @email VARCHAR(255),
+									 @cant_estrellas INT, @fecha_creacion DATETIME, @pais VARCHAR(100),
+									 @ciudad VARCHAR(100), @calle VARCHAR(100), @nro_calle INT,
+									 @all_inclusive INT, @all_inclusive_moderado INT, @pension_completa INT, @media_pension INT)
+AS
+BEGIN
+
+	DECLARE @HotelId INT
+	
+	INSERT INTO SQLECT.Hoteles (nombre, mail, fecha_creacion, ciudad, calle, nro_calle, cant_estrellas, recarga_estrella, pais)
+	VALUES (@nombre, @email, @fecha_creacion, @ciudad, @calle, @nro_calle, @cant_estrellas, 10, @pais)
+	
+	SET @HotelId = SCOPE_IDENTITY()
+	
+	IF (@all_inclusive=1) INSERT INTO SQLECT.Regimenes_Hoteles(fk_hotel,fk_regimen) VALUES (@HotelId,3)
+	IF (@all_inclusive_moderado=1) INSERT INTO SQLECT.Regimenes_Hoteles(fk_hotel,fk_regimen) VALUES (@HotelId,4)
+	IF (@pension_completa=1) INSERT INTO SQLECT.Regimenes_Hoteles(fk_hotel,fk_regimen) VALUES (@HotelId,1)
+	IF (@media_pension=1) INSERT INTO SQLECT.Regimenes_Hoteles(fk_hotel,fk_regimen) VALUES (@HotelId,2)
+	
+	/*TO DO: Establecer relacion entre administrador y nuevo hotel*/
+	
+END
+
+GO

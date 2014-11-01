@@ -46,7 +46,7 @@
             this.groupBox1.Controls.Add(this.modificar);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(453, 381);
+            this.groupBox1.Size = new System.Drawing.Size(607, 434);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Hoteles";
@@ -63,13 +63,13 @@
             this.lstHoteles.MultiSelect = false;
             this.lstHoteles.Name = "lstHoteles";
             this.lstHoteles.ReadOnly = true;
-            this.lstHoteles.Size = new System.Drawing.Size(421, 285);
+            this.lstHoteles.Size = new System.Drawing.Size(574, 285);
             this.lstHoteles.TabIndex = 4;
             this.lstHoteles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.lstHoteles_CellContentClick);
             // 
             // agregar
             // 
-            this.agregar.Location = new System.Drawing.Point(340, 322);
+            this.agregar.Location = new System.Drawing.Point(487, 310);
             this.agregar.Name = "agregar";
             this.agregar.Size = new System.Drawing.Size(103, 38);
             this.agregar.TabIndex = 3;
@@ -79,7 +79,7 @@
             // 
             // baja
             // 
-            this.baja.Location = new System.Drawing.Point(183, 322);
+            this.baja.Location = new System.Drawing.Point(364, 310);
             this.baja.Name = "baja";
             this.baja.Size = new System.Drawing.Size(103, 38);
             this.baja.TabIndex = 2;
@@ -88,7 +88,7 @@
             // 
             // modificar
             // 
-            this.modificar.Location = new System.Drawing.Point(25, 322);
+            this.modificar.Location = new System.Drawing.Point(238, 310);
             this.modificar.Name = "modificar";
             this.modificar.Size = new System.Drawing.Size(103, 38);
             this.modificar.TabIndex = 1;
@@ -98,7 +98,7 @@
             // 
             // cerrar
             // 
-            this.cerrar.Location = new System.Drawing.Point(400, 399);
+            this.cerrar.Location = new System.Drawing.Point(527, 463);
             this.cerrar.Name = "cerrar";
             this.cerrar.Size = new System.Drawing.Size(92, 34);
             this.cerrar.TabIndex = 3;
@@ -112,7 +112,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(504, 445);
+            this.ClientSize = new System.Drawing.Size(631, 509);
             this.Controls.Add(this.cerrar);
             this.Controls.Add(this.groupBox1);
             this.Name = "MainHotel";
