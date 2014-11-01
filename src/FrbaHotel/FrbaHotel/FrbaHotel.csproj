@@ -52,6 +52,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ABM de Cliente\Alta_Cliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM de Cliente\Alta_Cliente.Designer.cs">
+      <DependentUpon>Alta_Cliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM de Cliente\AppModel_Alta_Cliente.cs" />
+    <Compile Include="ABM de Cliente\Baja_Cliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM de Cliente\Baja_Cliente.Designer.cs">
+      <DependentUpon>Baja_Cliente.cs</DependentUpon>
+    </Compile>
     <Compile Include="ABM de Cliente\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -128,6 +141,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ABM de Cliente\Alta_Cliente.resx">
+      <DependentUpon>Alta_Cliente.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ABM de Hotel\Alta_Hotel.resx">
       <DependentUpon>Alta_Hotel.cs</DependentUpon>
     </EmbeddedResource>
