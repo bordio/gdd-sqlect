@@ -214,7 +214,7 @@ CREATE TABLE SQLECT.Roles (
 CREATE TABLE SQLECT.Usuarios (
 	id_usuario integer PRIMARY KEY identity(1,1),
 	usr_name varchar(30) NOT NULL UNIQUE,
-	pssword varchar(30) NOT NULL,
+	pssword char(64) NOT NULL,
 	fk_empleado smallint REFERENCES SQLECT.Empleados(id_empleado),
 	estado_usr tinyint DEFAULT 1
  )
@@ -249,8 +249,8 @@ INSERT INTO SQLECT.Roles(nombre,descripcion) VALUES ('Administrador General','Ad
 INSERT INTO SQLECT.Roles(nombre,descripcion) VALUES ('Recepcionista','Poseé funcionalidades de atención al público')
 INSERT INTO SQLECT.Roles(nombre,descripcion) VALUES ('Guest','Permite realizar reservas')
 
-INSERT INTO SQLECT.Usuarios(usr_name, pssword) VALUES('admin','w23e') /*El pssword debe ir con SHA256*/
-INSERT INTO SQLECT.Usuarios(usr_name, pssword) VALUES('guest','guest')
+INSERT INTO SQLECT.Usuarios(usr_name, pssword) VALUES('admin','e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7') /*El pssword debe ir con SHA256*/
+INSERT INTO SQLECT.Usuarios(usr_name, pssword) VALUES('guest','84983c60f7daadc1cb8698621f802c0d9f9a3c3c295c810748fb048115c186ec')
 
 INSERT INTO SQLECT.Roles_Usuarios(fk_usuario, fk_rol) VALUES(1,1)
 INSERT INTO SQLECT.Roles_Usuarios(fk_usuario, fk_rol) VALUES(2,3)
@@ -487,7 +487,7 @@ GO
 /* TOP 5 Hoteles fuera de Servicio */
 
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.SQLECT.top5HotelesFueraDeServicio'))
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.top5HotelesFueraDeServicio'))
 DROP PROCEDURE SQLECT.top5HotelesFueraDeServicio
 
 GO
@@ -577,3 +577,4 @@ BEGIN
 END
 
 GO
+

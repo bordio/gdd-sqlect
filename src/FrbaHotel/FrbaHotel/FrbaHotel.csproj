@@ -142,8 +142,13 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+<<<<<<< HEAD
     <EmbeddedResource Include="ABM de Hotel\Alta_Hotel.resx">
       <DependentUpon>Alta_Hotel.cs</DependentUpon>
+=======
+    <EmbeddedResource Include="ABM de Cliente\Alta_Cliente.resx">
+      <DependentUpon>Alta_Cliente.cs</DependentUpon>
+>>>>>>> ae80e45dc1b532299ed3e613fad051a81e33d103
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Hotel\MainHotel.resx">
       <DependentUpon>MainHotel.cs</DependentUpon>
