@@ -65,7 +65,8 @@ namespace FrbaHotel.ABM_de_Hotel
                 comando1.Parameters[0].Value = nombre.Text;
                 comando1.Parameters[1].Value = email.Text;
                 comando1.Parameters[2].Value = Int32.Parse(cant_estrellas.Text);
-                comando1.Parameters[3].Value = DateTime.Parse(fecha_creacion.Text);
+                if (fecha_creacion.Text != "") comando1.Parameters[3].Value = DateTime.Parse(fecha_creacion.Text);
+                else comando1.Parameters[3].Value = null;
                 comando1.Parameters[4].Value = pais.Text;
                 comando1.Parameters[5].Value = ciudad.Text;
                 comando1.Parameters[6].Value = calle.Text;

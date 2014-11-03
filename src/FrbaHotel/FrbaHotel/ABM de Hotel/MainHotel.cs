@@ -20,13 +20,18 @@ namespace FrbaHotel.ABM_de_Hotel
 
         private void MainHotel_Load(object sender, EventArgs e)
         {
-            lstHoteles.DataSource = cargar_lista().DefaultView;
+            lstHoteles.DataSource = cargar_lista(getAllInstances()).DefaultView;
             lstHoteles.AllowUserToAddRows = false;
         }
 
-        public static DataTable cargar_lista()
+        public static StringBuilder getAllInstances()
         {
             StringBuilder sentence = new StringBuilder().AppendFormat("SELECT nombre 'Nombre', pais 'Pais', ciudad 'Ciudad', calle + ' ' + CONVERT(varchar,nro_calle,10) 'Direccion', cant_estrellas 'Cantidad de estrellas' FROM SQLECT.Hoteles");
+            return sentence;
+        }
+
+        public static DataTable cargar_lista(StringBuilder sentence)
+        {
             DataTable tabla = Conexion.Instance.ejecutarQuery(sentence.ToString());
 
             return tabla;
@@ -51,6 +56,49 @@ namespace FrbaHotel.ABM_de_Hotel
         {
             Alta_Hotel formAlta = new Alta_Hotel(this.lstHoteles);
             formAlta.Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Nombre.ResetText();
+            CantidadEstrellas.ResetText();
+            Ciudad.ResetText();
+            Pais.ResetText();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            StringBuilder sentence = new StringBuilder();
+            sentence = getAllInstances();
+
+            if ((Nombre.Text != "") || (CantidadEstrellas.Text != "") || (Ciudad.Text != "") || (Pais.Text != ""))
+            {
+                sentence.Append(" WHERE ");
+                if (Nombre.Text != "") sentence.AppendFormat(" (nombre LIKE '%{0}%') AND ", Nombre.Text);
+                if (CantidadEstrellas.Text != "")
+                {
+                    try
+                    {
+                        int numero = Convert.ToInt32(CantidadEstrellas.Text);
+                        sentence.AppendFormat(" (cant_estrellas = '{0}') AND ", numero);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("El filtro de cantidad estrellas debe ser numerico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+                if (Ciudad.Text != "") sentence.AppendFormat(" (ciudad LIKE '%{0}%') AND ", Ciudad.Text);
+                if (Pais.Text != "") sentence.AppendFormat(" (pais LIKE '%{0}%') AND ", Pais.Text);
+                StringBuilder sentenceFiltro = new StringBuilder().AppendFormat(sentence.ToString().Substring(0, sentence.Length - 5));
+                lstHoteles.DataSource = cargar_lista(sentenceFiltro).DefaultView;
+                lstHoteles.AllowUserToAddRows = false;
+            }
+            else
+            {
+                lstHoteles.DataSource = cargar_lista(sentence).DefaultView;
+                lstHoteles.AllowUserToAddRows = false;
+            }
         }
     }
 }
