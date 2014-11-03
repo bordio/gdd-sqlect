@@ -11,14 +11,14 @@ namespace FrbaHotel.ABM_de_Hotel
 {
     public partial class Alta_Hotel : Form
     {
-        private AltaHotelApplicationModel appModel = new AltaHotelApplicationModel();
+        private HotelAppModel appModel;
         private DataGridView listaHoteles;
-        public static bool esAltaForm = true;
+
         public Alta_Hotel(DataGridView lsHoteles)
         {
             listaHoteles = lsHoteles;
             InitializeComponent();
-            esAltaForm = true;
+            appModel = new AltaHotelAppModel();
             Text = "Alta de Hotel";
         }
 
@@ -26,23 +26,8 @@ namespace FrbaHotel.ABM_de_Hotel
         {
             listaHoteles = lsHoteles;
             InitializeComponent();
-            esAltaForm = false;
+            appModel = new ModificacionAppModel();
             Text = "Modificacion de Hotel";
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void btSeleccionarFecha_Click(object sender, EventArgs e)
@@ -55,11 +40,6 @@ namespace FrbaHotel.ABM_de_Hotel
             Fecha_creacion.Clear();
             Fecha_creacion.AppendText(monthCalendar1.SelectionStart.ToShortDateString());
             monthCalendar1.Visible = false;
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void btVolver_Click(object sender, EventArgs e)
@@ -86,7 +66,7 @@ namespace FrbaHotel.ABM_de_Hotel
         private void btAlta_Click(object sender, EventArgs e)
         {
             StringBuilder errores = new StringBuilder();
-            bool retValue = this.appModel.altaHotel(Nombre, Email, Cantidad_Estrellas, Fecha_creacion,
+            bool retValue = this.appModel.actionHotel(Nombre, Email, Cantidad_Estrellas, Fecha_creacion,
                 this.ckAllInclusive.Checked, this.ckAllInclusiveModerado.Checked, this.ckMediaPension.Checked,
                 this.ckPensionCompleta.Checked, Pais, Ciudad, Calle, Nro_calle, errores);
 

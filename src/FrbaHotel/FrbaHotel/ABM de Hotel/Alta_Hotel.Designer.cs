@@ -92,7 +92,6 @@
             this.label2.Size = new System.Drawing.Size(65, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "Nro de Calle";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // Nro_calle
             // 
@@ -100,7 +99,6 @@
             this.Nro_calle.Name = "Nro_calle";
             this.Nro_calle.Size = new System.Drawing.Size(67, 20);
             this.Nro_calle.TabIndex = 26;
-            this.Nro_calle.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label3
             // 
@@ -128,7 +126,6 @@
             this.label5.Size = new System.Drawing.Size(35, 13);
             this.label5.TabIndex = 6;
             this.label5.Text = "Email:";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // label6
             // 
@@ -289,6 +286,7 @@
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Datos generales";
+            
             // 
             // label12
             // 
