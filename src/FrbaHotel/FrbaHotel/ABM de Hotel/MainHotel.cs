@@ -17,16 +17,21 @@ namespace FrbaHotel.ABM_de_Hotel
         {
             InitializeComponent();
         }
+        private StringBuilder paisSeleccionado = new StringBuilder();
+        private StringBuilder ciudadSeleccionado = new StringBuilder();
+        private StringBuilder calleSeleccionado = new StringBuilder();
+        private Int32 nro_calleSeleccionado = new Int32();
 
         private void MainHotel_Load(object sender, EventArgs e)
         {
+            
             lstHoteles.DataSource = cargar_lista(getAllInstances()).DefaultView;
             lstHoteles.AllowUserToAddRows = false;
         }
 
         public static StringBuilder getAllInstances()
         {
-            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT nombre 'Nombre', pais 'Pais', ciudad 'Ciudad', calle + ' ' + CONVERT(varchar,nro_calle,10) 'Direccion', cant_estrellas 'Cantidad de estrellas' FROM SQLECT.Hoteles");
+            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT nombre 'Nombre', pais 'Pais', ciudad 'Ciudad', calle 'Calle', nro_calle 'Nro Calle', cant_estrellas 'Cantidad de estrellas' FROM SQLECT.Hoteles");
             return sentence;
         }
 
@@ -44,12 +49,15 @@ namespace FrbaHotel.ABM_de_Hotel
 
         private void modificar_Click(object sender, EventArgs e)
         {
-
+            Alta_Hotel formAlta = new Alta_Hotel(this.lstHoteles,this.paisSeleccionado,this.ciudadSeleccionado,this.calleSeleccionado,this.nro_calleSeleccionado);
+            formAlta.Show();
         }
 
         private void lstHoteles_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-           
+            DataGridViewRow a = lstHoteles.CurrentRow;
+            StringBuilder b = new StringBuilder().AppendFormat("Pais: {0}, Ciudad: {1}, Direccion: {2}",a.Cells[1].Value.ToString(),a.Cells[2].Value.ToString(),a.Cells[3].Value.ToString());
+            //MessageBox.Show(b.ToString());
         }
 
         private void agregar_Click(object sender, EventArgs e)

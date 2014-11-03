@@ -13,10 +13,21 @@ namespace FrbaHotel.ABM_de_Hotel
     {
         private AltaHotelApplicationModel appModel = new AltaHotelApplicationModel();
         private DataGridView listaHoteles;
+        public static bool esAltaForm = true;
         public Alta_Hotel(DataGridView lsHoteles)
         {
             listaHoteles = lsHoteles;
             InitializeComponent();
+            esAltaForm = true;
+            Text = "Alta de Hotel";
+        }
+
+        public Alta_Hotel(DataGridView lsHoteles, StringBuilder pais, StringBuilder ciudad, StringBuilder calle, Int32 nro_calle)
+        {
+            listaHoteles = lsHoteles;
+            InitializeComponent();
+            esAltaForm = false;
+            Text = "Modificacion de Hotel";
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -81,8 +92,6 @@ namespace FrbaHotel.ABM_de_Hotel
 
             if (retValue)
             {
-                MessageBox.Show("Alta exitosa", "Alta de Hotel", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                 this.listaHoteles.DataSource = ABM_de_Hotel.MainHotel.cargar_lista(ABM_de_Hotel.MainHotel.getAllInstances()).DefaultView;
                 this.listaHoteles.AllowUserToAddRows = false;
                 this.Close();
