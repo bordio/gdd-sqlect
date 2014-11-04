@@ -217,12 +217,15 @@ CREATE TABLE SQLECT.Usuarios (
 	pssword char(64) NOT NULL,
 	fk_empleado smallint REFERENCES SQLECT.Empleados(id_empleado),
 	estado_usr tinyint DEFAULT 1
+	
  )
 
 
 CREATE TABLE SQLECT.Roles_Usuarios (
     fk_rol tinyint references SQLECT.Roles (id_rol),
-    fk_usuario integer references SQLECT.Usuarios (id_usuario)
+    fk_usuario integer references SQLECT.Usuarios (id_usuario),
+    cantidadDeIntentos tinyint DEFAULT 0,
+	
 )
 
 
@@ -235,7 +238,7 @@ CREATE TABLE SQLECT.Roles_Usuarios (
 CREATE TABLE SQLECT.Funcionalidades (
 	id_funcion smallint PRIMARY KEY identity(1,1),
 	nombre varchar(30),
-	descripicion varchar(120),
+	descripcion varchar(120),
 	estado_func tinyint DEFAULT 1
 )
 
@@ -247,22 +250,22 @@ CREATE TABLE SQLECT.Funcionalidades_Roles (
 	/* Migración de datos */
 INSERT INTO SQLECT.Roles(nombre,descripcion) VALUES ('Administrador General','Administra todos los aspectos de la aplicación')
 INSERT INTO SQLECT.Roles(nombre,descripcion) VALUES ('Recepcionista','Poseé funcionalidades de atención al público')
-INSERT INTO SQLECT.Roles(nombre,descripcion) VALUES ('Guest','Permite realizar reservas')
+
 
 INSERT INTO SQLECT.Usuarios(usr_name, pssword) VALUES('admin','e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7') /*Pass hasheada */
 
 INSERT INTO SQLECT.Roles_Usuarios(fk_usuario, fk_rol) VALUES(1,1)
 
 
-INSERT INTO SQLECT.Funcionalidades(nombre, descripicion) VALUES('Gestionar roles','Permite operaciones de alta, baja, y modificaciones de ROLES')
-INSERT INTO SQLECT.Funcionalidades(nombre, descripicion) VALUES('Gestionar usuarios','Permite operaciones de alta, baja, y modificaciones de USUARIOS')
-INSERT INTO SQLECT.Funcionalidades(nombre, descripicion) VALUES('Gestionar clientes','Permite operaciones de alta, baja, y modificaciones de CLIENTES')
-INSERT INTO SQLECT.Funcionalidades(nombre, descripicion) VALUES('Gestionar hoteles','Permite operaciones de alta, baja, y modificaciones de HOTELES')
-INSERT INTO SQLECT.Funcionalidades(nombre, descripicion) VALUES('Gestionar habitaciones','Permite operaciones de alta, baja, y modificaciones de HABITACIONES')
-INSERT INTO SQLECT.Funcionalidades(nombre, descripicion) VALUES('Gestionar reservas','Permite operaciones de alta, baja, y modificaciones de RESERVAS')
-INSERT INTO SQLECT.Funcionalidades(nombre, descripicion) VALUES('Gestionar consumibles','Permite operaciones de alta, baja, y modificaciones de CONSUMIBLES')
-INSERT INTO SQLECT.Funcionalidades(nombre, descripicion) VALUES('Facturación','Permite registrar facturas')
-INSERT INTO SQLECT.Funcionalidades(nombre, descripicion) VALUES('Listado estadístico','Permite acceder a datos estadísticos, y emitir informes')
+INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar roles','Permite operaciones de alta, baja, y modificaciones de ROLES')
+INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar usuarios','Permite operaciones de alta, baja, y modificaciones de USUARIOS')
+INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar clientes','Permite operaciones de alta, baja, y modificaciones de CLIENTES')
+INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar hoteles','Permite operaciones de alta, baja, y modificaciones de HOTELES')
+INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar habitaciones','Permite operaciones de alta, baja, y modificaciones de HABITACIONES')
+INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar reservas','Permite operaciones de alta, baja, y modificaciones de RESERVAS')
+INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar consumibles','Permite operaciones de alta, baja, y modificaciones de CONSUMIBLES')
+INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Facturación','Permite registrar facturas')
+INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Listado estadístico','Permite acceder a datos estadísticos, y emitir informes')
 
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,1)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,2)
@@ -276,7 +279,7 @@ INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,9)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(2,3)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(2,6)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(2,8)
-INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,6)
+
 
 
 INSERT INTO SQLECT.Hoteles(ciudad,calle,nro_calle,cant_estrellas,recarga_estrella)
@@ -548,6 +551,19 @@ SELECT TOP 5 cl.id_cliente'Id',cl.nombre'Nombre',cl.apellido'Apellido',SUM( ((re
  
  /*Login - Compruebo si se loguea correctamente*/
 
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.validarExistenciaDeUsuarioYRol'))
+DROP PROCEDURE SQLECT.validarExistenciaDeUsuarioYRol
+
+GO
+CREATE PROCEDURE SQLECT.validarExistenciaDeUsuarioYRol (@usuario varchar(30),@rol varchar(30))
+AS
+BEGIN
+ SELECT * FROM SQLECT.Usuarios u JOIN SQLECT.Roles_Usuarios ru ON (u.id_usuario=ru.fk_usuario)
+								 JOIN SQLECT.Roles r ON (r.id_rol=ru.fk_rol)
+ WHERE u.usr_name=@usuario AND r.nombre=@rol
+END
+GO
+
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.validarUsuarioLogin'))
 DROP PROCEDURE SQLECT.validarUsuarioLogin
 
@@ -557,9 +573,81 @@ AS
 BEGIN
  SELECT * FROM SQLECT.Usuarios u JOIN SQLECT.Roles_Usuarios ru ON (u.id_usuario=ru.fk_usuario)
 								 JOIN SQLECT.Roles r ON (r.id_rol=ru.fk_rol)
-		WHERE r.nombre=@rol AND u.usr_name=@usuario AND u.pssword=@password AND u.estado_usr=1 AND r.estado_rol=1
+		WHERE r.nombre=@rol AND u.usr_name=@usuario AND u.pssword=@password AND u.estado_usr=1 AND r.estado_rol=1 AND ru.cantidadDeIntentos<3
 END
 GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.verificarIntentos'))
+DROP PROCEDURE SQLECT.verificarIntentos
+
+GO
+CREATE PROCEDURE SQLECT.verificarIntentos (@usuario varchar(30),@rol varchar(30))
+AS
+BEGIN
+SELECT ru.cantidadDeIntentos 
+	FROM SQLECT.Roles_Usuarios ru JOIN SQLECT.Roles r ON (ru.fk_rol=r.id_rol)
+								  JOIN SQLECT.Usuarios u ON (u.id_usuario=ru.fk_rol)
+WHERE u.usr_name=@usuario AND r.nombre=@rol
+END
+GO
+
+
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.actualizarIntentosFallidos'))
+DROP PROCEDURE SQLECT.actualizarIntentosFallidos
+
+GO
+CREATE PROCEDURE SQLECT.actualizarIntentosFallidos (@usuario varchar(30),@rol varchar(30))
+AS
+BEGIN 
+UPDATE SQLECT.Roles_Usuarios SET cantidadDeIntentos=cantidadDeIntentos+1
+ WHERE fk_usuario IN (SELECT u.id_usuario FROM SQLECT.Usuarios u JOIN SQLECT.Roles_Usuarios ru ON (ru.fk_usuario=u.id_usuario)
+																 JOIN SQLECT.Roles r ON (r.id_rol=ru.fk_rol)
+									WHERE u.usr_name=@usuario AND r.nombre=@rol)
+	AND fk_rol IN (SELECT r.id_rol FROM SQLECT.Usuarios u JOIN SQLECT.Roles_Usuarios ru ON (ru.fk_usuario=u.id_usuario)
+																 JOIN SQLECT.Roles r ON (r.id_rol=ru.fk_rol)
+									WHERE u.usr_name=@usuario AND r.nombre=@rol)
+END
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.inhabilitarUsuario'))
+DROP PROCEDURE SQLECT.inhabilitarUsuario
+
+GO
+CREATE PROCEDURE SQLECT.inhabilitarUsuario (@usuario varchar(30) ,@rol varchar(30))
+AS
+BEGIN
+UPDATE SQLECT.Usuarios SET estado_usr=0
+WHERE usr_name=@usuario
+
+/* WHERE fk_usuario IN (SELECT u.id_usuario FROM SQLECT.Usuarios u JOIN SQLECT.Roles_Usuarios ru ON (ru.fk_usuario=u.id_usuario)
+																 JOIN SQLECT.Roles r ON (r.id_rol=ru.fk_rol)
+									WHERE u.usr_name=@usuario AND r.nombre=@rol)
+	AND fk_rol IN (SELECT r.id_rol FROM SQLECT.Usuarios u JOIN SQLECT.Roles_Usuarios ru ON (ru.fk_usuario=u.id_usuario)
+																 JOIN SQLECT.Roles r ON (r.id_rol=ru.fk_rol)
+									WHERE u.usr_name=@usuario AND r.nombre=@rol)
+END
+GO*/ --Posible alternativa.
+END
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.resetearCantidadDeIntentos'))
+DROP PROCEDURE SQLECT.resetearCantidadDeIntentos
+
+GO
+CREATE PROCEDURE SQLECT.resetearCantidadDeIntentos (@usuario varchar(30) ,@rol varchar(30))
+AS
+BEGIN
+UPDATE SQLECT.Roles_Usuarios SET cantidadDeIntentos=0
+ WHERE fk_usuario IN (SELECT u.id_usuario FROM SQLECT.Usuarios u JOIN SQLECT.Roles_Usuarios ru ON (ru.fk_usuario=u.id_usuario)
+																 JOIN SQLECT.Roles r ON (r.id_rol=ru.fk_rol)
+									WHERE u.usr_name=@usuario AND r.nombre=@rol)
+	AND fk_rol IN (SELECT r.id_rol FROM SQLECT.Usuarios u JOIN SQLECT.Roles_Usuarios ru ON (ru.fk_usuario=u.id_usuario)
+																 JOIN SQLECT.Roles r ON (r.id_rol=ru.fk_rol)
+									WHERE u.usr_name=@usuario AND r.nombre=@rol)
+END
+GO
+
 
 /* ABM Hoteles */
 
@@ -590,4 +678,20 @@ BEGIN
 	
 END
 
+GO
+
+/*Listado de funcionalidades de un rol*/
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.listarFuncionalidades'))
+DROP PROCEDURE SQLECT.listarFuncionalidades
+
+GO
+CREATE PROCEDURE SQLECT.listarFuncionalidades(@nombreRol varchar(30))
+AS
+BEGIN
+SELECT f.nombre,f.descripcion 
+   FROM SQLECT.Funcionalidades f JOIN SQLECT.Funcionalidades_Roles fr ON (f.id_funcion=fr.fk_funcion) 
+								 JOIN SQLECT.Roles r ON (r.id_rol=fr.fk_rol) 
+   WHERE r.nombre=@nombreRol AND f.estado_func=1
+END
 GO

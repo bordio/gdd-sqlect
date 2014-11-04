@@ -45,6 +45,7 @@
             this.tablaDelTOP5.Name = "tablaDelTOP5";
             this.tablaDelTOP5.Size = new System.Drawing.Size(655, 330);
             this.tablaDelTOP5.TabIndex = 0;
+            this.tablaDelTOP5.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tablaDelTOP5_CellContentClick);
             // 
             // leyendaTOP5
             // 
