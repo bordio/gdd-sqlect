@@ -53,8 +53,11 @@ namespace FrbaHotel.Login
                       {
                           limpiarCantidadDeIntentos(textUsuario.Text, comboBoxRol.SelectedItem.ToString());
                           Login.MenuDeFuncionalidades listadoDeFuncionalidades = new MenuDeFuncionalidades();
-                          listadoDeFuncionalidades.cargarFuncionalidades(comboBoxRol.SelectedItem.ToString());
                           listadoDeFuncionalidades.Show();
+                          listadoDeFuncionalidades.mostrarHotelesACargo(textUsuario.Text,comboBoxRol.SelectedItem.ToString());
+                          
+                          
+
                       }
                       else
                       {

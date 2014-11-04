@@ -250,12 +250,11 @@ CREATE TABLE SQLECT.Funcionalidades_Roles (
 	/* Migración de datos */
 INSERT INTO SQLECT.Roles(nombre,descripcion) VALUES ('Administrador General','Administra todos los aspectos de la aplicación')
 INSERT INTO SQLECT.Roles(nombre,descripcion) VALUES ('Recepcionista','Poseé funcionalidades de atención al público')
+INSERT INTO SQLECT.Roles(nombre,descripcion) VALUES	('Administrador','Gestiona el/los hotel/es que tiene a cargo')
 
 
 INSERT INTO SQLECT.Usuarios(usr_name, pssword) VALUES('admin','e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7') /*Pass hasheada */
-
-INSERT INTO SQLECT.Roles_Usuarios(fk_usuario, fk_rol) VALUES(1,1)
-
+INSERT INTO SQLECT.Roles_Usuarios(fk_rol,fk_usuario) VALUES (1,1)
 
 INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar roles','Permite operaciones de alta, baja, y modificaciones de ROLES')
 INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar usuarios','Permite operaciones de alta, baja, y modificaciones de USUARIOS')
@@ -267,7 +266,7 @@ INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar consum
 INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Facturación','Permite registrar facturas')
 INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Listado estadístico','Permite acceder a datos estadísticos, y emitir informes')
 
-INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,1)
+INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,1) /*Funcionalidades del Administrador General*/
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,2)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,3)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,4)
@@ -276,15 +275,27 @@ INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,6)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,7)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,8)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,9)
+																		/*Funcionalidades del Recepcionista*/
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(2,3)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(2,6)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(2,8)
+																		/*Funcionalidades del Administrador*/
+INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,3)
+INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,4)
+INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,5)
+INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,6)
+INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,7)
+INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,8)
+INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,9)
 
 
 
 INSERT INTO SQLECT.Hoteles(ciudad,calle,nro_calle,cant_estrellas,recarga_estrella)
 	SELECT DISTINCT Hotel_Ciudad,Hotel_Calle,Hotel_Nro_Calle,Hotel_CantEstrella,Hotel_Recarga_Estrella
 	FROM gd_esquema.Maestra ORDER BY Hotel_Ciudad;
+
+INSERT INTO SQLECT.Usuarios_Hoteles (fk_hotel,fk_usuario) /*Asignamos todos los hoteles al Administrador General*/
+ (SELECT id_hotel,1 FROM SQLECT.Hoteles)
 
 INSERT INTO SQLECT.Tipos_Habitaciones
 	SELECT DISTINCT Habitacion_Tipo_Codigo,Habitacion_Tipo_Descripcion,Habitacion_Tipo_Porcentual
@@ -678,6 +689,19 @@ BEGIN
 	
 END
 
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.buscarHotelesDisponibles'))
+DROP PROCEDURE SQLECT.buscarHotelesDisponibles
+
+GO
+
+CREATE PROCEDURE SQLECT.buscarHotelesDisponibles (@usuario varchar(30))
+AS
+BEGIN
+SELECT uh.fk_hotel FROM SQLECT.Usuarios_Hoteles uh JOIN SQLECT.Usuarios u ON (uh.fk_usuario=u.id_usuario)
+ WHERE u.usr_name=@usuario
+END
 GO
 
 /*Listado de funcionalidades de un rol*/
