@@ -12,7 +12,7 @@ namespace FrbaHotel.ABM_de_Cliente
     {
         private Conexion sqlconexion = Conexion.Instance;
 
-        public bool altaCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, DateTime fecha_Nac, string nacionalidad, string pasaporte_Nro)
+        public bool altaCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, String fecha_Nac, string nacionalidad, string pasaporte_Nro)
         {
                 Conexion conexion = Conexion.Instance;
                 System.Data.SqlClient.SqlCommand comandoACliente = new System.Data.SqlClient.SqlCommand();
@@ -27,7 +27,7 @@ namespace FrbaHotel.ABM_de_Cliente
                 comandoACliente.Parameters.Add("@Depto", SqlDbType.VarChar);
                 comandoACliente.Parameters.Add("@Fecha_Nac", SqlDbType.DateTime);
                 comandoACliente.Parameters.Add("@Nacionalidad", SqlDbType.VarChar);
-                comandoACliente.Parameters.Add("@Pasaporte_Nro", SqlDbType.Int);
+                comandoACliente.Parameters.Add("@Pasaporte_Nro", SqlDbType.BigInt);
 
                 comandoACliente.Parameters[0].Value = nombre;
                 comandoACliente.Parameters[1].Value = apellido;
@@ -36,7 +36,7 @@ namespace FrbaHotel.ABM_de_Cliente
                 comandoACliente.Parameters[4].Value = nro_Calle;
                 comandoACliente.Parameters[5].Value = piso;
                 comandoACliente.Parameters[6].Value = depto;
-                comandoACliente.Parameters[7].Value = fecha_Nac;
+                comandoACliente.Parameters[7].Value = DateTime.Parse(fecha_Nac);
                 comandoACliente.Parameters[8].Value = nacionalidad;
                 comandoACliente.Parameters[9].Value = pasaporte_Nro;
 

@@ -656,7 +656,7 @@ DROP PROCEDURE SQLECT.altaHotel
 
 GO
 CREATE PROCEDURE SQLECT.altaHotel (@nombre VARCHAR(60), @email VARCHAR(255),
-									 @cant_estrellas INT, @fecha_creacion DATETIME, @pais VARCHAR(100),
+									 @cant_estrellas INT, @fecha_creacion DATETIME = null, @pais VARCHAR(100),
 									 @ciudad VARCHAR(100), @calle VARCHAR(100), @nro_calle INT,
 									 @all_inclusive INT, @all_inclusive_moderado INT, @pension_completa INT, @media_pension INT)
 AS
