@@ -82,5 +82,10 @@ namespace FrbaHotel.ABM_de_Hotel
                 errores = null;
             }
         }
+
+        private void Alta_Hotel_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

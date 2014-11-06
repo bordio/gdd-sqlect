@@ -199,8 +199,7 @@ CREATE TABLE SQLECT.Empleados (
 	email varchar(255),
 	telefono integer,
 	direccion varchar(90),
-	fecha_nacimiento datetime,
-	fk_hotel integer
+	fecha_nacimiento datetime
 )
 
 CREATE TABLE SQLECT.Roles (
@@ -467,12 +466,12 @@ GO
 CREATE PROCEDURE SQLECT.top5HotelesReservasCanceladas(@año int,@inicioTri int,@finTri int)
  AS
   BEGIN
-SELECT TOP 5 ho.id_hotel'Id',COUNT(r.id_reserva)'Reservas canceladas' 
+SELECT TOP 5 ho.nombre 'Nombre',ho.id_hotel'Id',COUNT(r.id_reserva)'Reservas canceladas' 
   FROM SQLECT.Hoteles ho JOIN SQLECT.Habitaciones ha ON (ho.id_hotel=ha.fk_hotel)
                   JOIN SQLECT.Habitaciones_Reservas hr ON (ha.id_habitacion=hr.fk_habitacion)
                   JOIN SQLECT.Reservas r ON (r.id_reserva=hr.fk_reserva)
     WHERE (r.estado_reserva IN (2,3,4)) AND (YEAR(r.fecha_inicio)=@año) AND (MONTH(r.fecha_inicio) BETWEEN @inicioTri AND @finTri)
-      GROUP BY ho.id_hotel
+      GROUP BY ho.id_hotel,ho.nombre
 		ORDER BY 2 DESC
 
   END
@@ -487,7 +486,7 @@ GO
 CREATE PROCEDURE SQLECT.top5HotelesConsumiblesFacturados(@año int,@inicioTri int,@finTri int)
  AS
   BEGIN
-SELECT TOP 5 ho.id_hotel'Id',SUM(i.cantidad_prod)'Consumibles facturados'
+SELECT TOP 5 ho.nombre,ho.id_hotel'Id',SUM(i.cantidad_prod)'Consumibles facturados'
   FROM SQLECT.Hoteles ho JOIN SQLECT.Habitaciones ha ON (ho.id_hotel=ha.fk_hotel)
                   JOIN SQLECT.Habitaciones_Reservas hr ON (ha.id_habitacion=hr.fk_habitacion)
                   JOIN SQLECT.Reservas r ON (r.id_reserva=hr.fk_reserva)
@@ -495,7 +494,7 @@ SELECT TOP 5 ho.id_hotel'Id',SUM(i.cantidad_prod)'Consumibles facturados'
                   JOIN SQLECT.Items i ON (i.fk_factura=f.id_factura)
                   JOIN SQLECT.Consumibles c ON (i.fk_consumible=c.id_consumible)
     WHERE ( (YEAR(f.fecha)=@año) AND (MONTH(f.fecha) BETWEEN @inicioTri AND @finTri))
-	GROUP BY ho.id_hotel
+	GROUP BY ho.id_hotel,ho.nombre
 		ORDER BY 2 DESC
   END	
 GO
@@ -511,11 +510,11 @@ CREATE PROCEDURE SQLECT.top5HotelesFueraDeServicio (@año int, @inicioTri int, @f
 AS
 
  BEGIN
-SELECT TOP 5 b.fk_hotel'Id',SUM(DATEDIFF(day,b.fecha_fin,b.fecha_inicio))'Días fuera de servicio'
-   FROM SQLECT.Bajas_por_hotel b
+SELECT TOP 5 h.nombre,b.fk_hotel'Id',SUM(DATEDIFF(day,b.fecha_fin,b.fecha_inicio))'Días fuera de servicio'
+   FROM SQLECT.Bajas_por_hotel b JOIN SQLECT.Hoteles h ON (h.id_hotel=b.fk_hotel)
     WHERE ( (YEAR(b.fecha_inicio)=YEAR(b.fecha_fin)) AND (MONTH(b.fecha_inicio) >= @inicioTri AND MONTH(b.fecha_fin)<= @finTri) )
     
-    GROUP BY b.fk_hotel
+    GROUP BY b.fk_hotel,h.nombre
 		ORDER BY 2 DESC
   END
 GO  		
@@ -724,5 +723,3 @@ SELECT f.nombre,f.descripcion
 END
 GO
 
-
-SELECT * FROM SQLECT.Funcionalidades
