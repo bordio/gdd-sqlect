@@ -82,7 +82,7 @@ namespace FrbaHotel.Login
                 if (string.IsNullOrEmpty(tareaARealizar.Text))
                     MessageBox.Show("Debe seleccionar una tarea", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 else
-                    MessageBox.Show("Accedio correctamente");
+                    dirigirABMElegida(tareaARealizar.Text);
             }
             
             
@@ -123,6 +123,54 @@ namespace FrbaHotel.Login
         private void tablaDeFuncionalidades_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             tareaARealizar.Text = tablaDeFuncionalidades.CurrentRow.Cells[0].Value.ToString();
+        }
+        public void dirigirABMElegida(string funcionalidad)
+        {
+
+            switch (funcionalidad)
+            {
+                case "Gestionar roles": 
+                   FrbaHotel.ABM_de_Rol.Form1 gestionarRoles = new FrbaHotel.ABM_de_Rol.Form1();
+                   gestionarRoles.Show();
+                    break;
+                case "Gestionar usuarios": 
+                    FrbaHotel.ABM_de_Usuario.Form1 gestionarUsuarios = new FrbaHotel.ABM_de_Usuario.Form1();
+                    gestionarUsuarios.Show();
+                    break;
+                case "Gestionar clientes":
+                    FrbaHotel.ABM_de_Cliente.Form1 gestionarClientes = new FrbaHotel.ABM_de_Cliente.Form1();
+                    gestionarClientes.Show();
+                    break;
+                case "Gestionar hoteles":
+                    FrbaHotel.ABM_de_Hotel.MainHotel gestionarHoteles = new FrbaHotel.ABM_de_Hotel.MainHotel();
+                    gestionarHoteles.Show();
+                    break;
+                case "Gestionar habitaciones":
+                    FrbaHotel.ABM_de_Habitacion.Form1 gestionarHabitaciones = new FrbaHotel.ABM_de_Habitacion.Form1();
+                    gestionarHabitaciones.Show();
+                    break;
+                case "Generar/modificar reservas":
+                    FrbaHotel.Generar_Modificar_Reserva.Form1 gestionarReservas = new FrbaHotel.Generar_Modificar_Reserva.Form1();
+                    gestionarReservas.Show();
+                    break;
+                case "Cancelar reservas":
+                    FrbaHotel.Cancelar_Reserva.Form1 cancelarReservas = new FrbaHotel.Cancelar_Reserva.Form1();
+                    cancelarReservas.Show();
+                    break;
+                case "Gestionar consumibles":
+                    FrbaHotel.Registrar_Consumible.Form1 gestionarConsumibles = new FrbaHotel.Registrar_Consumible.Form1();
+                    gestionarConsumibles.Show();
+                    break;
+                case "Facturación":
+                    FrbaHotel.Registrar_Consumible.Form1 facturacion = new FrbaHotel.Registrar_Consumible.Form1();
+                    facturacion.Show();
+                    break;
+                case "Listado estadístico":
+                    FrbaHotel.Listado_Estadistico.Form1 listadoEstadistico = new FrbaHotel.Listado_Estadistico.Form1();
+                    listadoEstadistico.Show();
+                    break;
+             }
+
         }
 
        
