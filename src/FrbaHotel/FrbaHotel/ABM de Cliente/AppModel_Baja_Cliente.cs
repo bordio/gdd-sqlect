@@ -40,10 +40,10 @@ namespace FrbaHotel.ABM_de_Cliente
                 comandoACliente.Parameters[8].Value = nacionalidad;
                 comandoACliente.Parameters[9].Value = pasaporte_Nro;
 
-                comandoACliente.CommandText = "SQLECT.altaCliente";
+                comandoACliente.CommandText = "SQLECT.bajaCliente";
                 conexion.ejecutarQueryConSP(comandoACliente);
 
-                MessageBox.Show("Alta exitosa", "Alta de Cliente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Baja exitosa", "Baja de Cliente", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

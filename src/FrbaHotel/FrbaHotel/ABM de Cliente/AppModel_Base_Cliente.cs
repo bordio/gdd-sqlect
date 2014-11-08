@@ -69,6 +69,28 @@ namespace FrbaHotel.ABM_de_Cliente {
                 mensajeValidacion.AppendLine(string.Format(" El pasaporte {0} ya existe.", pasaporte.Text));
             };
         }
+
+        /*Para listar segun un filtrado determinado*/
+
+        public StringBuilder getAllInstances(string select)
+        {
+            StringBuilder sentence = new StringBuilder().AppendFormat(select);
+            return sentence;
+        }
+
+        public DataTable cargar_lista(StringBuilder sentence)
+        {
+            DataTable tabla = Conexion.Instance.ejecutarQuery(sentence.ToString());
+            return tabla;
+        }
+
+        public void appendASentencia(String control, StringBuilder sentence, String campo){
+
+            if(control != ""){
+                sentence.AppendFormat(" ({0} LIKE '%{1}%') AND ", campo, control);
+            }
+
+        }
     
     }
 }

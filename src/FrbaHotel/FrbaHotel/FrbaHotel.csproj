@@ -61,11 +61,24 @@
     <Compile Include="ABM de Cliente\AppModel_Alta_Cliente.cs" />
     <Compile Include="ABM de Cliente\AppModel_Baja_Cliente.cs" />
     <Compile Include="ABM de Cliente\AppModel_Base_Cliente.cs" />
+    <Compile Include="ABM de Cliente\AppModel_Modificacion_Cliente.cs" />
     <Compile Include="ABM de Cliente\Baja_Cliente.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ABM de Cliente\Baja_Cliente.Designer.cs">
       <DependentUpon>Baja_Cliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM de Cliente\Clientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM de Cliente\Clientes.Designer.cs">
+      <DependentUpon>Clientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM de Cliente\Modificacion_Cliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM de Cliente\Modificacion_Cliente.Designer.cs">
+      <DependentUpon>Modificacion_Cliente.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM de Habitacion\Form1.cs">
       <SubType>Form</SubType>
@@ -156,6 +169,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Cliente\Baja_Cliente.resx">
       <DependentUpon>Baja_Cliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Cliente\Modificacion_Cliente.resx">
+      <DependentUpon>Modificacion_Cliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Hotel\Alta_Hotel.resx">
       <DependentUpon>Alta_Hotel.cs</DependentUpon>

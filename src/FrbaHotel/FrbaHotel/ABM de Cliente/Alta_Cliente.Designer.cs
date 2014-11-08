@@ -38,8 +38,8 @@
             this.btLimpiar = new System.Windows.Forms.Button();
             this.groupBoxDomicilio = new System.Windows.Forms.GroupBox();
             this.groupBoxDatosPersonales = new System.Windows.Forms.GroupBox();
-            this.btFechaNac = new System.Windows.Forms.Button();
             this.monthCalendar = new System.Windows.Forms.MonthCalendar();
+            this.btFechaNac = new System.Windows.Forms.Button();
             this.lblPaisOrigen = new System.Windows.Forms.Label();
             this.PaisOrigen = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -228,7 +228,6 @@
             this.groupBoxDatosPersonales.Controls.Add(this.monthCalendar);
             this.groupBoxDatosPersonales.Controls.Add(this.btFechaNac);
             this.groupBoxDatosPersonales.Controls.Add(this.lblPaisOrigen);
-            this.groupBoxDatosPersonales.Controls.Add(this.PaisOrigen);
             this.groupBoxDatosPersonales.Controls.Add(this.label1);
             this.groupBoxDatosPersonales.Controls.Add(this.Fecha);
             this.groupBoxDatosPersonales.Controls.Add(this.labelObligatorio5);
@@ -236,12 +235,22 @@
             this.groupBoxDatosPersonales.Controls.Add(this.labelObligatorio3);
             this.groupBoxDatosPersonales.Controls.Add(this.labelObligatorio2);
             this.groupBoxDatosPersonales.Controls.Add(this.labelObligatorio);
+            this.groupBoxDatosPersonales.Controls.Add(this.PaisOrigen);
             this.groupBoxDatosPersonales.Location = new System.Drawing.Point(7, 12);
             this.groupBoxDatosPersonales.Name = "groupBoxDatosPersonales";
             this.groupBoxDatosPersonales.Size = new System.Drawing.Size(508, 373);
             this.groupBoxDatosPersonales.TabIndex = 0;
             this.groupBoxDatosPersonales.TabStop = false;
             this.groupBoxDatosPersonales.Text = "Datos Personales";
+            // 
+            // monthCalendar
+            // 
+            this.monthCalendar.Location = new System.Drawing.Point(321, 59);
+            this.monthCalendar.Name = "monthCalendar";
+            this.monthCalendar.TabIndex = 0;
+            this.monthCalendar.Visible = false;
+            this.monthCalendar.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_DateSelected);
+            this.monthCalendar.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_DateChanged);
             // 
             // btFechaNac
             // 
@@ -252,14 +261,6 @@
             this.btFechaNac.Text = "Seleccionar";
             this.btFechaNac.UseVisualStyleBackColor = true;
             this.btFechaNac.Click += new System.EventHandler(this.btFechaNac_Click);
-            // 
-            // monthCalendar
-            // 
-            this.monthCalendar.Location = new System.Drawing.Point(328, 104);
-            this.monthCalendar.Name = "monthCalendar";
-            this.monthCalendar.TabIndex = 0;
-            this.monthCalendar.Visible = false;
-            this.monthCalendar.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_DateChanged);
             // 
             // lblPaisOrigen
             // 
@@ -378,9 +379,7 @@
             this.Controls.Add(this.labelNombre);
             this.Controls.Add(this.btLimpiar);
             this.Controls.Add(this.btGuardar);
-            this.Controls.Add(this.Pasaporte);
             this.Controls.Add(this.labelNumPasap);
-            this.Controls.Add(this.Nacionalidad);
             this.Controls.Add(this.labelNacionalidad);
             this.Controls.Add(this.labelFechaNaci);
             this.Controls.Add(this.Departamento);
@@ -391,15 +390,17 @@
             this.Controls.Add(this.labelNumCalle);
             this.Controls.Add(this.Calle);
             this.Controls.Add(this.labelCalle);
-            this.Controls.Add(this.Email);
             this.Controls.Add(this.labelEmail);
             this.Controls.Add(this.Apellido);
             this.Controls.Add(this.labelApellido);
             this.Controls.Add(this.Nombre);
+            this.Controls.Add(this.Pasaporte);
+            this.Controls.Add(this.Nacionalidad);
             this.Controls.Add(this.groupBoxDomicilio);
+            this.Controls.Add(this.Email);
             this.Controls.Add(this.groupBoxDatosPersonales);
             this.Name = "Alta_Cliente";
-            this.Text = "Nuevo Cliente";
+            this.Text = "Crear/Modificar Cliente";
             this.groupBoxDatosPersonales.ResumeLayout(false);
             this.groupBoxDatosPersonales.PerformLayout();
             this.ResumeLayout(false);

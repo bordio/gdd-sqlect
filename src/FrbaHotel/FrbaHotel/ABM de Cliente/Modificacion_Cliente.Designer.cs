@@ -1,6 +1,6 @@
 ﻿namespace FrbaHotel.ABM_de_Cliente
 {
-    partial class Baja_Cliente
+    partial class Modificacion_Cliente
     {
         /// <summary>
         /// Required designer variable.
@@ -33,6 +33,7 @@
             this.Apellido = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.filtrosBusqueda = new System.Windows.Forms.GroupBox();
+            this.btFechaNac = new System.Windows.Forms.Button();
             this.btLimpiar = new System.Windows.Forms.Button();
             this.btBuscar = new System.Windows.Forms.Button();
             this.Email = new System.Windows.Forms.TextBox();
@@ -43,9 +44,11 @@
             this.labelFechaNaci = new System.Windows.Forms.Label();
             this.FechaNacimiento = new System.Windows.Forms.TextBox();
             this.labelEmail = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.gridClientes = new System.Windows.Forms.DataGridView();
+            this.monthCalendar = new System.Windows.Forms.MonthCalendar();
+            this.btModificar = new System.Windows.Forms.Button();
             this.filtrosBusqueda.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridClientes)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -56,7 +59,6 @@
             this.label1.Size = new System.Drawing.Size(44, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Nombre";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // Nombre
             // 
@@ -71,7 +73,6 @@
             this.Apellido.Name = "Apellido";
             this.Apellido.Size = new System.Drawing.Size(199, 20);
             this.Apellido.TabIndex = 3;
-            this.Apellido.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // label2
             // 
@@ -81,10 +82,11 @@
             this.label2.Size = new System.Drawing.Size(44, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "Apellido";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // filtrosBusqueda
             // 
+            this.filtrosBusqueda.Controls.Add(this.monthCalendar);
+            this.filtrosBusqueda.Controls.Add(this.btFechaNac);
             this.filtrosBusqueda.Controls.Add(this.btLimpiar);
             this.filtrosBusqueda.Controls.Add(this.btBuscar);
             this.filtrosBusqueda.Controls.Add(this.Email);
@@ -104,7 +106,16 @@
             this.filtrosBusqueda.TabIndex = 4;
             this.filtrosBusqueda.TabStop = false;
             this.filtrosBusqueda.Text = "Filtros de Búsqueda";
-            this.filtrosBusqueda.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // btFechaNac
+            // 
+            this.btFechaNac.Location = new System.Drawing.Point(501, 24);
+            this.btFechaNac.Name = "btFechaNac";
+            this.btFechaNac.Size = new System.Drawing.Size(75, 23);
+            this.btFechaNac.TabIndex = 28;
+            this.btFechaNac.Text = "Seleccionar";
+            this.btFechaNac.UseVisualStyleBackColor = true;
+            this.btFechaNac.Click += new System.EventHandler(this.btFechaNac_Click);
             // 
             // btLimpiar
             // 
@@ -114,6 +125,7 @@
             this.btLimpiar.TabIndex = 27;
             this.btLimpiar.Text = "Limpiar";
             this.btLimpiar.UseVisualStyleBackColor = true;
+            this.btLimpiar.Click += new System.EventHandler(this.btLimpiar_Click);
             // 
             // btBuscar
             // 
@@ -123,6 +135,7 @@
             this.btBuscar.TabIndex = 26;
             this.btBuscar.Text = "Buscar";
             this.btBuscar.UseVisualStyleBackColor = true;
+            this.btBuscar.Click += new System.EventHandler(this.btBuscar_Click);
             // 
             // Email
             // 
@@ -174,9 +187,10 @@
             // 
             // FechaNacimiento
             // 
+            this.FechaNacimiento.Enabled = false;
             this.FechaNacimiento.Location = new System.Drawing.Point(377, 26);
             this.FechaNacimiento.Name = "FechaNacimiento";
-            this.FechaNacimiento.Size = new System.Drawing.Size(199, 20);
+            this.FechaNacimiento.Size = new System.Drawing.Size(118, 20);
             this.FechaNacimiento.TabIndex = 10;
             // 
             // labelEmail
@@ -188,26 +202,54 @@
             this.labelEmail.TabIndex = 9;
             this.labelEmail.Text = "Email";
             // 
-            // dataGridView1
+            // gridClientes
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 182);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(591, 150);
-            this.dataGridView1.TabIndex = 5;
+            this.gridClientes.AllowUserToAddRows = false;
+            this.gridClientes.AllowUserToDeleteRows = false;
+            this.gridClientes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.gridClientes.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.gridClientes.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.gridClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridClientes.Location = new System.Drawing.Point(12, 182);
+            this.gridClientes.Name = "gridClientes";
+            this.gridClientes.ReadOnly = true;
+            this.gridClientes.Size = new System.Drawing.Size(591, 150);
+            this.gridClientes.TabIndex = 5;
+            this.gridClientes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridClientes_CellContentClick);
             // 
-            // Filtrar_Cliente
+            // monthCalendar
+            // 
+            this.monthCalendar.Location = new System.Drawing.Point(377, -3);
+            this.monthCalendar.Name = "monthCalendar";
+            this.monthCalendar.TabIndex = 6;
+            this.monthCalendar.Visible = false;
+            this.monthCalendar.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_DateSelected);
+            this.monthCalendar.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_DateChanged);
+            // 
+            // btModificar
+            // 
+            this.btModificar.Location = new System.Drawing.Point(227, 348);
+            this.btModificar.Name = "btModificar";
+            this.btModificar.Size = new System.Drawing.Size(156, 23);
+            this.btModificar.TabIndex = 6;
+            this.btModificar.Text = "Modificar";
+            this.btModificar.UseVisualStyleBackColor = true;
+            this.btModificar.Click += new System.EventHandler(this.btModificar_Click);
+            // 
+            // Modificacion_Cliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(628, 352);
-            this.Controls.Add(this.dataGridView1);
+            this.ClientSize = new System.Drawing.Size(617, 392);
+            this.Controls.Add(this.btModificar);
+            this.Controls.Add(this.gridClientes);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.filtrosBusqueda);
-            this.Name = "Filtrar_Cliente";
+            this.Name = "Modificacion_Cliente";
+            this.Load += new System.EventHandler(this.Modificacion_Cliente_Load);
             this.filtrosBusqueda.ResumeLayout(false);
             this.filtrosBusqueda.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridClientes)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -230,6 +272,9 @@
         private System.Windows.Forms.TextBox Nacionalidad;
         private System.Windows.Forms.Button btBuscar;
         private System.Windows.Forms.Button btLimpiar;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView gridClientes;
+        private System.Windows.Forms.MonthCalendar monthCalendar;
+        private System.Windows.Forms.Button btFechaNac;
+        private System.Windows.Forms.Button btModificar;
     }
 }

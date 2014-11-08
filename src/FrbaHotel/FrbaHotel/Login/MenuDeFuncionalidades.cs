@@ -138,7 +138,7 @@ namespace FrbaHotel.Login
                     gestionarUsuarios.Show();
                     break;
                 case "Gestionar clientes":
-                    FrbaHotel.ABM_de_Cliente.Form1 gestionarClientes = new FrbaHotel.ABM_de_Cliente.Form1();
+                    FrbaHotel.ABM_de_Cliente.Clientes gestionarClientes = new FrbaHotel.ABM_de_Cliente.Clientes();
                     gestionarClientes.Show();
                     break;
                 case "Gestionar hoteles":
