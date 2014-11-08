@@ -10,6 +10,7 @@ namespace FrbaHotel.ABM_de_Cliente {
 
     public abstract class AppModel_Base_Cliente {
 
+        public DataTable rowHotel = new DataTable();
         private Conexion sqlconexion = Conexion.Instance;
 
         public abstract void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, string fecha_Nac, string nacionalidad, string pasaporte_Nro);
@@ -91,6 +92,8 @@ namespace FrbaHotel.ABM_de_Cliente {
             }
 
         }
+
+       //public abstract void levantar(StringBuilder nombre, StringBuilder apellido, StringBuilder email, StringBuilder fechaNacimiento, StringBuilder dom_Calle, StringBuilder nro_Calle, StringBuilder piso, StringBuilder depto, StringBuilder nacionalidad, StringBuilder pasaporte, StringBuilder habilitado);
     
     }
 }

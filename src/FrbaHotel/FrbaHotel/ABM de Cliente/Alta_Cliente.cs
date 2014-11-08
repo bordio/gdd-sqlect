@@ -24,12 +24,16 @@ namespace FrbaHotel.ABM_de_Cliente
             Text = "Alta de Cliente";
         }
 
-        public Alta_Cliente(DataGridView lsClientes, StringBuilder pais, StringBuilder ciudad, StringBuilder calle, Int32 nro_calle)
+        public Alta_Cliente(DataGridView lsClientes, StringBuilder nombre, StringBuilder apellido, StringBuilder email, StringBuilder fechaNacimiento, StringBuilder dom_Calle, StringBuilder nro_Calle, StringBuilder piso, StringBuilder depto, StringBuilder nacionalidad, StringBuilder pasaporte, StringBuilder habilitado)
         {
-            listaClientes = lsClientes;
             InitializeComponent();
-            appModel = new AppModel_Modificacion_Cliente();
             Text = "Modificacion de Cliente";
+            listaClientes = lsClientes;
+            appModel = new AppModel_Modificacion_Cliente();
+            //this.appModel.levantar(nombre, apellido, email, fechaNacimiento, dom_Calle, nro_Calle, piso, depto, nacionalidad, pasaporte, habilitado);
+            
+            Nombre.Text = appModel.rowHotel.Rows[0][1].ToString();
+            Email.Text = appModel.rowHotel.Rows[0][2].ToString();
         }
 
 

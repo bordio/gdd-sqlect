@@ -11,6 +11,7 @@ namespace FrbaHotel.ABM_de_Cliente
     class AppModel_Modificacion_Cliente : AppModel_Base_Cliente
     {
         private Conexion sqlconexion = Conexion.Instance;
+        
 
         public override void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, String fecha_Nac, string nacionalidad, string pasaporte_Nro)
         {
@@ -48,6 +49,11 @@ namespace FrbaHotel.ABM_de_Cliente
         
         }
 
+      /*  public override void levantar(StringBuilder nombre, StringBuilder apellido, StringBuilder email, StringBuilder fechaNacimiento, StringBuilder dom_Calle, StringBuilder nro_Calle, StringBuilder piso, StringBuilder depto, StringBuilder nacionalidad, StringBuilder pasaporte, StringBuilder habilitado)
+       {
+           //StringBuilder sentence = new StringBuilder().AppendFormat("SELECT nombre,apellido,mail,fecha_Nac,dom_Calle,nro_Calle,piso,depto,nacionalidad,pasaporte_Nro,habilitado FROM SQLECT.Clientes WHERE nombre='{0}' AND apellido='{1}' AND mail='{2}' AND fecha_Nac='{3}' AND dom_Calle='{4}' AND nro_Calle={5} AND piso={6} AND depto={7} AND nacionalidad={8} AND pasaporte_Nro={9} AND habilitado={10}", nombre.ToString(), apellido.ToString(), email.ToString(), fechaNacimiento, dom_Calle.ToString(), nro_Calle, piso, depto.ToString(), nacionalidad.ToString(), pasaporte.ToString(), habilitado);
+           //rowHotel = Conexion.Instance.ejecutarQuery(sentence.ToString());
+       }*/
 
     }
 }

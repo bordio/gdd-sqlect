@@ -182,8 +182,9 @@
             this.lstHoteles.TabIndex = 4;
             this.lstHoteles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.lstHoteles_CellContentClick);
             // 
-            // baja
+// baja
             // 
+            this.baja.Enabled = false;
             this.baja.Location = new System.Drawing.Point(137, 396);
             this.baja.Name = "baja";
             this.baja.Size = new System.Drawing.Size(103, 38);
@@ -193,6 +194,7 @@
             // 
             // modificar
             // 
+            this.modificar.Enabled = false;
             this.modificar.Location = new System.Drawing.Point(18, 396);
             this.modificar.Name = "modificar";
             this.modificar.Size = new System.Drawing.Size(103, 38);
@@ -220,8 +222,7 @@
             this.cerrar.Text = "Volver";
             this.cerrar.UseVisualStyleBackColor = true;
             this.cerrar.Click += new System.EventHandler(this.cerrar_Click_1);
-            // 
-            // MainHotel
+            //            // MainHotel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

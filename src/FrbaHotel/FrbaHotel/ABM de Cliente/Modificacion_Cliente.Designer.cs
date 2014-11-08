@@ -33,7 +33,6 @@
             this.Apellido = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.filtrosBusqueda = new System.Windows.Forms.GroupBox();
-            this.btFechaNac = new System.Windows.Forms.Button();
             this.btLimpiar = new System.Windows.Forms.Button();
             this.btBuscar = new System.Windows.Forms.Button();
             this.Email = new System.Windows.Forms.TextBox();
@@ -41,11 +40,8 @@
             this.labelNumPasap = new System.Windows.Forms.Label();
             this.Pasaporte = new System.Windows.Forms.TextBox();
             this.labelNacionalidad = new System.Windows.Forms.Label();
-            this.labelFechaNaci = new System.Windows.Forms.Label();
-            this.FechaNacimiento = new System.Windows.Forms.TextBox();
             this.labelEmail = new System.Windows.Forms.Label();
             this.gridClientes = new System.Windows.Forms.DataGridView();
-            this.monthCalendar = new System.Windows.Forms.MonthCalendar();
             this.btModificar = new System.Windows.Forms.Button();
             this.filtrosBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridClientes)).BeginInit();
@@ -85,8 +81,6 @@
             // 
             // filtrosBusqueda
             // 
-            this.filtrosBusqueda.Controls.Add(this.monthCalendar);
-            this.filtrosBusqueda.Controls.Add(this.btFechaNac);
             this.filtrosBusqueda.Controls.Add(this.btLimpiar);
             this.filtrosBusqueda.Controls.Add(this.btBuscar);
             this.filtrosBusqueda.Controls.Add(this.Email);
@@ -96,8 +90,6 @@
             this.filtrosBusqueda.Controls.Add(this.Pasaporte);
             this.filtrosBusqueda.Controls.Add(this.Nombre);
             this.filtrosBusqueda.Controls.Add(this.labelNacionalidad);
-            this.filtrosBusqueda.Controls.Add(this.labelFechaNaci);
-            this.filtrosBusqueda.Controls.Add(this.FechaNacimiento);
             this.filtrosBusqueda.Controls.Add(this.labelEmail);
             this.filtrosBusqueda.Controls.Add(this.label1);
             this.filtrosBusqueda.Location = new System.Drawing.Point(12, 12);
@@ -106,16 +98,6 @@
             this.filtrosBusqueda.TabIndex = 4;
             this.filtrosBusqueda.TabStop = false;
             this.filtrosBusqueda.Text = "Filtros de Búsqueda";
-            // 
-            // btFechaNac
-            // 
-            this.btFechaNac.Location = new System.Drawing.Point(501, 24);
-            this.btFechaNac.Name = "btFechaNac";
-            this.btFechaNac.Size = new System.Drawing.Size(75, 23);
-            this.btFechaNac.TabIndex = 28;
-            this.btFechaNac.Text = "Seleccionar";
-            this.btFechaNac.UseVisualStyleBackColor = true;
-            this.btFechaNac.Click += new System.EventHandler(this.btFechaNac_Click);
             // 
             // btLimpiar
             // 
@@ -146,7 +128,7 @@
             // 
             // Nacionalidad
             // 
-            this.Nacionalidad.Location = new System.Drawing.Point(377, 51);
+            this.Nacionalidad.Location = new System.Drawing.Point(377, 29);
             this.Nacionalidad.Name = "Nacionalidad";
             this.Nacionalidad.Size = new System.Drawing.Size(199, 20);
             this.Nacionalidad.TabIndex = 25;
@@ -154,7 +136,7 @@
             // labelNumPasap
             // 
             this.labelNumPasap.AutoSize = true;
-            this.labelNumPasap.Location = new System.Drawing.Point(276, 83);
+            this.labelNumPasap.Location = new System.Drawing.Point(276, 55);
             this.labelNumPasap.Name = "labelNumPasap";
             this.labelNumPasap.Size = new System.Drawing.Size(95, 13);
             this.labelNumPasap.TabIndex = 24;
@@ -162,7 +144,7 @@
             // 
             // Pasaporte
             // 
-            this.Pasaporte.Location = new System.Drawing.Point(377, 80);
+            this.Pasaporte.Location = new System.Drawing.Point(377, 55);
             this.Pasaporte.Name = "Pasaporte";
             this.Pasaporte.Size = new System.Drawing.Size(199, 20);
             this.Pasaporte.TabIndex = 6;
@@ -170,28 +152,11 @@
             // labelNacionalidad
             // 
             this.labelNacionalidad.AutoSize = true;
-            this.labelNacionalidad.Location = new System.Drawing.Point(277, 54);
+            this.labelNacionalidad.Location = new System.Drawing.Point(276, 29);
             this.labelNacionalidad.Name = "labelNacionalidad";
             this.labelNacionalidad.Size = new System.Drawing.Size(69, 13);
             this.labelNacionalidad.TabIndex = 22;
             this.labelNacionalidad.Text = "Nacionalidad";
-            // 
-            // labelFechaNaci
-            // 
-            this.labelFechaNaci.AutoSize = true;
-            this.labelFechaNaci.Location = new System.Drawing.Point(278, 29);
-            this.labelFechaNaci.Name = "labelFechaNaci";
-            this.labelFechaNaci.Size = new System.Drawing.Size(93, 13);
-            this.labelFechaNaci.TabIndex = 20;
-            this.labelFechaNaci.Text = "Fecha Nacimiento";
-            // 
-            // FechaNacimiento
-            // 
-            this.FechaNacimiento.Enabled = false;
-            this.FechaNacimiento.Location = new System.Drawing.Point(377, 26);
-            this.FechaNacimiento.Name = "FechaNacimiento";
-            this.FechaNacimiento.Size = new System.Drawing.Size(118, 20);
-            this.FechaNacimiento.TabIndex = 10;
             // 
             // labelEmail
             // 
@@ -216,15 +181,6 @@
             this.gridClientes.Size = new System.Drawing.Size(591, 150);
             this.gridClientes.TabIndex = 5;
             this.gridClientes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridClientes_CellContentClick);
-            // 
-            // monthCalendar
-            // 
-            this.monthCalendar.Location = new System.Drawing.Point(377, -3);
-            this.monthCalendar.Name = "monthCalendar";
-            this.monthCalendar.TabIndex = 6;
-            this.monthCalendar.Visible = false;
-            this.monthCalendar.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_DateSelected);
-            this.monthCalendar.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_DateChanged);
             // 
             // btModificar
             // 
@@ -263,8 +219,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox filtrosBusqueda;
         private System.Windows.Forms.Label labelEmail;
-        private System.Windows.Forms.TextBox FechaNacimiento;
-        private System.Windows.Forms.Label labelFechaNaci;
         private System.Windows.Forms.TextBox Email;
         private System.Windows.Forms.TextBox Pasaporte;
         private System.Windows.Forms.Label labelNacionalidad;
@@ -273,8 +227,6 @@
         private System.Windows.Forms.Button btBuscar;
         private System.Windows.Forms.Button btLimpiar;
         private System.Windows.Forms.DataGridView gridClientes;
-        private System.Windows.Forms.MonthCalendar monthCalendar;
-        private System.Windows.Forms.Button btFechaNac;
         private System.Windows.Forms.Button btModificar;
     }
 }
