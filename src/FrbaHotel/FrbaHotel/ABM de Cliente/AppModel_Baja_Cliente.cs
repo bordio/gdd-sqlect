@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace FrbaHotel.ABM_de_Cliente
 {
-    class AppModel_Alta_Cliente : AppModel_Base_Cliente
+    class AppModel_Baja_Cliente : AppModel_Base_Cliente
     {
         private Conexion sqlconexion = Conexion.Instance;
 
