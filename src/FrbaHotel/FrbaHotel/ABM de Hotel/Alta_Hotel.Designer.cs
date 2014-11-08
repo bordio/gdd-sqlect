@@ -423,7 +423,6 @@
             this.Controls.Add(this.groupBox2);
             this.Name = "Alta_Hotel";
             this.Text = "Alta_Hotel";
-            this.Load += new System.EventHandler(this.Alta_Hotel_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
