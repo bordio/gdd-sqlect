@@ -7,7 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrbaHotel.Commons.Database;
+using FrbaHotel.Commons;
 using System.Security.Cryptography;
+using FrbaHotel.Commons.FuncionalidadesVarias;
 
 namespace FrbaHotel.Login
 {
@@ -20,6 +22,7 @@ namespace FrbaHotel.Login
             InitializeComponent();
            
         }
+        private Funcionalidades funciones = new Funcionalidades();
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -36,7 +39,7 @@ namespace FrbaHotel.Login
                     MessageBox.Show("Complete todos los campos", "Campos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 else
                 {
-                    if (!chequearExistenciaDeUsuarioYRol(textUsuario.Text,comboBoxRol.SelectedItem.ToString())) /*Chequeo si existe el usuario y su rol asignado*/
+                    if (!funciones.chequearExistenciaDeUsuarioYRol(textUsuario.Text,comboBoxRol.SelectedItem.ToString())) /*Chequeo si existe el usuario y su rol asignado*/
                     {
                         MessageBox.Show("Usuario inexistente", "Usuario invalido", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
@@ -47,7 +50,7 @@ namespace FrbaHotel.Login
 
                       if (intentosActual<numeroDeIntentos)
                          
-                      { string passHasheada = encriptarPassword(textPass.Text);
+                      { string passHasheada = funciones.encriptarPassword(textPass.Text);
 
                       if (validarUsuario(textUsuario.Text, passHasheada, comboBoxRol.SelectedItem.ToString())) /*Me fijo si ingreso la pass correctamente*/
                       {
@@ -65,7 +68,7 @@ namespace FrbaHotel.Login
                           actualizarIntentosFallidos(textUsuario.Text, comboBoxRol.SelectedItem.ToString());
                           if (intentosActual == numeroDeIntentos)
                           {
-                              inhabilitarUsuario(textUsuario.Text,null);
+                              funciones.inhabilitarUsuario(textUsuario.Text,null);
                               MessageBox.Show(string.Format("El usuario {0}, para el rol de {0} quedo bloqueado", textUsuario.Text, comboBoxRol.SelectedItem.ToString()));
                           }
                           else
@@ -99,7 +102,7 @@ namespace FrbaHotel.Login
                 labelUsuario.Visible = true; labelPass.Visible = true; labelRol.Visible = true;
                 textUsuario.Visible = true; textPass.Visible = true; comboBoxRol.Visible = true;
 
-                StringBuilder sentence = new StringBuilder().AppendFormat("SELECT DISTINCT nombre FROM SQLECT.Roles");
+                StringBuilder sentence = new StringBuilder().AppendFormat("SELECT DISTINCT r.nombre FROM SQLECT.Roles r WHERE r.estado_rol=1");
                 DataTable tabla = Conexion.Instance.ejecutarQuery(sentence.ToString());
 
                 foreach (DataRow dat in tabla.Rows)
@@ -146,50 +149,6 @@ namespace FrbaHotel.Login
             return validacion;
         }
 
-        public string encriptarPassword(string input)
-        {
-            SHA256CryptoServiceProvider provider = new SHA256CryptoServiceProvider();
-
-
-            byte[] inputBytes = Encoding.UTF8.GetBytes(input);
-
-            byte[] hashedBytes = provider.ComputeHash(inputBytes);
-
-
-            StringBuilder output = new StringBuilder();
-
-
-            for (int i = 0; i < hashedBytes.Length; i++)
-
-                output.Append(hashedBytes[i].ToString("x2").ToLower());
-
-
-            return output.ToString();
-        }
-        public bool chequearExistenciaDeUsuarioYRol(string nombreUsuario, string rolElegido)
-        {
-            Conexion cnn = Conexion.Instance;
-
-            System.Data.SqlClient.SqlCommand comandoExistenciaUsuario = new System.Data.SqlClient.SqlCommand();
-
-            comandoExistenciaUsuario.CommandType = CommandType.StoredProcedure;
-            int contador = 0;
-
-            comandoExistenciaUsuario.Parameters.Add("@usuario", SqlDbType.VarChar);
-            comandoExistenciaUsuario.Parameters[contador].Value = nombreUsuario;
-            contador++;
-
-            comandoExistenciaUsuario.Parameters.Add("@rol", SqlDbType.VarChar);
-            comandoExistenciaUsuario.Parameters[contador].Value = rolElegido;
-            contador++;
-
-            comandoExistenciaUsuario.CommandText = "SQLECT.validarExistenciaDeUsuarioYRol";
-
-            bool existencia = cnn.ejecutarEscalar(comandoExistenciaUsuario);
-
-            return existencia;
-        }
-
         public void actualizarIntentosFallidos(string usuario, string rol)
         {
             Conexion cnn = Conexion.Instance;
@@ -234,26 +193,7 @@ namespace FrbaHotel.Login
             int intentosRealizados = cnn.ejecutarEscalarInt(comandoIntentosRealizados);
             return intentosRealizados;
         }
-        public void inhabilitarUsuario(string usuario, string rol)
-        {
-            Conexion cnn = Conexion.Instance;
-
-            System.Data.SqlClient.SqlCommand comandoInhabilitarUsuario = new System.Data.SqlClient.SqlCommand();
-
-            comandoInhabilitarUsuario.CommandType = CommandType.StoredProcedure;
-            int contador = 0;
-
-            comandoInhabilitarUsuario.Parameters.Add("@usuario", SqlDbType.VarChar);
-            comandoInhabilitarUsuario.Parameters[contador].Value = usuario;
-            contador++;
-
-            comandoInhabilitarUsuario.Parameters.Add("@rol", SqlDbType.VarChar);
-            comandoInhabilitarUsuario.Parameters[contador].Value = rol;
-            contador++;
-
-            comandoInhabilitarUsuario.CommandText = "SQLECT.inhabilitarUsuario";
-            cnn.ejecutarSP(comandoInhabilitarUsuario);
-        }
+    
 
         public void limpiarCantidadDeIntentos(string usuario, string rol)
         {
@@ -276,9 +216,7 @@ namespace FrbaHotel.Login
             cnn.ejecutarSP(comandoInhabilitarUsuario);
         
         }
-
-       
+    
     }
-
 
 }

@@ -7,17 +7,22 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrbaHotel.Commons.Database;
+using FrbaHotel.Commons.FuncionalidadesVarias;
+using FrbaHotel.ABM_de_Usuario;
 
 namespace FrbaHotel.ABM_de_Usuario
 {
+    
+    
     public partial class Form1 : Form
     {
-        public Form1()
+      public Form1()
         {
             InitializeComponent();
         }
-
-        private void Form1_Load(object sender, EventArgs e)
+      private AppModel_Alta_Usuario funcionesUsuarios = new AppModel_Alta_Usuario();
+        
+    private void Form1_Load(object sender, EventArgs e)
         {
             StringBuilder sentence = new StringBuilder().AppendFormat("SELECT DISTINCT nombre FROM SQLECT.Roles");
             DataTable tabla = Conexion.Instance.ejecutarQuery(sentence.ToString());
@@ -80,6 +85,20 @@ namespace FrbaHotel.ABM_de_Usuario
             tablaDeUsuarios.DataSource = tabla.DefaultView;
 
             
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (funcionesUsuarios.nombresHotelesVacios())
+            {
+                MessageBox.Show("Error", "Todos los hoteles están sin nombre", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else
+            {
+
+                ABM_de_Usuario.AltaUsuario formularioAlta = new AltaUsuario();
+                formularioAlta.Show();
+            }
         }
 
 
