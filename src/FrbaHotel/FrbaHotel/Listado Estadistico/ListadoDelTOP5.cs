@@ -40,5 +40,10 @@ namespace FrbaHotel.Listado_Estadistico
             }
 
         }
+
+        private void tablaDelTOP5_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

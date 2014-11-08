@@ -286,7 +286,6 @@
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Datos generales";
-            
             // 
             // label12
             // 
@@ -424,6 +423,7 @@
             this.Controls.Add(this.groupBox2);
             this.Name = "Alta_Hotel";
             this.Text = "Alta_Hotel";
+            this.Load += new System.EventHandler(this.Alta_Hotel_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

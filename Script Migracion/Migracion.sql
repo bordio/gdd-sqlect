@@ -199,8 +199,7 @@ CREATE TABLE SQLECT.Empleados (
 	email varchar(255),
 	telefono integer,
 	direccion varchar(90),
-	fecha_nacimiento datetime,
-	fk_hotel integer
+	fecha_nacimiento datetime
 )
 
 CREATE TABLE SQLECT.Roles (
@@ -217,12 +216,15 @@ CREATE TABLE SQLECT.Usuarios (
 	pssword char(64) NOT NULL,
 	fk_empleado smallint REFERENCES SQLECT.Empleados(id_empleado),
 	estado_usr tinyint DEFAULT 1
+	
  )
 
 
 CREATE TABLE SQLECT.Roles_Usuarios (
     fk_rol tinyint references SQLECT.Roles (id_rol),
-    fk_usuario integer references SQLECT.Usuarios (id_usuario)
+    fk_usuario integer references SQLECT.Usuarios (id_usuario),
+    cantidadDeIntentos tinyint DEFAULT 0,
+	
 )
 
 
@@ -235,7 +237,7 @@ CREATE TABLE SQLECT.Roles_Usuarios (
 CREATE TABLE SQLECT.Funcionalidades (
 	id_funcion smallint PRIMARY KEY identity(1,1),
 	nombre varchar(30),
-	descripicion varchar(120),
+	descripcion varchar(120),
 	estado_func tinyint DEFAULT 1
 )
 
@@ -247,24 +249,24 @@ CREATE TABLE SQLECT.Funcionalidades_Roles (
 	/* Migración de datos */
 INSERT INTO SQLECT.Roles(nombre,descripcion) VALUES ('Administrador General','Administra todos los aspectos de la aplicación')
 INSERT INTO SQLECT.Roles(nombre,descripcion) VALUES ('Recepcionista','Poseé funcionalidades de atención al público')
-INSERT INTO SQLECT.Roles(nombre,descripcion) VALUES ('Guest','Permite realizar reservas')
+INSERT INTO SQLECT.Roles(nombre,descripcion) VALUES	('Administrador','Gestiona el/los hotel/es que tiene a cargo')
+
 
 INSERT INTO SQLECT.Usuarios(usr_name, pssword) VALUES('admin','e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7') /*Pass hasheada */
+INSERT INTO SQLECT.Roles_Usuarios(fk_rol,fk_usuario) VALUES (1,1)
 
-INSERT INTO SQLECT.Roles_Usuarios(fk_usuario, fk_rol) VALUES(1,1)
+INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar roles','Permite operaciones de alta, baja, y modificaciones de ROLES')
+INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar usuarios','Permite operaciones de alta, baja, y modificaciones de USUARIOS')
+INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar clientes','Permite operaciones de alta, baja, y modificaciones de CLIENTES')
+INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar hoteles','Permite operaciones de alta, baja, y modificaciones de HOTELES')
+INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar habitaciones','Permite operaciones de alta, baja, y modificaciones de HABITACIONES')
+INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Generar/modificar reservas','Permite operaciones de alta y modificaciones de RESERVAS')
+INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Cancelar reservas', 'Permite cancelaciones de reservas')
+INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar consumibles','Permite operaciones de alta, baja, y modificaciones de CONSUMIBLES')
+INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Facturación','Permite registrar facturas')
+INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Listado estadístico','Permite acceder a datos estadísticos, y emitir informes')
 
-
-INSERT INTO SQLECT.Funcionalidades(nombre, descripicion) VALUES('Gestionar roles','Permite operaciones de alta, baja, y modificaciones de ROLES')
-INSERT INTO SQLECT.Funcionalidades(nombre, descripicion) VALUES('Gestionar usuarios','Permite operaciones de alta, baja, y modificaciones de USUARIOS')
-INSERT INTO SQLECT.Funcionalidades(nombre, descripicion) VALUES('Gestionar clientes','Permite operaciones de alta, baja, y modificaciones de CLIENTES')
-INSERT INTO SQLECT.Funcionalidades(nombre, descripicion) VALUES('Gestionar hoteles','Permite operaciones de alta, baja, y modificaciones de HOTELES')
-INSERT INTO SQLECT.Funcionalidades(nombre, descripicion) VALUES('Gestionar habitaciones','Permite operaciones de alta, baja, y modificaciones de HABITACIONES')
-INSERT INTO SQLECT.Funcionalidades(nombre, descripicion) VALUES('Gestionar reservas','Permite operaciones de alta, baja, y modificaciones de RESERVAS')
-INSERT INTO SQLECT.Funcionalidades(nombre, descripicion) VALUES('Gestionar consumibles','Permite operaciones de alta, baja, y modificaciones de CONSUMIBLES')
-INSERT INTO SQLECT.Funcionalidades(nombre, descripicion) VALUES('Facturación','Permite registrar facturas')
-INSERT INTO SQLECT.Funcionalidades(nombre, descripicion) VALUES('Listado estadístico','Permite acceder a datos estadísticos, y emitir informes')
-
-INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,1)
+INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,1) /*Funcionalidades del Administrador General*/
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,2)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,3)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,4)
@@ -273,15 +275,29 @@ INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,6)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,7)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,8)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,9)
+INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,10)
+																		/*Funcionalidades del Recepcionista*/
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(2,3)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(2,6)
+INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(2,7)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(2,8)
+																		/*Funcionalidades del Administrador*/
+INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,3)
+INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,4)
+INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,5)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,6)
+INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,7)
+INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,8)
+INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,9)
+
 
 
 INSERT INTO SQLECT.Hoteles(ciudad,calle,nro_calle,cant_estrellas,recarga_estrella)
 	SELECT DISTINCT Hotel_Ciudad,Hotel_Calle,Hotel_Nro_Calle,Hotel_CantEstrella,Hotel_Recarga_Estrella
 	FROM gd_esquema.Maestra ORDER BY Hotel_Ciudad;
+
+INSERT INTO SQLECT.Usuarios_Hoteles (fk_hotel,fk_usuario) /*Asignamos todos los hoteles al Administrador General*/
+ (SELECT id_hotel,1 FROM SQLECT.Hoteles)
 
 INSERT INTO SQLECT.Tipos_Habitaciones
 	SELECT DISTINCT Habitacion_Tipo_Codigo,Habitacion_Tipo_Descripcion,Habitacion_Tipo_Porcentual
@@ -450,12 +466,12 @@ GO
 CREATE PROCEDURE SQLECT.top5HotelesReservasCanceladas(@año int,@inicioTri int,@finTri int)
  AS
   BEGIN
-SELECT TOP 5 ho.id_hotel'Id',COUNT(r.id_reserva)'Reservas canceladas' 
+SELECT TOP 5 ho.nombre 'Nombre',ho.id_hotel'Id',COUNT(r.id_reserva)'Reservas canceladas' 
   FROM SQLECT.Hoteles ho JOIN SQLECT.Habitaciones ha ON (ho.id_hotel=ha.fk_hotel)
                   JOIN SQLECT.Habitaciones_Reservas hr ON (ha.id_habitacion=hr.fk_habitacion)
                   JOIN SQLECT.Reservas r ON (r.id_reserva=hr.fk_reserva)
     WHERE (r.estado_reserva IN (2,3,4)) AND (YEAR(r.fecha_inicio)=@año) AND (MONTH(r.fecha_inicio) BETWEEN @inicioTri AND @finTri)
-      GROUP BY ho.id_hotel
+      GROUP BY ho.id_hotel,ho.nombre
 		ORDER BY 2 DESC
 
   END
@@ -470,7 +486,7 @@ GO
 CREATE PROCEDURE SQLECT.top5HotelesConsumiblesFacturados(@año int,@inicioTri int,@finTri int)
  AS
   BEGIN
-SELECT TOP 5 ho.id_hotel'Id',SUM(i.cantidad_prod)'Consumibles facturados'
+SELECT TOP 5 ho.nombre,ho.id_hotel'Id',SUM(i.cantidad_prod)'Consumibles facturados'
   FROM SQLECT.Hoteles ho JOIN SQLECT.Habitaciones ha ON (ho.id_hotel=ha.fk_hotel)
                   JOIN SQLECT.Habitaciones_Reservas hr ON (ha.id_habitacion=hr.fk_habitacion)
                   JOIN SQLECT.Reservas r ON (r.id_reserva=hr.fk_reserva)
@@ -478,7 +494,7 @@ SELECT TOP 5 ho.id_hotel'Id',SUM(i.cantidad_prod)'Consumibles facturados'
                   JOIN SQLECT.Items i ON (i.fk_factura=f.id_factura)
                   JOIN SQLECT.Consumibles c ON (i.fk_consumible=c.id_consumible)
     WHERE ( (YEAR(f.fecha)=@año) AND (MONTH(f.fecha) BETWEEN @inicioTri AND @finTri))
-	GROUP BY ho.id_hotel
+	GROUP BY ho.id_hotel,ho.nombre
 		ORDER BY 2 DESC
   END	
 GO
@@ -494,11 +510,11 @@ CREATE PROCEDURE SQLECT.top5HotelesFueraDeServicio (@año int, @inicioTri int, @f
 AS
 
  BEGIN
-SELECT TOP 5 b.fk_hotel'Id',SUM(DATEDIFF(day,b.fecha_fin,b.fecha_inicio))'Días fuera de servicio'
-   FROM SQLECT.Bajas_por_hotel b
+SELECT TOP 5 h.nombre,b.fk_hotel'Id',SUM(DATEDIFF(day,b.fecha_fin,b.fecha_inicio))'Días fuera de servicio'
+   FROM SQLECT.Bajas_por_hotel b JOIN SQLECT.Hoteles h ON (h.id_hotel=b.fk_hotel)
     WHERE ( (YEAR(b.fecha_inicio)=YEAR(b.fecha_fin)) AND (MONTH(b.fecha_inicio) >= @inicioTri AND MONTH(b.fecha_fin)<= @finTri) )
     
-    GROUP BY b.fk_hotel
+    GROUP BY b.fk_hotel,h.nombre
 		ORDER BY 2 DESC
   END
 GO  		
@@ -548,6 +564,19 @@ SELECT TOP 5 cl.id_cliente'Id',cl.nombre'Nombre',cl.apellido'Apellido',SUM( ((re
  
  /*Login - Compruebo si se loguea correctamente*/
 
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.validarExistenciaDeUsuarioYRol'))
+DROP PROCEDURE SQLECT.validarExistenciaDeUsuarioYRol
+
+GO
+CREATE PROCEDURE SQLECT.validarExistenciaDeUsuarioYRol (@usuario varchar(30),@rol varchar(30))
+AS
+BEGIN
+ SELECT * FROM SQLECT.Usuarios u JOIN SQLECT.Roles_Usuarios ru ON (u.id_usuario=ru.fk_usuario)
+								 JOIN SQLECT.Roles r ON (r.id_rol=ru.fk_rol)
+ WHERE u.usr_name=@usuario AND r.nombre=@rol
+END
+GO
+
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.validarUsuarioLogin'))
 DROP PROCEDURE SQLECT.validarUsuarioLogin
 
@@ -557,9 +586,81 @@ AS
 BEGIN
  SELECT * FROM SQLECT.Usuarios u JOIN SQLECT.Roles_Usuarios ru ON (u.id_usuario=ru.fk_usuario)
 								 JOIN SQLECT.Roles r ON (r.id_rol=ru.fk_rol)
-		WHERE r.nombre=@rol AND u.usr_name=@usuario AND u.pssword=@password AND u.estado_usr=1 AND r.estado_rol=1
+		WHERE r.nombre=@rol AND u.usr_name=@usuario AND u.pssword=@password AND u.estado_usr=1 AND r.estado_rol=1 AND ru.cantidadDeIntentos<3
 END
 GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.verificarIntentos'))
+DROP PROCEDURE SQLECT.verificarIntentos
+
+GO
+CREATE PROCEDURE SQLECT.verificarIntentos (@usuario varchar(30),@rol varchar(30))
+AS
+BEGIN
+SELECT ru.cantidadDeIntentos 
+	FROM SQLECT.Roles_Usuarios ru JOIN SQLECT.Roles r ON (ru.fk_rol=r.id_rol)
+								  JOIN SQLECT.Usuarios u ON (u.id_usuario=ru.fk_rol)
+WHERE u.usr_name=@usuario AND r.nombre=@rol
+END
+GO
+
+
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.actualizarIntentosFallidos'))
+DROP PROCEDURE SQLECT.actualizarIntentosFallidos
+
+GO
+CREATE PROCEDURE SQLECT.actualizarIntentosFallidos (@usuario varchar(30),@rol varchar(30))
+AS
+BEGIN 
+UPDATE SQLECT.Roles_Usuarios SET cantidadDeIntentos=cantidadDeIntentos+1
+ WHERE fk_usuario IN (SELECT u.id_usuario FROM SQLECT.Usuarios u JOIN SQLECT.Roles_Usuarios ru ON (ru.fk_usuario=u.id_usuario)
+																 JOIN SQLECT.Roles r ON (r.id_rol=ru.fk_rol)
+									WHERE u.usr_name=@usuario AND r.nombre=@rol)
+	AND fk_rol IN (SELECT r.id_rol FROM SQLECT.Usuarios u JOIN SQLECT.Roles_Usuarios ru ON (ru.fk_usuario=u.id_usuario)
+																 JOIN SQLECT.Roles r ON (r.id_rol=ru.fk_rol)
+									WHERE u.usr_name=@usuario AND r.nombre=@rol)
+END
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.inhabilitarUsuario'))
+DROP PROCEDURE SQLECT.inhabilitarUsuario
+
+GO
+CREATE PROCEDURE SQLECT.inhabilitarUsuario (@usuario varchar(30) ,@rol varchar(30))
+AS
+BEGIN
+UPDATE SQLECT.Usuarios SET estado_usr=0
+WHERE usr_name=@usuario
+
+/* WHERE fk_usuario IN (SELECT u.id_usuario FROM SQLECT.Usuarios u JOIN SQLECT.Roles_Usuarios ru ON (ru.fk_usuario=u.id_usuario)
+																 JOIN SQLECT.Roles r ON (r.id_rol=ru.fk_rol)
+									WHERE u.usr_name=@usuario AND r.nombre=@rol)
+	AND fk_rol IN (SELECT r.id_rol FROM SQLECT.Usuarios u JOIN SQLECT.Roles_Usuarios ru ON (ru.fk_usuario=u.id_usuario)
+																 JOIN SQLECT.Roles r ON (r.id_rol=ru.fk_rol)
+									WHERE u.usr_name=@usuario AND r.nombre=@rol)
+END
+GO*/ --Posible alternativa.
+END
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.resetearCantidadDeIntentos'))
+DROP PROCEDURE SQLECT.resetearCantidadDeIntentos
+
+GO
+CREATE PROCEDURE SQLECT.resetearCantidadDeIntentos (@usuario varchar(30) ,@rol varchar(30))
+AS
+BEGIN
+UPDATE SQLECT.Roles_Usuarios SET cantidadDeIntentos=0
+ WHERE fk_usuario IN (SELECT u.id_usuario FROM SQLECT.Usuarios u JOIN SQLECT.Roles_Usuarios ru ON (ru.fk_usuario=u.id_usuario)
+																 JOIN SQLECT.Roles r ON (r.id_rol=ru.fk_rol)
+									WHERE u.usr_name=@usuario AND r.nombre=@rol)
+	AND fk_rol IN (SELECT r.id_rol FROM SQLECT.Usuarios u JOIN SQLECT.Roles_Usuarios ru ON (ru.fk_usuario=u.id_usuario)
+																 JOIN SQLECT.Roles r ON (r.id_rol=ru.fk_rol)
+									WHERE u.usr_name=@usuario AND r.nombre=@rol)
+END
+GO
+
 
 /* ABM Hoteles */
 
@@ -591,3 +692,34 @@ BEGIN
 END
 
 GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.buscarHotelesDisponibles'))
+DROP PROCEDURE SQLECT.buscarHotelesDisponibles
+
+GO
+
+CREATE PROCEDURE SQLECT.buscarHotelesDisponibles (@usuario varchar(30))
+AS
+BEGIN
+SELECT uh.fk_hotel FROM SQLECT.Usuarios_Hoteles uh JOIN SQLECT.Usuarios u ON (uh.fk_usuario=u.id_usuario)
+												   JOIN SQLECT.Hoteles h ON (h.id_hotel=uh.fk_hotel)
+ WHERE u.usr_name=@usuario AND h.estado_hotel=1	
+END
+GO
+
+/*Listado de funcionalidades de un rol*/
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.listarFuncionalidades'))
+DROP PROCEDURE SQLECT.listarFuncionalidades
+
+GO
+CREATE PROCEDURE SQLECT.listarFuncionalidades(@nombreRol varchar(30))
+AS
+BEGIN
+SELECT f.nombre,f.descripcion 
+   FROM SQLECT.Funcionalidades f JOIN SQLECT.Funcionalidades_Roles fr ON (f.id_funcion=fr.fk_funcion) 
+								 JOIN SQLECT.Roles r ON (r.id_rol=fr.fk_rol) 
+   WHERE r.nombre=@nombreRol AND f.estado_func=1
+END
+GO
+

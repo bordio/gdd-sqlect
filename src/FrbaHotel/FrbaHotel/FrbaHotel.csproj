@@ -143,6 +143,12 @@
     <Compile Include="Login\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Login\MenuDeFuncionalidades.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login\MenuDeFuncionalidades.Designer.cs">
+      <DependentUpon>MenuDeFuncionalidades.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ABM de Cliente\Alta_Cliente.resx">
@@ -157,6 +163,9 @@
     <EmbeddedResource Include="ABM de Hotel\MainHotel.resx">
       <DependentUpon>MainHotel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Usuario\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Listado Estadistico\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -165,6 +174,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Login\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login\MenuDeFuncionalidades.resx">
+      <DependentUpon>MenuDeFuncionalidades.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
