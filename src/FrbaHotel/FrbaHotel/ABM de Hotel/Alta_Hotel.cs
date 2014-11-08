@@ -54,13 +54,6 @@ namespace FrbaHotel.ABM_de_Hotel
             monthCalendar1.Visible = true;
         }
 
-        private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
-        {
-            Fecha_creacion.Clear();
-            Fecha_creacion.AppendText(monthCalendar1.SelectionStart.ToShortDateString());
-            monthCalendar1.Visible = false;
-        }
-
         private void btVolver_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -100,6 +93,13 @@ namespace FrbaHotel.ABM_de_Hotel
                 MessageBox.Show(errores.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 errores = null;
             }
+        }
+
+        private void monthCalendar1_DateSelected(object sender, DateRangeEventArgs e)
+        {
+            Fecha_creacion.Clear();
+            Fecha_creacion.AppendText(monthCalendar1.SelectionStart.ToShortDateString());
+            monthCalendar1.Visible = false;
         }
     }
 }

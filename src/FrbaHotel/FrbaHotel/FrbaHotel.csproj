@@ -80,12 +80,21 @@
     <Compile Include="ABM de Cliente\Modificacion_Cliente.Designer.cs">
       <DependentUpon>Modificacion_Cliente.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM de Habitacion\Form1.cs">
+    <Compile Include="ABM de Habitacion\AltaHabitacionAppModel.cs" />
+    <Compile Include="ABM de Habitacion\FormHabitacion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM de Habitacion\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ABM de Habitacion\FormHabitacion.Designer.cs">
+      <DependentUpon>FormHabitacion.cs</DependentUpon>
     </Compile>
+    <Compile Include="ABM de Habitacion\HabitacionAppModel.cs" />
+    <Compile Include="ABM de Habitacion\MainHabitacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM de Habitacion\MainHabitacion.Designer.cs">
+      <DependentUpon>MainHabitacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM de Habitacion\ModificacionHabitacionAppModel.cs" />
     <Compile Include="ABM de Hotel\AltaHotelAppModel.cs" />
     <Compile Include="ABM de Hotel\Alta_Hotel.cs">
       <SubType>Form</SubType>
@@ -113,6 +122,13 @@
     <Compile Include="ABM de Rol\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ABM de Usuario\AltaUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM de Usuario\AltaUsuario.Designer.cs">
+      <DependentUpon>AltaUsuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM de Usuario\AppModel_Alta_Usuario.cs" />
     <Compile Include="ABM de Usuario\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,6 +142,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Commons\Database\Conexion.cs" />
+    <Compile Include="Commons\FuncionalidadesVarias.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -167,17 +184,28 @@
     <EmbeddedResource Include="ABM de Cliente\Alta_Cliente.resx">
       <DependentUpon>Alta_Cliente.cs</DependentUpon>
     </EmbeddedResource>
+<<<<<<< HEAD
     <EmbeddedResource Include="ABM de Cliente\Baja_Cliente.resx">
       <DependentUpon>Baja_Cliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Cliente\Modificacion_Cliente.resx">
       <DependentUpon>Modificacion_Cliente.cs</DependentUpon>
+=======
+    <EmbeddedResource Include="ABM de Habitacion\FormHabitacion.resx">
+      <DependentUpon>FormHabitacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Habitacion\MainHabitacion.resx">
+      <DependentUpon>MainHabitacion.cs</DependentUpon>
+>>>>>>> 87806b3882470fbb62139c2fd7b2b54f73cab55c
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Hotel\Alta_Hotel.resx">
       <DependentUpon>Alta_Hotel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Hotel\MainHotel.resx">
       <DependentUpon>MainHotel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Usuario\AltaUsuario.resx">
+      <DependentUpon>AltaUsuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Usuario\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

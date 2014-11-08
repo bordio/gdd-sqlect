@@ -122,6 +122,7 @@
             this.comboBoxRol.Size = new System.Drawing.Size(139, 21);
             this.comboBoxRol.TabIndex = 8;
             this.comboBoxRol.Visible = false;
+           
             // 
             // Form1
             // 
