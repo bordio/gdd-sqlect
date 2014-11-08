@@ -682,13 +682,55 @@ BEGIN
 	
 	SET @HotelId = SCOPE_IDENTITY()
 	
-	IF (@all_inclusive=1) INSERT INTO SQLECT.Regimenes_Hoteles(fk_hotel,fk_regimen) VALUES (@HotelId,3)
+	IF (@all_inclusive=	1) INSERT INTO SQLECT.Regimenes_Hoteles(fk_hotel,fk_regimen) VALUES (@HotelId,3)
 	IF (@all_inclusive_moderado=1) INSERT INTO SQLECT.Regimenes_Hoteles(fk_hotel,fk_regimen) VALUES (@HotelId,4)
 	IF (@pension_completa=1) INSERT INTO SQLECT.Regimenes_Hoteles(fk_hotel,fk_regimen) VALUES (@HotelId,1)
 	IF (@media_pension=1) INSERT INTO SQLECT.Regimenes_Hoteles(fk_hotel,fk_regimen) VALUES (@HotelId,2)
 	
 	/*TO DO: Establecer relacion entre administrador y nuevo hotel*/
 	
+END
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.modificacionHotel'))
+DROP PROCEDURE SQLECT.modificacionHotel
+
+GO
+CREATE PROCEDURE SQLECT.modificacionHotel (@id_hotel INT, @nombre VARCHAR(60), @email VARCHAR(255),
+									 @cant_estrellas INT, @fecha_creacion DATETIME = null, @pais VARCHAR(100),
+									 @ciudad VARCHAR(100), @calle VARCHAR(100), @nro_calle INT, 
+									 @all_inclusive INT, @all_inclusive_moderado INT, @pension_completa INT, @media_pension INT)
+AS
+BEGIN
+
+	UPDATE SQLECT.Hoteles SET nombre = @nombre, mail = @email, fecha_creacion = @fecha_creacion,
+	 ciudad = @ciudad, calle = @calle, nro_calle = @nro_calle, cant_estrellas = @cant_estrellas, pais = @pais
+	 WHERE id_hotel=@id_hotel
+	
+	IF (@all_inclusive=0) DELETE FROM SQLECT.Regimenes_Hoteles WHERE fk_hotel=@id_hotel AND fk_regimen=3
+	ELSE 
+		BEGIN
+			IF NOT EXISTS(SELECT fk_hotel,fk_regimen FROM SQLECT.Regimenes_Hoteles WHERE fk_hotel=@id_hotel AND fk_regimen=3)
+				INSERT INTO SQLECT.Regimenes_Hoteles(fk_hotel,fk_regimen) VALUES (@id_hotel,3)
+		END;
+	IF (@all_inclusive_moderado=0) DELETE FROM SQLECT.Regimenes_Hoteles WHERE fk_hotel=@id_hotel AND fk_regimen=4
+	ELSE 
+		BEGIN
+			IF NOT EXISTS(SELECT fk_hotel,fk_regimen FROM SQLECT.Regimenes_Hoteles WHERE fk_hotel=@id_hotel AND fk_regimen=4)
+				INSERT INTO SQLECT.Regimenes_Hoteles(fk_hotel,fk_regimen) VALUES (@id_hotel,4)
+		END;
+	IF (@pension_completa=0) DELETE FROM SQLECT.Regimenes_Hoteles WHERE fk_hotel=@id_hotel AND fk_regimen=1
+	ELSE
+		BEGIN
+			IF NOT EXISTS(SELECT fk_hotel,fk_regimen FROM SQLECT.Regimenes_Hoteles WHERE fk_hotel=@id_hotel AND fk_regimen=1)
+				 INSERT INTO SQLECT.Regimenes_Hoteles(fk_hotel,fk_regimen) VALUES (@id_hotel,1)
+		END;
+	IF (@media_pension=0) DELETE FROM SQLECT.Regimenes_Hoteles WHERE fk_hotel=@id_hotel AND fk_regimen=2
+	ELSE
+		BEGIN
+			IF NOT EXISTS(SELECT fk_hotel,fk_regimen FROM SQLECT.Regimenes_Hoteles WHERE fk_hotel=@id_hotel AND fk_regimen=2)
+				 INSERT INTO SQLECT.Regimenes_Hoteles(fk_hotel,fk_regimen) VALUES (@id_hotel,2)
+		END;
 END
 
 GO
@@ -722,4 +764,3 @@ SELECT f.nombre,f.descripcion
    WHERE r.nombre=@nombreRol AND f.estado_func=1
 END
 GO
-
