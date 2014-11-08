@@ -11,27 +11,23 @@ namespace FrbaHotel.ABM_de_Hotel
 {
     public partial class Alta_Hotel : Form
     {
-        private AltaHotelApplicationModel appModel = new AltaHotelApplicationModel();
+        private HotelAppModel appModel;
         private DataGridView listaHoteles;
+
         public Alta_Hotel(DataGridView lsHoteles)
         {
             listaHoteles = lsHoteles;
             InitializeComponent();
+            appModel = new AltaHotelAppModel();
+            Text = "Alta de Hotel";
         }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
+        public Alta_Hotel(DataGridView lsHoteles, StringBuilder pais, StringBuilder ciudad, StringBuilder calle, Int32 nro_calle)
         {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
+            listaHoteles = lsHoteles;
+            InitializeComponent();
+            appModel = new ModificacionAppModel();
+            Text = "Modificacion de Hotel";
         }
 
         private void btSeleccionarFecha_Click(object sender, EventArgs e)
@@ -44,11 +40,6 @@ namespace FrbaHotel.ABM_de_Hotel
             Fecha_creacion.Clear();
             Fecha_creacion.AppendText(monthCalendar1.SelectionStart.ToShortDateString());
             monthCalendar1.Visible = false;
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void btVolver_Click(object sender, EventArgs e)
@@ -75,14 +66,13 @@ namespace FrbaHotel.ABM_de_Hotel
         private void btAlta_Click(object sender, EventArgs e)
         {
             StringBuilder errores = new StringBuilder();
-            bool retValue = this.appModel.altaHotel(Nombre, Email, Cantidad_Estrellas, Fecha_creacion,
+            bool retValue = this.appModel.actionHotel(Nombre, Email, Cantidad_Estrellas, Fecha_creacion,
                 this.ckAllInclusive.Checked, this.ckAllInclusiveModerado.Checked, this.ckMediaPension.Checked,
                 this.ckPensionCompleta.Checked, Pais, Ciudad, Calle, Nro_calle, errores);
 
             if (retValue)
             {
-                MessageBox.Show("Alta exitosa", "Alta de Hotel", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.listaHoteles.DataSource = ABM_de_Hotel.MainHotel.cargar_lista().DefaultView;
+                this.listaHoteles.DataSource = ABM_de_Hotel.MainHotel.cargar_lista(ABM_de_Hotel.MainHotel.getAllInstances()).DefaultView;
                 this.listaHoteles.AllowUserToAddRows = false;
                 this.Close();
             }

@@ -59,17 +59,13 @@
       <DependentUpon>Alta_Cliente.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM de Cliente\AppModel_Alta_Cliente.cs" />
+    <Compile Include="ABM de Cliente\AppModel_Baja_Cliente.cs" />
+    <Compile Include="ABM de Cliente\AppModel_Base_Cliente.cs" />
     <Compile Include="ABM de Cliente\Baja_Cliente.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ABM de Cliente\Baja_Cliente.Designer.cs">
       <DependentUpon>Baja_Cliente.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ABM de Cliente\Listado_Base.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ABM de Cliente\Listado_Base.Designer.cs">
-      <DependentUpon>Listado_Base.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM de Habitacion\Form1.cs">
       <SubType>Form</SubType>
@@ -77,19 +73,21 @@
     <Compile Include="ABM de Habitacion\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM de Hotel\AltaHotelApplicationModel.cs" />
+    <Compile Include="ABM de Hotel\AltaHotelAppModel.cs" />
     <Compile Include="ABM de Hotel\Alta_Hotel.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ABM de Hotel\Alta_Hotel.Designer.cs">
       <DependentUpon>Alta_Hotel.cs</DependentUpon>
     </Compile>
+    <Compile Include="ABM de Hotel\HotelAppModel.cs" />
     <Compile Include="ABM de Hotel\MainHotel.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ABM de Hotel\MainHotel.Designer.cs">
       <DependentUpon>MainHotel.cs</DependentUpon>
     </Compile>
+    <Compile Include="ABM de Hotel\ModificacionAppModel.cs" />
     <Compile Include="ABM de Regimen\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -133,6 +131,12 @@
     <Compile Include="Listado Estadistico\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Listado Estadistico\ListadoDelTOP5.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Listado Estadistico\ListadoDelTOP5.Designer.cs">
+      <DependentUpon>ListadoDelTOP5.cs</DependentUpon>
+    </Compile>
     <Compile Include="Login\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -144,14 +148,23 @@
     <EmbeddedResource Include="ABM de Cliente\Alta_Cliente.resx">
       <DependentUpon>Alta_Cliente.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ABM de Cliente\Listado_Base.resx">
-      <DependentUpon>Listado_Base.cs</DependentUpon>
+    <EmbeddedResource Include="ABM de Cliente\Baja_Cliente.resx">
+      <DependentUpon>Baja_Cliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Hotel\Alta_Hotel.resx">
       <DependentUpon>Alta_Hotel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Hotel\MainHotel.resx">
       <DependentUpon>MainHotel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Listado Estadistico\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Listado Estadistico\ListadoDelTOP5.resx">
+      <DependentUpon>ListadoDelTOP5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
