@@ -24,8 +24,6 @@ namespace FrbaHotel.ABM_de_Hotel
 
         private void MainHotel_Load(object sender, EventArgs e)
         {
-            
-            lstHoteles.DataSource = cargar_lista(getAllInstances()).DefaultView;
             lstHoteles.AllowUserToAddRows = false;
         }
 
@@ -55,9 +53,19 @@ namespace FrbaHotel.ABM_de_Hotel
 
         private void lstHoteles_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            DataGridViewRow a = lstHoteles.CurrentRow;
-            StringBuilder b = new StringBuilder().AppendFormat("Pais: {0}, Ciudad: {1}, Direccion: {2}",a.Cells[1].Value.ToString(),a.Cells[2].Value.ToString(),a.Cells[3].Value.ToString());
-            //MessageBox.Show(b.ToString());
+            DataGridViewRow celda_actual = lstHoteles.CurrentRow;
+            paisSeleccionado.Remove(0,paisSeleccionado.Length);
+            ciudadSeleccionado.Remove(0, ciudadSeleccionado.Length);
+            calleSeleccionado.Remove(0, calleSeleccionado.Length);
+            nro_calleSeleccionado = 0;
+
+            paisSeleccionado.AppendFormat("{0}", celda_actual.Cells[1].Value.ToString());
+            ciudadSeleccionado.AppendFormat("{0}",celda_actual.Cells[2].Value.ToString());
+            calleSeleccionado.AppendFormat("{0}",celda_actual.Cells[3].Value.ToString());
+            nro_calleSeleccionado = Int32.Parse(celda_actual.Cells[4].Value.ToString());
+
+            modificar.Enabled = true;
+            baja.Enabled = true;
         }
 
         private void agregar_Click(object sender, EventArgs e)

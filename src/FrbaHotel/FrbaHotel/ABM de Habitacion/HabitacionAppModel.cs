@@ -6,32 +6,31 @@ using System.Data;
 using FrbaHotel.Commons.Database;
 using System.Windows.Forms;
 
-namespace FrbaHotel.ABM_de_Hotel
+namespace FrbaHotel.ABM_de_Habitacion
 {
-    public abstract class HotelAppModel
+    public abstract class HabitacionAppModel
     {
         private Conexion connSql = Conexion.Instance;
         protected bool fallo_carga = false;
-        public DataTable rowHotel = new DataTable();
+        public abstract void doActionHabitacion(Control cmb_hotel, Control numero_habitacion, Control piso, Control cmb_tipo_habitacion, Control exterior, Control interior, Control descripcion);
 
-        public abstract void doActionHotel(Control nombre, Control email, Control cant_estrellas, Control fecha_creacion, bool all_inclusive, bool all_inclusive_moderado, bool pension_completa, bool media_pension, Control pais, Control ciudad, Control calle, Control nro_calle);
-
-        public bool actionHotel(Control nombre, Control email, Control cant_estrellas, Control fecha_creacion, bool all_inclusive, bool all_inclusive_moderado, bool pension_completa, bool media_pension, Control pais, Control ciudad, Control calle, Control nro_calle, StringBuilder errores)
+        public bool actionHabitacion(Control cmb_hotel, Control numero_habitacion, Control piso, Control cmb_tipo_habitacion, Control exterior, Control interior, Control descripcion, StringBuilder errores)
         {
-            validarForm(nombre, email, cant_estrellas, fecha_creacion, all_inclusive, all_inclusive_moderado, pension_completa, media_pension, pais, ciudad, pais, nro_calle, errores);
+            validarForm(cmb_hotel, numero_habitacion, piso, cmb_tipo_habitacion, exterior, interior, descripcion, errores);
             if (errores.Length > 0)
             {
                 return false;
             }
             else
             {
-                doActionHotel(nombre, email, cant_estrellas, fecha_creacion, all_inclusive, all_inclusive_moderado, pension_completa, media_pension, pais, ciudad, calle, nro_calle);
+                doActionHabitacion(cmb_hotel, numero_habitacion, piso, cmb_tipo_habitacion, exterior, interior, descripcion);
                 return true;
             }
         }
 
-        public void validarForm(Control nombre, Control email, Control cant_estrellas, Control fecha_creacion, bool all_inclusive, bool all_inclusive_moderado, bool pension_completa, bool media_pension, Control pais, Control ciudad, Control calle, Control nro_calle, StringBuilder errores)
+        public void validarForm(Control cmb_hotel, Control numero_habitacion, Control piso, Control cmb_tipo_habitacion, Control exterior, Control interior, Control descripcion, StringBuilder errores)
         {
+            /*
             if (nombre.Text == "" || email.Text == "" || cant_estrellas.Text == "" || pais.Text == "" || ciudad.Text == "" || calle.Text == "" || nro_calle.Text == "")
             {
                 errores.AppendLine("No debe dejar los campos obligatorios en blanco");
@@ -41,7 +40,7 @@ namespace FrbaHotel.ABM_de_Hotel
             {
                 errores.AppendLine("Email duplicado");
             }
-            if (!fallo_carga && !this.seleccionoAlgunRegimen(all_inclusive,all_inclusive_moderado,pension_completa,media_pension))
+            if (!fallo_carga && !this.seleccionoAlgunRegimen(all_inclusive, all_inclusive_moderado, pension_completa, media_pension))
             {
                 errores.AppendLine("Debe seleccionar algun regimen");
             }
@@ -58,7 +57,7 @@ namespace FrbaHotel.ABM_de_Hotel
                 {
                     errores.AppendLine("El numero de calle debe ser un numero positivo");
                 }
-            }
+            }*/
             fallo_carga = false;
         }
 

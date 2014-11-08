@@ -231,7 +231,7 @@
             this.monthCalendar1.Name = "monthCalendar1";
             this.monthCalendar1.TabIndex = 14;
             this.monthCalendar1.Visible = false;
-            this.monthCalendar1.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar1_DateChanged);
+            this.monthCalendar1.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar1_DateSelected);
             // 
             // label9
             // 
@@ -423,7 +423,6 @@
             this.Controls.Add(this.groupBox2);
             this.Name = "Alta_Hotel";
             this.Text = "Alta_Hotel";
-            this.Load += new System.EventHandler(this.Alta_Hotel_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

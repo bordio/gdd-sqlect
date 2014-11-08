@@ -26,20 +26,32 @@ namespace FrbaHotel.ABM_de_Hotel
         {
             listaHoteles = lsHoteles;
             InitializeComponent();
-            appModel = new ModificacionAppModel();
             Text = "Modificacion de Hotel";
+            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT h.id_hotel,h.nombre,h.mail,h.fecha_creacion,h.pais,h.ciudad,h.calle,h.nro_calle,h.cant_estrellas,rh.fk_regimen FROM SQLECT.Hoteles h, SQLECT.Regimenes_Hoteles rh WHERE h.pais='{0}' AND h.ciudad='{1}' AND h.calle='{2}' AND h.nro_calle={3} AND h.id_hotel=rh.fk_hotel", pais.ToString(), ciudad.ToString(), calle.ToString(), nro_calle);
+            appModel = new ModificacionAppModel(sentence);
+            
+            Nombre.Text = appModel.rowHotel.Rows[0][1].ToString();
+            Email.Text = appModel.rowHotel.Rows[0][2].ToString();
+            Fecha_creacion.Text = appModel.rowHotel.Rows[0][3].ToString();
+            Pais.Text = appModel.rowHotel.Rows[0][4].ToString();
+            Ciudad.Text = appModel.rowHotel.Rows[0][5].ToString();
+            Calle.Text = appModel.rowHotel.Rows[0][6].ToString();
+            Nro_calle.Text = appModel.rowHotel.Rows[0][7].ToString();
+            Cantidad_Estrellas.Text = appModel.rowHotel.Rows[0][8].ToString();
+
+            int i;
+            for (i = 0; i<appModel.rowHotel.Rows.Count;i++) {
+                int fk_regimen = Int32.Parse(appModel.rowHotel.Rows[i][9].ToString());
+                if (fk_regimen==1) ckPensionCompleta.Checked = true;
+                if (fk_regimen==2) ckMediaPension.Checked = true;
+                if (fk_regimen==3) ckAllInclusive.Checked = true;
+                if (fk_regimen==4) ckAllInclusiveModerado.Checked = true;
+            }
         }
 
         private void btSeleccionarFecha_Click(object sender, EventArgs e)
         {
             monthCalendar1.Visible = true;
-        }
-
-        private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
-        {
-            Fecha_creacion.Clear();
-            Fecha_creacion.AppendText(monthCalendar1.SelectionStart.ToShortDateString());
-            monthCalendar1.Visible = false;
         }
 
         private void btVolver_Click(object sender, EventArgs e)
@@ -83,9 +95,11 @@ namespace FrbaHotel.ABM_de_Hotel
             }
         }
 
-        private void Alta_Hotel_Load(object sender, EventArgs e)
+        private void monthCalendar1_DateSelected(object sender, DateRangeEventArgs e)
         {
-
+            Fecha_creacion.Clear();
+            Fecha_creacion.AppendText(monthCalendar1.SelectionStart.ToShortDateString());
+            monthCalendar1.Visible = false;
         }
     }
 }
