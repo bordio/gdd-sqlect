@@ -48,6 +48,8 @@ namespace FrbaHotel.Login
             label1.Text = string.Format("Listado de funcionalidades del rol: {0}", rolAsignado);
             DataTable elListadoDeFuncionalidades = listarFuncionalidades(rolAsignado);
 
+
+
             tablaDeFuncionalidades.DataSource = elListadoDeFuncionalidades.DefaultView;
 
 

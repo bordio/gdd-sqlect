@@ -835,3 +835,21 @@ IF NOT EXISTS (SELECT * FROM SQLECT.Usuarios_Hoteles WHERE fk_hotel=@fkDeHotel A
 END
 GO
 
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.darDeBajaUsuario'))
+DROP PROCEDURE SQLECT.darDeBajaUsuario
+
+GO
+CREATE PROCEDURE SQLECT.darDeBajaUsuario(@usuario varchar(30))
+AS
+BEGIN
+DECLARE @id_usuario int
+ 
+ UPDATE SQLECT.Usuarios SET estado_usr=0 WHERE usr_name=@usuario
+ 
+ SET @id_usuario= (SELECT id_usuario FROM SQLECT.Usuarios WHERE usr_name=@usuario)
+ DELETE FROM SQLECT.Usuarios_Hoteles WHERE fk_usuario=@id_usuario
+ 
+ DELETE FROM SQLECT.Roles_Usuarios WHERE fk_usuario=@id_usuario
+ 
+END
+ GO

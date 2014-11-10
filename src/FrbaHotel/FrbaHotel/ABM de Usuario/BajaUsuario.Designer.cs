@@ -48,20 +48,22 @@
             // usuarioADarDeBaja
             // 
             this.usuarioADarDeBaja.Enabled = false;
+            this.usuarioADarDeBaja.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.usuarioADarDeBaja.Location = new System.Drawing.Point(104, 95);
             this.usuarioADarDeBaja.Name = "usuarioADarDeBaja";
-            this.usuarioADarDeBaja.Size = new System.Drawing.Size(179, 20);
+            this.usuarioADarDeBaja.Size = new System.Drawing.Size(179, 26);
             this.usuarioADarDeBaja.TabIndex = 1;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(27, 186);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(38, 174);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(538, 13);
+            this.label2.Size = new System.Drawing.Size(383, 30);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Si confirma la operacion, se inhabilitara dicho usuario para todos los hoteles qu" +
-                "e tenga a cargo hasta el momento";
+            this.label2.Text = "Si confirma la operacion, se inhabilitara dicho usuario para todos los \r\nhoteles " +
+                "y sus respectivos roles  que tenga a cargo hasta el momento.";
             // 
             // botonConfirmar
             // 
@@ -71,6 +73,7 @@
             this.botonConfirmar.TabIndex = 3;
             this.botonConfirmar.Text = "Confirmar";
             this.botonConfirmar.UseVisualStyleBackColor = true;
+            this.botonConfirmar.Click += new System.EventHandler(this.botonConfirmar_Click);
             // 
             // botonCancelar
             // 
@@ -80,6 +83,7 @@
             this.botonCancelar.TabIndex = 4;
             this.botonCancelar.Text = "Cancelar";
             this.botonCancelar.UseVisualStyleBackColor = true;
+            this.botonCancelar.Click += new System.EventHandler(this.botonCancelar_Click);
             // 
             // BajaUsuario
             // 
