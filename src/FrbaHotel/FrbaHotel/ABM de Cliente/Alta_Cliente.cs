@@ -121,6 +121,11 @@ namespace FrbaHotel.ABM_de_Cliente
             monthCalendar.Visible = true;
         }
 
+        private void Alta_Cliente_Load(object sender, EventArgs e)
+        {
+
+        }
+
     }
 
    

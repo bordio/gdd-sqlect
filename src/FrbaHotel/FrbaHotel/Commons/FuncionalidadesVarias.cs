@@ -81,6 +81,24 @@ namespace FrbaHotel.Commons.FuncionalidadesVarias
             comandoInhabilitarUsuario.CommandText = "SQLECT.inhabilitarUsuario";
             cnn.ejecutarSP(comandoInhabilitarUsuario);
         }
+        public int obtenerIDUsuario(string nombreUsuario)
+        {
+            Conexion cnn = Conexion.Instance;
+
+            System.Data.SqlClient.SqlCommand comandoIDUsuario = new System.Data.SqlClient.SqlCommand();
+
+            comandoIDUsuario.CommandType = CommandType.StoredProcedure;
+            int contador = 0;
+
+            comandoIDUsuario.Parameters.Add("@usuario", SqlDbType.VarChar);
+            comandoIDUsuario.Parameters[contador].Value = nombreUsuario;
+            contador++;
+
+            comandoIDUsuario.CommandText = "SQLECT.obtenerIDUsuario";
+            int idUsuario = cnn.ejecutarEscalarInt(comandoIDUsuario);
+
+            return idUsuario;
+        }
   
     }
 

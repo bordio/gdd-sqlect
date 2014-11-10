@@ -41,7 +41,6 @@
             this.monthCalendar = new System.Windows.Forms.MonthCalendar();
             this.btFechaNac = new System.Windows.Forms.Button();
             this.lblPaisOrigen = new System.Windows.Forms.Label();
-            this.PaisOrigen = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.Fecha = new System.Windows.Forms.TextBox();
             this.labelObligatorio5 = new System.Windows.Forms.Label();
@@ -49,6 +48,7 @@
             this.labelObligatorio3 = new System.Windows.Forms.Label();
             this.labelObligatorio2 = new System.Windows.Forms.Label();
             this.labelObligatorio = new System.Windows.Forms.Label();
+            this.PaisOrigen = new System.Windows.Forms.TextBox();
             this.btCancelar = new System.Windows.Forms.Button();
             this.Numero = new System.Windows.Forms.TextBox();
             this.Email = new System.Windows.Forms.TextBox();
@@ -271,13 +271,6 @@
             this.lblPaisOrigen.TabIndex = 0;
             this.lblPaisOrigen.Text = "Pais de Origen";
             // 
-            // PaisOrigen
-            // 
-            this.PaisOrigen.Location = new System.Drawing.Point(110, 134);
-            this.PaisOrigen.Name = "PaisOrigen";
-            this.PaisOrigen.Size = new System.Drawing.Size(199, 20);
-            this.PaisOrigen.TabIndex = 4;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -346,6 +339,13 @@
             this.labelObligatorio.TabIndex = 1;
             this.labelObligatorio.Text = "* Obligatorio";
             // 
+            // PaisOrigen
+            // 
+            this.PaisOrigen.Location = new System.Drawing.Point(110, 134);
+            this.PaisOrigen.Name = "PaisOrigen";
+            this.PaisOrigen.Size = new System.Drawing.Size(199, 20);
+            this.PaisOrigen.TabIndex = 4;
+            // 
             // btCancelar
             // 
             this.btCancelar.Location = new System.Drawing.Point(349, 393);
@@ -401,6 +401,7 @@
             this.Controls.Add(this.groupBoxDatosPersonales);
             this.Name = "Alta_Cliente";
             this.Text = "Crear/Modificar Cliente";
+            this.Load += new System.EventHandler(this.Alta_Cliente_Load);
             this.groupBoxDatosPersonales.ResumeLayout(false);
             this.groupBoxDatosPersonales.PerformLayout();
             this.ResumeLayout(false);

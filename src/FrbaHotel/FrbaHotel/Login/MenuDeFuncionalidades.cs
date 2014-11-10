@@ -7,15 +7,23 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrbaHotel.Commons.Database;
+using FrbaHotel.Commons.FuncionalidadesVarias;
 
 namespace FrbaHotel.Login
 {
     public partial class MenuDeFuncionalidades : Form
     {
-        public MenuDeFuncionalidades()
+        
+        public MenuDeFuncionalidades(string nombreUsuario)
         {
+
             InitializeComponent();
+            this.usuarioDeSesion = nombreUsuario;
         }
+
+        string usuarioDeSesion;
+
+        private Funcionalidades funcionesVarias = new Funcionalidades();
 
         private void MenuDeFuncionalidades_Load(object sender, EventArgs e)
         {
@@ -24,7 +32,7 @@ namespace FrbaHotel.Login
 
         public void mostrarHotelesACargo(string nombreDeUsuario, string rolElegido)
         {
-           DataTable tabla = buscarHotelesDisponibles(nombreDeUsuario);
+            DataTable tabla = buscarHotelesDisponibles(nombreDeUsuario);
 
             foreach (DataRow dat in tabla.Rows)
             {
@@ -41,7 +49,7 @@ namespace FrbaHotel.Login
             DataTable elListadoDeFuncionalidades = listarFuncionalidades(rolAsignado);
 
             tablaDeFuncionalidades.DataSource = elListadoDeFuncionalidades.DefaultView;
-            
+
 
         }
 
@@ -60,15 +68,11 @@ namespace FrbaHotel.Login
 
             listadoFunc.CommandText = "SQLECT.listarFuncionalidades";
 
-            DataTable table = cnn.ejecutarQueryConSP(listadoFunc); 
+            DataTable table = cnn.ejecutarQueryConSP(listadoFunc);
 
             return table;
         }
 
-        private void listaHotelesHabilitados_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -84,13 +88,12 @@ namespace FrbaHotel.Login
                 else
                     dirigirABMElegida(tareaARealizar.Text);
             }
-            
-            
-       
+
+
+
         }
 
-       
-        
+
         public DataTable buscarHotelesDisponibles(string nombreUsuario)
         {
             Conexion cnn = Conexion.Instance;
@@ -129,11 +132,11 @@ namespace FrbaHotel.Login
 
             switch (funcionalidad)
             {
-                case "Gestionar roles": 
-                   FrbaHotel.ABM_de_Rol.Form1 gestionarRoles = new FrbaHotel.ABM_de_Rol.Form1();
-                   gestionarRoles.Show();
+                case "Gestionar roles":
+                    FrbaHotel.ABM_de_Rol.Form1 gestionarRoles = new FrbaHotel.ABM_de_Rol.Form1();
+                    gestionarRoles.Show();
                     break;
-                case "Gestionar usuarios": 
+                case "Gestionar usuarios":
                     FrbaHotel.ABM_de_Usuario.Form1 gestionarUsuarios = new FrbaHotel.ABM_de_Usuario.Form1();
                     gestionarUsuarios.Show();
                     break;
@@ -169,11 +172,22 @@ namespace FrbaHotel.Login
                     FrbaHotel.Listado_Estadistico.Form1 listadoEstadistico = new FrbaHotel.Listado_Estadistico.Form1();
                     listadoEstadistico.Show();
                     break;
-             }
+
+            }
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            FrbaHotel.Login.ModificacionContraseña modificarContraseña = new FrbaHotel.Login.ModificacionContraseña(usuarioDeSesion);
+            modificarContraseña.Show();
+
 
         }
 
        
+
+
     }
 
 

@@ -266,6 +266,7 @@ INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar consum
 INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Facturación','Permite registrar facturas')
 INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Listado estadístico','Permite acceder a datos estadísticos, y emitir informes')
 
+
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,1) /*Funcionalidades del Administrador General*/
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,2)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,3)
@@ -276,11 +277,13 @@ INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,7)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,8)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,9)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,10)
+
 																		/*Funcionalidades del Recepcionista*/
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(2,3)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(2,6)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(2,7)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(2,8)
+
 																		/*Funcionalidades del Administrador*/
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,3)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,4)
@@ -289,6 +292,8 @@ INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,6)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,7)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,8)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,9)
+
+
 
 
 
@@ -589,6 +594,41 @@ BEGIN
 		WHERE r.nombre=@rol AND u.usr_name=@usuario AND u.pssword=@password AND u.estado_usr=1 AND r.estado_rol=1 AND ru.cantidadDeIntentos<3
 END
 GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.validarPassword'))
+DROP PROCEDURE SQLECT.validarPassword
+
+GO
+CREATE PROCEDURE SQLECT.validarPassword(@usuario varchar(30), @password char(64))
+AS
+BEGIN
+ SELECT u.id_usuario FROM SQLECT.Usuarios u WHERE u.usr_name=@usuario AND u.pssword=@password
+ END
+ GO
+ 
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.modificarPassword'))
+DROP PROCEDURE SQLECT.modificarPassword
+
+GO
+CREATE PROCEDURE SQLECT.modificarPassword(@usuario varchar(30),@passwordNueva char(64))
+AS
+BEGIN
+UPDATE SQLECT.Usuarios  SET pssword=@passwordNueva WHERE usr_name=@usuario
+END
+GO 
+
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.obtenerIDUsuario'))
+DROP PROCEDURE SQLECT.obtenerIDUsuario
+
+GO
+CREATE PROCEDURE SQLECT.obtenerIDUsuario (@usuario varchar(30))
+AS
+BEGIN 
+ SELECT u.id_usuario FROM SQLECT.Usuarios u WHERE u.usr_name=@usuario
+ END
+ GO
+
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.verificarIntentos'))
 DROP PROCEDURE SQLECT.verificarIntentos
