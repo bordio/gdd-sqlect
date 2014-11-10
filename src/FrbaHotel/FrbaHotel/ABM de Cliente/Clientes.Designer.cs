@@ -1,6 +1,6 @@
 ﻿namespace FrbaHotel.ABM_de_Cliente
 {
-    partial class Form1
+    partial class Clientes
     {
         /// <summary>
         /// Required designer variable.

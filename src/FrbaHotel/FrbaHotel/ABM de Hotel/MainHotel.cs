@@ -24,7 +24,12 @@ namespace FrbaHotel.ABM_de_Hotel
 
         private void MainHotel_Load(object sender, EventArgs e)
         {
+           
+            
+            lstHoteles.DataSource = cargar_lista(getAllInstances()).DefaultView;
             lstHoteles.AllowUserToAddRows = false;
+            lstHoteles.AllowUserToAddRows = false;
+
         }
 
         public static StringBuilder getAllInstances()

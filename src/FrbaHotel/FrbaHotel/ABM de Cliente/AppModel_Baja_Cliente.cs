@@ -8,11 +8,11 @@ using System.Windows.Forms;
 
 namespace FrbaHotel.ABM_de_Cliente
 {
-    class AppModel_Alta_Cliente : AppModel_Base_Cliente
+    class AppModel_Baja_Cliente : AppModel_Base_Cliente
     {
         private Conexion sqlconexion = Conexion.Instance;
 
-        public override void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, string fecha_Nac, string nacionalidad, string pasaporte_Nro)
+        public override void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, String fecha_Nac, string nacionalidad, string pasaporte_Nro)
         {
                 Conexion conexion = Conexion.Instance;
                 System.Data.SqlClient.SqlCommand comandoACliente = new System.Data.SqlClient.SqlCommand();
@@ -40,10 +40,10 @@ namespace FrbaHotel.ABM_de_Cliente
                 comandoACliente.Parameters[8].Value = nacionalidad;
                 comandoACliente.Parameters[9].Value = pasaporte_Nro;
 
-                comandoACliente.CommandText = "SQLECT.altaCliente";
+                comandoACliente.CommandText = "SQLECT.bajaCliente";
                 conexion.ejecutarQueryConSP(comandoACliente);
 
-                MessageBox.Show("Alta exitosa", "Alta de Cliente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Baja exitosa", "Baja de Cliente", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

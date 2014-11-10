@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -59,17 +59,26 @@
       <DependentUpon>Alta_Cliente.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM de Cliente\AppModel_Alta_Cliente.cs" />
+    <Compile Include="ABM de Cliente\AppModel_Baja_Cliente.cs" />
+    <Compile Include="ABM de Cliente\AppModel_Base_Cliente.cs" />
+    <Compile Include="ABM de Cliente\AppModel_Modificacion_Cliente.cs" />
     <Compile Include="ABM de Cliente\Baja_Cliente.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ABM de Cliente\Baja_Cliente.Designer.cs">
       <DependentUpon>Baja_Cliente.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM de Cliente\Form1.cs">
+    <Compile Include="ABM de Cliente\Clientes.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM de Cliente\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ABM de Cliente\Clientes.Designer.cs">
+      <DependentUpon>Clientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM de Cliente\Modificacion_Cliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM de Cliente\Modificacion_Cliente.Designer.cs">
+      <DependentUpon>Modificacion_Cliente.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM de Habitacion\AltaHabitacionAppModel.cs" />
     <Compile Include="ABM de Habitacion\FormHabitacion.cs">
@@ -180,6 +189,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ABM de Cliente\Alta_Cliente.resx">
       <DependentUpon>Alta_Cliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Cliente\Baja_Cliente.resx">
+      <DependentUpon>Baja_Cliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Cliente\Modificacion_Cliente.resx">
+      <DependentUpon>Modificacion_Cliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Habitacion\FormHabitacion.resx">
       <DependentUpon>FormHabitacion.cs</DependentUpon>

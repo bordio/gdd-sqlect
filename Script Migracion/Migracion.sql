@@ -795,4 +795,3 @@ IF NOT EXISTS (SELECT * FROM SQLECT.Usuarios_Hoteles WHERE fk_hotel=@fkDeHotel A
 END
 GO
 
-
