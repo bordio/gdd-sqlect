@@ -131,6 +131,7 @@
             // 
             // hotelDondeTrabaja
             // 
+            this.hotelDondeTrabaja.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.hotelDondeTrabaja.Location = new System.Drawing.Point(219, 356);
             this.hotelDondeTrabaja.Name = "hotelDondeTrabaja";
             this.hotelDondeTrabaja.Size = new System.Drawing.Size(100, 22);
@@ -469,6 +470,7 @@
             this.password.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.password.Location = new System.Drawing.Point(103, 67);
             this.password.Name = "password";
+            this.password.PasswordChar = '•';
             this.password.Size = new System.Drawing.Size(150, 21);
             this.password.TabIndex = 1;
             // 

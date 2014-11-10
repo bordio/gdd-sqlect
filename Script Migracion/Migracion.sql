@@ -192,7 +192,7 @@ CREATE TABLE SQLECT.Habitaciones_Reservas (
 
 CREATE TABLE SQLECT.Empleados (
 	id_empleado smallint identity(1,1) PRIMARY KEY,
-	dni_tipo tinyint,
+	dni_tipo char(4),
 	dni_nro integer,
 	nombre varchar(30),
 	apellido varchar(60),
@@ -769,11 +769,11 @@ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.altaU
 DROP PROCEDURE SQLECT.altaUsuario
 
 GO
-CREATE PROCEDURE SQLECT.altaUsuario(@username varchar(30), @password varchar(64),@rol varchar(30),@nombre varchar(30),@apellido varchar(60),@tipoDoc tinyint, @numeroDoc int, @mail varchar(255),@telefono int,@direccion varchar(90),@fechaNacimiento datetime,@hotelDesempeño varchar(60))
+CREATE PROCEDURE SQLECT.altaUsuario(@username varchar(30), @password varchar(64),@rol varchar(30),@nombre varchar(30),@apellido varchar(60),@tipoDoc char(4), @numeroDoc int, @mail varchar(255),@telefono int,@direccion varchar(90),@fechaNacimiento datetime,@hotelDesempeño varchar(60))
 AS
 BEGIN
 
-DECLARE @fkDeEmpleado int,@fkDeUsuario int, @fkDeRol int, @fkDeHotel int
+DECLARE @fkDeEmpleado int,@fkDeUsuario int, @fkDeRol tinyint, @fkDeHotel int
 
 INSERT INTO SQLECT.Empleados (dni_tipo,dni_nro,nombre,apellido,email,telefono,direccion,fecha_nacimiento)
                       VALUES (@tipoDoc,@numeroDoc,@nombre,@apellido,@mail,@telefono,@direccion,@fechaNacimiento)

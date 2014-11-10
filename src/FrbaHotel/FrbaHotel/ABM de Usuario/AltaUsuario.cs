@@ -62,7 +62,7 @@ namespace FrbaHotel.ABM_de_Usuario
             //Campos obligatorios
             bool usuarioOK = this.funcionesUsuarios.validarNoVacio(username, mensajeValidacion);
             this.funcionesUsuarios.validarNoVacio(password, mensajeValidacion);
-            this.funcionesUsuarios.validarComboVacio(comboRol, mensajeValidacion);
+            bool comboRolOK = this.funcionesUsuarios.validarComboVacio(comboRol, mensajeValidacion);
             this.funcionesUsuarios.validarNoVacio(nombre, mensajeValidacion);
             this.funcionesUsuarios.validarNoVacio(apellido, mensajeValidacion);
             bool tipoDniOK = this.funcionesUsuarios.validarComboVacio(comboTipoDNI, mensajeValidacion);
@@ -72,7 +72,7 @@ namespace FrbaHotel.ABM_de_Usuario
             this.funcionesUsuarios.validarNoVacio(direccion, mensajeValidacion);
             this.funcionesUsuarios.validarNoVacio(fechaNacimiento, mensajeValidacion);
             this.funcionesUsuarios.validarNoVacio(hotelDondeTrabaja, mensajeValidacion);
-            bool usuarioConRolExistente = funciones.chequearExistenciaDeUsuarioYRol(username.Text,comboRol.SelectedItem.ToString());
+            
 
             //Control de longitudes
             this.funcionesUsuarios.validarLongitud(nombre, 30, mensajeValidacion);
@@ -101,10 +101,20 @@ namespace FrbaHotel.ABM_de_Usuario
             {
                 this.funcionesUsuarios.validarEmail(mail, mensajeValidacion); 
             }
-            if (usuarioConRolExistente)
+            if (!comboRolOK)
+                mensajeValidacion.AppendLine("Debe elegir un rol");
+            else
             {
-                mensajeValidacion.AppendLine(string.Format(" Ya existe el usuario {0} con el rol de {1}",username.Text,comboRol.SelectedItem.ToString()));
+                bool usuarioConRolExistente = funciones.chequearExistenciaDeUsuarioYRol(username.Text, comboRol.SelectedItem.ToString());
+                if (usuarioConRolExistente)
+                {
+                    mensajeValidacion.AppendLine(string.Format(" Ya existe el usuario {0} con el rol de {1}", username.Text, comboRol.SelectedItem.ToString()));
+                }
+
             }
+            if (!tipoDniOK)
+                mensajeValidacion.AppendLine("Debe elegir un tipo de Documento");
+            
 
         //Si hay algún error, se muestra el mensaje.
             if (mensajeValidacion.Length > 0)

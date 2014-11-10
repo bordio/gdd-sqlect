@@ -32,7 +32,7 @@ namespace FrbaHotel.ABM_de_Usuario
                 return true;
             else
             {
-                mensajeValidacion.AppendLine(string.Format(" Debe elegir una opcion de la lista {0}", combo.Name));
+               
                 return false;
             }
         }
@@ -74,7 +74,7 @@ namespace FrbaHotel.ABM_de_Usuario
         public void validarDNI(string tipo, Control numero, StringBuilder mensajeValidacion)
         {
             StringBuilder query = new StringBuilder();
-            query.AppendFormat("SELECT * FROM SQLECT.Empleados e WHERE e.dni_tipo='{0}' AND e.dni_nro='{1}'", tipo, numero.Text);
+            query.AppendFormat("SELECT * FROM SQLECT.Empleados e WHERE e.dni_tipo='{0}' AND e.dni_nro={1}", tipo, numero.Text);
             if (this.sqlconexion.ejecutarQuery(query.ToString()).Rows.Count > 0)
             {
                 mensajeValidacion.AppendLine(string.Format(" El tipo de dni {0} con el numero {1} ya existe.", tipo, numero.Text));
@@ -93,7 +93,7 @@ namespace FrbaHotel.ABM_de_Usuario
 
 
 
-        public bool altaUsuario(string username, string password, string rol, string nombre, string apellido, string tipoDoc, int numeroDoc, string mail, int telefono, string direccion, string fechaDeNacimiento, string hotelDeDesempeño)
+        public bool altaUsuario(string username, string password, string rol, string nombre, string apellido, string tipoDoc, int numeroDoc, string mail, int telefono, string direccion,String fechaDeNacimiento, string hotelDeDesempeño)
         {
             Conexion conexion = Conexion.Instance;
             System.Data.SqlClient.SqlCommand comandoAUsuario = new System.Data.SqlClient.SqlCommand();
@@ -116,8 +116,8 @@ namespace FrbaHotel.ABM_de_Usuario
 
             comandoAUsuario.Parameters[0].Value = username;
             comandoAUsuario.Parameters[1].Value = passHasheada;
-            comandoAUsuario.Parameters[3].Value = rol;
-            comandoAUsuario.Parameters[2].Value = nombre;
+            comandoAUsuario.Parameters[2].Value = rol;
+            comandoAUsuario.Parameters[3].Value = nombre;
             comandoAUsuario.Parameters[4].Value = apellido;
             comandoAUsuario.Parameters[5].Value = tipoDoc;
             comandoAUsuario.Parameters[6].Value = numeroDoc;

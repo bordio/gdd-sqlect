@@ -80,6 +80,7 @@ namespace FrbaHotel.ABM_de_Hotel
             CantidadEstrellas.ResetText();
             Ciudad.ResetText();
             Pais.ResetText();
+            lstHoteles.DataSource = null;
         }
 
         private void button2_Click(object sender, EventArgs e)

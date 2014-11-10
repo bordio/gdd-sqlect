@@ -146,7 +146,7 @@ namespace FrbaHotel.Login
                     gestionarHoteles.Show();
                     break;
                 case "Gestionar habitaciones":
-                    FrbaHotel.ABM_de_Habitacion.Form1 gestionarHabitaciones = new FrbaHotel.ABM_de_Habitacion.Form1();
+                    FrbaHotel.ABM_de_Habitacion.MainHabitacion gestionarHabitaciones = new FrbaHotel.ABM_de_Habitacion.MainHabitacion();
                     gestionarHabitaciones.Show();
                     break;
                 case "Generar/modificar reservas":

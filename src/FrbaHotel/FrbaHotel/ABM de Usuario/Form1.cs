@@ -20,7 +20,9 @@ namespace FrbaHotel.ABM_de_Usuario
         {
             InitializeComponent();
         }
-      private AppModel_Alta_Usuario funcionesUsuarios = new AppModel_Alta_Usuario();
+
+        private StringBuilder usuarioSeleccionado = new StringBuilder();
+        private AppModel_Alta_Usuario funcionesUsuarios = new AppModel_Alta_Usuario();
         
     private void Form1_Load(object sender, EventArgs e)
         {
@@ -38,7 +40,7 @@ namespace FrbaHotel.ABM_de_Usuario
         }
         public static StringBuilder getAllInstances()
         {
-            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT u.usr_name 'Nombre', u.estado_usr 'Estado',r.nombre 'Rol' FROM SQLECT.Usuarios u JOIN SQLECT.Roles_Usuarios ru ON (u.id_usuario=ru.fk_usuario) JOIN SQLECT.Roles r ON (r.id_rol = ru.fk_rol)");
+            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT u.usr_name 'Nombre', r.nombre 'Rol',u.estado_usr 'Estado',h.nombre 'Hotel a cargo' FROM SQLECT.Usuarios u JOIN SQLECT.Roles_Usuarios ru ON (u.id_usuario=ru.fk_usuario) JOIN SQLECT.Roles r ON (r.id_rol = ru.fk_rol) JOIN SQLECT.Usuarios_Hoteles uh ON (u.id_usuario=uh.fk_usuario) JOIN SQLECT.Hoteles h ON (h.id_hotel=uh.fk_hotel)");
             return sentence;
         }
 
@@ -100,6 +102,28 @@ namespace FrbaHotel.ABM_de_Usuario
                 formularioAlta.Show();
             }
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            BajaUsuario formularioBaja = new BajaUsuario(usuarioSeleccionado.ToString());
+            formularioBaja.Show();
+        }
+
+        private void tablaDeUsuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridViewRow registro_actual = tablaDeUsuarios.CurrentRow;
+            usuarioSeleccionado.Remove(0, usuarioSeleccionado.Length);
+
+            usuarioSeleccionado.AppendFormat("{0}", registro_actual.Cells[0].Value.ToString());
+
+            botonModificar.Enabled = true;
+            botonBaja.Enabled = true;
+
+
+        }
+
+
+      
 
 
     }
