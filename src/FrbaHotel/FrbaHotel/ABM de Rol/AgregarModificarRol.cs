@@ -13,21 +13,33 @@ namespace FrbaHotel.ABM_de_Rol
 {
     public partial class AgregarModificarRol : Form
     {
-        public AgregarModificarRol()
+        private bool update;
+        private Int32 idRol;
+
+        public AgregarModificarRol(Int32 elIdRol)
         {
             InitializeComponent();
-        } 
+
+            idRol = elIdRol;
+            update = true;
+        }
+
+        public AgregarModificarRol(string nombre, string descripcion)
+        {
+            InitializeComponent();
+
+            txtNombre.Text = nombre;
+            txtDescrip.Text = descripcion;
+            getFunciones();
+            update = false;
+        }
 
         private void AgregarModificarRol_Load(object sender, EventArgs e)
         {
-            List<string> funcs = getFunciones();
-            for (int i = 0; i < funcs.Count; i++)
-            {
-                checkedListBox1.Items.Add(funcs[i]);    
-            }
+            getFunciones();
         }
 
-        public List<string> getFunciones()
+        public void getFunciones()
         {
            List<string> funcs = new List<string>();
 
@@ -35,10 +47,8 @@ namespace FrbaHotel.ABM_de_Rol
 
            for (int i = 0; i < tabla.Rows.Count; i++)
            {
-               funcs.Add(tabla.Rows[i]["Funcion"].ToString());
+               chkLstFunc.Items.Add(tabla.Rows[i]["Funcion"].ToString());
            }
-
-           return funcs;
        }
     }
 }

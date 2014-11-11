@@ -62,8 +62,11 @@
             this.gridRoles.MultiSelect = false;
             this.gridRoles.Name = "gridRoles";
             this.gridRoles.ReadOnly = true;
-            this.gridRoles.Size = new System.Drawing.Size(364, 248);
+            this.gridRoles.RowHeadersVisible = false;
+            this.gridRoles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridRoles.Size = new System.Drawing.Size(395, 248);
             this.gridRoles.TabIndex = 0;
+            this.gridRoles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridRoles_CellContentClick);
             // 
             // bttnModificar
             // 
@@ -74,6 +77,7 @@
             this.bttnModificar.TabIndex = 2;
             this.bttnModificar.Text = "Modificar";
             this.bttnModificar.UseVisualStyleBackColor = true;
+            this.bttnModificar.Click += new System.EventHandler(this.bttnModificar_Click);
             // 
             // bttnNuevo
             // 
@@ -116,20 +120,20 @@
             this.gridFunciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridFunciones.ColumnHeadersVisible = false;
             this.gridFunciones.Enabled = false;
-            this.gridFunciones.Location = new System.Drawing.Point(383, 32);
+            this.gridFunciones.Location = new System.Drawing.Point(413, 32);
             this.gridFunciones.MultiSelect = false;
             this.gridFunciones.Name = "gridFunciones";
             this.gridFunciones.ReadOnly = true;
             this.gridFunciones.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.gridFunciones.RowHeadersVisible = false;
-            this.gridFunciones.Size = new System.Drawing.Size(211, 248);
+            this.gridFunciones.Size = new System.Drawing.Size(181, 248);
             this.gridFunciones.TabIndex = 5;
             // 
             // lblFuncionalidades
             // 
             this.lblFuncionalidades.AutoSize = true;
             this.lblFuncionalidades.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFuncionalidades.Location = new System.Drawing.Point(379, 9);
+            this.lblFuncionalidades.Location = new System.Drawing.Point(409, 9);
             this.lblFuncionalidades.Name = "lblFuncionalidades";
             this.lblFuncionalidades.Size = new System.Drawing.Size(140, 20);
             this.lblFuncionalidades.TabIndex = 6;
