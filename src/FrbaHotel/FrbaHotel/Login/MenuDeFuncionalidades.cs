@@ -130,7 +130,7 @@ namespace FrbaHotel.Login
             switch (funcionalidad)
             {
                 case "Gestionar roles": 
-                   FrbaHotel.ABM_de_Rol.Form1 gestionarRoles = new FrbaHotel.ABM_de_Rol.Form1();
+                   FrbaHotel.ABM_de_Rol.MainRol gestionarRoles = new FrbaHotel.ABM_de_Rol.MainRol();
                    gestionarRoles.Show();
                     break;
                 case "Gestionar usuarios": 
