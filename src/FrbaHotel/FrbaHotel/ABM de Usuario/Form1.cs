@@ -23,6 +23,7 @@ namespace FrbaHotel.ABM_de_Usuario
 
         private StringBuilder usuarioSeleccionado = new StringBuilder();
         private AppModel_Alta_Usuario funcionesUsuarios = new AppModel_Alta_Usuario();
+        private StringBuilder estadoDelUsuario = new StringBuilder();
         
     private void Form1_Load(object sender, EventArgs e)
         {
@@ -40,7 +41,7 @@ namespace FrbaHotel.ABM_de_Usuario
         }
         public static StringBuilder getAllInstances()
         {
-            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT u.usr_name 'Nombre', r.nombre 'Rol',u.estado_usr 'Estado',h.nombre 'Hotel a cargo' FROM SQLECT.Usuarios u JOIN SQLECT.Roles_Usuarios ru ON (u.id_usuario=ru.fk_usuario) JOIN SQLECT.Roles r ON (r.id_rol = ru.fk_rol) JOIN SQLECT.Usuarios_Hoteles uh ON (u.id_usuario=uh.fk_usuario) JOIN SQLECT.Hoteles h ON (h.id_hotel=uh.fk_hotel)");
+            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT u.usr_name 'Nombre', r.nombre 'Rol',u.estado_usr 'Estado',h.nombre 'Hotel a cargo' FROM SQLECT.Usuarios u LEFT JOIN SQLECT.Roles_Usuarios ru ON (u.id_usuario=ru.fk_usuario) LEFT JOIN SQLECT.Roles r ON (r.id_rol = ru.fk_rol) LEFT JOIN SQLECT.Usuarios_Hoteles uh ON (u.id_usuario=uh.fk_usuario) LEFT JOIN SQLECT.Hoteles h ON (h.id_hotel=uh.fk_hotel)");
             return sentence;
         }
 
@@ -51,6 +52,8 @@ namespace FrbaHotel.ABM_de_Usuario
             radioHabilitado.Checked = false;
             radioInhabilitado.Checked = false;
             tablaDeUsuarios.DataSource = null;
+            botonBaja.Enabled = false;
+            botonModificar.Enabled = false;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -83,8 +86,7 @@ namespace FrbaHotel.ABM_de_Usuario
         public void cargarLista(StringBuilder consulta)
         {
             DataTable tabla = Conexion.Instance.ejecutarQuery(consulta.ToString());
-
-            tablaDeUsuarios.DataSource = tabla.DefaultView;
+             tablaDeUsuarios.DataSource = tabla.DefaultView;
 
             
         }
@@ -93,7 +95,7 @@ namespace FrbaHotel.ABM_de_Usuario
         {
             if (funcionesUsuarios.nombresHotelesVacios())
             {
-                MessageBox.Show("Error", "Todos los hoteles están sin nombre", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Todos los hoteles están sin nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else
             {
@@ -105,26 +107,29 @@ namespace FrbaHotel.ABM_de_Usuario
 
         private void button4_Click(object sender, EventArgs e)
         {
-            BajaUsuario formularioBaja = new BajaUsuario(usuarioSeleccionado.ToString());
-            formularioBaja.Show();
+            if (estadoDelUsuario.ToString() == "1")
+            {
+                BajaUsuario formularioBaja = new BajaUsuario(usuarioSeleccionado.ToString());
+                formularioBaja.Show();
+            }
+            else
+                MessageBox.Show("El usuario ya se encuentra dado de baja");
         }
 
         private void tablaDeUsuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             DataGridViewRow registro_actual = tablaDeUsuarios.CurrentRow;
             usuarioSeleccionado.Remove(0, usuarioSeleccionado.Length);
+            estadoDelUsuario.Remove(0,estadoDelUsuario.Length);
 
             usuarioSeleccionado.AppendFormat("{0}", registro_actual.Cells[0].Value.ToString());
+            estadoDelUsuario.AppendFormat("{0}", registro_actual.Cells[2].Value.ToString());
 
             botonModificar.Enabled = true;
             botonBaja.Enabled = true;
 
 
-        }
-
-
-      
-
+        }      
 
     }
 }

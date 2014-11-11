@@ -55,12 +55,13 @@ namespace FrbaHotel.Login
                       if (validarUsuario(textUsuario.Text, passHasheada, comboBoxRol.SelectedItem.ToString())) /*Me fijo si ingreso la pass correctamente*/
                       {
                           limpiarCantidadDeIntentos(textUsuario.Text, comboBoxRol.SelectedItem.ToString());
-                          Login.MenuDeFuncionalidades listadoDeFuncionalidades = new MenuDeFuncionalidades();
+                         
+                          
+                          Login.MenuDeFuncionalidades listadoDeFuncionalidades = new MenuDeFuncionalidades(textUsuario.Text);
                           listadoDeFuncionalidades.Show();
                           listadoDeFuncionalidades.mostrarHotelesACargo(textUsuario.Text,comboBoxRol.SelectedItem.ToString());
                           
                           
-
                       }
                       else
                       {
