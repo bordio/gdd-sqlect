@@ -116,11 +116,17 @@
     <Compile Include="ABM de Regimen\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM de Rol\Form1.cs">
+    <Compile Include="ABM de Rol\AgregarModificarRol.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM de Rol\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ABM de Rol\AgregarModificarRol.Designer.cs">
+      <DependentUpon>AgregarModificarRol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM de Rol\MainRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM de Rol\MainRol.Designer.cs">
+      <DependentUpon>MainRol.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM de Usuario\AltaUsuario.cs">
       <SubType>Form</SubType>
@@ -220,6 +226,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Hotel\MainHotel.resx">
       <DependentUpon>MainHotel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Rol\AgregarModificarRol.resx">
+      <DependentUpon>AgregarModificarRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Rol\MainRol.resx">
+      <DependentUpon>MainRol.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Usuario\AltaUsuario.resx">
       <DependentUpon>AltaUsuario.cs</DependentUpon>
