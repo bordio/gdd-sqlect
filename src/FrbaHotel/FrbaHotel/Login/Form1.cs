@@ -41,7 +41,7 @@ namespace FrbaHotel.Login
                 {
                     if (!funciones.chequearExistenciaDeUsuarioYRol(textUsuario.Text,comboBoxRol.SelectedItem.ToString())) /*Chequeo si existe el usuario y su rol asignado*/
                     {
-                        MessageBox.Show("Usuario inexistente", "Usuario invalido", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MessageBox.Show("Usuario incorrecto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
                     }
                     else

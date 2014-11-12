@@ -207,6 +207,7 @@
             this.botonModificar.TabIndex = 7;
             this.botonModificar.Text = "Modificación";
             this.botonModificar.UseVisualStyleBackColor = true;
+            this.botonModificar.Click += new System.EventHandler(this.botonModificar_Click);
             // 
             // label5
             // 

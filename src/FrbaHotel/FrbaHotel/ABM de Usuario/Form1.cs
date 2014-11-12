@@ -24,6 +24,19 @@ namespace FrbaHotel.ABM_de_Usuario
         private StringBuilder usuarioSeleccionado = new StringBuilder();
         private AppModel_Alta_Usuario funcionesUsuarios = new AppModel_Alta_Usuario();
         private StringBuilder estadoDelUsuario = new StringBuilder();
+        private StringBuilder hotelSeleccionado = new StringBuilder();
+        private StringBuilder nombre = new StringBuilder();
+        private StringBuilder apellido = new StringBuilder();
+        private StringBuilder mail = new StringBuilder();
+        private StringBuilder tipoDoc = new StringBuilder();
+        private StringBuilder numeroDoc = new StringBuilder();
+        private StringBuilder telefono = new StringBuilder();
+        private StringBuilder direccion = new StringBuilder();
+        private StringBuilder fechaNacimiento = new StringBuilder();
+        private StringBuilder rolSeleccionado = new StringBuilder();
+
+
+
         
     private void Form1_Load(object sender, EventArgs e)
         {
@@ -41,7 +54,7 @@ namespace FrbaHotel.ABM_de_Usuario
         }
         public static StringBuilder getAllInstances()
         {
-            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT u.usr_name 'Nombre', r.nombre 'Rol',u.estado_usr 'Estado',h.nombre 'Hotel a cargo' FROM SQLECT.Usuarios u LEFT JOIN SQLECT.Roles_Usuarios ru ON (u.id_usuario=ru.fk_usuario) LEFT JOIN SQLECT.Roles r ON (r.id_rol = ru.fk_rol) LEFT JOIN SQLECT.Usuarios_Hoteles uh ON (u.id_usuario=uh.fk_usuario) LEFT JOIN SQLECT.Hoteles h ON (h.id_hotel=uh.fk_hotel)");
+            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT u.usr_name 'Usuario', r.nombre 'Rol',u.estado_usr 'Estado',h.nombre 'Hotel a cargo',e.nombre'Nombre',e.apellido'Apellido',e.email'Mail',e.dni_tipo'Tipo Doc',e.dni_nro 'Numero Doc',e.telefono'Telefono',e.direccion'Direccion',e.fecha_nacimiento'Fecha' FROM SQLECT.Usuarios u LEFT JOIN SQLECT.Roles_Usuarios ru ON (u.id_usuario=ru.fk_usuario) LEFT JOIN SQLECT.Roles r ON (r.id_rol = ru.fk_rol) LEFT JOIN SQLECT.Usuarios_Hoteles uh ON (u.id_usuario=uh.fk_usuario) LEFT JOIN SQLECT.Hoteles h ON (h.id_hotel=uh.fk_hotel) LEFT JOIN SQLECT.Empleados e ON (e.id_empleado=u.fk_empleado) ");
             return sentence;
         }
 
@@ -109,6 +122,7 @@ namespace FrbaHotel.ABM_de_Usuario
         {
             if (estadoDelUsuario.ToString() == "1")
             {
+                tablaDeUsuarios.DataSource = null;
                 BajaUsuario formularioBaja = new BajaUsuario(usuarioSeleccionado.ToString());
                 formularioBaja.Show();
             }
@@ -121,15 +135,49 @@ namespace FrbaHotel.ABM_de_Usuario
             DataGridViewRow registro_actual = tablaDeUsuarios.CurrentRow;
             usuarioSeleccionado.Remove(0, usuarioSeleccionado.Length);
             estadoDelUsuario.Remove(0,estadoDelUsuario.Length);
+            hotelSeleccionado.Remove(0, hotelSeleccionado.Length);
+            nombre.Remove(0, nombre.Length);
+            apellido.Remove(0, apellido.Length);
+            tipoDoc.Remove(0, tipoDoc.Length);
+            numeroDoc.Remove(0, numeroDoc.Length);
+            telefono.Remove(0, telefono.Length);
+            direccion.Remove(0, direccion.Length);
+            fechaNacimiento.Remove(0, fechaNacimiento.Length);
+            rolSeleccionado.Remove(0, rolSeleccionado.Length);
+           
 
             usuarioSeleccionado.AppendFormat("{0}", registro_actual.Cells[0].Value.ToString());
+            rolSeleccionado.AppendFormat("{0}",registro_actual.Cells[1].Value.ToString());
             estadoDelUsuario.AppendFormat("{0}", registro_actual.Cells[2].Value.ToString());
+            hotelSeleccionado.AppendFormat("{0}", registro_actual.Cells[3].Value.ToString());
+            nombre.AppendFormat("{0}", registro_actual.Cells[4].Value.ToString());
+            apellido.AppendFormat("{0}", registro_actual.Cells[5].Value.ToString());
+            tipoDoc.AppendFormat("{0}", registro_actual.Cells[6].Value.ToString());
+            numeroDoc.AppendFormat("{0}", registro_actual.Cells[7].Value.ToString());
+            telefono.AppendFormat("{0}", registro_actual.Cells[8].Value.ToString());
+            direccion.AppendFormat("{0}", registro_actual.Cells[9].Value.ToString());
+            fechaNacimiento.AppendFormat("{0}", registro_actual.Cells[10].Value.ToString());
 
             botonModificar.Enabled = true;
             botonBaja.Enabled = true;
 
 
-        }      
+        }
+
+        private void botonModificar_Click(object sender, EventArgs e)
+        {
+            if (funcionesUsuarios.nombresHotelesVacios())
+            {
+                MessageBox.Show("Todos los hoteles están sin nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else
+            {
+
+                tablaDeUsuarios.DataSource = null;
+                ModificacionUsuario formModificacion = new ModificacionUsuario(usuarioSeleccionado.ToString(), nombre.ToString(), apellido.ToString(), tipoDoc.ToString(), numeroDoc.ToString(), telefono.ToString(), mail.ToString(), direccion.ToString(), fechaNacimiento.ToString(), hotelSeleccionado.ToString(),rolSeleccionado.ToString());
+                formModificacion.Show();
+            }
+        }
 
     }
 }

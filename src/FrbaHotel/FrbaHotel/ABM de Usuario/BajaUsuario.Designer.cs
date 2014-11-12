@@ -96,7 +96,7 @@
             this.Controls.Add(this.usuarioADarDeBaja);
             this.Controls.Add(this.label1);
             this.Name = "BajaUsuario";
-            this.Text = "BajaUsuario";
+            this.Text = "Baja de Usuario";
             this.Load += new System.EventHandler(this.BajaUsuario_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -33,6 +33,17 @@ namespace FrbaHotel.ABM_de_Usuario
                 comboRol.Items.Add(dat[0]);
             }
 
+            StringBuilder sentencia = new StringBuilder().AppendFormat("SELECT DISTINCT h.nombre FROM SQLECT.Hoteles h WHERE h.estado_hotel =1 ");
+            DataTable tablaHoteles = Conexion.Instance.ejecutarQuery(sentence.ToString());
+
+            foreach (DataRow dat in tablaHoteles.Rows)
+            {
+
+                hotelDondeTrabaja.Items.Add(dat[0]);
+            }
+
+           
+
        
         
         }
@@ -49,7 +60,7 @@ namespace FrbaHotel.ABM_de_Usuario
             telefono.Text = "";
             direccion.Text = "";
             fechaNacimiento.Text = "";
-            hotelDondeTrabaja.Text = "";
+            hotelDondeTrabaja.SelectedItem = null;
             comboRol.SelectedItem = null;
             
         }
@@ -71,7 +82,7 @@ namespace FrbaHotel.ABM_de_Usuario
             this.funcionesUsuarios.validarNoVacio(telefono, mensajeValidacion);
             this.funcionesUsuarios.validarNoVacio(direccion, mensajeValidacion);
             this.funcionesUsuarios.validarNoVacio(fechaNacimiento, mensajeValidacion);
-            this.funcionesUsuarios.validarNoVacio(hotelDondeTrabaja, mensajeValidacion);
+            bool hotelElegidoOK = this.funcionesUsuarios.validarComboVacio(hotelDondeTrabaja, mensajeValidacion);
             
 
             //Control de longitudes
@@ -112,6 +123,17 @@ namespace FrbaHotel.ABM_de_Usuario
                 }
 
             }
+            if (!hotelElegidoOK)
+                mensajeValidacion.AppendLine("Debe elegir un hotel"); 
+                
+            else 
+                { bool usuarioConHotelAsignado = funciones.chequearExistenciaDeHotelAsignado(username.Text, hotelDondeTrabaja.SelectedItem.ToString());
+                    if (usuarioConHotelAsignado)
+                    {mensajeValidacion.AppendLine(string.Format(" El usuario {0} ya tiene asignado el hotel {1}",username.Text,hotelDondeTrabaja.SelectedItem.ToString()));
+                    }
+                }
+            
+            
             if (!tipoDniOK)
                 mensajeValidacion.AppendLine("Debe elegir un tipo de Documento");
             
@@ -157,6 +179,8 @@ namespace FrbaHotel.ABM_de_Usuario
             monthCalendar.Visible = false;
 
         }
+
+   
 
         
         }

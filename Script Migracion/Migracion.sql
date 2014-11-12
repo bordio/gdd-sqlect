@@ -269,13 +269,13 @@ INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Listado estadíst
 
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,1) /*Funcionalidades del Administrador General*/
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,2)
-INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,3)
+/*INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,3)*/
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,4)
-INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,5)
+/*INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,5)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,6)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,7)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,8)
-INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,9)
+INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,9)*/
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,10)
 
 																		/*Funcionalidades del Recepcionista*/
@@ -853,3 +853,105 @@ DECLARE @id_usuario int
  
 END
  GO
+
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.chequearUsuarioConHotelAsignado'))
+DROP PROCEDURE  SQLECT.chequearUsuarioConHotelAsignado
+ 
+ GO
+ CREATE PROCEDURE  SQLECT.chequearUsuarioConHotelAsignado (@usuario varchar(30),@nombreHotel varchar(60))
+ AS
+ BEGIN
+ SELECT h.nombre FROM SQLECT.Usuarios u JOIN SQLECT.Usuarios_Hoteles uh ON (u.id_usuario=uh.fk_usuario)
+                                        JOIN SQLECT.Hoteles h ON (h.id_hotel=uh.fk_hotel)
+       WHERE h.nombre=@nombreHotel AND u.usr_name=@usuario
+  END
+  GO
+  
+ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.modificarDatosDelUsuario'))
+DROP PROCEDURE  SQLECT.modificarDatosDelUsuario
+
+GO
+CREATE PROCEDURE SQLECT.modificarDatosDelUsuario(@username varchar(30),@nombre varchar(30),@apellido varchar(60),@tipoDoc char(4),@numeroDoc int,@mail varchar(255),@telefono int,@direccion varchar(90),@fechaNacimiento datetime)
+AS
+BEGIN
+
+DECLARE @id_empleado int
+SET @id_empleado = (SELECT fk_empleado FROM SQLECT.Usuarios WHERE usr_name=@username)
+
+UPDATE SQLECT.Empleados SET nombre=@nombre,apellido=@apellido,dni_tipo=@tipoDoc,dni_nro=@numeroDoc,email=@mail,telefono=@telefono,direccion=@direccion,fecha_nacimiento=@fechaNacimiento
+ WHERE id_empleado=@id_empleado
+ END
+GO
+
+ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.quitarHotelDeUsuario'))
+DROP PROCEDURE  SQLECT.quitarHotelDeUsuario
+
+GO
+CREATE PROCEDURE SQLECT.quitarHotelDeUsuario(@username varchar(30),@nombreHotel varchar(60))
+AS
+BEGIN
+DECLARE @id_usuaio int, @id_hotel int
+
+SET @id_usuaio=(SELECT id_usuario FROM SQLECT.Usuarios WHERE usr_name=@username)
+SET @id_hotel =(SELECT id_hotel FROM SQLECT.Hoteles WHERE nombre=@nombreHotel)
+
+DELETE FROM SQLECT.Usuarios_Hoteles
+ WHERE fk_hotel=@id_hotel AND fk_usuario=@id_usuaio
+ END
+ GO
+
+
+ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.agregarHotelAlUsuario'))
+DROP PROCEDURE  SQLECT.agregarHotelAlUsuario
+
+GO
+CREATE PROCEDURE SQLECT.agregarHotelAlUsuario(@username varchar(30),@nombreHotel varchar(60))
+AS
+BEGIN
+
+DECLARE @id_usuaio int, @id_hotel int
+SET @id_usuaio=(SELECT id_usuario FROM SQLECT.Usuarios WHERE usr_name=@username)
+SET @id_hotel =(SELECT id_hotel FROM SQLECT.Hoteles WHERE nombre=@nombreHotel)
+
+IF NOT EXISTS(SELECT fk_usuario,fk_hotel FROM SQLECT.Usuarios_Hoteles WHERE fk_usuario=@id_usuaio AND fk_hotel=@id_hotel)
+ INSERT INTO SQLECT.Usuarios_Hoteles(fk_hotel,fk_usuario) VALUES (@id_hotel,@id_usuaio)
+ 
+END
+GO
+
+
+
+ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.quitarRolDelUsuario'))
+DROP PROCEDURE  SQLECT.quitarRolDelUsuario
+
+GO
+CREATE PROCEDURE SQLECT.quitarRolDelUsuario (@username varchar(30),@idDeRol int)
+AS
+BEGIN
+DECLARE @id_usuaio int
+SET @id_usuaio=(SELECT id_usuario FROM SQLECT.Usuarios WHERE usr_name=@username)
+
+DELETE FROM SQLECT.Roles_Usuarios WHERE fk_rol=@id_usuaio AND fk_usuario=@id_usuaio
+END
+GO
+
+ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.agregarRolAlUsuario'))
+DROP PROCEDURE SQLECT.agregarRolAlUsuario
+
+GO
+CREATE PROCEDURE SQLECT.agregarRolAlUsuario(@username varchar(30),@nombreRol varchar(30))
+AS
+BEGIN
+
+DECLARE @id_usuaio int, @id_rol int
+SET @id_usuaio=(SELECT id_usuario FROM SQLECT.Usuarios WHERE usr_name=@username)
+SET @id_rol =(SELECT id_rol FROM SQLECT.Roles WHERE nombre=@nombreRol)
+
+IF NOT EXISTS (SELECT * FROM SQLECT.Roles_Usuarios WHERE fk_rol=@id_rol AND fk_usuario=@id_usuaio)
+ INSERT INTO SQLECT.Roles_Usuarios(fk_usuario,fk_rol) VALUES (@id_usuaio,@id_rol)
+ 
+END
+GO
+  
+ 

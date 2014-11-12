@@ -99,8 +99,33 @@ namespace FrbaHotel.Commons.FuncionalidadesVarias
 
             return idUsuario;
         }
-  
+
+        public bool chequearExistenciaDeHotelAsignado(string usuario, string hotel)
+        {
+            Conexion cnn = Conexion.Instance;
+
+            System.Data.SqlClient.SqlCommand comandoExistenciaDeHotel = new System.Data.SqlClient.SqlCommand();
+
+            comandoExistenciaDeHotel.CommandType = CommandType.StoredProcedure;
+            int contador = 0;
+
+            comandoExistenciaDeHotel.Parameters.Add("@usuario", SqlDbType.VarChar);
+            comandoExistenciaDeHotel.Parameters[contador].Value = usuario;
+            contador++;
+
+            comandoExistenciaDeHotel.Parameters.Add("@nombreHotel", SqlDbType.VarChar);
+            comandoExistenciaDeHotel.Parameters[contador].Value = hotel;
+            contador++;
+
+            comandoExistenciaDeHotel.CommandText = "SQLECT.chequearUsuarioConHotelAsignado";
+
+            bool existencia = cnn.ejecutarEscalar(comandoExistenciaDeHotel);
+
+            return existencia;
+        }
+    
     }
+
 
 
 
