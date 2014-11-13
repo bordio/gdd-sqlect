@@ -131,6 +131,7 @@ namespace FrbaHotel.Login
         }
         public void dirigirABMElegida(string funcionalidad)
         {
+            int idDeHotelElegido = funcionesVarias.obtenerIDHotel(listaHotelesHabilitados.SelectedItem.ToString());
 
             switch (funcionalidad)
             {
@@ -155,7 +156,7 @@ namespace FrbaHotel.Login
                     gestionarHabitaciones.Show();
                     break;
                 case "Generar/modificar reservas":
-                    FrbaHotel.Generar_Modificar_Reserva.Form1 gestionarReservas = new FrbaHotel.Generar_Modificar_Reserva.Form1();
+                    FrbaHotel.Generar_Modificar_Reserva.Form1 gestionarReservas = new FrbaHotel.Generar_Modificar_Reserva.Form1(idDeHotelElegido);
                     gestionarReservas.Show();
                     break;
                 case "Cancelar reservas":

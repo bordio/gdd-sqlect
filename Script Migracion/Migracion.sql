@@ -629,6 +629,28 @@ BEGIN
  END
  GO
 
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.obtenerIDHotel'))
+DROP PROCEDURE  SQLECT.obtenerIDHotel
+
+GO
+CREATE PROCEDURE SQLECT.obtenerIDHotel(@hotel varchar(60))
+AS
+BEGIN
+ SELECT id_hotel FROM SQLECT.Hoteles WHERE nombre=@hotel
+ END
+ GO
+ 
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.obtenerNombreHotel'))
+DROP PROCEDURE SQLECT.obtenerNombreHotel  
+
+GO
+CREATE PROCEDURE SQLECT.obtenerNombreHotel (@idHotel int)
+AS
+BEGIN
+SELECT nombre FROM SQLECT.Hoteles WHERE id_hotel=@idHotel
+END
+GO
+ 
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.verificarIntentos'))
 DROP PROCEDURE SQLECT.verificarIntentos
@@ -643,8 +665,6 @@ SELECT ru.cantidadDeIntentos
 WHERE u.usr_name=@usuario AND r.nombre=@rol
 END
 GO
-
-
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.actualizarIntentosFallidos'))
 DROP PROCEDURE SQLECT.actualizarIntentosFallidos
@@ -783,7 +803,7 @@ GO
 CREATE PROCEDURE SQLECT.buscarHotelesDisponibles (@usuario varchar(30))
 AS
 BEGIN
-SELECT uh.fk_hotel FROM SQLECT.Usuarios_Hoteles uh JOIN SQLECT.Usuarios u ON (uh.fk_usuario=u.id_usuario)
+SELECT DISTINCT h.nombre FROM SQLECT.Usuarios_Hoteles uh JOIN SQLECT.Usuarios u ON (uh.fk_usuario=u.id_usuario)
 												   JOIN SQLECT.Hoteles h ON (h.id_hotel=uh.fk_hotel)
  WHERE u.usr_name=@usuario AND h.estado_hotel=1	
 END
@@ -803,6 +823,7 @@ SELECT f.nombre,f.descripcion
 								 JOIN SQLECT.Roles r ON (r.id_rol=fr.fk_rol) 
    WHERE r.nombre=@nombreRol AND f.estado_func=1
 END
+GO
 
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.altaUsuario'))

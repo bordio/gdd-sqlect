@@ -104,9 +104,9 @@
             // 
             this.listaHotelesHabilitados.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.listaHotelesHabilitados.FormattingEnabled = true;
-            this.listaHotelesHabilitados.Location = new System.Drawing.Point(51, 111);
+            this.listaHotelesHabilitados.Location = new System.Drawing.Point(41, 111);
             this.listaHotelesHabilitados.Name = "listaHotelesHabilitados";
-            this.listaHotelesHabilitados.Size = new System.Drawing.Size(121, 21);
+            this.listaHotelesHabilitados.Size = new System.Drawing.Size(155, 21);
             this.listaHotelesHabilitados.TabIndex = 6;
             // 
             // tareaARealizar
@@ -119,6 +119,7 @@
             // 
             // cambiarContraseña
             // 
+            this.cambiarContraseña.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cambiarContraseña.Location = new System.Drawing.Point(792, 253);
             this.cambiarContraseña.Name = "cambiarContraseña";
             this.cambiarContraseña.Size = new System.Drawing.Size(140, 47);

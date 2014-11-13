@@ -123,8 +123,50 @@ namespace FrbaHotel.Commons.FuncionalidadesVarias
 
             return existencia;
         }
-    
+
+        public int obtenerIDHotel(string nombreHotel)
+        {
+            Conexion cnn = Conexion.Instance;
+
+            System.Data.SqlClient.SqlCommand comandoIDHotel = new System.Data.SqlClient.SqlCommand();
+
+            comandoIDHotel.CommandType = CommandType.StoredProcedure;
+            int contador = 0;
+
+            comandoIDHotel.Parameters.Add("@hotel", SqlDbType.VarChar);
+            comandoIDHotel.Parameters[contador].Value = nombreHotel;
+            contador++;
+
+            comandoIDHotel.CommandText = "SQLECT.obtenerIDHotel";
+            int idUsuario = cnn.ejecutarEscalarInt(comandoIDHotel);
+
+            return idUsuario;
+        }
+
+        public string obtenerNombreHotel(int idDeHotel)
+        {
+            Conexion cnn = Conexion.Instance;
+
+            System.Data.SqlClient.SqlCommand comandoNombreHotel = new System.Data.SqlClient.SqlCommand();
+
+            comandoNombreHotel.CommandType = CommandType.StoredProcedure;
+            int contador = 0;
+
+            comandoNombreHotel.Parameters.Add("@idHotel", SqlDbType.Int);
+            comandoNombreHotel.Parameters[contador].Value = idDeHotel;
+            contador++;
+
+
+            comandoNombreHotel.CommandText = "SQLECT.obtenerNombreHotel";
+            string nombreDelHotel = cnn.ejecutarEscalarString(comandoNombreHotel);
+            
+            return nombreDelHotel;
+        
+        }
+
+   
     }
+
 
 
 
