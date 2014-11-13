@@ -48,7 +48,7 @@ namespace FrbaHotel.ABM_de_Usuario
            
         }
 
-        public bool modificarUsuario(string username,string nombre, string apellido, string tipoDocumento, string numeroDocumento, string mail, string telefono, string direccion, string fechaNacimiento, bool situacionHotel, string posibleNuevoHotel, bool situacionRol, string posibleeNuevoRol, int idDeRol)
+        public bool modificarUsuario(string username,string nombre, string apellido, string tipoDocumento, string numeroDocumento, string mail, string telefono, string direccion, string fechaNacimiento, bool situacionHotel, string posibleNuevoHotel, bool situacionRol, string posibleeNuevoRol, string idDeRol)
         {
             modificarDatosDelUsuario(username, nombre, apellido, tipoDocumento, numeroDocumento, mail, telefono, direccion, fechaNacimiento);
 
@@ -147,14 +147,14 @@ namespace FrbaHotel.ABM_de_Usuario
     }
 
 
-    public void quitarRolDelUsuario(string username, int idDeRol)
+    public void quitarRolDelUsuario(string username, string idDeRol)
     {
         Conexion conexion = Conexion.Instance;
         System.Data.SqlClient.SqlCommand comandoAUsuario = new System.Data.SqlClient.SqlCommand();
         comandoAUsuario.CommandType = CommandType.StoredProcedure;
 
         comandoAUsuario.Parameters.Add("@username", SqlDbType.VarChar);
-        comandoAUsuario.Parameters.Add("@idDeRol", SqlDbType.Int);
+        comandoAUsuario.Parameters.Add("@rol", SqlDbType.VarChar);
 
         comandoAUsuario.Parameters[0].Value = username;
         comandoAUsuario.Parameters[1].Value = idDeRol;

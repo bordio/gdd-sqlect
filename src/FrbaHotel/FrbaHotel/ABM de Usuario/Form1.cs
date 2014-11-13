@@ -27,7 +27,7 @@ namespace FrbaHotel.ABM_de_Usuario
         private StringBuilder hotelSeleccionado = new StringBuilder();
         private StringBuilder nombre = new StringBuilder();
         private StringBuilder apellido = new StringBuilder();
-        private StringBuilder mail = new StringBuilder();
+        private StringBuilder mailSeleccionado = new StringBuilder();
         private StringBuilder tipoDoc = new StringBuilder();
         private StringBuilder numeroDoc = new StringBuilder();
         private StringBuilder telefono = new StringBuilder();
@@ -108,7 +108,7 @@ namespace FrbaHotel.ABM_de_Usuario
         {
             if (funcionesUsuarios.nombresHotelesVacios())
             {
-                MessageBox.Show("Todos los hoteles están sin nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Todos los hoteles están sin nombre", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else
             {
@@ -120,6 +120,9 @@ namespace FrbaHotel.ABM_de_Usuario
 
         private void button4_Click(object sender, EventArgs e)
         {
+            botonModificar.Enabled = false;
+            botonBaja.Enabled = false;
+
             if (estadoDelUsuario.ToString() == "1")
             {
                 tablaDeUsuarios.DataSource = null;
@@ -144,7 +147,7 @@ namespace FrbaHotel.ABM_de_Usuario
             direccion.Remove(0, direccion.Length);
             fechaNacimiento.Remove(0, fechaNacimiento.Length);
             rolSeleccionado.Remove(0, rolSeleccionado.Length);
-           
+            mailSeleccionado.Remove(0, mailSeleccionado.Length);
 
             usuarioSeleccionado.AppendFormat("{0}", registro_actual.Cells[0].Value.ToString());
             rolSeleccionado.AppendFormat("{0}",registro_actual.Cells[1].Value.ToString());
@@ -152,11 +155,12 @@ namespace FrbaHotel.ABM_de_Usuario
             hotelSeleccionado.AppendFormat("{0}", registro_actual.Cells[3].Value.ToString());
             nombre.AppendFormat("{0}", registro_actual.Cells[4].Value.ToString());
             apellido.AppendFormat("{0}", registro_actual.Cells[5].Value.ToString());
-            tipoDoc.AppendFormat("{0}", registro_actual.Cells[6].Value.ToString());
-            numeroDoc.AppendFormat("{0}", registro_actual.Cells[7].Value.ToString());
-            telefono.AppendFormat("{0}", registro_actual.Cells[8].Value.ToString());
-            direccion.AppendFormat("{0}", registro_actual.Cells[9].Value.ToString());
-            fechaNacimiento.AppendFormat("{0}", registro_actual.Cells[10].Value.ToString());
+            mailSeleccionado.AppendFormat("{0}", registro_actual.Cells[6].Value.ToString());
+            tipoDoc.AppendFormat("{0}", registro_actual.Cells[7].Value.ToString());
+            numeroDoc.AppendFormat("{0}", registro_actual.Cells[8].Value.ToString());
+            telefono.AppendFormat("{0}", registro_actual.Cells[9].Value.ToString());
+            direccion.AppendFormat("{0}", registro_actual.Cells[10].Value.ToString());
+            fechaNacimiento.AppendFormat("{0}", registro_actual.Cells[11].Value.ToString());
 
             botonModificar.Enabled = true;
             botonBaja.Enabled = true;
@@ -166,15 +170,16 @@ namespace FrbaHotel.ABM_de_Usuario
 
         private void botonModificar_Click(object sender, EventArgs e)
         {
-            if (funcionesUsuarios.nombresHotelesVacios())
+            /*if (funcionesUsuarios.nombresHotelesVacios())
             {
-                MessageBox.Show("Todos los hoteles están sin nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Todos los hoteles están sin nombre", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-            else
+            else*/
             {
-
+                botonModificar.Enabled = false;
+                botonBaja.Enabled = false;
                 tablaDeUsuarios.DataSource = null;
-                ModificacionUsuario formModificacion = new ModificacionUsuario(usuarioSeleccionado.ToString(), nombre.ToString(), apellido.ToString(), tipoDoc.ToString(), numeroDoc.ToString(), telefono.ToString(), mail.ToString(), direccion.ToString(), fechaNacimiento.ToString(), hotelSeleccionado.ToString(),rolSeleccionado.ToString());
+                ModificacionUsuario formModificacion = new ModificacionUsuario(usuarioSeleccionado.ToString(), nombre.ToString(), apellido.ToString(), tipoDoc.ToString(), numeroDoc.ToString(),mailSeleccionado.ToString() , telefono.ToString(), direccion.ToString(), fechaNacimiento.ToString(), hotelSeleccionado.ToString(),rolSeleccionado.ToString());
                 formModificacion.Show();
             }
         }

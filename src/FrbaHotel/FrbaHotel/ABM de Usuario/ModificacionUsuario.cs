@@ -66,7 +66,7 @@ namespace FrbaHotel.ABM_de_Usuario
                 comboHoteles.Items.Add(dat[0]);
             }
 
-            StringBuilder sentenciaRoles = new StringBuilder().AppendFormat("SELECT DISTINCT r.nombre FROM SQLECT.Roles r JOIN SQLECT.Roles_Usuarios ru ON (r.id_rol=ru.fk_rol) JOIN SQLECT.Usuarios u ON (u.id_usuario =ru.fk_usuario) WHERE r.estado_rol =1 AND r.nombre<>'{0}'");
+            StringBuilder sentenciaRoles = new StringBuilder().AppendFormat("SELECT DISTINCT r.nombre FROM SQLECT.Roles r WHERE r.estado_rol=1 AND r.nombre<>'{0}'",idDeRolActual,usuarioActual);
             DataTable tablaRoles = Conexion.Instance.ejecutarQuery(sentenciaRoles.ToString());
 
             foreach (DataRow dat in tablaRoles.Rows)
@@ -82,10 +82,11 @@ namespace FrbaHotel.ABM_de_Usuario
             string rolNuevo = null;
             string hotelNuevo = null;*/
 
-
+            comboRol.Enabled = false;
+            comboTipoDNI.SelectedItem = null;
             username.Text = usuarioActual;
+            nombre.Text = nombreActual;
             apellido.Text = apellidoActual;
-            comboTipoDNI.SelectedItem = tipoDocActual;
             numeroDoc.Text = numeroDocActual;
             mail.Text = mailActual;
             telefono.Text = telefonoActual;
@@ -119,13 +120,13 @@ namespace FrbaHotel.ABM_de_Usuario
             direccion.Text = "";
             fechaNacimiento.Text = "";
             hotelDondeTrabaja.Text = null;
-            radioMantener.Checked = false;
+            radioMantener.Checked = true;
             radioQuitar.Checked = false;
-            comboHoteles.Enabled = true;
+            comboHoteles.Enabled = false;
             comboHoteles.SelectedIndex=-1;
             radioQuitarRol.Checked = false;
             radioAgregarRol.Checked = false;
-            comboRol.Enabled = true;
+            comboRol.Enabled = false;
             comboRol.SelectedItem=null;
 
 
@@ -167,12 +168,14 @@ namespace FrbaHotel.ABM_de_Usuario
 
             //Chequeo de inconsistencias
 
-            if ((tipoDniOK && numeroDniOK) && ( ((tipoDocActual!=comboTipoDNI.SelectedItem.ToString()) || (numeroDocActual!=numeroDoc.Text )) ) )
+            if ((tipoDniOK & numeroDniOK))
             {
+                if ((tipoDocActual != comboTipoDNI.SelectedItem.ToString()) && (numeroDocActual != numeroDoc.Text)) 
+
                 this.funcionesUsuarios.validarDNI(comboTipoDNI.SelectedItem.ToString(), numeroDoc, mensajeValidacion);
             }
 
-            if (mailOK && (mailActual!=mail.Text))
+            if (mailOK & (mailActual!=mail.Text))
             {
                 this.funcionesUsuarios.validarEmail(mail, mensajeValidacion);
             }
@@ -201,10 +204,10 @@ namespace FrbaHotel.ABM_de_Usuario
             else
             { validaciones = true; }
 
-           
+            bool usuarioModificado = false;
+            
             if (validaciones)
             {
-                bool usuarioModificado = false;
                   if (comboHoteles.SelectedIndex > -1)
                   { hotelNuevo = comboHoteles.SelectedItem.ToString(); }
                   if (quitarRol == false && agregarRol == false)
@@ -212,13 +215,14 @@ namespace FrbaHotel.ABM_de_Usuario
                       usuarioModificado = funciones.modificarUsuario(username.Text, nombre.Text, apellido.Text, comboTipoDNI.SelectedItem.ToString(), numeroDoc.Text, mail.Text, telefono.Text, direccion.Text, fechaNacimiento.Text, quitarHotel, hotelNuevo);
                   }
                   else
-                      usuarioModificado = funciones.modificarUsuario(username.Text, nombre.Text, apellido.Text, comboTipoDNI.SelectedItem.ToString(), numeroDoc.Text, mail.Text, telefono.Text, direccion.Text, fechaNacimiento.Text, quitarHotel, hotelNuevo, quitarRol, rolNuevo,Convert.ToInt32(idDeRolActual));
+                      usuarioModificado = funciones.modificarUsuario(username.Text, nombre.Text, apellido.Text, comboTipoDNI.SelectedItem.ToString(), numeroDoc.Text, mail.Text, telefono.Text, direccion.Text, fechaNacimiento.Text, quitarHotel, hotelNuevo, quitarRol, comboRol.SelectedItem.ToString(),idDeRolActual);
                 
-                MessageBox.Show("Todo correcto");
+                /*MessageBox.Show("Todo correcto");*/
             
             }
 
-          
+            if (usuarioModificado)
+                MessageBox.Show("Usuario modificado", "", MessageBoxButtons.OK, MessageBoxIcon.None);
 
             
         }
@@ -234,7 +238,7 @@ namespace FrbaHotel.ABM_de_Usuario
 
         private void radioAgregarRol_CheckedChanged(object sender, EventArgs e)
         {
-            quitarRol = true;
+            agregarRol = true;
             comboRol.Enabled = true;
             /*radioQuitarRol.Checked = false;*/
             if (comboRol.SelectedIndex > -1)
@@ -269,8 +273,7 @@ namespace FrbaHotel.ABM_de_Usuario
             {
                 hotelNuevo = comboHoteles.SelectedItem.ToString();
             }
-          
-            
+                  
         }
 
         private void comboRol_SelectedValueChanged(object sender, EventArgs e)
@@ -282,6 +285,7 @@ namespace FrbaHotel.ABM_de_Usuario
             }
             
         }
+
 
     }
 }

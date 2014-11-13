@@ -171,6 +171,7 @@
             this.tablaDeUsuarios.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.tablaDeUsuarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tablaDeUsuarios.Location = new System.Drawing.Point(60, 313);
+            this.tablaDeUsuarios.MultiSelect = false;
             this.tablaDeUsuarios.Name = "tablaDeUsuarios";
             this.tablaDeUsuarios.ReadOnly = true;
             this.tablaDeUsuarios.Size = new System.Drawing.Size(597, 213);

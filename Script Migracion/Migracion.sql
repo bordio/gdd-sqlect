@@ -876,11 +876,24 @@ CREATE PROCEDURE SQLECT.modificarDatosDelUsuario(@username varchar(30),@nombre v
 AS
 BEGIN
 
-DECLARE @id_empleado int
+DECLARE @id_empleado int,@fkPosibleDeEmpleado int
+
 SET @id_empleado = (SELECT fk_empleado FROM SQLECT.Usuarios WHERE usr_name=@username)
+
+ IF (@id_empleado IS NOT NULL)
+BEGIN
 
 UPDATE SQLECT.Empleados SET nombre=@nombre,apellido=@apellido,dni_tipo=@tipoDoc,dni_nro=@numeroDoc,email=@mail,telefono=@telefono,direccion=@direccion,fecha_nacimiento=@fechaNacimiento
  WHERE id_empleado=@id_empleado
+END
+ ELSE
+ 
+  BEGIN
+INSERT INTO SQLECT.Empleados(nombre,apellido,dni_tipo,dni_nro,email,telefono,direccion,fecha_nacimiento) VALUES (@nombre,@apellido,@tipoDoc,@numeroDoc,@mail,@telefono,@direccion,@fechaNacimiento)
+SET @fkPosibleDeEmpleado=SCOPE_IDENTITY();
+UPDATE SQLECT.Usuarios SET fk_empleado=@fkPosibleDeEmpleado WHERE usr_name=@username
+  END
+
  END
 GO
 
@@ -920,19 +933,19 @@ IF NOT EXISTS(SELECT fk_usuario,fk_hotel FROM SQLECT.Usuarios_Hoteles WHERE fk_u
 END
 GO
 
-
-
  IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.quitarRolDelUsuario'))
 DROP PROCEDURE  SQLECT.quitarRolDelUsuario
 
 GO
-CREATE PROCEDURE SQLECT.quitarRolDelUsuario (@username varchar(30),@idDeRol int)
+CREATE PROCEDURE SQLECT.quitarRolDelUsuario (@username varchar(30),@rol varchar(30))
 AS
 BEGIN
-DECLARE @id_usuaio int
-SET @id_usuaio=(SELECT id_usuario FROM SQLECT.Usuarios WHERE usr_name=@username)
+DECLARE @id_usuaio int,@id_rol int
 
-DELETE FROM SQLECT.Roles_Usuarios WHERE fk_rol=@id_usuaio AND fk_usuario=@id_usuaio
+SET @id_usuaio=(SELECT id_usuario FROM SQLECT.Usuarios WHERE usr_name=@username)
+SET @id_rol= (SELECT id_rol FROM SQLECT.Roles WHERE nombre=@rol)
+
+DELETE FROM SQLECT.Roles_Usuarios WHERE fk_rol=@id_rol AND fk_usuario=@id_usuaio
 END
 GO
 
@@ -953,5 +966,4 @@ IF NOT EXISTS (SELECT * FROM SQLECT.Roles_Usuarios WHERE fk_rol=@id_rol AND fk_u
  
 END
 GO
-  
- 
+

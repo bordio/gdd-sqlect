@@ -29,7 +29,16 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.comboRol = new System.Windows.Forms.ComboBox();
+            this.radioAgregarRol = new System.Windows.Forms.RadioButton();
+            this.radioQuitarRol = new System.Windows.Forms.RadioButton();
+            this.label3 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.comboHoteles = new System.Windows.Forms.ComboBox();
+            this.hotelAgregado = new System.Windows.Forms.Label();
+            this.radioQuitar = new System.Windows.Forms.RadioButton();
+            this.radioMantener = new System.Windows.Forms.RadioButton();
+            this.hotelDondeTrabaja = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
             this.monthCalendar = new System.Windows.Forms.MonthCalendar();
             this.comboTipoDNI = new System.Windows.Forms.ComboBox();
@@ -63,15 +72,6 @@
             this.username = new System.Windows.Forms.TextBox();
             this.botonLimpiar = new System.Windows.Forms.Button();
             this.botonConfirmar = new System.Windows.Forms.Button();
-            this.hotelDondeTrabaja = new System.Windows.Forms.TextBox();
-            this.radioMantener = new System.Windows.Forms.RadioButton();
-            this.radioQuitar = new System.Windows.Forms.RadioButton();
-            this.hotelAgregado = new System.Windows.Forms.Label();
-            this.comboHoteles = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.radioQuitarRol = new System.Windows.Forms.RadioButton();
-            this.radioAgregarRol = new System.Windows.Forms.RadioButton();
-            this.comboRol = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -92,6 +92,51 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Usuario";
+            // 
+            // comboRol
+            // 
+            this.comboRol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboRol.FormattingEnabled = true;
+            this.comboRol.Location = new System.Drawing.Point(186, 603);
+            this.comboRol.Name = "comboRol";
+            this.comboRol.Size = new System.Drawing.Size(243, 24);
+            this.comboRol.TabIndex = 40;
+            this.comboRol.SelectedValueChanged += new System.EventHandler(this.comboRol_SelectedValueChanged);
+            // 
+            // radioAgregarRol
+            // 
+            this.radioAgregarRol.AutoSize = true;
+            this.radioAgregarRol.Location = new System.Drawing.Point(46, 607);
+            this.radioAgregarRol.Name = "radioAgregarRol";
+            this.radioAgregarRol.Size = new System.Drawing.Size(110, 20);
+            this.radioAgregarRol.TabIndex = 39;
+            this.radioAgregarRol.TabStop = true;
+            this.radioAgregarRol.Text = "Agregar Rol";
+            this.radioAgregarRol.UseVisualStyleBackColor = true;
+            this.radioAgregarRol.CheckedChanged += new System.EventHandler(this.radioAgregarRol_CheckedChanged);
+            // 
+            // radioQuitarRol
+            // 
+            this.radioQuitarRol.AutoSize = true;
+            this.radioQuitarRol.Location = new System.Drawing.Point(46, 569);
+            this.radioQuitarRol.Name = "radioQuitarRol";
+            this.radioQuitarRol.Size = new System.Drawing.Size(95, 20);
+            this.radioQuitarRol.TabIndex = 38;
+            this.radioQuitarRol.TabStop = true;
+            this.radioQuitarRol.Text = "Quitar Rol";
+            this.radioQuitarRol.UseVisualStyleBackColor = true;
+            this.radioQuitarRol.CheckedChanged += new System.EventHandler(this.radioQuitarRol_CheckedChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(165, 569);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(558, 16);
+            this.label3.TabIndex = 37;
+            this.label3.Text = "(Nota: Eligiendo esta opción no podrá operar con los hoteles que tenga a cargo co" +
+                "n este rol)";
             // 
             // groupBox2
             // 
@@ -136,6 +181,60 @@
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Datos identificatorios a la persona";
+            // 
+            // comboHoteles
+            // 
+            this.comboHoteles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboHoteles.FormattingEnabled = true;
+            this.comboHoteles.Location = new System.Drawing.Point(219, 421);
+            this.comboHoteles.Name = "comboHoteles";
+            this.comboHoteles.Size = new System.Drawing.Size(182, 24);
+            this.comboHoteles.TabIndex = 37;
+            this.comboHoteles.SelectedValueChanged += new System.EventHandler(this.comboHoteles_SelectedValueChanged);
+            // 
+            // hotelAgregado
+            // 
+            this.hotelAgregado.AutoSize = true;
+            this.hotelAgregado.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.hotelAgregado.Location = new System.Drawing.Point(22, 429);
+            this.hotelAgregado.Name = "hotelAgregado";
+            this.hotelAgregado.Size = new System.Drawing.Size(129, 16);
+            this.hotelAgregado.TabIndex = 36;
+            this.hotelAgregado.Text = "Asignar Hotel nuevo";
+            // 
+            // radioQuitar
+            // 
+            this.radioQuitar.AutoSize = true;
+            this.radioQuitar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioQuitar.Location = new System.Drawing.Point(468, 358);
+            this.radioQuitar.Name = "radioQuitar";
+            this.radioQuitar.Size = new System.Drawing.Size(67, 20);
+            this.radioQuitar.TabIndex = 35;
+            this.radioQuitar.TabStop = true;
+            this.radioQuitar.Text = "Quitar";
+            this.radioQuitar.UseVisualStyleBackColor = true;
+            this.radioQuitar.CheckedChanged += new System.EventHandler(this.radioQuitar_CheckedChanged);
+            // 
+            // radioMantener
+            // 
+            this.radioMantener.AutoSize = true;
+            this.radioMantener.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioMantener.Location = new System.Drawing.Point(346, 357);
+            this.radioMantener.Name = "radioMantener";
+            this.radioMantener.Size = new System.Drawing.Size(90, 20);
+            this.radioMantener.TabIndex = 34;
+            this.radioMantener.TabStop = true;
+            this.radioMantener.Text = "Mantener";
+            this.radioMantener.UseVisualStyleBackColor = true;
+            this.radioMantener.CheckedChanged += new System.EventHandler(this.radioMantener_CheckedChanged);
+            // 
+            // hotelDondeTrabaja
+            // 
+            this.hotelDondeTrabaja.Enabled = false;
+            this.hotelDondeTrabaja.Location = new System.Drawing.Point(219, 356);
+            this.hotelDondeTrabaja.Name = "hotelDondeTrabaja";
+            this.hotelDondeTrabaja.Size = new System.Drawing.Size(100, 22);
+            this.hotelDondeTrabaja.TabIndex = 33;
             // 
             // button3
             // 
@@ -464,106 +563,6 @@
             this.botonConfirmar.Text = "Confirmar cambios";
             this.botonConfirmar.UseVisualStyleBackColor = true;
             this.botonConfirmar.Click += new System.EventHandler(this.botonConfirmar_Click);
-            // 
-            // hotelDondeTrabaja
-            // 
-            this.hotelDondeTrabaja.Enabled = false;
-            this.hotelDondeTrabaja.Location = new System.Drawing.Point(219, 356);
-            this.hotelDondeTrabaja.Name = "hotelDondeTrabaja";
-            this.hotelDondeTrabaja.Size = new System.Drawing.Size(100, 22);
-            this.hotelDondeTrabaja.TabIndex = 33;
-            // 
-            // radioMantener
-            // 
-            this.radioMantener.AutoSize = true;
-            this.radioMantener.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioMantener.Location = new System.Drawing.Point(346, 357);
-            this.radioMantener.Name = "radioMantener";
-            this.radioMantener.Size = new System.Drawing.Size(90, 20);
-            this.radioMantener.TabIndex = 34;
-            this.radioMantener.TabStop = true;
-            this.radioMantener.Text = "Mantener";
-            this.radioMantener.UseVisualStyleBackColor = true;
-            this.radioMantener.CheckedChanged += new System.EventHandler(this.radioMantener_CheckedChanged);
-            // 
-            // radioQuitar
-            // 
-            this.radioQuitar.AutoSize = true;
-            this.radioQuitar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioQuitar.Location = new System.Drawing.Point(468, 358);
-            this.radioQuitar.Name = "radioQuitar";
-            this.radioQuitar.Size = new System.Drawing.Size(67, 20);
-            this.radioQuitar.TabIndex = 35;
-            this.radioQuitar.TabStop = true;
-            this.radioQuitar.Text = "Quitar";
-            this.radioQuitar.UseVisualStyleBackColor = true;
-            this.radioQuitar.CheckedChanged += new System.EventHandler(this.radioQuitar_CheckedChanged);
-            // 
-            // hotelAgregado
-            // 
-            this.hotelAgregado.AutoSize = true;
-            this.hotelAgregado.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.hotelAgregado.Location = new System.Drawing.Point(22, 429);
-            this.hotelAgregado.Name = "hotelAgregado";
-            this.hotelAgregado.Size = new System.Drawing.Size(129, 16);
-            this.hotelAgregado.TabIndex = 36;
-            this.hotelAgregado.Text = "Asignar Hotel nuevo";
-            // 
-            // comboHoteles
-            // 
-            this.comboHoteles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboHoteles.FormattingEnabled = true;
-            this.comboHoteles.Location = new System.Drawing.Point(219, 421);
-            this.comboHoteles.Name = "comboHoteles";
-            this.comboHoteles.Size = new System.Drawing.Size(182, 24);
-            this.comboHoteles.TabIndex = 37;
-            this.comboHoteles.SelectedValueChanged += new System.EventHandler(this.comboHoteles_SelectedValueChanged);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(165, 569);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(558, 16);
-            this.label3.TabIndex = 37;
-            this.label3.Text = "(Nota: Eligiendo esta opción no podrá operar con los hoteles que tenga a cargo co" +
-                "n este rol)";
-            // 
-            // radioQuitarRol
-            // 
-            this.radioQuitarRol.AutoSize = true;
-            this.radioQuitarRol.Location = new System.Drawing.Point(46, 569);
-            this.radioQuitarRol.Name = "radioQuitarRol";
-            this.radioQuitarRol.Size = new System.Drawing.Size(95, 20);
-            this.radioQuitarRol.TabIndex = 38;
-            this.radioQuitarRol.TabStop = true;
-            this.radioQuitarRol.Text = "Quitar Rol";
-            this.radioQuitarRol.UseVisualStyleBackColor = true;
-            this.radioQuitarRol.CheckedChanged += new System.EventHandler(this.radioQuitarRol_CheckedChanged);
-            // 
-            // radioAgregarRol
-            // 
-            this.radioAgregarRol.AutoSize = true;
-            this.radioAgregarRol.Location = new System.Drawing.Point(46, 607);
-            this.radioAgregarRol.Name = "radioAgregarRol";
-            this.radioAgregarRol.Size = new System.Drawing.Size(110, 20);
-            this.radioAgregarRol.TabIndex = 39;
-            this.radioAgregarRol.TabStop = true;
-            this.radioAgregarRol.Text = "Agregar Rol";
-            this.radioAgregarRol.UseVisualStyleBackColor = true;
-            this.radioAgregarRol.CheckedChanged += new System.EventHandler(this.radioAgregarRol_CheckedChanged);
-            // 
-            // comboRol
-            // 
-            this.comboRol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboRol.FormattingEnabled = true;
-            this.comboRol.Location = new System.Drawing.Point(186, 603);
-            this.comboRol.Name = "comboRol";
-            this.comboRol.Size = new System.Drawing.Size(243, 24);
-            this.comboRol.TabIndex = 40;
-           
-            this.comboRol.SelectedValueChanged += new System.EventHandler(this.comboRol_SelectedValueChanged);
             // 
             // ModificacionUsuario
             // 
