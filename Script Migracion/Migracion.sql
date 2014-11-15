@@ -176,6 +176,7 @@ CREATE TABLE SQLECT.Reservas (
     fk_regimen tinyint references SQLECT.Regimenes(id_regimen),
     fk_cliente integer references SQLECT.Clientes(id_cliente),
     estado_reserva tinyint DEFAULT 0
+    /*fecha_reserva datetime DEFAULT NULL */ 
 )
 
 CREATE TABLE SQLECT.Reservas_Canceladas (
@@ -250,10 +251,13 @@ CREATE TABLE SQLECT.Funcionalidades_Roles (
 INSERT INTO SQLECT.Roles(nombre,descripcion) VALUES ('Administrador General','Administra todos los aspectos de la aplicación')
 INSERT INTO SQLECT.Roles(nombre,descripcion) VALUES ('Recepcionista','Poseé funcionalidades de atención al público')
 INSERT INTO SQLECT.Roles(nombre,descripcion) VALUES	('Administrador','Gestiona el/los hotel/es que tiene a cargo')
+INSERT INTO SQLECT.Roles(nombre,descripcion) VALUES ('Guest','Puede realizar y modificar reservas ')
 
 
 INSERT INTO SQLECT.Usuarios(usr_name, pssword) VALUES('admin','e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7') /*Pass hasheada */
+INSERT INTO SQLECT.Usuarios(usr_name, pssword) VALUES('guest','84983c60f7daadc1cb8698621f802c0d9f9a3c3c295c810748fb048115c186ec')
 INSERT INTO SQLECT.Roles_Usuarios(fk_rol,fk_usuario) VALUES (1,1)
+INSERT INTO SQLECT.Roles_Usuarios(fk_rol,fk_usuario) VALUES	(4,2)
 
 INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar roles','Permite operaciones de alta, baja, y modificaciones de ROLES')
 INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar usuarios','Permite operaciones de alta, baja, y modificaciones de USUARIOS')
@@ -988,3 +992,39 @@ IF NOT EXISTS (SELECT * FROM SQLECT.Roles_Usuarios WHERE fk_rol=@id_rol AND fk_u
 END
 GO
 
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.obtenerMaximasHabitacionesDisponibles'))
+DROP PROCEDURE SQLECT.obtenerMaximasHabitacionesDisponibles
+
+GO
+CREATE PROCEDURE SQLECT.obtenerMaximasHabitacionesDisponibles(@fechaDesde datetime, @fechaHasta datetime,@idHotel int)
+AS
+BEGIN
+      
+SELECT tipo_habitacion 'Tipo', COUNT(DISTINCT id_habitacion) 'Cant.' FROM SQLECT.Habitaciones
+      WHERE id_habitacion NOT IN
+		(
+			SELECT DISTINCT h.id_habitacion FROM SQLECT.Habitaciones h
+				JOIN SQLECT.Habitaciones_Reservas hr ON (h.id_habitacion=hr.fk_habitacion)
+				JOIN SQLECT.Hoteles ho ON (h.fk_hotel=ho.id_hotel)
+				JOIN SQLECT.Reservas r ON (r.id_reserva=hr.fk_reserva)
+				
+				WHERE	ho.id_hotel=@idHotel AND
+						r.estado_reserva IN (0,1,5) AND
+						(	
+							( @fechaDesde<r.fecha_inicio and r.fecha_inicio<@fechaHasta) OR
+							( @fechaDesde<DATEADD(day,r.cant_noches_reserva,r.fecha_inicio) and DATEADD(day,r.cant_noches_reserva,r.fecha_inicio)<@fechaHasta)
+						)
+		) AND fk_hotel = @idHotel
+	GROUP BY tipo_habitacion
+	ORDER BY 1
+END
+GO	
+
+/*select h.fk_hotel, h.id_habitacion, t.descripcion, r.fecha_inicio 'desde', DATEADD(day,r.cant_noches_reserva,r.fecha_inicio) 'hasta', r.estado_reserva from SQLECT.Habitaciones h, SQLECT.Habitaciones_Reservas hr, SQLECT.Reservas r, SQLECT.Tipos_Habitaciones t
+where h.id_habitacion = hr.fk_habitacion and hr.fk_reserva = r.id_reserva and h.id_habitacion = 55 and h.tipo_habitacion = t.id_tipo_habitacion
+order by 2 DESC
+
+
+exec SQLECT.obtenerMaximasHabitacionesDisponibles '2013-03-18T12:23:45', '2013-03-29T12:23:45', 11
+       
+*/												

@@ -29,6 +29,23 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.cantidadHuéspedes = new System.Windows.Forms.NumericUpDown();
+            this.label12 = new System.Windows.Forms.Label();
+            this.textoQuintuple = new System.Windows.Forms.Label();
+            this.textoCuadruple = new System.Windows.Forms.Label();
+            this.textoTriple = new System.Windows.Forms.Label();
+            this.textoDoble = new System.Windows.Forms.Label();
+            this.textoSimple = new System.Windows.Forms.Label();
+            this.cantidadSimples = new System.Windows.Forms.NumericUpDown();
+            this.cantidadDobles = new System.Windows.Forms.NumericUpDown();
+            this.cantidadTriples = new System.Windows.Forms.NumericUpDown();
+            this.cantidadCuádruples = new System.Windows.Forms.NumericUpDown();
+            this.cantidadQuíntuples = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.comboRegimen = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.monthCalendar = new System.Windows.Forms.MonthCalendar();
             this.botonSeleccionarH = new System.Windows.Forms.Button();
             this.botonSeleccionarD = new System.Windows.Forms.Button();
@@ -37,42 +54,29 @@
             this.label1 = new System.Windows.Forms.Label();
             this.fechaHasta = new System.Windows.Forms.TextBox();
             this.fechaDesde = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.comboRegimen = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.cantidadQuíntuples = new System.Windows.Forms.NumericUpDown();
-            this.cantidadCuádruples = new System.Windows.Forms.NumericUpDown();
-            this.cantidadTriples = new System.Windows.Forms.NumericUpDown();
-            this.cantidadDobles = new System.Windows.Forms.NumericUpDown();
-            this.cantidadSimples = new System.Windows.Forms.NumericUpDown();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.cantidadHuéspedes = new System.Windows.Forms.NumericUpDown();
             this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cantidadQuíntuples)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cantidadCuádruples)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cantidadTriples)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cantidadDobles)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cantidadSimples)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cantidadHuéspedes)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cantidadSimples)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cantidadDobles)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cantidadTriples)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cantidadCuádruples)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cantidadQuíntuples)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.dataGridView1);
+            this.groupBox1.Controls.Add(this.button2);
             this.groupBox1.Controls.Add(this.cantidadHuéspedes);
             this.groupBox1.Controls.Add(this.label12);
-            this.groupBox1.Controls.Add(this.label11);
-            this.groupBox1.Controls.Add(this.label10);
-            this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.textoQuintuple);
+            this.groupBox1.Controls.Add(this.textoCuadruple);
+            this.groupBox1.Controls.Add(this.textoTriple);
+            this.groupBox1.Controls.Add(this.textoDoble);
+            this.groupBox1.Controls.Add(this.textoSimple);
             this.groupBox1.Controls.Add(this.cantidadSimples);
             this.groupBox1.Controls.Add(this.cantidadDobles);
             this.groupBox1.Controls.Add(this.cantidadTriples);
@@ -97,6 +101,157 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Reserva";
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Location = new System.Drawing.Point(655, 66);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(128, 52);
+            this.button2.TabIndex = 2;
+            this.button2.Text = "Consultar disponibilidad";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
+            // 
+            // cantidadHuéspedes
+            // 
+            this.cantidadHuéspedes.Enabled = false;
+            this.cantidadHuéspedes.Location = new System.Drawing.Point(220, 311);
+            this.cantidadHuéspedes.Name = "cantidadHuéspedes";
+            this.cantidadHuéspedes.Size = new System.Drawing.Size(50, 22);
+            this.cantidadHuéspedes.TabIndex = 27;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(455, 155);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(294, 16);
+            this.label12.TabIndex = 26;
+            this.label12.Text = "Elija la cantidad de habitaciones que va a tomar";
+            this.label12.Visible = false;
+            // 
+            // textoQuintuple
+            // 
+            this.textoQuintuple.AutoSize = true;
+            this.textoQuintuple.Location = new System.Drawing.Point(146, 268);
+            this.textoQuintuple.Name = "textoQuintuple";
+            this.textoQuintuple.Size = new System.Drawing.Size(64, 16);
+            this.textoQuintuple.TabIndex = 25;
+            this.textoQuintuple.Text = "Quíntuple";
+            // 
+            // textoCuadruple
+            // 
+            this.textoCuadruple.AutoSize = true;
+            this.textoCuadruple.Location = new System.Drawing.Point(146, 239);
+            this.textoCuadruple.Name = "textoCuadruple";
+            this.textoCuadruple.Size = new System.Drawing.Size(70, 16);
+            this.textoCuadruple.TabIndex = 24;
+            this.textoCuadruple.Text = "Cuádruple";
+            // 
+            // textoTriple
+            // 
+            this.textoTriple.AutoSize = true;
+            this.textoTriple.Location = new System.Drawing.Point(146, 207);
+            this.textoTriple.Name = "textoTriple";
+            this.textoTriple.Size = new System.Drawing.Size(43, 16);
+            this.textoTriple.TabIndex = 23;
+            this.textoTriple.Text = "Triple";
+            // 
+            // textoDoble
+            // 
+            this.textoDoble.AutoSize = true;
+            this.textoDoble.Location = new System.Drawing.Point(146, 179);
+            this.textoDoble.Name = "textoDoble";
+            this.textoDoble.Size = new System.Drawing.Size(45, 16);
+            this.textoDoble.TabIndex = 22;
+            this.textoDoble.Text = "Doble";
+            // 
+            // textoSimple
+            // 
+            this.textoSimple.AutoSize = true;
+            this.textoSimple.Location = new System.Drawing.Point(146, 151);
+            this.textoSimple.Name = "textoSimple";
+            this.textoSimple.Size = new System.Drawing.Size(50, 16);
+            this.textoSimple.TabIndex = 21;
+            this.textoSimple.Text = "Simple";
+            // 
+            // cantidadSimples
+            // 
+            this.cantidadSimples.Enabled = false;
+            this.cantidadSimples.Location = new System.Drawing.Point(291, 149);
+            this.cantidadSimples.Name = "cantidadSimples";
+            this.cantidadSimples.Size = new System.Drawing.Size(40, 22);
+            this.cantidadSimples.TabIndex = 20;
+            // 
+            // cantidadDobles
+            // 
+            this.cantidadDobles.Enabled = false;
+            this.cantidadDobles.Location = new System.Drawing.Point(291, 177);
+            this.cantidadDobles.Name = "cantidadDobles";
+            this.cantidadDobles.Size = new System.Drawing.Size(40, 22);
+            this.cantidadDobles.TabIndex = 19;
+            // 
+            // cantidadTriples
+            // 
+            this.cantidadTriples.Enabled = false;
+            this.cantidadTriples.Location = new System.Drawing.Point(291, 205);
+            this.cantidadTriples.Name = "cantidadTriples";
+            this.cantidadTriples.Size = new System.Drawing.Size(40, 22);
+            this.cantidadTriples.TabIndex = 18;
+            // 
+            // cantidadCuádruples
+            // 
+            this.cantidadCuádruples.Enabled = false;
+            this.cantidadCuádruples.Location = new System.Drawing.Point(291, 237);
+            this.cantidadCuádruples.Name = "cantidadCuádruples";
+            this.cantidadCuádruples.Size = new System.Drawing.Size(40, 22);
+            this.cantidadCuádruples.TabIndex = 17;
+            // 
+            // cantidadQuíntuples
+            // 
+            this.cantidadQuíntuples.Enabled = false;
+            this.cantidadQuíntuples.Location = new System.Drawing.Point(291, 266);
+            this.cantidadQuíntuples.Name = "cantidadQuíntuples";
+            this.cantidadQuíntuples.Size = new System.Drawing.Size(40, 22);
+            this.cantidadQuíntuples.TabIndex = 16;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(19, 313);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(152, 16);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "Cantidad de huéspedes";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(19, 133);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(120, 16);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "Tipo de habitación";
+            // 
+            // comboRegimen
+            // 
+            this.comboRegimen.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboRegimen.Enabled = false;
+            this.comboRegimen.FormattingEnabled = true;
+            this.comboRegimen.Location = new System.Drawing.Point(188, 366);
+            this.comboRegimen.Name = "comboRegimen";
+            this.comboRegimen.Size = new System.Drawing.Size(172, 24);
+            this.comboRegimen.TabIndex = 11;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(19, 374);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(107, 16);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Tipo de régimen";
             // 
             // monthCalendar
             // 
@@ -148,9 +303,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(19, 28);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 16);
+            this.label1.Size = new System.Drawing.Size(46, 16);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Fechas";
+            this.label1.Text = "Fecha";
             // 
             // fechaHasta
             // 
@@ -168,164 +323,30 @@
             this.fechaDesde.Size = new System.Drawing.Size(120, 22);
             this.fechaDesde.TabIndex = 0;
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(19, 374);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(107, 16);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "Tipo de régimen";
-            // 
-            // comboRegimen
-            // 
-            this.comboRegimen.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboRegimen.FormattingEnabled = true;
-            this.comboRegimen.Location = new System.Drawing.Point(188, 366);
-            this.comboRegimen.Name = "comboRegimen";
-            this.comboRegimen.Size = new System.Drawing.Size(172, 24);
-            this.comboRegimen.TabIndex = 11;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(19, 133);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(120, 16);
-            this.label4.TabIndex = 12;
-            this.label4.Text = "Tipo de habitación";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(19, 313);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(152, 16);
-            this.label6.TabIndex = 15;
-            this.label6.Text = "Cantidad de huéspedes";
-            // 
-            // cantidadQuíntuples
-            // 
-            this.cantidadQuíntuples.Location = new System.Drawing.Point(291, 266);
-            this.cantidadQuíntuples.Name = "cantidadQuíntuples";
-            this.cantidadQuíntuples.Size = new System.Drawing.Size(33, 22);
-            this.cantidadQuíntuples.TabIndex = 16;
-            // 
-            // cantidadCuádruples
-            // 
-            this.cantidadCuádruples.Location = new System.Drawing.Point(291, 237);
-            this.cantidadCuádruples.Name = "cantidadCuádruples";
-            this.cantidadCuádruples.Size = new System.Drawing.Size(33, 22);
-            this.cantidadCuádruples.TabIndex = 17;
-            // 
-            // cantidadTriples
-            // 
-            this.cantidadTriples.Location = new System.Drawing.Point(291, 205);
-            this.cantidadTriples.Name = "cantidadTriples";
-            this.cantidadTriples.Size = new System.Drawing.Size(33, 22);
-            this.cantidadTriples.TabIndex = 18;
-            // 
-            // cantidadDobles
-            // 
-            this.cantidadDobles.Location = new System.Drawing.Point(291, 177);
-            this.cantidadDobles.Name = "cantidadDobles";
-            this.cantidadDobles.Size = new System.Drawing.Size(33, 22);
-            this.cantidadDobles.TabIndex = 19;
-            // 
-            // cantidadSimples
-            // 
-            this.cantidadSimples.Location = new System.Drawing.Point(291, 149);
-            this.cantidadSimples.Name = "cantidadSimples";
-            this.cantidadSimples.Size = new System.Drawing.Size(33, 22);
-            this.cantidadSimples.TabIndex = 20;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(146, 151);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(50, 16);
-            this.label7.TabIndex = 21;
-            this.label7.Text = "Simple";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(146, 179);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(45, 16);
-            this.label8.TabIndex = 22;
-            this.label8.Text = "Doble";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(146, 207);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(43, 16);
-            this.label9.TabIndex = 23;
-            this.label9.Text = "Triple";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(146, 239);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(70, 16);
-            this.label10.TabIndex = 24;
-            this.label10.Text = "Cuádruple";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(146, 268);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(64, 16);
-            this.label11.TabIndex = 25;
-            this.label11.Text = "Quíntuple";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(453, 268);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(294, 16);
-            this.label12.TabIndex = 26;
-            this.label12.Text = "Elija la cantidad de habitaciones que va a tomar";
-            // 
-            // cantidadHuéspedes
-            // 
-            this.cantidadHuéspedes.Location = new System.Drawing.Point(220, 311);
-            this.cantidadHuéspedes.Name = "cantidadHuéspedes";
-            this.cantidadHuéspedes.Size = new System.Drawing.Size(50, 22);
-            this.cantidadHuéspedes.TabIndex = 27;
-            // 
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(34, 464);
+            this.button1.Location = new System.Drawing.Point(747, 451);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(147, 52);
             this.button1.TabIndex = 1;
             this.button1.Text = "Limpiar";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // dataGridView1
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(612, 464);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(147, 52);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Consultar disponibilidad";
-            this.button2.UseVisualStyleBackColor = true;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(642, 183);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(240, 150);
+            this.dataGridView1.TabIndex = 28;
             // 
             // GenerarReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1011, 528);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
             this.Name = "GenerarReserva";
@@ -333,12 +354,13 @@
             this.Load += new System.EventHandler(this.GenerarReserva_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cantidadQuíntuples)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cantidadCuádruples)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cantidadTriples)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cantidadDobles)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cantidadSimples)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cantidadHuéspedes)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cantidadSimples)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cantidadDobles)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cantidadTriples)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cantidadCuádruples)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cantidadQuíntuples)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -364,13 +386,14 @@
         private System.Windows.Forms.NumericUpDown cantidadCuádruples;
         private System.Windows.Forms.NumericUpDown cantidadQuíntuples;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label textoQuintuple;
+        private System.Windows.Forms.Label textoCuadruple;
+        private System.Windows.Forms.Label textoTriple;
+        private System.Windows.Forms.Label textoDoble;
+        private System.Windows.Forms.Label textoSimple;
         private System.Windows.Forms.NumericUpDown cantidadHuéspedes;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
