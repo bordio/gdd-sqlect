@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.botonConsultarDispo = new System.Windows.Forms.Button();
             this.cantidadHuéspedes = new System.Windows.Forms.NumericUpDown();
             this.label12 = new System.Windows.Forms.Label();
             this.textoQuintuple = new System.Windows.Forms.Label();
@@ -55,7 +55,7 @@
             this.fechaHasta = new System.Windows.Forms.TextBox();
             this.fechaDesde = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.botonPrecio = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cantidadHuéspedes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cantidadSimples)).BeginInit();
@@ -63,13 +63,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.cantidadTriples)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cantidadCuádruples)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cantidadQuíntuples)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.dataGridView1);
-            this.groupBox1.Controls.Add(this.button2);
+            this.groupBox1.Controls.Add(this.botonPrecio);
+            this.groupBox1.Controls.Add(this.botonConsultarDispo);
             this.groupBox1.Controls.Add(this.cantidadHuéspedes);
             this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.textoQuintuple);
@@ -102,16 +101,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Reserva";
             // 
-            // button2
+            // botonConsultarDispo
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(655, 66);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(128, 52);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Consultar disponibilidad";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click_1);
+            this.botonConsultarDispo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.botonConsultarDispo.Location = new System.Drawing.Point(655, 66);
+            this.botonConsultarDispo.Name = "botonConsultarDispo";
+            this.botonConsultarDispo.Size = new System.Drawing.Size(128, 52);
+            this.botonConsultarDispo.TabIndex = 2;
+            this.botonConsultarDispo.Text = "Consultar disponibilidad";
+            this.botonConsultarDispo.UseVisualStyleBackColor = true;
+            this.botonConsultarDispo.Click += new System.EventHandler(this.button2_Click_1);
             // 
             // cantidadHuéspedes
             // 
@@ -124,7 +123,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(455, 155);
+            this.label12.Location = new System.Drawing.Point(452, 177);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(294, 16);
             this.label12.TabIndex = 26;
@@ -243,6 +242,7 @@
             this.comboRegimen.Name = "comboRegimen";
             this.comboRegimen.Size = new System.Drawing.Size(172, 24);
             this.comboRegimen.TabIndex = 11;
+        
             // 
             // label5
             // 
@@ -334,13 +334,15 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // dataGridView1
+            // botonPrecio
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(642, 183);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(240, 150);
-            this.dataGridView1.TabIndex = 28;
+            this.botonPrecio.Location = new System.Drawing.Point(655, 250);
+            this.botonPrecio.Name = "botonPrecio";
+            this.botonPrecio.Size = new System.Drawing.Size(128, 50);
+            this.botonPrecio.TabIndex = 28;
+            this.botonPrecio.Text = "Consultar precios de habitación";
+            this.botonPrecio.UseVisualStyleBackColor = true;
+            this.botonPrecio.Click += new System.EventHandler(this.botonPrecio_Click);
             // 
             // GenerarReserva
             // 
@@ -360,7 +362,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.cantidadTriples)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cantidadCuádruples)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cantidadQuíntuples)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -393,7 +394,7 @@
         private System.Windows.Forms.Label textoSimple;
         private System.Windows.Forms.NumericUpDown cantidadHuéspedes;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button botonConsultarDispo;
+        private System.Windows.Forms.Button botonPrecio;
     }
 }

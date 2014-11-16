@@ -30,6 +30,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void GenerarReserva_Load(object sender, EventArgs e)
         {
+            
             monthCalendar.Visible = false;
 
             StringBuilder sentence = new StringBuilder().AppendFormat("SELECT r.descripcion FROM SQLECT.Regimenes_Hoteles rh JOIN SQLECT.Hoteles h ON (rh.fk_hotel=h.id_hotel) JOIN SQLECT.Regimenes r ON (r.id_regimen=rh.fk_regimen) WHERE h.id_hotel={0}",idHotelEnCuestion);
@@ -41,7 +42,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 comboRegimen.Items.Add(dat[0]);
             }
 
-            
+            comboRegimen.Enabled = false;
+            botonPrecio.Enabled = false;
         }
 
         private void monthCalendar1_DateSelected(object sender, DateRangeEventArgs e)
@@ -75,8 +77,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void button1_Click(object sender, EventArgs e)
         {
-            fechaDesde.Enabled = true;
-            fechaHasta.Enabled = true;
+            label12.Visible = false;
+            comboRegimen.Enabled = false;
+            comboRegimen.SelectedItem = null;
+            botonPrecio.Enabled = false;
+
             botonSeleccionarD.Enabled = true;
             botonSeleccionarH.Enabled=true;
 
@@ -112,11 +117,12 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             bool fechaDesdeOK = this.funciones.validarNoVacio(fechaDesde, mensajeValidacion);
             bool fechaHastaOK = this.funciones.validarNoVacio(fechaHasta, mensajeValidacion);
 
+            DateTime fechaActual = DateTime.Today;
             bool fechasValidas=false;
             
             if (fechaDesdeOK & fechaHastaOK)
             {
-                if (Convert.ToDateTime(fechaDesde.Text) <= Convert.ToDateTime(fechaHasta.Text))
+                if (Convert.ToDateTime(fechaDesde.Text) <= Convert.ToDateTime(fechaHasta.Text) )
                     fechasValidas = true;
                  else
                     mensajeValidacion.AppendLine("La fecha de Check-in es posterior a la de Check-out");
@@ -129,61 +135,50 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             }
             else
             {
-                botonSeleccionarD.Enabled = false;
-                botonSeleccionarH.Enabled = false;
-                fechaDesde.Enabled = false;
-                fechaHasta.Enabled = false;
-
-                label12.Visible = true;
-                cantidadSimples.Enabled = true;
-                cantidadDobles.Enabled = true;
-                cantidadTriples.Enabled = true;
-                cantidadCuádruples.Enabled = true;
-                cantidadQuíntuples.Enabled = true;
-                cantidadHuéspedes.Enabled = true;
-                comboRegimen.Enabled = true;
-
-                //Cargo los máximos disponibles por cada tipo de habitación
-                 DataTable tablaDeMaximos = funcionesReservas.habitacionesMaximasDisponibles(fechaDesde.Text, fechaHasta.Text, idHotelEnCuestion);
-
-                 dataGridView1.DataSource = tablaDeMaximos.DefaultView;
+                //Cargo los máximos disponibles por cada tipo de habitación            
                 
-                for (int i =0; i < tablaDeMaximos.Rows.Count; i++) 
-                
-                { int tipoHab=Convert.ToInt32(tablaDeMaximos.Rows[i]["Tipo"].ToString());
-                    
-                    switch(tipoHab)
-                    {
-                        case 1001:
-                        cantidadSimples.Maximum= Convert.ToInt32(tablaDeMaximos.Rows[i]["Cant."].ToString() );
-                        break;
-                        case 1002:
-                        cantidadDobles.Maximum = Convert.ToInt32(tablaDeMaximos.Rows[i]["Cant."].ToString());
-                        break;
-                        case 1003:
-                        cantidadTriples.Maximum = Convert.ToInt32(tablaDeMaximos.Rows[i]["Cant."].ToString());
-                        break;
-                        case 1004:
-                        cantidadCuádruples.Maximum = Convert.ToInt32(tablaDeMaximos.Rows[i]["Cant."].ToString());
-                        break;
-                        case 1005:
-                        cantidadQuíntuples.Maximum = Convert.ToInt32(tablaDeMaximos.Rows[i]["Cant."].ToString());
-                        break;
+                DataTable tablaDeMaximos = funcionesReservas.habitacionesMaximasDisponibles(fechaDesde.Text, fechaHasta.Text, idHotelEnCuestion);
+                funcionesReservas.cargarCantidadesMaximasDeHabitaciones(tablaDeMaximos, cantidadSimples, cantidadDobles, cantidadTriples, cantidadCuádruples, cantidadQuíntuples);
 
-                    
-                    }
-                
-                    
+                if (cantidadSimples.Maximum == 0 & cantidadDobles.Maximum == 0 & cantidadTriples.Maximum == 0 & cantidadCuádruples.Maximum == 0 & cantidadQuíntuples.Maximum == 0)
+                {
+                    MessageBox.Show(string.Format("Se encuentra todo reservado para el {0} hasta el {1}", fechaDesde.Text.ToString(), fechaHasta.Text.ToString()));
                 }
+                else
+                {
+                    comboRegimen.Enabled = true;
 
-               
+                    botonSeleccionarD.Enabled = false;
+                    botonSeleccionarH.Enabled = false;
+                    fechaDesde.Enabled = false;
+                    fechaHasta.Enabled = false;
 
-                              
+                    label12.Visible = true;
+                    cantidadSimples.Enabled = true;
+                    cantidadDobles.Enabled = true;
+                    cantidadTriples.Enabled = true;
+                    cantidadCuádruples.Enabled = true;
+                    cantidadQuíntuples.Enabled = true;
+                    cantidadHuéspedes.Enabled = true;
+                    comboRegimen.Enabled = true;
+
+                    botonPrecio.Enabled = true;
+                }
             
             }
             
         }
 
+        private void botonPrecio_Click(object sender, EventArgs e)
+        {
+            if (comboRegimen.SelectedIndex<0)
+                MessageBox.Show("Debe elegir un tipo de Régimen");
+            else
+            {
+                PreciosYConfirmacion formularioPrecios = new PreciosYConfirmacion(comboRegimen.SelectedItem.ToString(), idHotelEnCuestion, cantidadHuéspedes.Value, cantidadSimples.Value, cantidadDobles.Value, cantidadTriples.Value, cantidadCuádruples.Value, cantidadQuíntuples.Value,fechaDesde.Text.ToString(),fechaHasta.Text.ToString());
+                formularioPrecios.Show();
+            }
+        }
       
     }
 }

@@ -36,6 +36,81 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             return maximasDisponibles;
         }
 
-    }
 
-}
+        public void cargarCantidadesMaximasDeHabitaciones(DataTable tablaDeMaximos, NumericUpDown simples, NumericUpDown dobles, NumericUpDown triples, NumericUpDown cuadruples, NumericUpDown quintuples)
+        {
+
+            simples.Maximum = 0;
+            dobles.Maximum = 0;
+            triples.Maximum = 0;
+            cuadruples.Maximum = 0;
+            quintuples.Maximum = 0;
+
+            for (int i = 0; i < tablaDeMaximos.Rows.Count; i++)
+            {
+                int tipoHab = Convert.ToInt32(tablaDeMaximos.Rows[i][0].ToString());
+
+                switch (tipoHab)
+                {
+                    case 1001:
+                        simples.Maximum = Convert.ToInt32(tablaDeMaximos.Rows[i][1].ToString());
+                        break;
+                    case 1002:
+                        dobles.Maximum = Convert.ToInt32(tablaDeMaximos.Rows[i][1].ToString());
+                        break;
+                    case 1003:
+                        triples.Maximum = Convert.ToInt32(tablaDeMaximos.Rows[i][1].ToString());
+                        break;
+                    case 1004:
+                        cuadruples.Maximum = Convert.ToInt32(tablaDeMaximos.Rows[i][1].ToString());
+                        break;
+                    case 1005:
+                        quintuples.Maximum = Convert.ToInt32(tablaDeMaximos.Rows[i][1].ToString());
+                        break;
+
+
+                }
+
+            }
+
+
+
+        }
+
+        public DataTable obtenerPreciosDeHabtitaciones(string tipoRegimen, int idHotel)
+        {
+
+            Conexion conexion = Conexion.Instance;
+            System.Data.SqlClient.SqlCommand comandoAReserva = new System.Data.SqlClient.SqlCommand();
+            comandoAReserva.CommandType = CommandType.StoredProcedure;
+
+            comandoAReserva.Parameters.Add("@tipoRegimen", SqlDbType.VarChar);
+            comandoAReserva.Parameters.Add("@idHotel", SqlDbType.Int);
+
+            comandoAReserva.Parameters[0].Value = tipoRegimen;
+            comandoAReserva.Parameters[1].Value = idHotel;
+           
+            comandoAReserva.CommandText = "SQLECT.obtenerPreciosDeHabitaciones";
+            DataTable tablaDePrecios = conexion.ejecutarQueryConSP(comandoAReserva);
+
+            return tablaDePrecios;
+
+        
+        }
+
+
+        public bool chequearCantHuespedesYHabitaciones(int cantidadHuespedes, int habSimples, int habDobles, int habTriples, int habCuadruples, int habQuintuples)
+        {
+            int huespedesMaximos = habSimples * 1 + habDobles * 2 + habTriples * 3 + habCuadruples * 4 + habQuintuples * 5;
+
+              if (cantidadHuespedes<=huespedesMaximos)
+                  return true;
+            else
+                  return false;
+        
+        
+        }
+
+        }
+
+    }

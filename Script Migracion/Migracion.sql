@@ -1014,7 +1014,7 @@ SELECT tipo_habitacion 'Tipo', COUNT(DISTINCT id_habitacion) 'Cant.' FROM SQLECT
 							( @fechaDesde<r.fecha_inicio and r.fecha_inicio<@fechaHasta) OR
 							( @fechaDesde<DATEADD(day,r.cant_noches_reserva,r.fecha_inicio) and DATEADD(day,r.cant_noches_reserva,r.fecha_inicio)<@fechaHasta)
 						)
-		) AND fk_hotel = @idHotel
+		) AND fk_hotel = @idHotel AND estado_habitacion=1
 	GROUP BY tipo_habitacion
 	ORDER BY 1
 END
@@ -1025,6 +1025,22 @@ where h.id_habitacion = hr.fk_habitacion and hr.fk_reserva = r.id_reserva and h.
 order by 2 DESC
 
 
-exec SQLECT.obtenerMaximasHabitacionesDisponibles '2013-03-18T12:23:45', '2013-03-29T12:23:45', 11
+exec SQLECT.obtenerMaximasHabitacionesDisponibles '2013-03-18T12:23:45', '2013-03-18T12:23:45', 11
        
-*/												
+*/		
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.obtenerPreciosDeHabitaciones'))
+DROP PROCEDURE SQLECT.obtenerPreciosDeHabitaciones	
+
+GO
+CREATE PROCEDURE SQLECT.obtenerPreciosDeHabitaciones(@tipoRegimen varchar(60),@idHotel int)
+AS
+BEGIN
+
+DECLARE @precioRegimen int,@adicionalHotel int
+SET @adicionalHotel = ( SELECT (cant_estrellas*recarga_estrella) FROM SQLECT.Hoteles WHERE id_hotel=@idHotel)
+SET @precioRegimen = (SELECT precio FROM SQLECT.Regimenes WHERE descripcion=@tipoRegimen)
+
+SELECT descripcion, (@precioRegimen*(id_tipo_habitacion-1000)*porcentual)+@adicionalHotel 'Precio de la habitación por noche' FROM SQLECT.Tipos_Habitaciones
+ ORDER BY id_tipo_habitacion
+END
+GO
