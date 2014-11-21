@@ -45,6 +45,9 @@ DROP TABLE SQLECT.Clientes
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Habitaciones') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE SQLECT.Habitaciones
 
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Habitaciones_Reservas') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+DROP TABLE SQLECT.Habitaciones_Reservas
+
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Tipos_Habitaciones') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE SQLECT.Tipos_Habitaciones
 
@@ -68,9 +71,6 @@ DROP TABLE SQLECT.Facturas
 
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Consumibles') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE SQLECT.Consumibles
-
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Habitaciones_Reservas') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE SQLECT.Habitaciones_Reservas
 
 
 /* Creamos las tablas */
@@ -148,7 +148,7 @@ CREATE TABLE SQLECT.Facturas (
     total_factura INTEGER,
     forma_pago VARCHAR(30),
     detalle_forma_pago VARCHAR(120),
-    fk_reserva integer /*Cambiar este campo por fk_estadia (guarda que fk_reserva esta en varios select*/
+    fk_estadia integer /*Cambiar este campo por fk_estadia (guarda que fk_reserva esta en varios select*/
 )
 
 CREATE TABLE SQLECT.Consumibles(
@@ -353,9 +353,21 @@ INSERT INTO SQLECT.Clientes (nombre,apellido,mail,dom_Calle,nro_Calle,piso,depto
 	Cliente_Fecha_Nac, Cliente_Nacionalidad, Cliente_Pasaporte_Nro 
 	FROM gd_esquema.Maestra)
 
-INSERT INTO SQLECT.Facturas (id_factura,fecha,total_factura,fk_reserva,forma_pago,detalle_forma_pago)
-	(SELECT DISTINCT Factura_Nro, Factura_Fecha, Factura_Total, Reserva_Codigo,'Efectivo','Pago en efectivo'
-	 FROM gd_esquema.Maestra WHERE(Factura_Nro IS NOT NULL))
+INSERT INTO SQLECT.Reservas (id_reserva,fecha_inicio,cant_noches_reserva,fk_regimen,fk_cliente)
+	SELECT m.Reserva_Codigo, m.Reserva_Fecha_Inicio, m.Reserva_Cant_Noches, r.id_regimen, c.id_cliente
+	FROM gd_esquema.Maestra m JOIN SQLECT.Regimenes r ON (m.Regimen_Descripcion = r.descripcion) AND (m.Regimen_Precio = r.precio)
+							  JOIN SQLECT.Clientes c ON (m.Cliente_Fecha_Nac = c.fecha_Nac) AND (m.Cliente_Pasaporte_Nro = c.pasaporte_Nro)
+	WHERE m.Estadia_Fecha_Inicio is null
+
+INSERT INTO SQLECT.Estadias(fk_reserva,fecha_inicio,fecha_fin,cant_noches)
+ (SELECT DISTINCT Reserva_Codigo,Estadia_Fecha_Inicio,DATEADD(DAY,Estadia_Cant_Noches-1,Estadia_Fecha_Inicio),Estadia_Cant_Noches
+     FROM gd_esquema.Maestra
+      WHERE Estadia_Fecha_Inicio IS NOT NULL)
+
+INSERT INTO SQLECT.Facturas (id_factura,fecha,total_factura,fk_estadia,forma_pago,detalle_forma_pago)
+	(SELECT DISTINCT Factura_Nro, Factura_Fecha, Factura_Total, id_estadia,'Efectivo','Pago en efectivo'
+	 FROM gd_esquema.Maestra JOIN SQLECT.Estadias ON (Reserva_Codigo=fk_reserva)
+	  WHERE(Factura_Nro IS NOT NULL))
 
 INSERT INTO SQLECT.Consumibles (id_consumible, descripcion, precio)
 	(SELECT DISTINCT Consumible_Codigo, Consumible_Descripcion, Consumible_Precio
@@ -366,22 +378,11 @@ INSERT INTO SQLECT.Items (cantidad_prod,monto_item, fk_factura, fk_consumible)
 	(SELECT DISTINCT Item_Factura_Cantidad, Item_Factura_Monto, Factura_Nro, Consumible_Codigo
 	 FROM gd_esquema.Maestra WHERE Factura_Nro IS NOT NULL)
 
-INSERT INTO SQLECT.Reservas (id_reserva,fecha_inicio,cant_noches_reserva,fk_regimen,fk_cliente)
-	SELECT m.Reserva_Codigo, m.Reserva_Fecha_Inicio, m.Reserva_Cant_Noches, r.id_regimen, c.id_cliente
-	FROM gd_esquema.Maestra m JOIN SQLECT.Regimenes r ON (m.Regimen_Descripcion = r.descripcion) AND (m.Regimen_Precio = r.precio)
-							  JOIN SQLECT.Clientes c ON (m.Cliente_Fecha_Nac = c.fecha_Nac) AND (m.Cliente_Pasaporte_Nro = c.pasaporte_Nro)
-	WHERE m.Estadia_Fecha_Inicio is null
-
 INSERT INTO SQLECT.Habitaciones_Reservas (fk_habitacion,fk_reserva)
 	SELECT ha.id_habitacion, m.Reserva_Codigo
 	FROM SQLECT.Hoteles ho JOIN gd_esquema.Maestra m ON (ho.calle=m.Hotel_Calle AND ho.ciudad=m.Hotel_Ciudad AND ho.nro_calle=m.Hotel_Nro_Calle AND ho.cant_estrellas=m.Hotel_CantEstrella)
 				   JOIN SQLECT.Habitaciones ha ON (ha.fk_hotel = ho.id_hotel AND ha.frente=m.Habitacion_Frente AND ha.nro_habitacion=m.Habitacion_Numero AND ha.piso=m.Habitacion_Piso AND ha.tipo_habitacion=m.Habitacion_Tipo_Codigo)
 	WHERE m.Estadia_Fecha_Inicio IS NULL
-
-INSERT INTO SQLECT.Estadias(fk_reserva,fecha_inicio,fecha_fin,cant_noches)
- (SELECT DISTINCT Reserva_Codigo,Estadia_Fecha_Inicio,DATEADD(DAY,Estadia_Cant_Noches-1,Estadia_Fecha_Inicio),Estadia_Cant_Noches
-     FROM gd_esquema.Maestra
-      WHERE Estadia_Fecha_Inicio IS NOT NULL)
 
 INSERT INTO SQLECT.Consumibles_Estadias_Habitaciones(fk_consumible,fk_estadia,fk_habitacion)
  (SELECT DISTINCT m.Consumible_Codigo,e.id_estadia,ha.id_habitacion
@@ -478,20 +479,16 @@ CREATE PROCEDURE SQLECT.procEstadoReserva
 									m.Estadia_Fecha_Inicio IS NOT NULL AND
 									m.Factura_Nro IS NULL)
 		  WHERE id_reserva IN 
-			  (SELECT r.id_reserva FROM SQLECT.Facturas f JOIN SQLECT.Reservas r ON (r.id_reserva=f.fk_reserva)
-							)
+			  (SELECT e.fk_reserva FROM SQLECT.Estadias e)
+	  
 	  UPDATE SQLECT.Reservas
 		SET estado_reserva = 4 /* Cancelada por No-Show*/
 		 WHERE id_reserva NOT IN
-			  (SELECT r.id_reserva FROM SQLECT.Facturas f JOIN SQLECT.Reservas r ON (r.id_reserva=f.fk_reserva))
+			  (SELECT e.fk_reserva FROM SQLECT.Estadias e)
    END;	        
  GO
  
 EXECUTE SQLECT.procEstadoReserva
-
-INSERT INTO SQLECT.Reservas_Canceladas(fk_reserva,motivo,fecha_cancelacion)
-  SELECT id_reserva,'Porque sí',fecha_inicio FROM SQLECT.Reservas WHERE estado_reserva IN (2,3,4)
-
 
 /*TOP 5 Reservas canceladas*/
 
@@ -525,8 +522,8 @@ CREATE PROCEDURE SQLECT.top5HotelesConsumiblesFacturados(@año int,@inicioTri int
 SELECT TOP 5 ho.nombre,ho.id_hotel'Id',SUM(i.cantidad_prod)'Consumibles facturados'
   FROM SQLECT.Hoteles ho JOIN SQLECT.Habitaciones ha ON (ho.id_hotel=ha.fk_hotel)
                   JOIN SQLECT.Habitaciones_Reservas hr ON (ha.id_habitacion=hr.fk_habitacion)
-                  JOIN SQLECT.Reservas r ON (r.id_reserva=hr.fk_reserva)
-                  JOIN SQLECT.Facturas f ON (f.fk_reserva=r.id_reserva)
+                  JOIN SQLECT.Estadias e ON (e.fk_reserva=hr.fk_reserva)
+                  JOIN SQLECT.Facturas f ON (f.fk_estadia=e.id_estadia)
                   JOIN SQLECT.Items i ON (i.fk_factura=f.id_factura)
                   JOIN SQLECT.Consumibles c ON (i.fk_consumible=c.id_consumible)
     WHERE ( (YEAR(f.fecha)=@año) AND (MONTH(f.fecha) BETWEEN @inicioTri AND @finTri))
@@ -587,7 +584,8 @@ BEGIN
 SELECT TOP 5 cl.id_cliente'Id',cl.nombre'Nombre',cl.apellido'Apellido',SUM( ((re.precio*r.cant_noches_estadia)/10)+((i.cantidad_prod*c.precio)/5) )'Puntos'
   FROM SQLECT.Clientes cl JOIN SQLECT.Reservas r ON (r.fk_cliente=cl.id_cliente)
 				   JOIN SQLECT.Regimenes re ON (r.fk_regimen=re.id_regimen)
-				   JOIN SQLECT.Facturas f ON (r.id_reserva=f.fk_reserva)
+				   JOIN SQLECT.Estadias e ON (e.fk_reserva=r.id_reserva)
+				   JOIN SQLECT.Facturas f ON (e.id_estadia=f.fk_estadia)
 				   JOIN SQLECT.Items i ON (i.fk_factura=f.id_factura)
 				   JOIN SQLECT.Consumibles c ON (c.id_consumible=i.fk_consumible)
 	WHERE ( (YEAR(f.fecha)=@año) AND (MONTH(f.fecha) BETWEEN @inicioTri AND @finTri) )
