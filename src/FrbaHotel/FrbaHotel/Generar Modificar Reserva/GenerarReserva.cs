@@ -123,21 +123,26 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
             bool fechasValidas=false;
 
-          
+
             if (fechaDesdeOK & fechaHastaOK)
             {
                 if (Convert.ToDateTime(fechaDesde.Text) < fechaActual | Convert.ToDateTime(fechaHasta.Text) < fechaActual)
-                {
                     MessageBox.Show("No puede elegir fechas anterior a la actual");
-                }
 
                 else
+                {
 
-                    fechasValidas = true;
-                /*if (Convert.ToDateTime(fechaDesde.Text) <= Convert.ToDateTime(fechaHasta.Text)  )
-                    fechasValidas = true;
-                 else
-                    mensajeValidacion.AppendLine("La fecha de Check-in es posterior a la de Check-out");*/
+                    if (Convert.ToDateTime(fechaDesde.Text) > Convert.ToDateTime(fechaHasta.Text))
+                        MessageBox.Show("El check-in es posterior al check-out");
+                    else
+
+                        fechasValidas = true;
+                    /*if (Convert.ToDateTime(fechaDesde.Text) <= Convert.ToDateTime(fechaHasta.Text)  )
+                        fechasValidas = true;
+                     else
+                        mensajeValidacion.AppendLine("La fecha de Check-in es posterior a la de Check-out");*/
+
+                }
             }
 
             if (!fechasValidas)

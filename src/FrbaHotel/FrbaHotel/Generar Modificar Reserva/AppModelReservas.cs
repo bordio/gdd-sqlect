@@ -170,7 +170,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         }
 
 
-        public void reservarHabitacion(int idHotel, int numeroHabitacion, int idReserva)
+        public void reservarHabitacion(int idHotel, int numeroHabitacion, int idReserva, string fechaDesde, int cantNoches)
         {
             Conexion conexion = Conexion.Instance;
             System.Data.SqlClient.SqlCommand comandoAReserva = new System.Data.SqlClient.SqlCommand();
@@ -179,10 +179,14 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             comandoAReserva.Parameters.Add("@idHotel", SqlDbType.Int);
             comandoAReserva.Parameters.Add("@numeroHabitacion", SqlDbType.Int);
             comandoAReserva.Parameters.Add("@idReserva", SqlDbType.Int);
+            comandoAReserva.Parameters.Add("@fechaDesde", SqlDbType.DateTime);
+            comandoAReserva.Parameters.Add("@cantNoches",SqlDbType.Int);
 
             comandoAReserva.Parameters[0].Value = idHotel;
             comandoAReserva.Parameters[1].Value = numeroHabitacion;
             comandoAReserva.Parameters[2].Value = idReserva;
+            comandoAReserva.Parameters[3].Value = DateTime.Parse(fechaDesde);
+            comandoAReserva.Parameters[4].Value = cantNoches;
 
             comandoAReserva.CommandText = "SQLECT.reservarHabitacion";
             conexion.ejecutarSP(comandoAReserva);

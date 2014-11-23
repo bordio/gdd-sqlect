@@ -190,6 +190,7 @@ CREATE TABLE SQLECT.Reservas_Canceladas (
 CREATE TABLE SQLECT.Habitaciones_Reservas (
     fk_habitacion integer,
     fk_reserva integer,
+    estado_ocupacion char(1) DEFAULT 'O' CHECK (estado_ocupacion IN ('D','O')), /*O: Ocupada o Por ocupar; D: Desocupada*/
     PRIMARY KEY (fk_habitacion,fk_reserva)
 )
 
@@ -393,7 +394,6 @@ INSERT INTO SQLECT.Consumibles_Estadias_Habitaciones(fk_consumible,fk_estadia)
     WHERE m.Consumible_Codigo IS NOT NULL )
 
 
-
 /* Creación de Procedimientos */
 
 
@@ -491,6 +491,11 @@ CREATE PROCEDURE SQLECT.procEstadoReserva
  GO
  
 EXECUTE SQLECT.procEstadoReserva
+
+/*Actualizo los estados de ocupacion de las habitaciones de cada reserva*/
+
+UPDATE SQLECT.Habitaciones_Reservas SET estado_ocupacion='D'
+ WHERE fk_reserva IN (SELECT id_reserva FROM SQLECT.Reservas WHERE estado_reserva IN (2,3,4) )
 
 /*TOP 5 Reservas canceladas*/
 
@@ -1036,11 +1041,11 @@ SELECT tipo_habitacion 'Tipo', COUNT(DISTINCT id_habitacion) 'Cant.' FROM SQLECT
 				JOIN SQLECT.Reservas r ON (r.id_reserva=hr.fk_reserva)
 				
 				WHERE	ho.id_hotel=@idHotel AND
-						r.estado_reserva IN (0,1,5) AND
+						hr.estado_ocupacion='O' AND
 						(	
 							( @fechaDesde<r.fecha_inicio and r.fecha_inicio<@fechaHasta) OR
-							( @fechaDesde<DATEADD(day,r.cant_noches_reserva,r.fecha_inicio) and DATEADD(day,r.cant_noches_reserva,r.fecha_inicio)<@fechaHasta)
-						)
+							( @fechaDesde<DATEADD(day,r.cant_noches_reserva,r.fecha_inicio) and DATEADD(day,r.cant_noches_reserva,r.fecha_inicio)<=@fechaHasta)
+						) 
 		) AND fk_hotel = @idHotel AND estado_habitacion=1
 	GROUP BY tipo_habitacion
 	ORDER BY 1
@@ -1089,13 +1094,13 @@ SELECT DISTINCT hot.nombre'Hotel',tipHab.descripcion'Tipo Habitacion',ha.nro_hab
 				JOIN SQLECT.Hoteles ho ON (h.fk_hotel=ho.id_hotel)
 				JOIN SQLECT.Reservas r ON (r.id_reserva=hr.fk_reserva)
 				
-				WHERE	ho.id_hotel=@idHotel AND
-						r.estado_reserva IN (0,1,5) AND
+				WHERE	ho.id_hotel=@idHotel AND 
+						hr.estado_ocupacion='O' AND
 						(	
-							( @fechaDesde<=r.fecha_inicio and r.fecha_inicio<=@fechaHasta) OR
-							( @fechaDesde<=DATEADD(day,r.cant_noches_reserva,r.fecha_inicio) and DATEADD(day,r.cant_noches_reserva,r.fecha_inicio)<=@fechaHasta)
-						)
-		) AND ha.fk_hotel = @idHotel AND ha.estado_habitacion=1
+							( @fechaDesde<r.fecha_inicio and r.fecha_inicio<@fechaHasta) OR
+							( @fechaDesde<DATEADD(day,r.cant_noches_reserva,r.fecha_inicio) and DATEADD(day,r.cant_noches_reserva,r.fecha_inicio)<@fechaHasta)
+						) )
+		 AND ha.fk_hotel = @idHotel AND ha.estado_habitacion=1
 	ORDER BY 1
 END
 GO	
@@ -1121,12 +1126,22 @@ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.reser
 DROP PROCEDURE SQLECT.reservarHabitacion
 
 GO
-CREATE PROCEDURE SQLECT.reservarHabitacion(@idHotel int, @numeroHabitacion int, @idReserva int)
+CREATE PROCEDURE SQLECT.reservarHabitacion(@idHotel int, @numeroHabitacion int, @idReserva int,@fechaDesde datetime, @cantNoches int)
 AS
 BEGIN TRANSACTION
- DECLARE @idHabitacion int
+ DECLARE @idHabitacion int,@fechaHasta datetime
  SET @idHabitacion = (SELECT id_habitacion FROM SQLECT.Habitaciones WHERE nro_habitacion=@numeroHabitacion AND fk_hotel=@idHotel)
  INSERT INTO SQLECT.Habitaciones_Reservas(fk_habitacion,fk_reserva) VALUES (@idHabitacion,@idReserva)
+  
+  SET @fechaHasta = DATEADD(DAY,@cantNoches,@fechaDesde)
+  
+UPDATE SQLECT.Habitaciones_Reservas SET estado_ocupacion='O'
+ WHERE fk_habitacion=@idHabitacion AND ( fk_reserva IN ( SELECT id_reserva FROM SQLECT.Reservas r JOIN SQLECT.Habitaciones_Reservas hr ON (hr.fk_reserva=r.id_reserva)
+                                                           WHERE hr.fk_habitacion=@idHabitacion AND( ( @fechaDesde<r.fecha_inicio and r.fecha_inicio<@fechaHasta) OR
+																									  ( ( @fechaDesde<DATEADD(day,r.cant_noches_reserva,r.fecha_inicio) and DATEADD(day,r.cant_noches_reserva,r.fecha_inicio)<@fechaHasta)) 
+																									    OR ( @fechaDesde>DATEADD(day,r.cant_noches_reserva,r.fecha_inicio) AND hr.estado_ocupacion='D') ) AND r.estado_reserva IN (2,3,4) )
+                                       )                   
+  
 COMMIT TRANSACTION
 GO
   
@@ -1158,4 +1173,4 @@ SELECT TOP 1 id_reserva FROM SQLECT.Reservas
  ORDER BY id_reserva DESC
 END
 GO
-
+ 

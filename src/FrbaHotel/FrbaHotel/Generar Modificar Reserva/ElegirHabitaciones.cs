@@ -117,13 +117,15 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
                     foreach (int numeroHabitacion in listaHabitaciones)
                     {
-                        funcionesReservas.reservarHabitacion(idHotelActual, numeroHabitacion, idReserva);
+                        funcionesReservas.reservarHabitacion(idHotelActual, numeroHabitacion, idReserva, fechaDesdeActual, cantNoches);
                     }
 
                     MessageBox.Show("Reserva hecha correctamente");
+                    this.Close();
                 }
-                else
-                    MessageBox.Show("La cantidad de habitaciones elegidas difieren de las cantidades que selecciono al comienzo de la reserva");
+            }
+            else
+                MessageBox.Show("La cantidad de habitaciones elegidas difieren de las cantidades que selecciono al comienzo de la reserva");
 
                 listaHabitaciones.Clear();
                 contadorSimples = 0;
@@ -132,7 +134,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 contadorCuadruples = 0;
                 contadorQuintuples = 0;
 
-            }
+            
         }
 
         private void tablaPruebaHabitaciones_CurrentCellDirtyStateChanged(object sender, EventArgs e)
@@ -159,6 +161,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                         
             }
                               
+        }
+
+        private void botonVolver_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
       
