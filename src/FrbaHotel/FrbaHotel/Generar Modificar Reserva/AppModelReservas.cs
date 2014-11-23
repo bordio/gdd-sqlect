@@ -111,6 +111,100 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         
         }
 
+        public decimal calcularPrecioReserva(DataTable tablaDePrecios, int cantidadDias,int cantSimples, int cantDobles, int cantTriples, int cantCuadruples, int cantQuintuples)
+        {
+            decimal precioTotal = cantidadDias * (cantSimples * Convert.ToDecimal(tablaDePrecios.Rows[0][1]) + cantDobles * Convert.ToDecimal(tablaDePrecios.Rows[1][1]) + cantTriples * Convert.ToDecimal(tablaDePrecios.Rows[2][1]) + cantCuadruples * Convert.ToDecimal(tablaDePrecios.Rows[3][1]) + cantQuintuples * Convert.ToDecimal(tablaDePrecios.Rows[4][1]));
+
+                return precioTotal;
         }
 
+        public bool realizarReserva(string fechaInicio, int cantidadNoches, string usuarioDeSesion, string tipoRegimen, int idDeHotel)
+        {
+            DateTime fechaActual = DateTime.Today;
+
+
+            Conexion conexion = Conexion.Instance;
+            System.Data.SqlClient.SqlCommand comandoAReserva = new System.Data.SqlClient.SqlCommand();
+            comandoAReserva.CommandType = CommandType.StoredProcedure;
+
+            comandoAReserva.Parameters.Add("@fechaInicio", SqlDbType.DateTime);
+            comandoAReserva.Parameters.Add("@cantidadNoches", SqlDbType.Int);
+            comandoAReserva.Parameters.Add("@usuario", SqlDbType.VarChar);
+            comandoAReserva.Parameters.Add("@tipoRegimen", SqlDbType.VarChar);
+            comandoAReserva.Parameters.Add("@idHotel", SqlDbType.Int);
+         
+            comandoAReserva.Parameters[0].Value = DateTime.Parse(fechaInicio);
+            comandoAReserva.Parameters[1].Value = cantidadNoches;
+            comandoAReserva.Parameters[2].Value = usuarioDeSesion;
+            comandoAReserva.Parameters[3].Value = tipoRegimen;
+            comandoAReserva.Parameters[4].Value = idDeHotel;
+
+
+            comandoAReserva.CommandText = "SQLECT.realizarReserva";
+            conexion.ejecutarSP(comandoAReserva);
+
+            return true;
+        }
+
+        public DataTable obtenerHabitacionesDisponibles(int idHotel, string fechaDesde, string fechaHasta)
+        
+        {
+            Conexion conexion = Conexion.Instance;
+            System.Data.SqlClient.SqlCommand comandoAReserva = new System.Data.SqlClient.SqlCommand();
+            comandoAReserva.CommandType = CommandType.StoredProcedure;
+
+            comandoAReserva.Parameters.Add("@fechaDesde", SqlDbType.DateTime);
+            comandoAReserva.Parameters.Add("@fechaHasta", SqlDbType.DateTime);
+            comandoAReserva.Parameters.Add("@idHotel", SqlDbType.Int);
+
+            comandoAReserva.Parameters[0].Value = DateTime.Parse(fechaDesde);
+            comandoAReserva.Parameters[1].Value = DateTime.Parse(fechaHasta);
+            comandoAReserva.Parameters[2].Value = idHotel;
+
+
+            comandoAReserva.CommandText = "SQLECT.mostrarHabitacionesDisponibles";
+            DataTable habitacionesDsiponibles = conexion.ejecutarQueryConSP(comandoAReserva);
+
+            return habitacionesDsiponibles;
+        
+        }
+
+
+        public void reservarHabitacion(int idHotel, int numeroHabitacion, int idReserva)
+        {
+            Conexion conexion = Conexion.Instance;
+            System.Data.SqlClient.SqlCommand comandoAReserva = new System.Data.SqlClient.SqlCommand();
+            comandoAReserva.CommandType = CommandType.StoredProcedure;
+
+            comandoAReserva.Parameters.Add("@idHotel", SqlDbType.Int);
+            comandoAReserva.Parameters.Add("@numeroHabitacion", SqlDbType.Int);
+            comandoAReserva.Parameters.Add("@idReserva", SqlDbType.Int);
+
+            comandoAReserva.Parameters[0].Value = idHotel;
+            comandoAReserva.Parameters[1].Value = numeroHabitacion;
+            comandoAReserva.Parameters[2].Value = idReserva;
+
+            comandoAReserva.CommandText = "SQLECT.reservarHabitacion";
+            conexion.ejecutarSP(comandoAReserva);
+
+        }
+
+        public int obtenerIdReserva()
+        {
+            Conexion conexion = Conexion.Instance;
+            System.Data.SqlClient.SqlCommand comandoAReserva = new System.Data.SqlClient.SqlCommand();
+            comandoAReserva.CommandType = CommandType.StoredProcedure;
+
+            comandoAReserva.CommandText = "SQLECT.obtenerIdReserva";
+            int idReserva = conexion.ejecutarEscalarInt(comandoAReserva);
+            
+            return idReserva;
+        
+        }
+      
+
+         
+          }
     }
+
+    

@@ -88,7 +88,7 @@ namespace FrbaHotel.Login
                 if (string.IsNullOrEmpty(tareaARealizar.Text))
                     MessageBox.Show("Debe seleccionar una tarea", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 else
-                    dirigirABMElegida(tareaARealizar.Text);
+                    dirigirABMElegida(tareaARealizar.Text,usuarioDeSesion);
             }
 
 
@@ -129,7 +129,7 @@ namespace FrbaHotel.Login
         {
             tareaARealizar.Text = tablaDeFuncionalidades.CurrentRow.Cells[0].Value.ToString();
         }
-        public void dirigirABMElegida(string funcionalidad)
+        public void dirigirABMElegida(string funcionalidad, string usuarioDeSesion)
         {
             int idDeHotelElegido = funcionesVarias.obtenerIDHotel(listaHotelesHabilitados.SelectedItem.ToString());
 
@@ -156,7 +156,7 @@ namespace FrbaHotel.Login
                     gestionarHabitaciones.Show();
                     break;
                 case "Generar/modificar reservas":
-                    FrbaHotel.Generar_Modificar_Reserva.Form1 gestionarReservas = new FrbaHotel.Generar_Modificar_Reserva.Form1(idDeHotelElegido);
+                    FrbaHotel.Generar_Modificar_Reserva.Form1 gestionarReservas = new FrbaHotel.Generar_Modificar_Reserva.Form1(idDeHotelElegido,usuarioDeSesion);
                     gestionarReservas.Show();
                     break;
                 case "Cancelar reservas":

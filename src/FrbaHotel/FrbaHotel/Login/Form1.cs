@@ -28,7 +28,7 @@ namespace FrbaHotel.Login
         {
             if (!checkUsuarioRegis.Checked)
             {
-                Generar_Modificar_Reserva.Form1 generarReserva = new Generar_Modificar_Reserva.Form1(0);
+                Generar_Modificar_Reserva.Form1 generarReserva = new Generar_Modificar_Reserva.Form1(0,"guest");
                 generarReserva.Show();
 
             }

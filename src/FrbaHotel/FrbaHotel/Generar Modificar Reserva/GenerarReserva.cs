@@ -15,14 +15,17 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 {
     public partial class GenerarReserva : Form
     {
-        public GenerarReserva(int idDeHotel)
+        public GenerarReserva(int idDeHotel,string usuarioDeSesion)
         {
             InitializeComponent();
             this.idHotelEnCuestion = idDeHotel;
+            this.usuarioDeSesion = usuarioDeSesion;
         }
 
         int idHotelEnCuestion;
+        string usuarioDeSesion;
         bool soyDesde = false;
+        DateTime fechaActual = DateTime.Today;
 
         AppModel_Alta_Usuario funciones = new AppModel_Alta_Usuario();
         StringBuilder mensajeValidacion = new StringBuilder();
@@ -77,6 +80,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void button1_Click(object sender, EventArgs e)
         {
+            botonConsultarDispo.Enabled = true;
             label12.Visible = false;
             comboRegimen.Enabled = false;
             comboRegimen.SelectedItem = null;
@@ -117,15 +121,23 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             bool fechaDesdeOK = this.funciones.validarNoVacio(fechaDesde, mensajeValidacion);
             bool fechaHastaOK = this.funciones.validarNoVacio(fechaHasta, mensajeValidacion);
 
-            DateTime fechaActual = DateTime.Today;
             bool fechasValidas=false;
-            
+
+          
             if (fechaDesdeOK & fechaHastaOK)
             {
-                if (Convert.ToDateTime(fechaDesde.Text) <= Convert.ToDateTime(fechaHasta.Text) )
+                if (Convert.ToDateTime(fechaDesde.Text) < fechaActual | Convert.ToDateTime(fechaHasta.Text) < fechaActual)
+                {
+                    MessageBox.Show("No puede elegir fechas anterior a la actual");
+                }
+
+                else
+
+                    fechasValidas = true;
+                /*if (Convert.ToDateTime(fechaDesde.Text) <= Convert.ToDateTime(fechaHasta.Text)  )
                     fechasValidas = true;
                  else
-                    mensajeValidacion.AppendLine("La fecha de Check-in es posterior a la de Check-out");
+                    mensajeValidacion.AppendLine("La fecha de Check-in es posterior a la de Check-out");*/
             }
 
             if (!fechasValidas)
@@ -146,6 +158,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 }
                 else
                 {
+                    botonConsultarDispo.Enabled = false;
+
                     comboRegimen.Enabled = true;
 
                     botonSeleccionarD.Enabled = false;
@@ -175,7 +189,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 MessageBox.Show("Debe elegir un tipo de Régimen");
             else
             {
-                PreciosYConfirmacion formularioPrecios = new PreciosYConfirmacion(comboRegimen.SelectedItem.ToString(), idHotelEnCuestion, cantidadHuéspedes.Value, cantidadSimples.Value, cantidadDobles.Value, cantidadTriples.Value, cantidadCuádruples.Value, cantidadQuíntuples.Value,fechaDesde.Text.ToString(),fechaHasta.Text.ToString());
+                PreciosYConfirmacion formularioPrecios = new PreciosYConfirmacion(comboRegimen.SelectedItem.ToString(), idHotelEnCuestion, cantidadHuéspedes.Value, cantidadSimples.Value, cantidadDobles.Value, cantidadTriples.Value, cantidadCuádruples.Value, cantidadQuíntuples.Value,fechaDesde.Text.ToString(),fechaHasta.Text.ToString(), usuarioDeSesion);
                 formularioPrecios.Show();
             }
         }

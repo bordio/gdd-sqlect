@@ -14,15 +14,17 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 {
     public partial class Form1 : Form
     {
-        public Form1(int idDeHotel)
+        public Form1(int idDeHotel, string usuarioDeSesion)
         {
             InitializeComponent();
 
             this.idDeHotelDeSesion = idDeHotel;
+            this.usuarioDeSesion = usuarioDeSesion;
 
         }
 
         int idDeHotelDeSesion;
+        string usuarioDeSesion;
         Funcionalidades funcionesVarias = new Funcionalidades();
 
         private void Form1_Load(object sender, EventArgs e)
@@ -66,7 +68,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     idHotelElegido = idDeHotelDeSesion;
             }
 
-            FrbaHotel.Generar_Modificar_Reserva.GenerarReserva formGenerarReserva = new FrbaHotel.Generar_Modificar_Reserva.GenerarReserva(idHotelElegido);
+            FrbaHotel.Generar_Modificar_Reserva.GenerarReserva formGenerarReserva = new FrbaHotel.Generar_Modificar_Reserva.GenerarReserva(idHotelElegido,usuarioDeSesion);
             formGenerarReserva.Show();
 
 

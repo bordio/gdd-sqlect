@@ -31,8 +31,10 @@
             this.tablaPreciosHabitaciones = new System.Windows.Forms.DataGridView();
             this.textoPresentacion = new System.Windows.Forms.Label();
             this.textoInformativo = new System.Windows.Forms.Label();
-            this.botonRealizarReserva = new System.Windows.Forms.Button();
+            this.botonElegirHabitaciones = new System.Windows.Forms.Button();
             this.botonVolver = new System.Windows.Forms.Button();
+            this.textPrecioReserva = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.tablaPreciosHabitaciones)).BeginInit();
             this.SuspendLayout();
             // 
@@ -66,16 +68,16 @@
             this.textoInformativo.TabIndex = 2;
             this.textoInformativo.Text = "label1";
             // 
-            // botonRealizarReserva
+            // botonElegirHabitaciones
             // 
-            this.botonRealizarReserva.Enabled = false;
-            this.botonRealizarReserva.Location = new System.Drawing.Point(630, 287);
-            this.botonRealizarReserva.Name = "botonRealizarReserva";
-            this.botonRealizarReserva.Size = new System.Drawing.Size(132, 52);
-            this.botonRealizarReserva.TabIndex = 3;
-            this.botonRealizarReserva.Text = "Realizar reserva";
-            this.botonRealizarReserva.UseVisualStyleBackColor = true;
-            this.botonRealizarReserva.Click += new System.EventHandler(this.botonRealizarReserva_Click);
+            this.botonElegirHabitaciones.Enabled = false;
+            this.botonElegirHabitaciones.Location = new System.Drawing.Point(630, 287);
+            this.botonElegirHabitaciones.Name = "botonElegirHabitaciones";
+            this.botonElegirHabitaciones.Size = new System.Drawing.Size(132, 52);
+            this.botonElegirHabitaciones.TabIndex = 3;
+            this.botonElegirHabitaciones.Text = "Elegir habitaciones";
+            this.botonElegirHabitaciones.UseVisualStyleBackColor = true;
+            this.botonElegirHabitaciones.Click += new System.EventHandler(this.botonRealizarReserva_Click);
             // 
             // botonVolver
             // 
@@ -87,13 +89,33 @@
             this.botonVolver.UseVisualStyleBackColor = true;
             this.botonVolver.Click += new System.EventHandler(this.botonVolver_Click);
             // 
+            // textPrecioReserva
+            // 
+            this.textPrecioReserva.Enabled = false;
+            this.textPrecioReserva.Location = new System.Drawing.Point(630, 177);
+            this.textPrecioReserva.Name = "textPrecioReserva";
+            this.textPrecioReserva.Size = new System.Drawing.Size(132, 20);
+            this.textPrecioReserva.TabIndex = 5;
+            this.textPrecioReserva.Visible = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(490, 183);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(103, 13);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Precio de la estadia:";
+            // 
             // PreciosYConfirmacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(803, 351);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.textPrecioReserva);
             this.Controls.Add(this.botonVolver);
-            this.Controls.Add(this.botonRealizarReserva);
+            this.Controls.Add(this.botonElegirHabitaciones);
             this.Controls.Add(this.textoInformativo);
             this.Controls.Add(this.textoPresentacion);
             this.Controls.Add(this.tablaPreciosHabitaciones);
@@ -111,7 +133,9 @@
         private System.Windows.Forms.DataGridView tablaPreciosHabitaciones;
         private System.Windows.Forms.Label textoPresentacion;
         private System.Windows.Forms.Label textoInformativo;
-        private System.Windows.Forms.Button botonRealizarReserva;
+        private System.Windows.Forms.Button botonElegirHabitaciones;
         private System.Windows.Forms.Button botonVolver;
+        private System.Windows.Forms.TextBox textPrecioReserva;
+        private System.Windows.Forms.Label label1;
     }
 }
