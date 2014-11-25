@@ -24,6 +24,16 @@ namespace FrbaHotel.ABM_de_Cliente
             Text = "Alta de Cliente";
         }
 
+        public Alta_Cliente(int idReserva)
+        {
+            InitializeComponent();
+            appModel = new AppModel_Alta_Cliente();
+            Text = "Alta de Cliente";
+            this.idReservaDelCliente = idReserva;
+        }
+
+        int idReservaDelCliente;
+
         public Alta_Cliente(DataGridView lsClientes, StringBuilder nombre, StringBuilder apellido, StringBuilder email, StringBuilder fechaNacimiento, StringBuilder dom_Calle, StringBuilder nro_Calle, StringBuilder piso, StringBuilder depto, StringBuilder nacionalidad, StringBuilder pasaporte, StringBuilder habilitado)
         {
             InitializeComponent();
@@ -80,11 +90,26 @@ namespace FrbaHotel.ABM_de_Cliente
             //CONEXION BD
             if (validaciones)
             {
-                this.appModel.abmlCliente(
-                   this.Nombre.Text, this.Apellido.Text, this.Email.Text,
-                   this.Calle.Text, this.Numero.Text, this.Piso.Text, this.Departamento.Text,
-                   this.Fecha.Text, this.Nacionalidad.Text, this.Pasaporte.Text);
+                if (idReservaDelCliente != 0)
+                {
+                    this.appModel.abmlCliente(
+                       this.Nombre.Text, this.Apellido.Text, this.Email.Text,
+                       this.Calle.Text, this.Numero.Text, this.Piso.Text, this.Departamento.Text,
+                       this.Fecha.Text, this.Nacionalidad.Text, this.Pasaporte.Text, this.idReservaDelCliente); /* Cliente sin reserva*/
+                }
+                else
+                {
+                    this.appModel.abmlCliente(
+                           this.Nombre.Text, this.Apellido.Text, this.Email.Text,
+                           this.Calle.Text, this.Numero.Text, this.Piso.Text, this.Departamento.Text,
+                           this.Fecha.Text, this.Nacionalidad.Text, this.Pasaporte.Text, 0); /*Cliente con reserva*/
+                }
+            
+            
+            
             }
+        
+        
         }
 
         private void btLimpiar_Click(object sender, EventArgs e) {
@@ -121,11 +146,7 @@ namespace FrbaHotel.ABM_de_Cliente
             monthCalendar.Visible = true;
         }
 
-        private void Alta_Cliente_Load(object sender, EventArgs e)
-        {
-
-        }
-
+     
     }
 
    

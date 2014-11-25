@@ -401,7 +401,6 @@
             this.Controls.Add(this.groupBoxDatosPersonales);
             this.Name = "Alta_Cliente";
             this.Text = "Crear/Modificar Cliente";
-            this.Load += new System.EventHandler(this.Alta_Cliente_Load);
             this.groupBoxDatosPersonales.ResumeLayout(false);
             this.groupBoxDatosPersonales.PerformLayout();
             this.ResumeLayout(false);

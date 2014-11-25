@@ -205,10 +205,68 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             return idReserva;
         
         }
-      
 
-         
-          }
+        public string generarCodigoReserva()
+        {
+            string codigoReserva = Guid.NewGuid().ToString().Substring(0,8);
+            return codigoReserva;
+        }
+        public bool verificarCodigoReservaRepetido(string codigo)
+        {
+            Conexion conexion = Conexion.Instance;
+            System.Data.SqlClient.SqlCommand comandoAReserva = new System.Data.SqlClient.SqlCommand();
+            comandoAReserva.CommandType = CommandType.StoredProcedure;
+
+            comandoAReserva.Parameters.Add("@codigoReserva", SqlDbType.VarChar);
+           
+            comandoAReserva.Parameters[0].Value = codigo;
+          
+            comandoAReserva.CommandText = "SQLECT.verificarExistenciaCodigoReserva";
+            bool existenciaCodigo = conexion.ejecutarEscalar(comandoAReserva);
+
+            return existenciaCodigo;
+        }
+
+        public void adjuntarCodigoALaReserva(int idReserva, string codigo)
+        {
+            Conexion conexion = Conexion.Instance;
+            System.Data.SqlClient.SqlCommand comandoAReserva = new System.Data.SqlClient.SqlCommand();
+            comandoAReserva.CommandType = CommandType.StoredProcedure;
+
+            comandoAReserva.Parameters.Add("@idReserva", SqlDbType.Int);
+            comandoAReserva.Parameters.Add("@codigoReserva", SqlDbType.VarChar);
+
+            comandoAReserva.Parameters[0].Value = idReserva;
+            comandoAReserva.Parameters[1].Value = codigo;
+
+            comandoAReserva.CommandText = "SQLECT.adjuntarCodigoALaReserva";
+            conexion.ejecutarSP(comandoAReserva);        
+        }
+
+        public bool adjudicarClienteALaReserva(string email, int pasaporte, int idReserva)
+        
+        {
+            Conexion conexion = Conexion.Instance;
+            System.Data.SqlClient.SqlCommand comandoAReserva = new System.Data.SqlClient.SqlCommand();
+            comandoAReserva.CommandType = CommandType.StoredProcedure;
+
+            comandoAReserva.Parameters.Add("@email", SqlDbType.VarChar);
+            comandoAReserva.Parameters.Add("@pasaporte", SqlDbType.Int);
+            comandoAReserva.Parameters.Add("@idReserva", SqlDbType.Int);
+
+            comandoAReserva.Parameters[0].Value = email;
+            comandoAReserva.Parameters[1].Value = pasaporte;
+            comandoAReserva.Parameters[2].Value = idReserva;
+          
+            comandoAReserva.CommandText = "SQLECT.adjuntarClienteALaReserva";
+            conexion.ejecutarSP(comandoAReserva);
+
+            return true;
+        
+        }
+
     }
+   
+}
 
     

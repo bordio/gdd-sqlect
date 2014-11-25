@@ -178,7 +178,8 @@ CREATE TABLE SQLECT.Reservas (
     fk_regimen tinyint references SQLECT.Regimenes(id_regimen),
     fk_cliente integer references SQLECT.Clientes(id_cliente),
     estado_reserva tinyint DEFAULT 0,
-    fecha_reserva datetime DEFAULT NULL
+    fecha_reserva datetime DEFAULT NULL,
+    codigo_reserva varchar(9) DEFAULT NULL
 )
 
 CREATE TABLE SQLECT.Reservas_Canceladas (
@@ -194,12 +195,14 @@ CREATE TABLE SQLECT.Habitaciones_Reservas (
     PRIMARY KEY (fk_habitacion,fk_reserva)
 )
 
-CREATE TABLE SQLECT.Estadias(
+CREATE TABLE SQLECT.Estadias (
     id_estadia integer PRIMARY KEY identity(1,1),
     fk_reserva integer REFERENCES SQLECT.Reservas(id_reserva),
 	fecha_inicio datetime,
 	fecha_fin datetime DEFAULT NULL,
-	cant_noches tinyint
+	cant_noches tinyint,
+	fk_usuario_checkin int DEFAULT NULL,
+	fk_usuario_checkout int DEFAULT NULL
 
 )
 
@@ -403,12 +406,13 @@ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.altaC
 DROP PROCEDURE SQLECT.altaCliente
 
 GO
-CREATE PROCEDURE SQLECT.altaCliente (@Nombre VARCHAR(60), @Apellido VARCHAR(60), @Mail VARCHAR(255), @Dom_Calle VARCHAR(90), @Nro_Calle INTEGER, @Piso TINYINT, @Depto VARCHAR(5), @Fecha_Nac DATETIME, @Nacionalidad VARCHAR(60), @Pasaporte_Nro INTEGER)
+CREATE PROCEDURE SQLECT.altaCliente (@Nombre VARCHAR(60), @Apellido VARCHAR(60), @Mail VARCHAR(255), @Dom_Calle VARCHAR(90), @Nro_Calle INTEGER, @Piso TINYINT, @Depto VARCHAR(5), @Fecha_Nac DATETIME, @Nacionalidad VARCHAR(60), @Pasaporte_Nro INTEGER,@idReserva int)
 AS
 BEGIN
 
 	DECLARE @UserId INT
 	DECLARE @PersonalDataId INT
+	DECLARE @idCliente INT
 	
 	SELECT * FROM SQLECT.Clientes C WHERE C.pasaporte_Nro=@Pasaporte_Nro OR C.mail=@Mail
 	IF (@@ROWCOUNT >0)
@@ -418,6 +422,14 @@ BEGIN
 
 	INSERT INTO SQLECT.Clientes (nombre,apellido,mail,dom_Calle,nro_Calle,piso,depto,fecha_Nac,nacionalidad,pasaporte_Nro)
 	VALUES (@Nombre, @Apellido, @Mail, @Dom_Calle, @Nro_Calle, @Piso, @Depto, @Fecha_Nac, @Nacionalidad, @Pasaporte_Nro)
+
+SET @idCliente = SCOPE_IDENTITY();
+  IF (@idReserva<>0)
+	BEGIN
+		UPDATE SQLECT.Reservas SET fk_cliente=@idCliente
+			WHERE id_reserva=@idReserva
+	END
+
 END
 GO
 /*-----------------------------------ABM CLIENTE FIN----------------------------------------------------*/
@@ -1043,14 +1055,20 @@ SELECT tipo_habitacion 'Tipo', COUNT(DISTINCT id_habitacion) 'Cant.' FROM SQLECT
 				WHERE	ho.id_hotel=@idHotel AND
 						hr.estado_ocupacion='O' AND
 						(	
-							( @fechaDesde<r.fecha_inicio and r.fecha_inicio<@fechaHasta) OR
-							( @fechaDesde<DATEADD(day,r.cant_noches_reserva,r.fecha_inicio) and DATEADD(day,r.cant_noches_reserva,r.fecha_inicio)<=@fechaHasta)
+							( fecha_inicio<=@fechaDesde and @fechaDesde<=DATEADD(day,r.cant_noches_reserva-1,r.fecha_inicio)) OR
+							( fecha_inicio<=@fechaHasta and @fechaHasta<=DATEADD(day,r.cant_noches_reserva-1,r.fecha_inicio)) OR
+							( @fechaDesde<=fecha_inicio and @fechaHasta>=DATEADD(day,r.cant_noches_reserva-1,r.fecha_inicio))
+							
+							
 						) 
 		) AND fk_hotel = @idHotel AND estado_habitacion=1
 	GROUP BY tipo_habitacion
 	ORDER BY 1
 END
 GO	
+
+/*( @fechaDesde<r.fecha_inicio and r.fecha_inicio<@fechaHasta) OR
+  ( @fechaDesde<DATEADD(day,r.cant_noches_reserva,r.fecha_inicio) and DATEADD(day,r.cant_noches_reserva,r.fecha_inicio)<=@fechaHasta)*/
 
 /*select h.fk_hotel, h.id_habitacion, t.descripcion, r.fecha_inicio 'desde', DATEADD(day,r.cant_noches_reserva,r.fecha_inicio) 'hasta', r.estado_reserva from SQLECT.Habitaciones h, SQLECT.Habitaciones_Reservas hr, SQLECT.Reservas r, SQLECT.Tipos_Habitaciones t
 where h.id_habitacion = hr.fk_habitacion and hr.fk_reserva = r.id_reserva and h.id_habitacion = 55 and h.tipo_habitacion = t.id_tipo_habitacion
@@ -1097,8 +1115,9 @@ SELECT DISTINCT hot.nombre'Hotel',tipHab.descripcion'Tipo Habitacion',ha.nro_hab
 				WHERE	ho.id_hotel=@idHotel AND 
 						hr.estado_ocupacion='O' AND
 						(	
-							( @fechaDesde<r.fecha_inicio and r.fecha_inicio<@fechaHasta) OR
-							( @fechaDesde<DATEADD(day,r.cant_noches_reserva,r.fecha_inicio) and DATEADD(day,r.cant_noches_reserva,r.fecha_inicio)<@fechaHasta)
+							( fecha_inicio<=@fechaDesde and @fechaDesde<=DATEADD(day,r.cant_noches_reserva-1,r.fecha_inicio)) OR
+							( fecha_inicio<=@fechaHasta and @fechaHasta<=DATEADD(day,r.cant_noches_reserva-1,r.fecha_inicio)) OR
+							( @fechaDesde<=fecha_inicio and @fechaHasta>=DATEADD(day,r.cant_noches_reserva-1,r.fecha_inicio))
 						) )
 		 AND ha.fk_hotel = @idHotel AND ha.estado_habitacion=1
 	ORDER BY 1
@@ -1174,3 +1193,62 @@ SELECT TOP 1 id_reserva FROM SQLECT.Reservas
 END
 GO
  
+ 
+ /*SELECT * FROM SQLECT.Habitaciones_Reservas
+  WHERE fk_habitacion IN (201,276,320)
+   ORDER BY 2 DESC
+   
+   SELECT * FROM SQLECT.Reservas
+    where id_reserva=110741
+    
+    SELECT * FROM SQLECT.Reservas
+     ORDER BY 1 DESC
+     
+     SELECT * FROM SQLECT.Habitaciones_Reservas
+      WHERE fk_habitacion IN (SELECT hr.fk_habitacion FROM SQLECT.Habitaciones_Reservas hr
+                                WHERE fk_reserva=110742)
+         ORDER BY fk_reserva DESC*/
+ 
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.verificarExistenciaCodigoReserva'))
+DROP PROCEDURE SQLECT.verificarExistenciaCodigoReserva
+
+GO    
+CREATE PROCEDURE SQLECT.verificarExistenciaCodigoReserva(@codigoReserva varchar(9))
+AS
+BEGIN
+SELECT codigo_reserva FROM SQLECT.Reservas 
+  WHERE codigo_reserva=@codigoReserva
+  
+END
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.adjuntarCodigoALaReserva'))
+DROP PROCEDURE SQLECT.adjuntarCodigoALaReserva
+
+GO
+CREATE PROCEDURE SQLECT.adjuntarCodigoALaReserva(@idReserva int, @codigoReserva varchar(9))
+AS
+BEGIN
+UPDATE SQLECT.Reservas SET codigo_reserva=@codigoReserva
+ WHERE id_reserva=@idReserva
+END
+GO
+
+
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.adjuntarClienteALaReserva'))
+DROP PROCEDURE SQLECT.adjuntarClienteALaReserva
+
+GO
+CREATE PROCEDURE SQLECT.adjuntarClienteALaReserva(@email varchar(255),@pasaporte int,@idReserva int)
+AS
+BEGIN
+DECLARE @idCliente int
+SET @idCliente= (SELECT id_cliente FROM SQLECT.Clientes WHERE mail=@email AND pasaporte_Nro=@pasaporte)
+
+UPDATE SQLECT.Reservas SET fk_cliente=@idCliente
+ WHERE id_reserva=@idReserva
+
+END
+GO
+

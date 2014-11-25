@@ -178,6 +178,7 @@
             this.gridClientes.Location = new System.Drawing.Point(12, 182);
             this.gridClientes.Name = "gridClientes";
             this.gridClientes.ReadOnly = true;
+            this.gridClientes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridClientes.Size = new System.Drawing.Size(591, 150);
             this.gridClientes.TabIndex = 5;
             this.gridClientes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridClientes_CellContentClick);

@@ -120,8 +120,20 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                         funcionesReservas.reservarHabitacion(idHotelActual, numeroHabitacion, idReserva, fechaDesdeActual, cantNoches);
                     }
 
+                    string codigoReserva = funcionesReservas.generarCodigoReserva(); /*Generamos un código alfanumérico aleatorio de 8 caracteres*/
+                    
+                    while(funcionesReservas.verificarCodigoReservaRepetido(codigoReserva))
+                    {
+                    codigoReserva= funcionesReservas.generarCodigoReserva();
+                    }
+
+                    funcionesReservas.adjuntarCodigoALaReserva(idReserva, codigoReserva); /* Asignamos el código a la reserva*/
+
                     MessageBox.Show("Reserva hecha correctamente");
                     this.Close();
+
+                    FrbaHotel.Generar_Modificar_Reserva.RegistroCliente formRegistroCliente = new FrbaHotel.Generar_Modificar_Reserva.RegistroCliente(idReserva);
+                    formRegistroCliente.Show();
                 }
             }
             else

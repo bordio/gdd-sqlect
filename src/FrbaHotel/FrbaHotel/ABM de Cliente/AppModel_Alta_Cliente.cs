@@ -12,7 +12,7 @@ namespace FrbaHotel.ABM_de_Cliente
     {
         private Conexion sqlconexion = Conexion.Instance;
 
-        public override void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, string fecha_Nac, string nacionalidad, string pasaporte_Nro)
+        public override void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, string fecha_Nac, string nacionalidad, string pasaporte_Nro,int idReserva)
         {
                 Conexion conexion = Conexion.Instance;
                 System.Data.SqlClient.SqlCommand comandoACliente = new System.Data.SqlClient.SqlCommand();
@@ -28,22 +28,25 @@ namespace FrbaHotel.ABM_de_Cliente
                 comandoACliente.Parameters.Add("@Fecha_Nac", SqlDbType.DateTime);
                 comandoACliente.Parameters.Add("@Nacionalidad", SqlDbType.VarChar);
                 comandoACliente.Parameters.Add("@Pasaporte_Nro", SqlDbType.BigInt);
+                comandoACliente.Parameters.Add("@idReserva", SqlDbType.Int);
 
                 comandoACliente.Parameters[0].Value = nombre;
                 comandoACliente.Parameters[1].Value = apellido;
-                comandoACliente.Parameters[3].Value = mail;
-                comandoACliente.Parameters[2].Value = dom_Calle;
+                comandoACliente.Parameters[2].Value = mail;
+                comandoACliente.Parameters[3].Value = dom_Calle;
                 comandoACliente.Parameters[4].Value = nro_Calle;
                 comandoACliente.Parameters[5].Value = piso;
                 comandoACliente.Parameters[6].Value = depto;
                 comandoACliente.Parameters[7].Value = DateTime.Parse(fecha_Nac);
                 comandoACliente.Parameters[8].Value = nacionalidad;
                 comandoACliente.Parameters[9].Value = pasaporte_Nro;
+                comandoACliente.Parameters[10].Value = idReserva;
 
                 comandoACliente.CommandText = "SQLECT.altaCliente";
                 conexion.ejecutarQueryConSP(comandoACliente);
 
                 MessageBox.Show("Alta exitosa", "Alta de Cliente", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
     }
 }
