@@ -5,12 +5,14 @@ using System.Text;
 using System.Data;
 using FrbaHotel.Commons.Database;
 using System.Windows.Forms;
+using FrbaHotel.Generar_Modificar_Reserva;
 
 namespace FrbaHotel.ABM_de_Cliente
 {
     class AppModel_Alta_Cliente : AppModel_Base_Cliente
     {
         private Conexion sqlconexion = Conexion.Instance;
+        AppModel_Reservas funcionesReservas = new AppModel_Reservas();
 
         public override void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, string fecha_Nac, string nacionalidad, string pasaporte_Nro,int idReserva)
         {
@@ -45,7 +47,10 @@ namespace FrbaHotel.ABM_de_Cliente
                 comandoACliente.CommandText = "SQLECT.altaCliente";
                 conexion.ejecutarQueryConSP(comandoACliente);
 
-                MessageBox.Show("Alta exitosa", "Alta de Cliente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (idReserva != 0)
+                  MessageBox.Show(string.Format("Alta exitosa, guarde el siguiente código para posteriores modificaciones: {0}", funcionesReservas.obtenerCodigoReserva(idReserva))); 
+                else           
+                  MessageBox.Show("Alta exitosa", "Alta de Cliente", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
     }

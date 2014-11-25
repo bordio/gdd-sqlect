@@ -283,6 +283,7 @@
             this.monthCalendar.Location = new System.Drawing.Point(405, 15);
             this.monthCalendar.Name = "monthCalendar";
             this.monthCalendar.TabIndex = 7;
+            this.monthCalendar.Visible = false;
             this.monthCalendar.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar1_DateSelected);
             // 
             // botonSeleccionarH

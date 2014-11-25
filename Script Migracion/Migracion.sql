@@ -504,10 +504,18 @@ CREATE PROCEDURE SQLECT.procEstadoReserva
  
 EXECUTE SQLECT.procEstadoReserva
 
-/*Actualizo los estados de ocupacion de las habitaciones de cada reserva*/
+/*Actualizamos los estados de ocupacion de las habitaciones de cada reserva*/
 
 UPDATE SQLECT.Habitaciones_Reservas SET estado_ocupacion='D'
  WHERE fk_reserva IN (SELECT id_reserva FROM SQLECT.Reservas WHERE estado_reserva IN (2,3,4) )
+ 
+/*Como los hoteles están sin nombre, asumimos como tal su dirección + número de calle*/
+BEGIN
+IF NOT EXISTS(SELECT DISTINCT nombre FROM SQLECT.Hoteles WHERE nombre<>NULL)
+ UPDATE SQLECT.Hoteles SET nombre=calle+' '+ CAST(nro_calle as varchar)
+ END
+ 
+
 
 /*TOP 5 Reservas canceladas*/
 
@@ -1234,8 +1242,6 @@ UPDATE SQLECT.Reservas SET codigo_reserva=@codigoReserva
 END
 GO
 
-
-
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.adjuntarClienteALaReserva'))
 DROP PROCEDURE SQLECT.adjuntarClienteALaReserva
 
@@ -1251,4 +1257,88 @@ UPDATE SQLECT.Reservas SET fk_cliente=@idCliente
 
 END
 GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.obtenerCodigoReserva'))
+DROP PROCEDURE SQLECT.obtenerCodigoReserva
+
+GO
+CREATE PROCEDURE SQLECT.obtenerCodigoReserva(@idReserva int)
+AS
+BEGIN
+SELECT codigo_reserva FROM SQLECT.Reservas
+ WHERE id_reserva=@idReserva
+END
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.correspondeReservaAlHotel'))
+DROP PROCEDURE SQLECT.correspondeReservaAlHotel
+
+GO
+CREATE PROCEDURE SQLECT.correspondeReservaAlHotel(@codigoReserva varchar(9), @idHotel int)
+AS
+BEGIN
+SELECT DISTINCT r.codigo_reserva FROM SQLECT.Reservas r JOIN SQLECT.Habitaciones_Reservas hr ON (r.id_reserva=hr.fk_reserva) 
+														JOIN SQLECT.Habitaciones h ON (hr.fk_habitacion=h.id_habitacion)
+	 WHERE r.codigo_reserva=@codigoReserva AND h.fk_hotel=@idHotel
+END
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.chequearHabilitacionDeCancelacion'))
+DROP PROCEDURE SQLECT.chequearHabilitacionDeCancelacion
+
+GO
+CREATE PROCEDURE SQLECT.chequearHabilitacionDeCancelacion(@codigoReserva varchar(9),@fechaActual datetime)
+AS
+BEGIN
+SELECT id_reserva FROM SQLECT.Reservas 
+ WHERE codigo_reserva=@codigoReserva AND DATEDIFF(DAY,@fechaActual,fecha_inicio)>=1 AND estado_reserva NOT IN(2,3,4)
+END
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.cancelarReserva'))
+DROP PROCEDURE SQLECT.cancelarReserva
+
+GO
+CREATE PROCEDURE SQLECT.cancelarReserva(@codigoReserva varchar(9),@usuario varchar(30),@nombreRol varchar(30),@motivo varchar(120))
+AS
+BEGIN
+
+DECLARE @canceladaPor int,@idUsuario int,@idReserva int,@fechaDesde datetime
+SET @idUsuario = (SELECT id_usuario FROM SQLECT.Usuarios WHERE usr_name=@usuario)
+SET @idReserva = (SELECT id_reserva FROM SQLECT.Reservas WHERE codigo_reserva=@codigoReserva)
+SET @fechaDesde = (SELECT fecha_inicio FROM SQLECT.Reservas WHERE codigo_reserva=@codigoReserva)
+
+BEGIN TRANSACTION
+  BEGIN
+	IF(@nombreRol='Recepcionista')
+	 SET @canceladaPor=2
+    ELSE
+     SET @canceladaPor=3
+   END
+   
+UPDATE SQLECT.Reservas SET estado_reserva=@canceladaPor,cant_noches_estadia=NULL,fk_usuario_ultima_modificacion=@idUsuario
+ WHERE codigo_reserva=@codigoReserva
+ 
+INSERT INTO SQLECT.Reservas_Canceladas(fk_reserva,motivo) VALUES (@idReserva,@motivo)
+
+UPDATE SQLECT.Habitaciones_Reservas SET estado_ocupacion='D'
+ WHERE fk_reserva=@idReserva
+
+COMMIT TRANSACTION
+END
+GO
+/*
+SELECT * FROM SQLECT.Reservas
+ ORDER BY 1 DESC
+ 
+SELECT * FROM SQLECT.Habitaciones_Reservas
+ ORDER BY fk_reserva DESC
+ 
+ SELECT * FROM SQLECT.Habitaciones
+  ORDER BY 1 
+ 
+ SELECT * FROM SQLECT.Clientes
+  ORDER BY id_cliente DESC
+  
+ SELECT * FROM SQLECT.Reservas_Canceladas*/
 

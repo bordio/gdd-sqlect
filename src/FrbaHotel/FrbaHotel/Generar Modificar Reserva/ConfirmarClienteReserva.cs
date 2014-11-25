@@ -37,11 +37,15 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void button1_Click(object sender, EventArgs e)
         {
-            bool todoOk = funcionesReservas.adjudicarClienteALaReserva(emailDelClienteDeLaReserva, pasaporteDelClienteDeLaReserva, idReserva);
-            if (todoOk)
+            if (string.IsNullOrEmpty(Mail.Text) | Convert.ToInt32(Pasaporte.Text) == 0)
+                MessageBox.Show("Error en la elección del cliente");
+            else
             {
-                MessageBox.Show(string.Format("Cliente adjudicado a la reserva: {0}", idReserva));
-                this.Close();
+                bool todoOk = funcionesReservas.adjudicarClienteALaReserva(emailDelClienteDeLaReserva, pasaporteDelClienteDeLaReserva, idReserva);
+                if (todoOk)
+                {
+                    MessageBox.Show(string.Format("Registro correcto del cliente a la reserva, guarde el siguiente codigo para posibles modificaciones: {0}",funcionesReservas.obtenerCodigoReserva(idReserva)));
+                }
             }
         }
     }

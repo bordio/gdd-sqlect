@@ -14,14 +14,16 @@ namespace FrbaHotel.Login
     public partial class MenuDeFuncionalidades : Form
     {
         
-        public MenuDeFuncionalidades(string nombreUsuario)
+        public MenuDeFuncionalidades(string nombreUsuario,string nombreRol)
         {
 
             InitializeComponent();
             this.usuarioDeSesion = nombreUsuario;
+            this.nombreRolDeSesion = nombreRol;
         }
 
         string usuarioDeSesion;
+        string nombreRolDeSesion;
 
         private Funcionalidades funcionesVarias = new Funcionalidades();
 
@@ -160,7 +162,7 @@ namespace FrbaHotel.Login
                     gestionarReservas.Show();
                     break;
                 case "Cancelar reservas":
-                    FrbaHotel.Cancelar_Reserva.Form1 cancelarReservas = new FrbaHotel.Cancelar_Reserva.Form1();
+                    FrbaHotel.Cancelar_Reserva.Form1 cancelarReservas = new FrbaHotel.Cancelar_Reserva.Form1(idDeHotelElegido,usuarioDeSesion,nombreRolDeSesion,true);
                     cancelarReservas.Show();
                     break;
                 case "Gestionar consumibles":

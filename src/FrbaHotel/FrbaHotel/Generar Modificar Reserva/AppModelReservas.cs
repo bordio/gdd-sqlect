@@ -264,6 +264,85 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             return true;
         
         }
+        public string obtenerCodigoReserva(int idReserva)
+        {
+            Conexion conexion = Conexion.Instance;
+            System.Data.SqlClient.SqlCommand comandoAReserva = new System.Data.SqlClient.SqlCommand();
+            comandoAReserva.CommandType = CommandType.StoredProcedure;
+       
+            comandoAReserva.Parameters.Add("@idReserva", SqlDbType.Int);
+
+            comandoAReserva.Parameters[0].Value = idReserva;
+
+            comandoAReserva.CommandText = "SQLECT.obtenerCodigoReserva";
+            string codigoDeLaReserva = conexion.ejecutarEscalarString(comandoAReserva);
+            
+            return codigoDeLaReserva;
+        }
+
+        public bool correspondeReservaAlHotel(string codigo, int idHotel)
+        
+        {
+            Conexion conexion = Conexion.Instance;
+            System.Data.SqlClient.SqlCommand comandoAReserva = new System.Data.SqlClient.SqlCommand();
+            comandoAReserva.CommandType = CommandType.StoredProcedure;
+
+            comandoAReserva.Parameters.Add("@codigoReserva", SqlDbType.VarChar);
+            comandoAReserva.Parameters.Add("@idHotel", SqlDbType.Int);
+
+            comandoAReserva.Parameters[0].Value = codigo;
+            comandoAReserva.Parameters[1].Value = idHotel;
+
+            comandoAReserva.CommandText = "SQLECT.correspondeReservaAlHotel";
+            bool correspondeAlHotel = conexion.ejecutarEscalar(comandoAReserva);
+
+            return correspondeAlHotel;       
+        }
+
+        public bool chequearHabilitacionDeCancelacion(string codigoReserva)
+    
+        {
+            DateTime fechaActual = DateTime.Now;
+            
+            Conexion conexion = Conexion.Instance;
+            System.Data.SqlClient.SqlCommand comandoAReserva = new System.Data.SqlClient.SqlCommand();
+            comandoAReserva.CommandType = CommandType.StoredProcedure;
+
+            comandoAReserva.Parameters.Add("@codigoReserva", SqlDbType.VarChar);
+            comandoAReserva.Parameters.Add("@fechaActual", SqlDbType.DateTime);
+
+            comandoAReserva.Parameters[0].Value = codigoReserva;
+            comandoAReserva.Parameters[1].Value = fechaActual;
+
+            comandoAReserva.CommandText = "SQLECT.chequearHabilitacionDeCancelacion";
+            bool efectivizacion=conexion.ejecutarEscalar(comandoAReserva);
+
+            return efectivizacion;       
+   
+        }
+
+        public bool cancelarReserva(string codigo, string usuarioDeSesion,string nombreRol,string motivo)
+        {
+
+            Conexion conexion = Conexion.Instance;
+            System.Data.SqlClient.SqlCommand comandoAReserva = new System.Data.SqlClient.SqlCommand();
+            comandoAReserva.CommandType = CommandType.StoredProcedure;
+
+            comandoAReserva.Parameters.Add("@codigoReserva", SqlDbType.VarChar);
+            comandoAReserva.Parameters.Add("@usuario", SqlDbType.VarChar);
+            comandoAReserva.Parameters.Add("@nombreRol", SqlDbType.VarChar);
+            comandoAReserva.Parameters.Add("@motivo", SqlDbType.VarChar);
+           
+            comandoAReserva.Parameters[0].Value = codigo;
+            comandoAReserva.Parameters[1].Value = usuarioDeSesion;
+            comandoAReserva.Parameters[2].Value = nombreRol;
+            comandoAReserva.Parameters[3].Value = motivo;
+            
+            comandoAReserva.CommandText = "SQLECT.cancelarReserva";
+            conexion.ejecutarSP(comandoAReserva);
+               
+            return true;
+        }
 
     }
    

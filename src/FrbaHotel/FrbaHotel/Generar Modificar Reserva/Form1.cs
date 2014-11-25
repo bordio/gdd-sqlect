@@ -74,5 +74,26 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
 
         }
+
+        private void botonModificarReserva_Click(object sender, EventArgs e)
+        {
+            int idHotelElegido = 0;
+
+            if ((idDeHotelDeSesion == 0) & string.IsNullOrEmpty(listaHotelAElegir.SelectedItem.ToString()))
+            {
+                MessageBox.Show("Debe elegir un hotel", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                if (idDeHotelDeSesion == 0)
+                    idHotelElegido = funcionesVarias.obtenerIDHotel(listaHotelAElegir.SelectedItem.ToString());
+                else
+                    idHotelElegido = idDeHotelDeSesion;
+            }
+
+            FrbaHotel.Cancelar_Reserva.Form1 formModificarReserva = new FrbaHotel.Cancelar_Reserva.Form1(idDeHotelDeSesion, usuarioDeSesion, false);
+            formModificarReserva.Show();
+
+        }
     }
 }
