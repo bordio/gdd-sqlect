@@ -165,6 +165,10 @@ namespace FrbaHotel.Login
                     FrbaHotel.Cancelar_Reserva.Form1 cancelarReservas = new FrbaHotel.Cancelar_Reserva.Form1(idDeHotelElegido,usuarioDeSesion,nombreRolDeSesion,true);
                     cancelarReservas.Show();
                     break;
+                case "Gestionar estadias":
+                    FrbaHotel.Registrar_Estadia.Form1 registrarEstadias = new FrbaHotel.Registrar_Estadia.Form1(usuarioDeSesion, idDeHotelElegido);
+                    registrarEstadias.Show();
+                    break;
                 case "Gestionar consumibles":
                     FrbaHotel.Registrar_Consumible.Form1 gestionarConsumibles = new FrbaHotel.Registrar_Consumible.Form1();
                     gestionarConsumibles.Show();

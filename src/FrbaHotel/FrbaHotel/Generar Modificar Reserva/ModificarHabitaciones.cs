@@ -56,35 +56,42 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             checkBox.Name = "Seleccion";
             tablaHabitacionesDisponibles.Columns.Add(checkBox);
 
-            if (tablaHabDisp.Rows.Count > 0)
+           
+            if (cambioDeFechaActual)           
+            
             {
-                if (cambioDeFechaActual)
+                if (tablaHabDisp.Rows.Count > 0)
                 {
                     tablaHabitacionesDisponibles.DataSource = tablaHabDisp.DefaultView;
+                    
+                    tablaHabitacionesDisponibles.Columns[1].ReadOnly = true;
+                    tablaHabitacionesDisponibles.Columns[2].ReadOnly = true;
+                    tablaHabitacionesDisponibles.Columns[3].ReadOnly = true;
+                    tablaHabitacionesDisponibles.Columns[4].ReadOnly = true;
                 }
+
                 else
                 {
-                    foreach (DataRow fila in tablaHabAct.Rows)
+                    MessageBox.Show(string.Format("No hay habitaciones disponibles desde el {0} hasta el {1}", fechaDesdeActual, fechaHastaActual));
+                    this.Close();
+                }
+                
+            }
+                else
+                {
+                   foreach (DataRow fila in tablaHabAct.Rows)
                     {
                         tablaHabDisp.ImportRow(fila);
-                    }
-                    tablaHabitacionesDisponibles.DataSource = tablaHabDisp.DefaultView;
+                    }  
+                   tablaHabitacionesDisponibles.DataSource = tablaHabDisp.DefaultView;
 
-                }
+                   tablaHabitacionesDisponibles.Columns[1].ReadOnly = true;
+                   tablaHabitacionesDisponibles.Columns[2].ReadOnly = true;
+                   tablaHabitacionesDisponibles.Columns[3].ReadOnly = true;
+                   tablaHabitacionesDisponibles.Columns[4].ReadOnly = true;
 
-                tablaHabitacionesDisponibles.Columns[1].ReadOnly = true;
-                tablaHabitacionesDisponibles.Columns[2].ReadOnly = true;
-                tablaHabitacionesDisponibles.Columns[3].ReadOnly = true;
-                tablaHabitacionesDisponibles.Columns[4].ReadOnly = true;
-                tablaHabitacionesDisponibles.Columns[5].ReadOnly = true;
-            }
-            else
-            {
-                MessageBox.Show(string.Format("No hay disponibilidad para el {0} hasta el {1}",fechaDesdeActual,fechaHastaActual));
-                this.Close();
-            
-            }
-        }
+                }        
+    }
 
         private void botonContinuar_Click(object sender, EventArgs e)
         {

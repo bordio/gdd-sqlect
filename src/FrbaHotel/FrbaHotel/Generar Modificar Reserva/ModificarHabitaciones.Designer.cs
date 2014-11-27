@@ -52,7 +52,7 @@
             this.tablaHabitacionesActuales.Location = new System.Drawing.Point(12, 44);
             this.tablaHabitacionesActuales.Name = "tablaHabitacionesActuales";
             this.tablaHabitacionesActuales.ReadOnly = true;
-            this.tablaHabitacionesActuales.Size = new System.Drawing.Size(914, 113);
+            this.tablaHabitacionesActuales.Size = new System.Drawing.Size(472, 112);
             this.tablaHabitacionesActuales.TabIndex = 0;
             // 
             // tablaHabitacionesDisponibles
@@ -64,7 +64,7 @@
             this.tablaHabitacionesDisponibles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tablaHabitacionesDisponibles.Location = new System.Drawing.Point(12, 220);
             this.tablaHabitacionesDisponibles.Name = "tablaHabitacionesDisponibles";
-            this.tablaHabitacionesDisponibles.Size = new System.Drawing.Size(914, 176);
+            this.tablaHabitacionesDisponibles.Size = new System.Drawing.Size(515, 164);
             this.tablaHabitacionesDisponibles.TabIndex = 1;
             this.tablaHabitacionesDisponibles.CurrentCellDirtyStateChanged += new System.EventHandler(this.tablaHabitacionesDisponibles_CurrentCellDirtyStateChanged);
             this.tablaHabitacionesDisponibles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tablaHabitacionesDisponibles_CellContentClick);
@@ -121,11 +121,11 @@
             // 
             this.textoDelRegimen.AutoSize = true;
             this.textoDelRegimen.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textoDelRegimen.Location = new System.Drawing.Point(443, 447);
+            this.textoDelRegimen.Location = new System.Drawing.Point(392, 444);
             this.textoDelRegimen.Name = "textoDelRegimen";
             this.textoDelRegimen.Size = new System.Drawing.Size(135, 16);
             this.textoDelRegimen.TabIndex = 7;
-            this.textoDelRegimen.Text = "Tiene como regimen:";
+            this.textoDelRegimen.Text = "Tiene como régimen:";
             // 
             // botonVolver
             // 
