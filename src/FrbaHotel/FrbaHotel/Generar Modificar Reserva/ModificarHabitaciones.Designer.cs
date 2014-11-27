@@ -49,7 +49,6 @@
             this.tablaHabitacionesActuales.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.tablaHabitacionesActuales.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.tablaHabitacionesActuales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tablaHabitacionesActuales.Enabled = false;
             this.tablaHabitacionesActuales.Location = new System.Drawing.Point(12, 44);
             this.tablaHabitacionesActuales.Name = "tablaHabitacionesActuales";
             this.tablaHabitacionesActuales.ReadOnly = true;
@@ -76,9 +75,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(23, 18);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(221, 15);
+            this.label1.Size = new System.Drawing.Size(295, 15);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Habitaciones que dispone actualmente";
+            this.label1.Text = "Habitaciones que dispuso de su última modificación.";
             // 
             // label2
             // 

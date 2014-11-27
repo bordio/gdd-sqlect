@@ -147,7 +147,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 contadorTriples = 0;
                 contadorCuadruples = 0;
                 contadorQuintuples = 0;
-
+                
             
         }
 

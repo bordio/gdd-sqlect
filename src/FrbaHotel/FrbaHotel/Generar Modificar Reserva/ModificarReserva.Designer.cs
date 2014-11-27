@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.tablaPreciosRegimenes = new System.Windows.Forms.DataGridView();
             this.comboRegimen = new System.Windows.Forms.ComboBox();
             this.botonPreciosRegimen = new System.Windows.Forms.Button();
             this.checkCambiarRegimen = new System.Windows.Forms.CheckBox();
@@ -44,7 +45,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.fechaHasta = new System.Windows.Forms.TextBox();
             this.fechaDesde = new System.Windows.Forms.TextBox();
-            this.tablaPreciosRegimenes = new System.Windows.Forms.DataGridView();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tablaPreciosRegimenes)).BeginInit();
             this.SuspendLayout();
@@ -74,6 +74,19 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Reserva";
+            // 
+            // tablaPreciosRegimenes
+            // 
+            this.tablaPreciosRegimenes.AllowUserToAddRows = false;
+            this.tablaPreciosRegimenes.AllowUserToDeleteRows = false;
+            this.tablaPreciosRegimenes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.tablaPreciosRegimenes.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.tablaPreciosRegimenes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tablaPreciosRegimenes.Location = new System.Drawing.Point(399, 217);
+            this.tablaPreciosRegimenes.Name = "tablaPreciosRegimenes";
+            this.tablaPreciosRegimenes.ReadOnly = true;
+            this.tablaPreciosRegimenes.Size = new System.Drawing.Size(314, 146);
+            this.tablaPreciosRegimenes.TabIndex = 32;
             // 
             // comboRegimen
             // 
@@ -219,18 +232,6 @@
             this.fechaDesde.Name = "fechaDesde";
             this.fechaDesde.Size = new System.Drawing.Size(120, 22);
             this.fechaDesde.TabIndex = 0;
-            // 
-            // tablaPreciosRegimenes
-            // 
-            this.tablaPreciosRegimenes.AllowUserToAddRows = false;
-            this.tablaPreciosRegimenes.AllowUserToDeleteRows = false;
-            this.tablaPreciosRegimenes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.tablaPreciosRegimenes.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.tablaPreciosRegimenes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tablaPreciosRegimenes.Location = new System.Drawing.Point(399, 217);
-            this.tablaPreciosRegimenes.Name = "tablaPreciosRegimenes";
-            this.tablaPreciosRegimenes.Size = new System.Drawing.Size(314, 146);
-            this.tablaPreciosRegimenes.TabIndex = 32;
             // 
             // ModificarReserva
             // 

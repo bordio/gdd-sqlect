@@ -1356,7 +1356,7 @@ SELECT DISTINCT hot.nombre'Hotel',tipHab.descripcion'Tipo Habitacion',ha.nro_hab
 								JOIN SQLECT.Tipos_Habitaciones tipHab ON (ha.tipo_habitacion=tipHab.id_tipo_habitacion)
 								JOIN SQLECT.Habitaciones_Reservas hr ON (hr.fk_habitacion=ha.id_habitacion)
 								JOIN SQLECT.Reservas r ON (r.id_reserva=hr.fk_reserva)
-	WHERE r.codigo_reserva=@codigoReserva
+	WHERE r.codigo_reserva=@codigoReserva AND hr.estado_ocupacion='O'
 END
 GO
 
@@ -1443,5 +1443,5 @@ ELSE
 END
 GO
 
-  
+
   

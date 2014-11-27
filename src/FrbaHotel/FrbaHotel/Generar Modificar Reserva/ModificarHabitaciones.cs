@@ -21,6 +21,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             this.cambioDeFechaActual = cambioDeFecha;
             this.idHotelEnCuestion = idHotel;
             this.usuarioDeSesionActual = usuarioDeSesion;
+            
         }
 
         AppModel_Reservas funcionesReservas = new AppModel_Reservas();
@@ -42,7 +43,9 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void ModificarHabitaciones_Load(object sender, EventArgs e)
         {
+                      
             textoDelRegimen.Text = string.Format("Está con el régimen:{0}", regimenModificadoActual);
+            
             DataTable tablaHabAct = funcionesReservas.obtenerHabitacionesActualesDeReserva(codigoReservaActual);
             tablaHabitacionesActuales.DataSource = tablaHabAct.DefaultView;
 
@@ -53,28 +56,34 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             checkBox.Name = "Seleccion";
             tablaHabitacionesDisponibles.Columns.Add(checkBox);
 
-            if (cambioDeFechaActual)
+            if (tablaHabDisp.Rows.Count > 0)
             {
-                tablaHabitacionesDisponibles.DataSource = tablaHabDisp.DefaultView;
+                if (cambioDeFechaActual)
+                {
+                    tablaHabitacionesDisponibles.DataSource = tablaHabDisp.DefaultView;
+                }
+                else
+                {
+                    foreach (DataRow fila in tablaHabAct.Rows)
+                    {
+                        tablaHabDisp.ImportRow(fila);
+                    }
+                    tablaHabitacionesDisponibles.DataSource = tablaHabDisp.DefaultView;
+
+                }
+
+                tablaHabitacionesDisponibles.Columns[1].ReadOnly = true;
+                tablaHabitacionesDisponibles.Columns[2].ReadOnly = true;
+                tablaHabitacionesDisponibles.Columns[3].ReadOnly = true;
+                tablaHabitacionesDisponibles.Columns[4].ReadOnly = true;
+                tablaHabitacionesDisponibles.Columns[5].ReadOnly = true;
             }
             else
             {
-                foreach (DataRow fila in tablaHabAct.Rows)
-                {
-                    tablaHabDisp.ImportRow(fila);
-                }
-                tablaHabitacionesDisponibles.DataSource = tablaHabDisp.DefaultView;
-               
-         
+                MessageBox.Show(string.Format("No hay disponibilidad para el {0} hasta el {1}",fechaDesdeActual,fechaHastaActual));
+                this.Close();
             
             }
-
-            tablaHabitacionesDisponibles.Columns[1].ReadOnly = true;
-            tablaHabitacionesDisponibles.Columns[2].ReadOnly = true;
-            tablaHabitacionesDisponibles.Columns[3].ReadOnly = true;
-            tablaHabitacionesDisponibles.Columns[4].ReadOnly = true;
-            tablaHabitacionesDisponibles.Columns[5].ReadOnly = true;
-
         }
 
         private void botonContinuar_Click(object sender, EventArgs e)
@@ -125,15 +134,31 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                             funcionesReservas.modificarHabitacionDeReserva(codigoReservaActual, numeroHabitacion, idHotelEnCuestion);
                         }
                         MessageBox.Show("Modificación exitosa");
+                      
                         this.Close();
                     }
 
                 }
+                listaHabitaciones.Clear();
+                contadorSimples = 0;
+                contadorDobles = 0;
+                contadorTriples = 0;
+                contadorCuadruples = 0;
+                contadorQuintuples = 0;
 
 
             }
             else
-            { MessageBox.Show("Debe elegir una cantidad de huéspedes y alguna habitacion"); }
+            { MessageBox.Show("Debe elegir una cantidad de huéspedes y alguna habitacion");
+
+            listaHabitaciones.Clear();
+            contadorSimples = 0;
+            contadorDobles = 0;
+            contadorTriples = 0;
+            contadorCuadruples = 0;
+            contadorQuintuples = 0;
+            
+            }
  
         
         }

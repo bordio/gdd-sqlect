@@ -23,13 +23,15 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         AppModel_Alta_Usuario funciones = new AppModel_Alta_Usuario();
         AppModel_Reservas funcionesReservas = new AppModel_Reservas();
-        string fechaDesdeReserva;
-        string fechaHastaReserva;
+        /*string fechaDesdeReserva;
+        string fechaHastaReserva;*/
         int idHotelEnCuestion;
         string usuarioDeSesionActual;
         string codigoReservaActual;
         bool soyDesde = false;
         bool cambioDeFecha = false;
+        private string fechaDesdeConvertida;
+        private string fechaHastaConvertida;
         DateTime fechaActual = DateTime.Now;
         StringBuilder mensajeValidacion = new StringBuilder();
         
@@ -56,26 +58,18 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 DateTime fechaDesdeCruda = DateTime.Parse(datos[0].ToString());
                 DateTime fechaHastaCruda = fechaDesdeCruda.AddDays(Convert.ToDouble(calculo));
 
-                string fechaDesdeConvertida = fechaDesdeCruda.ToShortDateString();
-                string fechaHastaConvertida = fechaHastaCruda.ToShortDateString();
+                fechaDesdeConvertida = fechaDesdeCruda.ToShortDateString();
+                fechaHastaConvertida = fechaHastaCruda.ToShortDateString();
 
                 fechaDesde.Text = fechaDesdeConvertida;
                 fechaHasta.Text = fechaHastaConvertida;
                 regimenActual.Text = datos[2].ToString();
 
-                this.fechaDesdeReserva = fechaDesdeConvertida;
-                this.fechaHastaReserva = fechaHastaConvertida;
             }
-
-
-
- 
       
         }
 
-    
-        
-        
+            
         private void checkCambiarFechas_CheckedChanged(object sender, EventArgs e)
         {
             if (checkCambiarFechas.Checked == true)
@@ -86,7 +80,6 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             }
             else
             {
-
                 botonSeleccionarH.Enabled = false;
                 botonSeleccionarD.Enabled = false;
             }
@@ -170,7 +163,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 cambioDeFecha = false;
 
 
-            if ((fechaDesdeReserva != fechaDesde.Text) | (fechaHastaReserva != fechaHasta.Text))
+            if ((fechaDesdeConvertida != fechaDesde.Text) | (fechaHastaConvertida != fechaHasta.Text))
             {
                 cambioDeFecha = true;
             }

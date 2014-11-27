@@ -51,6 +51,8 @@
             this.tablaPruebaHabitaciones.AllowUserToDeleteRows = false;
             this.tablaPruebaHabitaciones.AllowUserToResizeColumns = false;
             this.tablaPruebaHabitaciones.AllowUserToResizeRows = false;
+            this.tablaPruebaHabitaciones.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.tablaPruebaHabitaciones.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.tablaPruebaHabitaciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tablaPruebaHabitaciones.Location = new System.Drawing.Point(30, 47);
             this.tablaPruebaHabitaciones.Name = "tablaPruebaHabitaciones";
