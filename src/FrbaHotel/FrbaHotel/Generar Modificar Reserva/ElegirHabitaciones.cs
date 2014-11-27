@@ -16,7 +16,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 {
     public partial class ElegirHabitaciones : Form
     {
-        public ElegirHabitaciones(int idHotelEnCuestion, string fechaDesde, string fechaHasta, int cantSimples, int cantDobles, int cantTriples, int cantCuadruples, int cantQuintuples,string usuarioDeSesion,string regimenElegido)
+        public ElegirHabitaciones(int idHotelEnCuestion, string fechaDesde, string fechaHasta, int cantSimples, int cantDobles, int cantTriples, int cantCuadruples, int cantQuintuples,string usuarioDeSesion,string regimenElegido,int cantHuespedes)
         {
             InitializeComponent();
             this.idHotelActual = idHotelEnCuestion;
@@ -29,6 +29,9 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             this.cantQuintuples = cantQuintuples;
             this.usuarioDeSesion = usuarioDeSesion;
             this.regimenActual = regimenElegido;
+            this.cantHuespedes = cantHuespedes;
+            
+            
         }
 
         AppModel_Reservas funcionesReservas = new AppModel_Reservas();
@@ -45,6 +48,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         int cantTriples;
         int cantCuadruples;
         int cantQuintuples;
+        int cantHuespedes;
         int idHotelActual;
         string fechaDesdeActual;
         string fechaHastaActual;
@@ -56,8 +60,6 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void ElegirHabitaciones_Load(object sender, EventArgs e)
         {
-
-            
 
           DataTable tablaHabitaciones = funcionesReservas.obtenerHabitacionesDisponibles(idHotelActual, fechaDesdeActual, fechaHastaActual);
 
@@ -108,7 +110,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             {
                 int idReserva;
 
-                bool reservaHecha = funcionesReservas.realizarReserva(fechaDesdeActual, cantNoches, usuarioDeSesion, regimenActual, idHotelActual);
+                bool reservaHecha = funcionesReservas.realizarReserva(fechaDesdeActual, cantNoches, usuarioDeSesion, regimenActual, idHotelActual,cantHuespedes);
 
 
                 if (reservaHecha)
@@ -167,9 +169,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             {
                 DataGridViewRow row = tablaPruebaHabitaciones.Rows[e.ColumnIndex];
 
-                DataGridViewCheckBoxCell cellSeleccion = row.Cells["Seleccion"] as DataGridViewCheckBoxCell;
-
-                    
+                DataGridViewCheckBoxCell cellSeleccion = row.Cells["Seleccion"] as DataGridViewCheckBoxCell;                  
                         
             }
                               

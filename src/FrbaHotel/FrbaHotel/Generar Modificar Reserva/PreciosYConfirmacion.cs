@@ -29,6 +29,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             this.usuarioDeSesion = usuarioDeSesion;
         }
 
+
         AppModel_Reservas funcionesReservas = new AppModel_Reservas();
 
         string usuarioDeSesion;
@@ -43,6 +44,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         string fechaDesde;
         string fechaHasta;
 
+
         private void PreciosYConfirmacion_Load(object sender, EventArgs e)
         {
 
@@ -56,13 +58,13 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
             tablaPreciosHabitaciones.DataSource = tablaDePreciosDelRegimen.DefaultView;
 
-            DataGridViewCheckBoxColumn pruebaCheckBox = new DataGridViewCheckBoxColumn();
+            /*DataGridViewCheckBoxColumn pruebaCheckBox = new DataGridViewCheckBoxColumn();*/
           
 
             if (funcionesReservas.chequearCantHuespedesYHabitaciones(Convert.ToInt32(cantidadHuespedes), Convert.ToInt32(cantidadSimples), Convert.ToInt32(cantidadDobles), Convert.ToInt32(cantidadTriples), Convert.ToInt32(cantidadCuadruples), Convert.ToInt32(cantidadQuintuples)) & cantidadHuespedes>0)
             {
                 
-                textoInformativo.Text=(string.Format("Reservo {0} días", diasReservados.ToString()));
+                textoInformativo.Text=(string.Format("Está reservando {0} noches", diasReservados.ToString()));
                 textPrecioReserva.Visible = true;
                 textPrecioReserva.Text = string.Format("U$S {0}",funcionesReservas.calcularPrecioReserva(tablaDePreciosDelRegimen,diasReservados, Convert.ToInt32(cantidadSimples), Convert.ToInt32(cantidadDobles), Convert.ToInt32(cantidadTriples), Convert.ToInt32(cantidadCuadruples), Convert.ToInt32(cantidadQuintuples)).ToString() );    
                 botonElegirHabitaciones.Enabled = true;
@@ -72,7 +74,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 if (cantidadHuespedes == 0)
                 textoInformativo.Text="No eligio la cantidad de huéspedes";
                 else
-                textoInformativo.Text = "Hay más huéspedes que la disponibilidad de habitaciones que escogio";
+                textoInformativo.Text = "Hay más huéspedes que la capacidad de alojamiento de habitaciones que escogio";
             }
         
         }
@@ -85,7 +87,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         private void botonRealizarReserva_Click(object sender, EventArgs e)
         {
 
-            ElegirHabitaciones formFinal = new ElegirHabitaciones(idHotelEnCuestion, fechaDesde, fechaHasta, Convert.ToInt32(cantidadSimples), Convert.ToInt32(cantidadDobles),Convert.ToInt32(cantidadTriples),Convert.ToInt32(cantidadCuadruples) ,Convert.ToInt32(cantidadQuintuples),usuarioDeSesion,regimenElegido);
+            ElegirHabitaciones formFinal = new ElegirHabitaciones(idHotelEnCuestion, fechaDesde, fechaHasta, Convert.ToInt32(cantidadSimples), Convert.ToInt32(cantidadDobles),Convert.ToInt32(cantidadTriples),Convert.ToInt32(cantidadCuadruples) ,Convert.ToInt32(cantidadQuintuples),usuarioDeSesion,regimenElegido,Convert.ToInt32(cantidadHuespedes));
             formFinal.Show();
 
             

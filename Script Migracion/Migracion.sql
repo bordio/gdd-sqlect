@@ -179,7 +179,8 @@ CREATE TABLE SQLECT.Reservas (
     fk_cliente integer references SQLECT.Clientes(id_cliente),
     estado_reserva tinyint DEFAULT 0,
     fecha_reserva datetime DEFAULT NULL,
-    codigo_reserva varchar(9) DEFAULT NULL
+    codigo_reserva varchar(9) DEFAULT NULL,
+    cantidad_huespedes int DEFAULT 1
 )
 
 CREATE TABLE SQLECT.Reservas_Canceladas (
@@ -1137,14 +1138,14 @@ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.reali
 DROP PROCEDURE SQLECT.realizarReserva
 
 GO
-CREATE PROCEDURE SQLECT.realizarReserva(@fechaInicio datetime, @cantidadNoches int, @usuario varchar(30),@tipoRegimen varchar(60),@idHotel int)
+CREATE PROCEDURE SQLECT.realizarReserva(@fechaInicio datetime, @cantidadNoches int, @usuario varchar(30),@tipoRegimen varchar(60),@idHotel int,@cantHuespedes int )
 AS
 BEGIN TRANSACTION
 
 DECLARE @idUsuario int,@idRegimen int
 SET @idUsuario = (SELECT id_usuario FROM SQLECT.Usuarios WHERE usr_name=@usuario)
 SET @idRegimen = (SELECT id_regimen FROM SQLECT.Regimenes WHERE descripcion=@tipoRegimen)
-INSERT INTO SQLECT.Reservas(id_reserva,fecha_inicio,cant_noches_reserva,fk_usuario_reserva,fk_usuario_ultima_modificacion,fk_regimen,fecha_reserva) VALUES (SQLECT.obtenerIdSiguiente(),@fechaInicio,@cantidadNoches,@idUsuario,@idUsuario,@idRegimen,GETDATE())
+INSERT INTO SQLECT.Reservas(id_reserva,fecha_inicio,cant_noches_reserva,fk_usuario_reserva,fk_usuario_ultima_modificacion,fk_regimen,fecha_reserva,cantidad_huespedes) VALUES (SQLECT.obtenerIdSiguiente(),@fechaInicio,@cantidadNoches,@idUsuario,@idUsuario,@idRegimen,GETDATE(),@cantHuespedes)
 
 COMMIT TRANSACTION
 GO
@@ -1342,3 +1343,105 @@ SELECT * FROM SQLECT.Habitaciones_Reservas
   
  SELECT * FROM SQLECT.Reservas_Canceladas*/
 
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.obtenerHabitacionesActualesDeReserva'))
+DROP PROCEDURE SQLECT.obtenerHabitacionesActualesDeReserva
+
+GO
+CREATE PROCEDURE SQLECT.obtenerHabitacionesActualesDeReserva(@codigoReserva varchar(9))
+AS
+BEGIN
+
+SELECT DISTINCT hot.nombre'Hotel',tipHab.descripcion'Tipo Habitacion',ha.nro_habitacion'Numero',ha.piso'Piso',ha.frente'Frente' 
+	FROM SQLECT.Habitaciones ha JOIN SQLECT.Hoteles hot ON (hot.id_hotel=ha.fk_hotel) 
+								JOIN SQLECT.Tipos_Habitaciones tipHab ON (ha.tipo_habitacion=tipHab.id_tipo_habitacion)
+								JOIN SQLECT.Habitaciones_Reservas hr ON (hr.fk_habitacion=ha.id_habitacion)
+								JOIN SQLECT.Reservas r ON (r.id_reserva=hr.fk_reserva)
+	WHERE r.codigo_reserva=@codigoReserva
+END
+GO
+
+/*IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.obtenerHabitacionesDiponiblesMasActuales'))
+DROP PROCEDURE SQLECT.obtenerHabitacionesDiponiblesMasActuales
+
+GO
+CREATE PROCEDURE SQLECT.obtenerHabitacionesDiponiblesMasActuales(@idHotel int, @fechaDesde datetime,@fechaHasta datetime, @codigoReserva varchar(9))
+AS
+BEGIN
+SELECT DISTINCT hot.nombre'Hotel',tipHab.descripcion'Tipo Habitacion',ha.nro_habitacion'Numero',ha.piso'Piso',ha.frente'Frente' FROM SQLECT.Habitaciones ha JOIN SQLECT.Hoteles hot ON (hot.id_hotel=ha.fk_hotel) JOIN SQLECT.Tipos_Habitaciones tipHab ON (ha.tipo_habitacion=tipHab.id_tipo_habitacion)
+      WHERE id_habitacion NOT IN
+		(
+			SELECT DISTINCT h.id_habitacion FROM SQLECT.Habitaciones h
+				JOIN SQLECT.Habitaciones_Reservas hr ON (h.id_habitacion=hr.fk_habitacion)
+				JOIN SQLECT.Hoteles ho ON (h.fk_hotel=ho.id_hotel)
+				JOIN SQLECT.Reservas r ON (r.id_reserva=hr.fk_reserva)
+				
+				WHERE	ho.id_hotel=@idHotel AND 
+						hr.estado_ocupacion='O' AND
+						(	
+							( fecha_inicio<=@fechaDesde and @fechaDesde<=DATEADD(day,r.cant_noches_reserva-1,r.fecha_inicio)) OR
+							( fecha_inicio<=@fechaHasta and @fechaHasta<=DATEADD(day,r.cant_noches_reserva-1,r.fecha_inicio)) OR
+							( @fechaDesde<=fecha_inicio and @fechaHasta>=DATEADD(day,r.cant_noches_reserva-1,r.fecha_inicio)) 
+														
+						) 
+						
+						)
+		 AND ha.fk_hotel = @idHotel AND ha.estado_habitacion=1
+	ORDER BY 1
+    	
+END
+GO*/
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.modificarReserva'))
+DROP PROCEDURE SQLECT.modificarReserva
+
+GO
+CREATE PROCEDURE SQLECT.modificarReserva(@codigoReserva varchar(9),@usuario varchar(30),@cantHuespedes int, @regimen varchar(60),@fechaDesde datetime,@fechaHasta datetime)
+AS
+BEGIN
+DECLARE @idUsuario int, @idRegimen int
+SET @idUsuario = (SELECT id_usuario FROM SQLECT.Usuarios WHERE usr_name=@usuario)
+SET @idRegimen = (SELECT id_regimen FROM SQLECT.Regimenes WHERE descripcion=@regimen)
+
+BEGIN TRANSACTION
+UPDATE SQLECT.Reservas SET estado_reserva=1,fk_usuario_ultima_modificacion=@idUsuario,fk_regimen=@idRegimen,cantidad_huespedes=@cantHuespedes,fecha_inicio=@fechaDesde,cant_noches_reserva=DATEDIFF(DAY,@fechaDesde,@fechaHasta)+1
+ WHERE codigo_reserva=@codigoReserva
+COMMIT TRANSACTION
+END
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.desocuparHabitacionesDeReserva'))
+DROP PROCEDURE SQLECT.desocuparHabitacionesDeReserva
+
+GO
+CREATE PROCEDURE SQLECT.desocuparHabitacionesDeReserva(@codigoReserva varchar(9))
+AS
+BEGIN
+UPDATE SQLECT.Habitaciones_Reservas SET estado_ocupacion='D'
+ WHERE fk_reserva IN (SELECT id_reserva FROM SQLECT.Reservas WHERE codigo_reserva=@codigoReserva)
+END
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.modificarHabitacionDeReserva'))
+DROP PROCEDURE SQLECT.modificarHabitacionDeReserva
+
+GO
+CREATE PROCEDURE SQLECT.modificarHabitacionDeReserva(@codigoReserva varchar(9),@numeroHabitacion int,@idHotel int)
+AS
+BEGIN
+DECLARE @idHabitacion int,@idReserva int
+SET @idHabitacion = (SELECT id_habitacion FROM SQLECT.Habitaciones WHERE nro_habitacion=@numeroHabitacion AND fk_hotel=@idHotel)
+SET @idReserva = (SELECT id_reserva FROM SQLECT.Reservas WHERE codigo_reserva=@codigoReserva)
+
+IF NOT EXISTS(SELECT * FROM SQLECT.Habitaciones_Reservas WHERE fk_reserva=@idReserva AND fk_habitacion=@idHabitacion)
+ INSERT INTO SQLECT.Habitaciones_Reservas(fk_habitacion,fk_reserva,estado_ocupacion) VALUES (@idHabitacion,@idReserva,'O')
+ELSE
+ BEGIN
+    UPDATE SQLECT.Habitaciones_Reservas SET estado_ocupacion='O'
+    WHERE fk_reserva=@idReserva AND fk_habitacion=@idHabitacion
+  END
+
+END
+GO
+
+  
+  

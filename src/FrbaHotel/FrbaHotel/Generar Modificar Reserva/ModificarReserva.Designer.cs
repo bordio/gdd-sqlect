@@ -29,7 +29,12 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.botonConsultarDispo = new System.Windows.Forms.Button();
+            this.comboRegimen = new System.Windows.Forms.ComboBox();
+            this.botonPreciosRegimen = new System.Windows.Forms.Button();
+            this.checkCambiarRegimen = new System.Windows.Forms.CheckBox();
+            this.regimenActual = new System.Windows.Forms.TextBox();
+            this.checkCambiarFechas = new System.Windows.Forms.CheckBox();
+            this.botonContinuar = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.monthCalendar = new System.Windows.Forms.MonthCalendar();
             this.botonSeleccionarH = new System.Windows.Forms.Button();
@@ -39,22 +44,20 @@
             this.label1 = new System.Windows.Forms.Label();
             this.fechaHasta = new System.Windows.Forms.TextBox();
             this.fechaDesde = new System.Windows.Forms.TextBox();
-            this.checkCambiarFechas = new System.Windows.Forms.CheckBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.checkCambiarRegimen = new System.Windows.Forms.CheckBox();
-            this.botonPreciosRegimen = new System.Windows.Forms.Button();
-            this.comboRegimen = new System.Windows.Forms.ComboBox();
+            this.tablaPreciosRegimenes = new System.Windows.Forms.DataGridView();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tablaPreciosRegimenes)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.tablaPreciosRegimenes);
             this.groupBox1.Controls.Add(this.comboRegimen);
             this.groupBox1.Controls.Add(this.botonPreciosRegimen);
             this.groupBox1.Controls.Add(this.checkCambiarRegimen);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.regimenActual);
             this.groupBox1.Controls.Add(this.checkCambiarFechas);
-            this.groupBox1.Controls.Add(this.botonConsultarDispo);
+            this.groupBox1.Controls.Add(this.botonContinuar);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.monthCalendar);
             this.groupBox1.Controls.Add(this.botonSeleccionarH);
@@ -67,21 +70,73 @@
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(37, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(828, 397);
+            this.groupBox1.Size = new System.Drawing.Size(973, 450);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Reserva";
             // 
-            // botonConsultarDispo
+            // comboRegimen
             // 
-            this.botonConsultarDispo.Enabled = false;
-            this.botonConsultarDispo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.botonConsultarDispo.Location = new System.Drawing.Point(406, 140);
-            this.botonConsultarDispo.Name = "botonConsultarDispo";
-            this.botonConsultarDispo.Size = new System.Drawing.Size(128, 52);
-            this.botonConsultarDispo.TabIndex = 2;
-            this.botonConsultarDispo.Text = "Consultar disponibilidad";
-            this.botonConsultarDispo.UseVisualStyleBackColor = true;
+            this.comboRegimen.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboRegimen.Enabled = false;
+            this.comboRegimen.FormattingEnabled = true;
+            this.comboRegimen.Location = new System.Drawing.Point(218, 323);
+            this.comboRegimen.Name = "comboRegimen";
+            this.comboRegimen.Size = new System.Drawing.Size(152, 24);
+            this.comboRegimen.TabIndex = 31;
+            // 
+            // botonPreciosRegimen
+            // 
+            this.botonPreciosRegimen.Enabled = false;
+            this.botonPreciosRegimen.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.botonPreciosRegimen.Location = new System.Drawing.Point(218, 373);
+            this.botonPreciosRegimen.Name = "botonPreciosRegimen";
+            this.botonPreciosRegimen.Size = new System.Drawing.Size(128, 52);
+            this.botonPreciosRegimen.TabIndex = 30;
+            this.botonPreciosRegimen.Text = "Consultar precios del regimen";
+            this.botonPreciosRegimen.UseVisualStyleBackColor = true;
+            this.botonPreciosRegimen.Click += new System.EventHandler(this.botonPreciosRegimen_Click);
+            // 
+            // checkCambiarRegimen
+            // 
+            this.checkCambiarRegimen.AutoSize = true;
+            this.checkCambiarRegimen.Location = new System.Drawing.Point(39, 327);
+            this.checkCambiarRegimen.Name = "checkCambiarRegimen";
+            this.checkCambiarRegimen.Size = new System.Drawing.Size(130, 20);
+            this.checkCambiarRegimen.TabIndex = 29;
+            this.checkCambiarRegimen.Text = "Cambiar regimen";
+            this.checkCambiarRegimen.UseVisualStyleBackColor = true;
+            this.checkCambiarRegimen.CheckedChanged += new System.EventHandler(this.checkCambiarRegimen_CheckedChanged);
+            // 
+            // regimenActual
+            // 
+            this.regimenActual.Enabled = false;
+            this.regimenActual.Location = new System.Drawing.Point(218, 265);
+            this.regimenActual.Name = "regimenActual";
+            this.regimenActual.Size = new System.Drawing.Size(152, 22);
+            this.regimenActual.TabIndex = 28;
+            // 
+            // checkCambiarFechas
+            // 
+            this.checkCambiarFechas.AutoSize = true;
+            this.checkCambiarFechas.Location = new System.Drawing.Point(39, 157);
+            this.checkCambiarFechas.Name = "checkCambiarFechas";
+            this.checkCambiarFechas.Size = new System.Drawing.Size(121, 20);
+            this.checkCambiarFechas.TabIndex = 27;
+            this.checkCambiarFechas.Text = "Cambiar fechas";
+            this.checkCambiarFechas.UseVisualStyleBackColor = true;
+            this.checkCambiarFechas.CheckedChanged += new System.EventHandler(this.checkCambiarFechas_CheckedChanged);
+            // 
+            // botonContinuar
+            // 
+            this.botonContinuar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.botonContinuar.Location = new System.Drawing.Point(780, 373);
+            this.botonContinuar.Name = "botonContinuar";
+            this.botonContinuar.Size = new System.Drawing.Size(128, 52);
+            this.botonContinuar.TabIndex = 2;
+            this.botonContinuar.Text = "Continuar";
+            this.botonContinuar.UseVisualStyleBackColor = true;
+            this.botonContinuar.Click += new System.EventHandler(this.botonConsultarDispo_Click);
             // 
             // label5
             // 
@@ -94,7 +149,7 @@
             // 
             // monthCalendar
             // 
-            this.monthCalendar.Location = new System.Drawing.Point(541, 30);
+            this.monthCalendar.Location = new System.Drawing.Point(372, 28);
             this.monthCalendar.Name = "monthCalendar";
             this.monthCalendar.TabIndex = 7;
             this.monthCalendar.Visible = false;
@@ -165,68 +220,30 @@
             this.fechaDesde.Size = new System.Drawing.Size(120, 22);
             this.fechaDesde.TabIndex = 0;
             // 
-            // checkCambiarFechas
+            // tablaPreciosRegimenes
             // 
-            this.checkCambiarFechas.AutoSize = true;
-            this.checkCambiarFechas.Location = new System.Drawing.Point(39, 157);
-            this.checkCambiarFechas.Name = "checkCambiarFechas";
-            this.checkCambiarFechas.Size = new System.Drawing.Size(121, 20);
-            this.checkCambiarFechas.TabIndex = 27;
-            this.checkCambiarFechas.Text = "Cambiar fechas";
-            this.checkCambiarFechas.UseVisualStyleBackColor = true;
-            this.checkCambiarFechas.CheckedChanged += new System.EventHandler(this.checkCambiarFechas_CheckedChanged);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(218, 265);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(172, 22);
-            this.textBox1.TabIndex = 28;
-            // 
-            // checkCambiarRegimen
-            // 
-            this.checkCambiarRegimen.AutoSize = true;
-            this.checkCambiarRegimen.Location = new System.Drawing.Point(39, 327);
-            this.checkCambiarRegimen.Name = "checkCambiarRegimen";
-            this.checkCambiarRegimen.Size = new System.Drawing.Size(130, 20);
-            this.checkCambiarRegimen.TabIndex = 29;
-            this.checkCambiarRegimen.Text = "Cambiar regimen";
-            this.checkCambiarRegimen.UseVisualStyleBackColor = true;
-            this.checkCambiarRegimen.CheckedChanged += new System.EventHandler(this.checkCambiarRegimen_CheckedChanged);
-            // 
-            // botonPreciosRegimen
-            // 
-            this.botonPreciosRegimen.Enabled = false;
-            this.botonPreciosRegimen.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.botonPreciosRegimen.Location = new System.Drawing.Point(406, 271);
-            this.botonPreciosRegimen.Name = "botonPreciosRegimen";
-            this.botonPreciosRegimen.Size = new System.Drawing.Size(128, 52);
-            this.botonPreciosRegimen.TabIndex = 30;
-            this.botonPreciosRegimen.Text = "Consultar precios del regimen";
-            this.botonPreciosRegimen.UseVisualStyleBackColor = true;
-            // 
-            // comboRegimen
-            // 
-            this.comboRegimen.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboRegimen.Enabled = false;
-            this.comboRegimen.FormattingEnabled = true;
-            this.comboRegimen.Location = new System.Drawing.Point(218, 323);
-            this.comboRegimen.Name = "comboRegimen";
-            this.comboRegimen.Size = new System.Drawing.Size(172, 24);
-            this.comboRegimen.TabIndex = 31;
+            this.tablaPreciosRegimenes.AllowUserToAddRows = false;
+            this.tablaPreciosRegimenes.AllowUserToDeleteRows = false;
+            this.tablaPreciosRegimenes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.tablaPreciosRegimenes.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.tablaPreciosRegimenes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tablaPreciosRegimenes.Location = new System.Drawing.Point(399, 217);
+            this.tablaPreciosRegimenes.Name = "tablaPreciosRegimenes";
+            this.tablaPreciosRegimenes.Size = new System.Drawing.Size(314, 146);
+            this.tablaPreciosRegimenes.TabIndex = 32;
             // 
             // ModificarReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1015, 442);
+            this.ClientSize = new System.Drawing.Size(1022, 474);
             this.Controls.Add(this.groupBox1);
             this.Name = "ModificarReserva";
             this.Text = "Modificar Reserva";
             this.Load += new System.EventHandler(this.ModificarReserva_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tablaPreciosRegimenes)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -234,7 +251,7 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button botonConsultarDispo;
+        private System.Windows.Forms.Button botonContinuar;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.MonthCalendar monthCalendar;
         private System.Windows.Forms.Button botonSeleccionarH;
@@ -247,8 +264,9 @@
         private System.Windows.Forms.CheckBox checkCambiarFechas;
         private System.Windows.Forms.Button botonPreciosRegimen;
         private System.Windows.Forms.CheckBox checkCambiarRegimen;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox regimenActual;
         private System.Windows.Forms.ComboBox comboRegimen;
+        private System.Windows.Forms.DataGridView tablaPreciosRegimenes;
 
     }
 }
