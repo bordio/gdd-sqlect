@@ -138,7 +138,6 @@
             this.Controls.Add(this.lblTitulo);
             this.Name = "AgregarModificarRol";
             this.Text = "AgregarModificarRol";
-            this.Load += new System.EventHandler(this.AgregarModificarRol_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
