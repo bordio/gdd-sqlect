@@ -83,6 +83,7 @@
             this.botonModificarReserva.TabIndex = 4;
             this.botonModificarReserva.Text = "Modificar reserva";
             this.botonModificarReserva.UseVisualStyleBackColor = true;
+            this.botonModificarReserva.Click += new System.EventHandler(this.botonModificarReserva_Click);
             // 
             // Form1
             // 

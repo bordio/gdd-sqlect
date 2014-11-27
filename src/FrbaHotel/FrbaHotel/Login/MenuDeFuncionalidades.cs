@@ -14,14 +14,16 @@ namespace FrbaHotel.Login
     public partial class MenuDeFuncionalidades : Form
     {
         
-        public MenuDeFuncionalidades(string nombreUsuario)
+        public MenuDeFuncionalidades(string nombreUsuario,string nombreRol)
         {
 
             InitializeComponent();
             this.usuarioDeSesion = nombreUsuario;
+            this.nombreRolDeSesion = nombreRol;
         }
 
         string usuarioDeSesion;
+        string nombreRolDeSesion;
 
         private Funcionalidades funcionesVarias = new Funcionalidades();
 
@@ -88,7 +90,7 @@ namespace FrbaHotel.Login
                 if (string.IsNullOrEmpty(tareaARealizar.Text))
                     MessageBox.Show("Debe seleccionar una tarea", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 else
-                    dirigirABMElegida(tareaARealizar.Text);
+                    dirigirABMElegida(tareaARealizar.Text,usuarioDeSesion);
             }
 
 
@@ -129,7 +131,7 @@ namespace FrbaHotel.Login
         {
             tareaARealizar.Text = tablaDeFuncionalidades.CurrentRow.Cells[0].Value.ToString();
         }
-        public void dirigirABMElegida(string funcionalidad)
+        public void dirigirABMElegida(string funcionalidad, string usuarioDeSesion)
         {
             int idDeHotelElegido = funcionesVarias.obtenerIDHotel(listaHotelesHabilitados.SelectedItem.ToString());
 
@@ -156,12 +158,16 @@ namespace FrbaHotel.Login
                     gestionarHabitaciones.Show();
                     break;
                 case "Generar/modificar reservas":
-                    FrbaHotel.Generar_Modificar_Reserva.Form1 gestionarReservas = new FrbaHotel.Generar_Modificar_Reserva.Form1(idDeHotelElegido);
+                    FrbaHotel.Generar_Modificar_Reserva.Form1 gestionarReservas = new FrbaHotel.Generar_Modificar_Reserva.Form1(idDeHotelElegido,usuarioDeSesion);
                     gestionarReservas.Show();
                     break;
                 case "Cancelar reservas":
-                    FrbaHotel.Cancelar_Reserva.Form1 cancelarReservas = new FrbaHotel.Cancelar_Reserva.Form1();
+                    FrbaHotel.Cancelar_Reserva.Form1 cancelarReservas = new FrbaHotel.Cancelar_Reserva.Form1(idDeHotelElegido,usuarioDeSesion,nombreRolDeSesion,true);
                     cancelarReservas.Show();
+                    break;
+                case "Gestionar estadias":
+                    FrbaHotel.Registrar_Estadia.Form1 registrarEstadias = new FrbaHotel.Registrar_Estadia.Form1(usuarioDeSesion, idDeHotelElegido);
+                    registrarEstadias.Show();
                     break;
                 case "Gestionar consumibles":
                     FrbaHotel.Registrar_Consumible.Form1 gestionarConsumibles = new FrbaHotel.Registrar_Consumible.Form1();

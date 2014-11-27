@@ -28,7 +28,7 @@ namespace FrbaHotel.Login
         {
             if (!checkUsuarioRegis.Checked)
             {
-                Generar_Modificar_Reserva.Form1 generarReserva = new Generar_Modificar_Reserva.Form1(0);
+                Generar_Modificar_Reserva.Form1 generarReserva = new Generar_Modificar_Reserva.Form1(0,"guest");
                 generarReserva.Show();
 
             }
@@ -57,7 +57,7 @@ namespace FrbaHotel.Login
                           limpiarCantidadDeIntentos(textUsuario.Text, comboBoxRol.SelectedItem.ToString());
                          
                           
-                          Login.MenuDeFuncionalidades listadoDeFuncionalidades = new MenuDeFuncionalidades(textUsuario.Text);
+                          Login.MenuDeFuncionalidades listadoDeFuncionalidades = new MenuDeFuncionalidades(textUsuario.Text,comboBoxRol.SelectedItem.ToString());
                           listadoDeFuncionalidades.Show();
                           listadoDeFuncionalidades.mostrarHotelesACargo(textUsuario.Text,comboBoxRol.SelectedItem.ToString());
                           

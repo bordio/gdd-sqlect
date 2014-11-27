@@ -14,15 +14,17 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 {
     public partial class Form1 : Form
     {
-        public Form1(int idDeHotel)
+        public Form1(int idDeHotel, string usuarioDeSesion)
         {
             InitializeComponent();
 
             this.idDeHotelDeSesion = idDeHotel;
+            this.usuarioDeSesion = usuarioDeSesion;
 
         }
 
         int idDeHotelDeSesion;
+        string usuarioDeSesion;
         Funcionalidades funcionesVarias = new Funcionalidades();
 
         private void Form1_Load(object sender, EventArgs e)
@@ -66,10 +68,31 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     idHotelElegido = idDeHotelDeSesion;
             }
 
-            FrbaHotel.Generar_Modificar_Reserva.GenerarReserva formGenerarReserva = new FrbaHotel.Generar_Modificar_Reserva.GenerarReserva(idHotelElegido);
+            FrbaHotel.Generar_Modificar_Reserva.GenerarReserva formGenerarReserva = new FrbaHotel.Generar_Modificar_Reserva.GenerarReserva(idHotelElegido,usuarioDeSesion);
             formGenerarReserva.Show();
 
 
+
+        }
+
+        private void botonModificarReserva_Click(object sender, EventArgs e)
+        {
+            int idHotelElegido = 0;
+
+            if ((idDeHotelDeSesion == 0) & string.IsNullOrEmpty(listaHotelAElegir.SelectedItem.ToString()))
+            {
+                MessageBox.Show("Debe elegir un hotel", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                if (idDeHotelDeSesion == 0)
+                    idHotelElegido = funcionesVarias.obtenerIDHotel(listaHotelAElegir.SelectedItem.ToString());
+                else
+                    idHotelElegido = idDeHotelDeSesion;
+            }
+
+            FrbaHotel.Cancelar_Reserva.Form1 formModificarReserva = new FrbaHotel.Cancelar_Reserva.Form1(idDeHotelDeSesion, usuarioDeSesion, false);
+            formModificarReserva.Show();
 
         }
     }

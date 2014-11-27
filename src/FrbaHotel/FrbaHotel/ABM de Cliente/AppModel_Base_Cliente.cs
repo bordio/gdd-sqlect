@@ -13,7 +13,8 @@ namespace FrbaHotel.ABM_de_Cliente {
         public DataTable rowHotel = new DataTable();
         private Conexion sqlconexion = Conexion.Instance;
 
-        public abstract void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, string fecha_Nac, string nacionalidad, string pasaporte_Nro);
+        public abstract void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, string fecha_Nac, string nacionalidad, string pasaporte_Nro, int idReserva);
+        
         
         /*Validacion de campos*/
 

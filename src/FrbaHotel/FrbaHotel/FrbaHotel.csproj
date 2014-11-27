@@ -154,6 +154,12 @@
       <DependentUpon>ModificacionUsuario.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM de Usuario\ModificacionUsuarioApp.cs" />
+    <Compile Include="Cancelar Reserva\CancelarLaReserva.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cancelar Reserva\CancelarLaReserva.Designer.cs">
+      <DependentUpon>CancelarLaReserva.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cancelar Reserva\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -168,6 +174,19 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Generar Modificar Reserva\AppModelReservas.cs" />
+    <Compile Include="Generar Modificar Reserva\ConfirmarClienteReserva.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Modificar Reserva\ConfirmarClienteReserva.Designer.cs">
+      <DependentUpon>ConfirmarClienteReserva.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generar Modificar Reserva\ElegirHabitaciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Modificar Reserva\ElegirHabitaciones.Designer.cs">
+      <DependentUpon>ElegirHabitaciones.cs</DependentUpon>
+    </Compile>
     <Compile Include="Generar Modificar Reserva\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -179,6 +198,30 @@
     </Compile>
     <Compile Include="Generar Modificar Reserva\GenerarReserva.Designer.cs">
       <DependentUpon>GenerarReserva.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generar Modificar Reserva\ModificarHabitaciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Modificar Reserva\ModificarHabitaciones.Designer.cs">
+      <DependentUpon>ModificarHabitaciones.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generar Modificar Reserva\ModificarReserva.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Modificar Reserva\ModificarReserva.Designer.cs">
+      <DependentUpon>ModificarReserva.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generar Modificar Reserva\PreciosYConfirmacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Modificar Reserva\PreciosYConfirmacion.Designer.cs">
+      <DependentUpon>PreciosYConfirmacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generar Modificar Reserva\RegistroCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Modificar Reserva\RegistroCliente.Designer.cs">
+      <DependentUpon>RegistroCliente.cs</DependentUpon>
     </Compile>
     <Compile Include="Listado Estadistico\Form1.cs">
       <SubType>Form</SubType>
@@ -218,6 +261,9 @@
     <EmbeddedResource Include="ABM de Cliente\Baja_Cliente.resx">
       <DependentUpon>Baja_Cliente.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Cliente\Clientes.resx">
+      <DependentUpon>Clientes.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ABM de Cliente\Modificacion_Cliente.resx">
       <DependentUpon>Modificacion_Cliente.cs</DependentUpon>
     </EmbeddedResource>
@@ -251,11 +297,35 @@
     <EmbeddedResource Include="ABM de Usuario\ModificacionUsuario.resx">
       <DependentUpon>ModificacionUsuario.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Cancelar Reserva\CancelarLaReserva.resx">
+      <DependentUpon>CancelarLaReserva.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cancelar Reserva\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Modificar Reserva\ConfirmarClienteReserva.resx">
+      <DependentUpon>ConfirmarClienteReserva.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Modificar Reserva\ElegirHabitaciones.resx">
+      <DependentUpon>ElegirHabitaciones.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Generar Modificar Reserva\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Generar Modificar Reserva\GenerarReserva.resx">
       <DependentUpon>GenerarReserva.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Modificar Reserva\ModificarHabitaciones.resx">
+      <DependentUpon>ModificarHabitaciones.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Modificar Reserva\ModificarReserva.resx">
+      <DependentUpon>ModificarReserva.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Modificar Reserva\PreciosYConfirmacion.resx">
+      <DependentUpon>PreciosYConfirmacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Modificar Reserva\RegistroCliente.resx">
+      <DependentUpon>RegistroCliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Listado Estadistico\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -276,6 +346,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registrar Estadia\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

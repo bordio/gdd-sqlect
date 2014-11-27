@@ -15,5 +15,10 @@ namespace FrbaHotel.ABM_de_Cliente
         {
             InitializeComponent();
         }
+
+        private void Clientes_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
