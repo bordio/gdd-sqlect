@@ -148,7 +148,7 @@ CREATE TABLE SQLECT.Facturas (
     total_factura INTEGER,
     forma_pago VARCHAR(30),
     detalle_forma_pago VARCHAR(120),
-    fk_estadia integer /*Cambiar este campo por fk_estadia (guarda que fk_reserva esta en varios select*/
+    fk_estadia integer,
 )
 
 CREATE TABLE SQLECT.Consumibles(
@@ -163,6 +163,7 @@ CREATE TABLE SQLECT.Items(
     fk_consumible INTEGER,
     cantidad_prod INTEGER,
     monto_item INTEGER,
+    descripcion VARCHAR(30) DEFAULT 'Estadía',
     primary key (fk_factura,nro_item),
     foreign key (fk_consumible) references SQLECT.Consumibles (id_consumible),
     foreign key (fk_factura) references SQLECT.Facturas (id_factura)
@@ -520,8 +521,13 @@ IF NOT EXISTS(SELECT DISTINCT nombre FROM SQLECT.Hoteles WHERE nombre<>NULL)
  UPDATE SQLECT.Hoteles SET nombre=calle+' '+ CAST(nro_calle as varchar)
  END
  
-
-
+/*Actualizo las descripciones de los Items*/
+BEGIN
+ UPDATE SQLECT.Items SET descripcion='Consumible'
+  WHERE fk_consumible IS NOT NULL
+END
+  
+ 
 /*TOP 5 Reservas canceladas*/
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.top5HotelesReservasCanceladas'))
@@ -1444,5 +1450,131 @@ ELSE
     WHERE fk_reserva=@idReserva AND fk_habitacion=@idHabitacion
   END
 
+END
+GO
+
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.chequearFechaDeIngreso'))
+DROP PROCEDURE SQLECT.chequearFechaDeIngreso
+
+GO
+CREATE PROCEDURE SQLECT.chequearFechaDeIngreso(@codigoReserva varchar(9))
+AS
+BEGIN
+
+DECLARE @fechaActual datetime
+SET @fechaActual=GETDATE()
+SELECT estado_reserva FROM SQLECT.Reservas WHERE codigo_reserva=@codigoReserva AND ( DATEPART(YEAR,fecha_inicio)=DATEPART(YEAR,@fechaActual) AND DATEPART(MONTH,fecha_inicio)=DATEPART(MONTH,@fechaActual) AND DATEPART(DAY,fecha_inicio)=DATEPART(DAY,@fechaActual) )
+END
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.cancelarReservaPorNoShow'))
+DROP PROCEDURE SQLECT.cancelarReservaPorNoShow
+
+GO
+CREATE PROCEDURE SQLECT.cancelarReservaPorNoShow(@codigoReserva varchar(9))
+AS
+BEGIN
+
+DECLARE @idReserva int
+ SET @idReserva= (SELECT id_reserva FROM SQLECT.Reservas WHERE codigo_reserva=@codigoReserva)
+ 
+ BEGIN TRANSACTION
+  UPDATE SQLECT.Reservas SET estado_reserva=4
+   WHERE codigo_reserva=@codigoReserva
+  
+  UPDATE SQLECT.Habitaciones_Reservas SET estado_ocupacion='D'
+   WHERE fk_reserva=@idReserva
+   
+  INSERT INTO SQLECT.Reservas_Canceladas(fecha_cancelacion,fk_reserva,motivo) VALUES (GETDATE(),@idReserva,'No se presentó en fecha')
+  
+  COMMIT TRANSACTION
+END
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.realizarCheckIn'))
+DROP PROCEDURE SQLECT.realizarCheckIn
+
+GO
+CREATE PROCEDURE SQLECT.realizarCheckIn(@codigoReserva varchar(9), @usuario varchar(30))
+AS
+BEGIN
+
+DECLARE @idReserva int,@idUsuario int
+ SET @idUsuario=(SELECT id_usuario FROM SQLECT.Usuarios WHERE usr_name=@usuario)
+ SET @idReserva=(SELECT id_reserva FROM SQLECT.Reservas WHERE codigo_reserva=@codigoReserva)
+  
+  BEGIN TRANSACTION
+   UPDATE SQLECT.Reservas SET estado_reserva=5,cant_noches_estadia=cant_noches_reserva
+    WHERE codigo_reserva=@codigoReserva
+    
+   INSERT INTO SQLECT.Estadias(fk_reserva,fecha_inicio,fk_usuario_checkin,cant_noches) VALUES(@idReserva,GETDATE(),@idUsuario,1)
+   
+  COMMIT TRANSACTION
+  
+END
+GO
+
+/*SELECT r.id_reserva,r.fecha_inicio,r.cant_noches_reserva FROM SQLECT.Reservas r JOIN SQLECT.Habitaciones_Reservas hr on (hr.fk_reserva=r.id_reserva)
+								JOIN SQLECT.Habitaciones h ON (hr.fk_habitacion=h.id_habitacion)
+						WHERE h.fk_hotel=1 AND r.estado_reserva=5
+ ORDER BY 1 DESC
+ 
+UPDATE SQLECT.Reservas SET codigo_reserva=11111111
+ WHERE id_reserva=57989
+ 
+ UPDATE SQLECT.Reservas SET codigo_reserva=22222222
+ WHERE id_reserva=57648
+ 
+  UPDATE SQLECT.Reservas SET codigo_reserva=33333333
+ WHERE id_reserva=58320
+ 
+ 
+ 
+ SELECT * FROM SQLECT.Estadias
+  ORDER BY 1 DESC*/
+	  
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.chequearFechaDeEgreso'))
+DROP PROCEDURE SQLECT.chequearFechaDeEgreso	  
+
+GO
+CREATE PROCEDURE SQLECT.chequearFechaDeEgreso(@codigoReserva varchar(9))
+AS
+BEGIN
+DECLARE @fechaActual datetime
+SET @fechaActual=GETDATE()
+
+SELECT estado_reserva FROM SQLECT.Reservas 
+  WHERE codigo_reserva=@codigoReserva AND ( @fechaActual BETWEEN fecha_inicio AND DATEADD(DAY,cant_noches_reserva-1,fecha_inicio) ) 
+  END
+  GO
+  
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.realizarCheckOut'))
+DROP PROCEDURE SQLECT.realizarCheckOut	  
+
+GO
+CREATE PROCEDURE SQLECT.realizarCheckOut(@codigoReserva varchar(9),@usuario varchar(30))
+AS
+BEGIN
+
+DECLARE @idReserva int,@idUsuario int
+ SET @idUsuario=(SELECT id_usuario FROM SQLECT.Usuarios WHERE usr_name=@usuario)
+ SET @idReserva=(SELECT id_reserva FROM SQLECT.Reservas WHERE codigo_reserva=@codigoReserva)
+ 
+ BEGIN TRANSACTION
+   UPDATE SQLECT.Habitaciones_Reservas SET estado_ocupacion='D'
+	WHERE fk_reserva=@idReserva
+
+IF NOT EXISTS(SELECT fecha_fin FROM SQLECT.Estadias WHERE fk_reserva=@idReserva AND fecha_fin IS NOT NULL)	  
+   BEGIN
+   UPDATE SQLECT.Estadias SET fecha_fin=GETDATE(),cant_noches=DATEDIFF(DAY,fecha_inicio,GETDATE()),fk_usuario_checkout=@idUsuario
+    WHERE fk_reserva=@idReserva
+    END
+    
+   UPDATE SQLECT.Reservas SET cant_noches_estadia= DATEDIFF(DAY,fecha_inicio,GETDATE())
+    WHERE id_reserva=@idReserva
+ 
+ COMMIT TRANSACTION
+ 
 END
 GO
