@@ -93,7 +93,7 @@ CREATE TABLE SQLECT.Bajas_por_hotel(
 	fk_hotel integer REFERENCES SQLECT.Hoteles(id_hotel),
 	fecha_inicio DATETIME,
 	fecha_fin DATETIME,
-	motivo varchar(100)
+	motivo text
 )
 
 CREATE TABLE SQLECT.Tipos_Habitaciones(
