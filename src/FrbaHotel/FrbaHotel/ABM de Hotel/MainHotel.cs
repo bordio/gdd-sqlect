@@ -16,6 +16,7 @@ namespace FrbaHotel.ABM_de_Hotel
         public MainHotel()
         {
             InitializeComponent();
+            Text = "Gestor de hoteles";
         }
         private StringBuilder paisSeleccionado = new StringBuilder();
         private StringBuilder ciudadSeleccionado = new StringBuilder();
@@ -25,12 +26,7 @@ namespace FrbaHotel.ABM_de_Hotel
 
         private void MainHotel_Load(object sender, EventArgs e)
         {
-           
-            
-            lstHoteles.DataSource = cargar_lista(getAllInstances()).DefaultView;
             lstHoteles.AllowUserToAddRows = false;
-            lstHoteles.AllowUserToAddRows = false;
-
         }
 
         public static StringBuilder getAllInstances()
