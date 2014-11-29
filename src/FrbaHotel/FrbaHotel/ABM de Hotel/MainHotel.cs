@@ -20,6 +20,7 @@ namespace FrbaHotel.ABM_de_Hotel
         private StringBuilder paisSeleccionado = new StringBuilder();
         private StringBuilder ciudadSeleccionado = new StringBuilder();
         private StringBuilder calleSeleccionado = new StringBuilder();
+        private StringBuilder nombreSeleccionado = new StringBuilder();
         private Int32 nro_calleSeleccionado = new Int32();
 
         private void MainHotel_Load(object sender, EventArgs e)
@@ -54,23 +55,6 @@ namespace FrbaHotel.ABM_de_Hotel
         {
             Alta_Hotel formAlta = new Alta_Hotel(this.lstHoteles,this.paisSeleccionado,this.ciudadSeleccionado,this.calleSeleccionado,this.nro_calleSeleccionado);
             formAlta.Show();
-        }
-
-        private void lstHoteles_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            DataGridViewRow celda_actual = lstHoteles.CurrentRow;
-            paisSeleccionado.Remove(0,paisSeleccionado.Length);
-            ciudadSeleccionado.Remove(0, ciudadSeleccionado.Length);
-            calleSeleccionado.Remove(0, calleSeleccionado.Length);
-            nro_calleSeleccionado = 0;
-
-            paisSeleccionado.AppendFormat("{0}", celda_actual.Cells[1].Value.ToString());
-            ciudadSeleccionado.AppendFormat("{0}",celda_actual.Cells[2].Value.ToString());
-            calleSeleccionado.AppendFormat("{0}",celda_actual.Cells[3].Value.ToString());
-            nro_calleSeleccionado = Int32.Parse(celda_actual.Cells[4].Value.ToString());
-
-            modificar.Enabled = true;
-            baja.Enabled = true;
         }
 
         private void agregar_Click(object sender, EventArgs e)
@@ -121,6 +105,31 @@ namespace FrbaHotel.ABM_de_Hotel
                 lstHoteles.DataSource = cargar_lista(sentence).DefaultView;
                 lstHoteles.AllowUserToAddRows = false;
             }
+        }
+
+        private void baja_Click(object sender, EventArgs e)
+        {
+            Baja_Hotel formBaja = new Baja_Hotel(this.nombreSeleccionado, this.paisSeleccionado, this.ciudadSeleccionado, this.calleSeleccionado, this.nro_calleSeleccionado);
+            formBaja.Show();
+        }
+
+        private void lstHoteles_SelectionChanged(object sender, EventArgs e)
+        {
+            DataGridViewRow celda_actual = lstHoteles.CurrentRow;
+            paisSeleccionado.Remove(0, paisSeleccionado.Length);
+            ciudadSeleccionado.Remove(0, ciudadSeleccionado.Length);
+            calleSeleccionado.Remove(0, calleSeleccionado.Length);
+            nombreSeleccionado.Remove(0, nombreSeleccionado.Length);
+            nro_calleSeleccionado = 0;
+
+            nombreSeleccionado.AppendFormat("{0}", celda_actual.Cells[0].Value.ToString());
+            paisSeleccionado.AppendFormat("{0}", celda_actual.Cells[1].Value.ToString());
+            ciudadSeleccionado.AppendFormat("{0}", celda_actual.Cells[2].Value.ToString());
+            calleSeleccionado.AppendFormat("{0}", celda_actual.Cells[3].Value.ToString());
+            nro_calleSeleccionado = Int32.Parse(celda_actual.Cells[4].Value.ToString());
+
+            modificar.Enabled = true;
+            baja.Enabled = true;
         }
     }
 }
