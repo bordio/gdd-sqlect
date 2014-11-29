@@ -49,7 +49,7 @@
             this.SeleccionarDesde = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.Desde = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtMotivo = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -68,7 +68,7 @@
             this.groupBox1.Controls.Add(this.SeleccionarDesde);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.Desde);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.txtMotivo);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(498, 437);
@@ -83,6 +83,7 @@
             this.Dar_baja.TabIndex = 30;
             this.Dar_baja.Text = "Dar de baja";
             this.Dar_baja.UseVisualStyleBackColor = true;
+            this.Dar_baja.Click += new System.EventHandler(this.Dar_baja_Click);
             // 
             // Volver
             // 
@@ -271,15 +272,15 @@
             this.Desde.TabIndex = 20;
             this.Desde.TextChanged += new System.EventHandler(this.Desde_TextChanged);
             // 
-            // textBox1
+            // txtMotivo
             // 
-            this.textBox1.Location = new System.Drawing.Point(22, 258);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox1.Size = new System.Drawing.Size(445, 128);
-            this.textBox1.TabIndex = 28;
-            this.textBox1.Click += new System.EventHandler(this.textBox1_Click);
+            this.txtMotivo.Location = new System.Drawing.Point(22, 258);
+            this.txtMotivo.Multiline = true;
+            this.txtMotivo.Name = "txtMotivo";
+            this.txtMotivo.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtMotivo.Size = new System.Drawing.Size(445, 128);
+            this.txtMotivo.TabIndex = 28;
+            this.txtMotivo.Click += new System.EventHandler(this.textBox1_Click);
             // 
             // Baja_Hotel
             // 
@@ -319,7 +320,7 @@
         private System.Windows.Forms.TextBox Hasta;
         private System.Windows.Forms.Button Dar_baja;
         private System.Windows.Forms.Button Volver;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtMotivo;
         private System.Windows.Forms.Label Motivo;
     }
 }
