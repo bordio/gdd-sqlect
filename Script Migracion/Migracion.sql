@@ -324,6 +324,8 @@ INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,7)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,8)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,9)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,10)
+																	    /*Funcionalidades del Guest*/
+INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(4,6)
 
 
 INSERT INTO SQLECT.Hoteles(ciudad,calle,nro_calle,cant_estrellas,recarga_estrella)
@@ -1545,7 +1547,7 @@ DECLARE @fechaActual datetime
 SET @fechaActual=GETDATE()
 
 SELECT estado_reserva FROM SQLECT.Reservas 
-  WHERE codigo_reserva=@codigoReserva AND ( @fechaActual BETWEEN fecha_inicio AND DATEADD(DAY,cant_noches_reserva-1,fecha_inicio) ) 
+  WHERE codigo_reserva=@codigoReserva AND ( @fechaActual BETWEEN fecha_inicio AND DATEADD(DAY,cant_noches_reserva,fecha_inicio) ) 
   END
   GO
   
@@ -1566,7 +1568,7 @@ DECLARE @idReserva int,@idUsuario int
 	WHERE fk_reserva=@idReserva
 
 IF NOT EXISTS(SELECT fecha_fin FROM SQLECT.Estadias WHERE fk_reserva=@idReserva AND fecha_fin IS NOT NULL)	  
-   BEGIN
+   BEGIN   
    UPDATE SQLECT.Estadias SET fecha_fin=GETDATE(),cant_noches=DATEDIFF(DAY,fecha_inicio,GETDATE()),fk_usuario_checkout=@idUsuario
     WHERE fk_reserva=@idReserva
     END
@@ -1578,3 +1580,19 @@ IF NOT EXISTS(SELECT fecha_fin FROM SQLECT.Estadias WHERE fk_reserva=@idReserva 
  
 END
 GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.chequearRealizacionDeCheckIn'))
+DROP PROCEDURE SQLECT.chequearRealizacionDeCheckIn
+
+GO
+CREATE PROCEDURE SQLECT.chequearRealizacionDeCheckIn(@codigoReserva varchar(9))
+AS
+BEGIN
+
+DECLARE @idReserva int
+SET @idReserva=(SELECT id_reserva FROM SQLECT.Reservas WHERE codigo_reserva=@codigoReserva)
+
+SELECT fecha_inicio FROM SQLECT.Estadias WHERE fk_reserva=@idReserva AND fecha_inicio IS NOT NULL
+
+END
+GO 

@@ -83,8 +83,6 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
             foreach (DataGridViewRow row in tablaPruebaHabitaciones.Rows)
             {
-
-
                 if (Convert.ToBoolean(row.Cells[0].Value))
                 {
                     listaHabitaciones.Add(Convert.ToInt32(row.Cells[3].Value.ToString()));
