@@ -170,11 +170,11 @@ namespace FrbaHotel.Login
                     registrarEstadias.Show();
                     break;
                 case "Gestionar consumibles":
-                    FrbaHotel.Registrar_Consumible.Form1 gestionarConsumibles = new FrbaHotel.Registrar_Consumible.Form1();
+                    FrbaHotel.Registrar_Consumible.Form1 gestionarConsumibles = new FrbaHotel.Registrar_Consumible.Form1(idDeHotelElegido);
                     gestionarConsumibles.Show();
                     break;
                 case "Facturación":
-                    FrbaHotel.Registrar_Consumible.Form1 facturacion = new FrbaHotel.Registrar_Consumible.Form1();
+                    FrbaHotel.Registrar_Consumible.Form1 facturacion = new FrbaHotel.Registrar_Consumible.Form1(idDeHotelElegido);
                     facturacion.Show();
                     break;
                 case "Listado estadístico":
