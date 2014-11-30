@@ -53,7 +53,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ABM de Cliente\Alta_Cliente.cs">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="ABM de Cliente\Alta_Cliente.Designer.cs">
       <DependentUpon>Alta_Cliente.cs</DependentUpon>
@@ -75,7 +74,6 @@
       <DependentUpon>Clientes.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM de Cliente\Modificacion_Cliente.cs">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="ABM de Cliente\Modificacion_Cliente.Designer.cs">
       <DependentUpon>Modificacion_Cliente.cs</DependentUpon>
