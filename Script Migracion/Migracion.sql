@@ -1605,6 +1605,22 @@ SELECT fecha_inicio FROM SQLECT.Estadias WHERE fk_reserva=@idReserva AND fecha_i
 END
 GO 
 
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.chequearRealizacionDeCheckOut'))
+DROP PROCEDURE SQLECT.chequearRealizacionDeCheckOut
+
+GO
+CREATE PROCEDURE SQLECT.chequearRealizacionDeCheckOut(@codigoReserva varchar(9))
+AS
+BEGIN
+
+DECLARE @idReserva int
+SET @idReserva=(SELECT id_reserva FROM SQLECT.Reservas WHERE codigo_reserva=@codigoReserva)
+
+SELECT fecha_fin FROM SQLECT.Estadias WHERE fk_reserva=@idReserva AND fecha_fin IS NOT NULL
+
+END
+GO 
+
 /*SELECT h.nro_habitacion,c.descripcion,ceh.cantidad FROM SQLECT.Consumibles_Estadias_Habitaciones ceh JOIN SQLECT.Consumibles c ON (ceh.fk_consumible=c.id_consumible)
 																	        				         JOIN SQLECT.Habitaciones h ON (ceh.fk_habitacion=h.id_habitacion)
 																	        				         WHERE nro_habitacion=36 ORDER BY descripcion 
@@ -1642,7 +1658,7 @@ SET @idEstadia=(SELECT e.id_estadia FROM SQLECT.Reservas r JOIN SQLECT.Estadias 
 SET @idConsumible=(SELECT id_consumible FROM SQLECT.Consumibles WHERE descripcion=@consumible)
 SET @idHabitacion=(SELECT DISTINCT h.id_habitacion FROM SQLECT.Habitaciones h JOIN SQLECT.Habitaciones_Reservas hr ON (hr.fk_habitacion=h.id_habitacion)
                                                                               JOIN SQLECT.Reservas r ON (hr.fk_reserva=r.id_reserva)
-                     WHERE r.codigo_reserva=@codigoReserva )
+                     WHERE r.codigo_reserva=@codigoReserva AND h.nro_habitacion=@numeroHabitacion)
 
 IF EXISTS(SELECT * FROM SQLECT.Consumibles_Estadias_Habitaciones 
 				WHERE fk_estadia=@idEstadia AND fk_habitacion=@idHabitacion AND fk_consumible=@idConsumible)
@@ -1669,7 +1685,7 @@ SET @idEstadia=(SELECT e.id_estadia FROM SQLECT.Reservas r JOIN SQLECT.Estadias 
 SET @idConsumible=(SELECT id_consumible FROM SQLECT.Consumibles WHERE descripcion=@consumible)
 SET @idHabitacion=(SELECT DISTINCT h.id_habitacion FROM SQLECT.Habitaciones h JOIN SQLECT.Habitaciones_Reservas hr ON (hr.fk_habitacion=h.id_habitacion)
                                                                               JOIN SQLECT.Reservas r ON (hr.fk_reserva=r.id_reserva)
-                     WHERE r.codigo_reserva=@codigoReserva )
+                     WHERE r.codigo_reserva=@codigoReserva AND h.nro_habitacion=@numeroHabitacion)
 
 IF EXISTS(SELECT * FROM SQLECT.Consumibles_Estadias_Habitaciones 
 				WHERE fk_estadia=@idEstadia AND fk_habitacion=@idHabitacion AND fk_consumible=@idConsumible)
@@ -1691,12 +1707,9 @@ SET @idEstadia=(SELECT e.id_estadia FROM SQLECT.Reservas r JOIN SQLECT.Estadias 
 SET @idConsumible=(SELECT id_consumible FROM SQLECT.Consumibles WHERE descripcion=@consumible)
 SET @idHabitacion=(SELECT DISTINCT h.id_habitacion FROM SQLECT.Habitaciones h JOIN SQLECT.Habitaciones_Reservas hr ON (hr.fk_habitacion=h.id_habitacion)
                                                                               JOIN SQLECT.Reservas r ON (hr.fk_reserva=r.id_reserva)
-                     WHERE r.codigo_reserva=@codigoReserva )
+                     WHERE r.codigo_reserva=@codigoReserva AND h.nro_habitacion=@numeroHabitacion)
                      
 DELETE FROM SQLECT.Consumibles_Estadias_Habitaciones
  WHERE fk_estadia=@idEstadia AND fk_habitacion=@idHabitacion AND fk_consumible=@idConsumible
 END
 GO                     
-
-
-	

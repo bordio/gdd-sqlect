@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using FrbaHotel.Commons.Database;
 using FrbaHotel.Commons.FuncionalidadesVarias;
 using FrbaHotel.Login;
+using FrbaHotel.ABM_de_Cliente;
+using FrbaHotel.ABM_de_Usuario;
 
 namespace FrbaHotel.Generar_Modificar_Reserva
 {
@@ -26,6 +28,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         int idDeHotelDeSesion;
         string usuarioDeSesion;
         Funcionalidades funcionesVarias = new Funcionalidades();
+        AppModel_Alta_Usuario funcionesUsuarios = new AppModel_Alta_Usuario();
+        StringBuilder mensaje = new StringBuilder();
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -39,7 +43,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 foreach (DataRow dat in tablaHoteles.Rows)
                 {
 
-                    listaHotelAElegir.Items.Add(dat[0]);
+                    listaHotelAElegir.Items.Add(dat[0]); 
                 }
 
             }
@@ -56,7 +60,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {
             int idHotelElegido=0;
 
-            if ((idDeHotelDeSesion == 0) & string.IsNullOrEmpty(listaHotelAElegir.SelectedItem.ToString()))
+            if ((idDeHotelDeSesion == 0) & !funcionesUsuarios.validarComboVacio(listaHotelAElegir,mensaje) )
             {
                 MessageBox.Show("Debe elegir un hotel", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -79,7 +83,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {
             int idHotelElegido = 0;
 
-            if ((idDeHotelDeSesion == 0) & string.IsNullOrEmpty(listaHotelAElegir.SelectedItem.ToString()))
+            if ((idDeHotelDeSesion == 0) & !funcionesUsuarios.validarComboVacio(listaHotelAElegir, mensaje))
             {
                 MessageBox.Show("Debe elegir un hotel", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }

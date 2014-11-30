@@ -53,6 +53,8 @@
             // 
             this.tablaDeFuncionalidades.AllowUserToAddRows = false;
             this.tablaDeFuncionalidades.AllowUserToDeleteRows = false;
+            this.tablaDeFuncionalidades.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.tablaDeFuncionalidades.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.tablaDeFuncionalidades.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tablaDeFuncionalidades.GridColor = System.Drawing.SystemColors.ButtonFace;
             this.tablaDeFuncionalidades.Location = new System.Drawing.Point(275, 50);
@@ -61,7 +63,7 @@
             this.tablaDeFuncionalidades.ReadOnly = true;
             this.tablaDeFuncionalidades.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.tablaDeFuncionalidades.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tablaDeFuncionalidades.Size = new System.Drawing.Size(457, 203);
+            this.tablaDeFuncionalidades.Size = new System.Drawing.Size(542, 186);
             this.tablaDeFuncionalidades.TabIndex = 1;
             this.tablaDeFuncionalidades.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tablaDeFuncionalidades_CellMouseDoubleClick);
             this.tablaDeFuncionalidades.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tablaDeFuncionalidades_CellContentClick);
@@ -80,9 +82,10 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(272, 283);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(272, 297);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(206, 13);
+            this.label3.Size = new System.Drawing.Size(261, 16);
             this.label3.TabIndex = 4;
             this.label3.Text = "Seleccione la tarea a realizar (doble click):";
             this.label3.Click += new System.EventHandler(this.label3_Click);
@@ -112,7 +115,7 @@
             // tareaARealizar
             // 
             this.tareaARealizar.Enabled = false;
-            this.tareaARealizar.Location = new System.Drawing.Point(484, 280);
+            this.tareaARealizar.Location = new System.Drawing.Point(554, 293);
             this.tareaARealizar.Name = "tareaARealizar";
             this.tareaARealizar.Size = new System.Drawing.Size(168, 20);
             this.tareaARealizar.TabIndex = 7;
@@ -120,7 +123,7 @@
             // cambiarContraseña
             // 
             this.cambiarContraseña.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cambiarContraseña.Location = new System.Drawing.Point(792, 253);
+            this.cambiarContraseña.Location = new System.Drawing.Point(820, 266);
             this.cambiarContraseña.Name = "cambiarContraseña";
             this.cambiarContraseña.Size = new System.Drawing.Size(140, 47);
             this.cambiarContraseña.TabIndex = 8;

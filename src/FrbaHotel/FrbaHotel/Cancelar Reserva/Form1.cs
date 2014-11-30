@@ -84,7 +84,7 @@ namespace FrbaHotel.Cancelar_Reserva
                     else
                     {
                         if (esCancelarReserva)
-                             MessageBox.Show("No puede cancelar la reserva, ya que esta se encuentra cancelada o falta menos de un día para su ingreso");
+                             MessageBox.Show("No puede cancelar la reserva, ya que esta se encuentra cancelada,finalizada o falta menos de un día para su ingreso");
                         this.Close();
                             
                        

@@ -47,6 +47,7 @@
             // 
             // hotelDeSesion
             // 
+            this.hotelDeSesion.Enabled = false;
             this.hotelDeSesion.Location = new System.Drawing.Point(297, 19);
             this.hotelDeSesion.Name = "hotelDeSesion";
             this.hotelDeSesion.Size = new System.Drawing.Size(105, 20);
