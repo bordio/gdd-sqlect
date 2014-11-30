@@ -52,11 +52,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ABM de Cliente\Alta_Cliente.cs">
+    <Compile Include="ABM de Cliente\BaseAltaModificacion_Cliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM de Cliente\Alta_Cliente.Designer.cs">
-      <DependentUpon>Alta_Cliente.cs</DependentUpon>
+    <Compile Include="ABM de Cliente\BaseAltaModificacion_Cliente.Designer.cs">
+      <DependentUpon>BaseAltaModificacion_Cliente.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM de Cliente\AppModel_Alta_Cliente.cs" />
     <Compile Include="ABM de Cliente\AppModel_Baja_Cliente.cs" />
@@ -73,6 +73,15 @@
     </Compile>
     <Compile Include="ABM de Cliente\Clientes.Designer.cs">
       <DependentUpon>Clientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM de Cliente\Alta_Cliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM de Cliente\ModificacionMain_Cliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM de Cliente\ModificacionMain_Cliente.Designer.cs">
+      <DependentUpon>ModificacionMain_Cliente.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM de Cliente\Modificacion_Cliente.cs">
       <SubType>Form</SubType>
@@ -101,6 +110,12 @@
     </Compile>
     <Compile Include="ABM de Hotel\Alta_Hotel.Designer.cs">
       <DependentUpon>Alta_Hotel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM de Hotel\Baja_Hotel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM de Hotel\Baja_Hotel.Designer.cs">
+      <DependentUpon>Baja_Hotel.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM de Hotel\HotelAppModel.cs" />
     <Compile Include="ABM de Hotel\MainHotel.cs">
@@ -255,8 +270,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ABM de Cliente\Alta_Cliente.resx">
-      <DependentUpon>Alta_Cliente.cs</DependentUpon>
+    <EmbeddedResource Include="ABM de Cliente\BaseAltaModificacion_Cliente.resx">
+      <DependentUpon>BaseAltaModificacion_Cliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Cliente\Baja_Cliente.resx">
       <DependentUpon>Baja_Cliente.cs</DependentUpon>
@@ -264,8 +279,8 @@
     <EmbeddedResource Include="ABM de Cliente\Clientes.resx">
       <DependentUpon>Clientes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ABM de Cliente\Modificacion_Cliente.resx">
-      <DependentUpon>Modificacion_Cliente.cs</DependentUpon>
+    <EmbeddedResource Include="ABM de Cliente\ModificacionMain_Cliente.resx">
+      <DependentUpon>ModificacionMain_Cliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Habitacion\FormHabitacion.resx">
       <DependentUpon>FormHabitacion.cs</DependentUpon>
@@ -275,6 +290,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Hotel\Alta_Hotel.resx">
       <DependentUpon>Alta_Hotel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Hotel\Baja_Hotel.resx">
+      <DependentUpon>Baja_Hotel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Hotel\MainHotel.resx">
       <DependentUpon>MainHotel.cs</DependentUpon>
@@ -347,6 +365,12 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Registrar Consumible\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registrar Consumible\RegistrarConsumible.resx">
+      <DependentUpon>RegistrarConsumible.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Registrar Estadia\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -369,6 +393,12 @@
     </Compile>
     <Compile Include="Registrar Consumible\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Registrar Consumible\RegistrarConsumible.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registrar Consumible\RegistrarConsumible.Designer.cs">
+      <DependentUpon>RegistrarConsumible.cs</DependentUpon>
     </Compile>
     <Compile Include="Registrar Estadia\AppModel_Estadia.cs" />
     <Compile Include="Registrar Estadia\Form1.cs">
