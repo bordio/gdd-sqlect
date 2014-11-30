@@ -87,50 +87,57 @@ namespace FrbaHotel.Registrar_Estadia
 
         private void botonCheckIn_Click(object sender, EventArgs e)
         {
-            if ((estadoReservaActual == 0) | (estadoReservaActual == 1))
+            if (!funcionesEstadias.chequearRealizacionDeCheckIn(codigoReserva.Text))
             {
-                if (funcionesEstadias.chequearFechaDeIngreso(codigoReserva.Text))
-                {
-                    funcionesEstadias.realizarCheckIn(codigoReserva.Text, usuarioDeSesionActual);
 
-                    MessageBox.Show("Check-In realizado correctamente");
-                    this.Close();
-                    if (cantHuespedes > 1)
+                if ((estadoReservaActual == 0) | (estadoReservaActual == 1))
+                {
+                    if (funcionesEstadias.chequearFechaDeIngreso(codigoReserva.Text))
                     {
-                        MessageBox.Show(string.Format("Debe registrar a {0} huéspedes",cantHuespedes)); 
+                        funcionesEstadias.realizarCheckIn(codigoReserva.Text, usuarioDeSesionActual);
+
+                        MessageBox.Show("Check-In realizado correctamente");
+                        this.Close();
+                        if (cantHuespedes > 1)
+                        {
+                            MessageBox.Show(string.Format("Debe registrar a {0} huéspedes", cantHuespedes));
+                        }
+                        this.Close();
                     }
-                    this.Close();
+                    else
+                    {
+                        funcionesEstadias.cancelarReservaPorNoShow(codigoReserva.Text);
+                        MessageBox.Show("La reserva ha sido cancelada por no presentarse en fecha.");
+                    }
+
                 }
                 else
-                 {
-                    funcionesEstadias.cancelarReservaPorNoShow(codigoReserva.Text);
-                    MessageBox.Show("La reserva ha sido cancelada por no presentarse en fecha.");
-                 }
-            
+                {
+                    if ((estadoReservaActual == 2) | (estadoReservaActual == 3) | (estadoReservaActual == 4))
+
+                        MessageBox.Show("La reserva está cancelada");
+                    else
+                        MessageBox.Show("La reserva se encuentra efectivizada");
+                }
+
             }
-            else
-            {
-                if ((estadoReservaActual == 2) | (estadoReservaActual == 3) | (estadoReservaActual == 4))
-
-                    MessageBox.Show("La reserva está cancelada");
-                else
-                    MessageBox.Show("La reserva se encuentra efectivizada");
-            }
-
-                
-
+            else            
+             MessageBox.Show("Ya se ha realizado el Check-In");
         }
 
         private void botonCheckOut_Click(object sender, EventArgs e)
-        {
+        {                        
             if (estadoReservaActual == 5)
             {
-                if (cantNochesReserva > 1)
+                if (funcionesEstadias.chequearRealizacionDeCheckIn(codigoReserva.Text))
                 { 
                   if(funcionesEstadias.chequearFechaDeEgreso(codigoReserva.Text))
                   {
                       funcionesEstadias.realizarCheckOut(codigoReserva.Text, usuarioDeSesionActual);
                       MessageBox.Show("Check-Out realizado correctamente");
+
+                      FrbaHotel.Registrar_Consumible.Form1 formRegistrarConsumibles = new FrbaHotel.Registrar_Consumible.Form1(idHotelEnCuestion, codigoReserva.Text);
+                      formRegistrarConsumibles.Show();
                       this.Close();
                   
                   }
@@ -140,24 +147,19 @@ namespace FrbaHotel.Registrar_Estadia
                           MessageBox.Show(string.Format("Esta queriendo retirarse antes del inicio de la reserva que comienza el {0}",fechaInicioActual.ToShortDateString()));
                       else
                           MessageBox.Show("No se encuentra dentro del período de la reserva"); }
-                
-                  
+                                  
                   }
                     else
-                      MessageBox.Show("No puede retirarse el mismo día del ingreso");
+                      MessageBox.Show("No puede retirarse antes de hacer el Check-In");
                 
               }
             else
             {
-                if ((estadoReservaActual == 2) | (estadoReservaActual == 3) | (estadoReservaActual == 4))
-                    MessageBox.Show("La reserva está cancelada");                 
-                            
+             if ((estadoReservaActual == 2) | (estadoReservaActual == 3) | (estadoReservaActual == 4))
+                  MessageBox.Show("La reserva está cancelada");                                   
             }
-
-
-        }
-
         
+        }        
 
         }
     }

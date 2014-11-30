@@ -77,8 +77,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             bool mismoDiaQueElInicioDeLaReserva = conexion.ejecutarEscalar(comandoAReserva);
 
             return mismoDiaQueElInicioDeLaReserva;      
-        
-        
+               
         }
 
         public void realizarCheckOut(string codigoReserva, string usuario)
@@ -95,6 +94,23 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
             comandoAReserva.CommandText = "SQLECT.realizarCheckOut";
             conexion.ejecutarSP(comandoAReserva);
+        
+        }
+
+        public bool chequearRealizacionDeCheckIn(string codigoReserva)
+        {
+            Conexion conexion = Conexion.Instance;
+            System.Data.SqlClient.SqlCommand comandoAReserva = new System.Data.SqlClient.SqlCommand();
+            comandoAReserva.CommandType = CommandType.StoredProcedure;
+
+            comandoAReserva.Parameters.Add("@codigoReserva", SqlDbType.VarChar);
+
+            comandoAReserva.Parameters[0].Value = codigoReserva;
+
+            comandoAReserva.CommandText = "SQLECT.chequearRealizacionDeCheckIn";
+            bool yaHizoElCheckIn = conexion.ejecutarEscalar(comandoAReserva);
+
+            return yaHizoElCheckIn;   
         
         }
     }
