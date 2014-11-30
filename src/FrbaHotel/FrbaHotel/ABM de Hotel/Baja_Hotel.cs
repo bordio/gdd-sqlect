@@ -83,6 +83,12 @@ namespace FrbaHotel.ABM_de_Hotel
             validar_formulario();
             if (validar_establecimiento_vacio()) errores.AppendLine("El establecimiento no se encuentra vacio en el rango de fechas seleccionado.");
             if (errores.Length > 0) MessageBox.Show(errores.ToString(), "Errores al tratar de dar de baja", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else
+            {
+                //stored procedure
+                MessageBox.Show("Se ha dado de baja temporal correctamente.", "Baja temporal", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
+            }
         }
 
         private bool validar_establecimiento_vacio()
