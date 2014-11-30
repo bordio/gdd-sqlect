@@ -1,6 +1,6 @@
 ﻿namespace FrbaHotel.ABM_de_Cliente
 {
-    partial class Baja_Cliente
+    partial class ModificacionMain_Cliente
     {
         /// <summary>
         /// Required designer variable.
@@ -40,12 +40,11 @@
             this.labelNumPasap = new System.Windows.Forms.Label();
             this.Pasaporte = new System.Windows.Forms.TextBox();
             this.labelNacionalidad = new System.Windows.Forms.Label();
-            this.labelFechaNaci = new System.Windows.Forms.Label();
-            this.FechaNacimiento = new System.Windows.Forms.TextBox();
             this.labelEmail = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.gridClientes = new System.Windows.Forms.DataGridView();
+            this.btModificar = new System.Windows.Forms.Button();
             this.filtrosBusqueda.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridClientes)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -56,7 +55,6 @@
             this.label1.Size = new System.Drawing.Size(44, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Nombre";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // Nombre
             // 
@@ -71,7 +69,6 @@
             this.Apellido.Name = "Apellido";
             this.Apellido.Size = new System.Drawing.Size(199, 20);
             this.Apellido.TabIndex = 3;
-            this.Apellido.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // label2
             // 
@@ -81,7 +78,6 @@
             this.label2.Size = new System.Drawing.Size(44, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "Apellido";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // filtrosBusqueda
             // 
@@ -94,8 +90,6 @@
             this.filtrosBusqueda.Controls.Add(this.Pasaporte);
             this.filtrosBusqueda.Controls.Add(this.Nombre);
             this.filtrosBusqueda.Controls.Add(this.labelNacionalidad);
-            this.filtrosBusqueda.Controls.Add(this.labelFechaNaci);
-            this.filtrosBusqueda.Controls.Add(this.FechaNacimiento);
             this.filtrosBusqueda.Controls.Add(this.labelEmail);
             this.filtrosBusqueda.Controls.Add(this.label1);
             this.filtrosBusqueda.Location = new System.Drawing.Point(12, 12);
@@ -104,7 +98,6 @@
             this.filtrosBusqueda.TabIndex = 4;
             this.filtrosBusqueda.TabStop = false;
             this.filtrosBusqueda.Text = "Filtros de Búsqueda";
-            this.filtrosBusqueda.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // btLimpiar
             // 
@@ -114,6 +107,7 @@
             this.btLimpiar.TabIndex = 27;
             this.btLimpiar.Text = "Limpiar";
             this.btLimpiar.UseVisualStyleBackColor = true;
+            this.btLimpiar.Click += new System.EventHandler(this.btLimpiar_Click);
             // 
             // btBuscar
             // 
@@ -123,6 +117,7 @@
             this.btBuscar.TabIndex = 26;
             this.btBuscar.Text = "Buscar";
             this.btBuscar.UseVisualStyleBackColor = true;
+            this.btBuscar.Click += new System.EventHandler(this.btBuscar_Click);
             // 
             // Email
             // 
@@ -133,7 +128,7 @@
             // 
             // Nacionalidad
             // 
-            this.Nacionalidad.Location = new System.Drawing.Point(377, 51);
+            this.Nacionalidad.Location = new System.Drawing.Point(377, 29);
             this.Nacionalidad.Name = "Nacionalidad";
             this.Nacionalidad.Size = new System.Drawing.Size(199, 20);
             this.Nacionalidad.TabIndex = 25;
@@ -141,7 +136,7 @@
             // labelNumPasap
             // 
             this.labelNumPasap.AutoSize = true;
-            this.labelNumPasap.Location = new System.Drawing.Point(276, 83);
+            this.labelNumPasap.Location = new System.Drawing.Point(276, 55);
             this.labelNumPasap.Name = "labelNumPasap";
             this.labelNumPasap.Size = new System.Drawing.Size(95, 13);
             this.labelNumPasap.TabIndex = 24;
@@ -149,7 +144,7 @@
             // 
             // Pasaporte
             // 
-            this.Pasaporte.Location = new System.Drawing.Point(377, 80);
+            this.Pasaporte.Location = new System.Drawing.Point(377, 55);
             this.Pasaporte.Name = "Pasaporte";
             this.Pasaporte.Size = new System.Drawing.Size(199, 20);
             this.Pasaporte.TabIndex = 6;
@@ -157,27 +152,11 @@
             // labelNacionalidad
             // 
             this.labelNacionalidad.AutoSize = true;
-            this.labelNacionalidad.Location = new System.Drawing.Point(277, 54);
+            this.labelNacionalidad.Location = new System.Drawing.Point(276, 29);
             this.labelNacionalidad.Name = "labelNacionalidad";
             this.labelNacionalidad.Size = new System.Drawing.Size(69, 13);
             this.labelNacionalidad.TabIndex = 22;
             this.labelNacionalidad.Text = "Nacionalidad";
-            // 
-            // labelFechaNaci
-            // 
-            this.labelFechaNaci.AutoSize = true;
-            this.labelFechaNaci.Location = new System.Drawing.Point(278, 29);
-            this.labelFechaNaci.Name = "labelFechaNaci";
-            this.labelFechaNaci.Size = new System.Drawing.Size(93, 13);
-            this.labelFechaNaci.TabIndex = 20;
-            this.labelFechaNaci.Text = "Fecha Nacimiento";
-            // 
-            // FechaNacimiento
-            // 
-            this.FechaNacimiento.Location = new System.Drawing.Point(377, 26);
-            this.FechaNacimiento.Name = "FechaNacimiento";
-            this.FechaNacimiento.Size = new System.Drawing.Size(199, 20);
-            this.FechaNacimiento.TabIndex = 10;
             // 
             // labelEmail
             // 
@@ -188,27 +167,47 @@
             this.labelEmail.TabIndex = 9;
             this.labelEmail.Text = "Email";
             // 
-            // dataGridView1
+            // gridClientes
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 182);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(591, 150);
-            this.dataGridView1.TabIndex = 5;
+            this.gridClientes.AllowUserToAddRows = false;
+            this.gridClientes.AllowUserToDeleteRows = false;
+            this.gridClientes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.gridClientes.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.gridClientes.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.gridClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridClientes.Location = new System.Drawing.Point(12, 182);
+            this.gridClientes.Name = "gridClientes";
+            this.gridClientes.ReadOnly = true;
+            this.gridClientes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridClientes.Size = new System.Drawing.Size(591, 150);
+            this.gridClientes.TabIndex = 5;
+            this.gridClientes.SelectionChanged += new System.EventHandler(this.gridClientes_CellContentClick);
             // 
-            // Baja_Cliente
+            // btModificar
+            // 
+            this.btModificar.Location = new System.Drawing.Point(227, 348);
+            this.btModificar.Name = "btModificar";
+            this.btModificar.Size = new System.Drawing.Size(156, 23);
+            this.btModificar.TabIndex = 6;
+            this.btModificar.Text = "Modificar";
+            this.btModificar.UseVisualStyleBackColor = true;
+            this.btModificar.Click += new System.EventHandler(this.btModificar_Click);
+            // 
+            // Modificacion_Cliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(628, 352);
-            this.Controls.Add(this.dataGridView1);
+            this.ClientSize = new System.Drawing.Size(617, 392);
+            this.Controls.Add(this.btModificar);
+            this.Controls.Add(this.gridClientes);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.filtrosBusqueda);
-            this.Name = "Baja_Cliente";
-            this.Text = "Baja Clientes";
+            this.Name = "Modificacion_Cliente";
+            this.Text = "Modificar Clientes";
+            this.Load += new System.EventHandler(this.Modificacion_Cliente_Load);
             this.filtrosBusqueda.ResumeLayout(false);
             this.filtrosBusqueda.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridClientes)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -222,8 +221,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox filtrosBusqueda;
         private System.Windows.Forms.Label labelEmail;
-        private System.Windows.Forms.TextBox FechaNacimiento;
-        private System.Windows.Forms.Label labelFechaNaci;
         private System.Windows.Forms.TextBox Email;
         private System.Windows.Forms.TextBox Pasaporte;
         private System.Windows.Forms.Label labelNacionalidad;
@@ -231,6 +228,7 @@
         private System.Windows.Forms.TextBox Nacionalidad;
         private System.Windows.Forms.Button btBuscar;
         private System.Windows.Forms.Button btLimpiar;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView gridClientes;
+        private System.Windows.Forms.Button btModificar;
     }
 }

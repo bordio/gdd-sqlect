@@ -1,6 +1,6 @@
 ﻿namespace FrbaHotel.ABM_de_Cliente
 {
-    partial class Alta_Cliente
+    partial class BaseAltaModificacion_Cliente
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -52,6 +52,7 @@
             this.btCancelar = new System.Windows.Forms.Button();
             this.Numero = new System.Windows.Forms.TextBox();
             this.Email = new System.Windows.Forms.TextBox();
+            this.btGuardarCambios = new System.Windows.Forms.Button();
             this.groupBoxDatosPersonales.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -198,7 +199,7 @@
             // 
             this.btGuardar.Location = new System.Drawing.Point(23, 393);
             this.btGuardar.Name = "btGuardar";
-            this.btGuardar.Size = new System.Drawing.Size(75, 23);
+            this.btGuardar.Size = new System.Drawing.Size(124, 23);
             this.btGuardar.TabIndex = 11;
             this.btGuardar.Text = "Guardar";
             this.btGuardar.UseVisualStyleBackColor = true;
@@ -206,9 +207,9 @@
             // 
             // btLimpiar
             // 
-            this.btLimpiar.Location = new System.Drawing.Point(107, 393);
+            this.btLimpiar.Location = new System.Drawing.Point(153, 393);
             this.btLimpiar.Name = "btLimpiar";
-            this.btLimpiar.Size = new System.Drawing.Size(75, 23);
+            this.btLimpiar.Size = new System.Drawing.Size(124, 23);
             this.btLimpiar.TabIndex = 12;
             this.btLimpiar.Text = "Limpiar";
             this.btLimpiar.UseVisualStyleBackColor = true;
@@ -225,6 +226,7 @@
             // 
             // groupBoxDatosPersonales
             // 
+            this.groupBoxDatosPersonales.Controls.Add(this.btGuardarCambios);
             this.groupBoxDatosPersonales.Controls.Add(this.monthCalendar);
             this.groupBoxDatosPersonales.Controls.Add(this.btFechaNac);
             this.groupBoxDatosPersonales.Controls.Add(this.lblPaisOrigen);
@@ -348,9 +350,9 @@
             // 
             // btCancelar
             // 
-            this.btCancelar.Location = new System.Drawing.Point(349, 393);
+            this.btCancelar.Location = new System.Drawing.Point(350, 393);
             this.btCancelar.Name = "btCancelar";
-            this.btCancelar.Size = new System.Drawing.Size(75, 23);
+            this.btCancelar.Size = new System.Drawing.Size(124, 23);
             this.btCancelar.TabIndex = 13;
             this.btCancelar.Text = "Cancelar";
             this.btCancelar.UseVisualStyleBackColor = true;
@@ -370,7 +372,17 @@
             this.Email.Size = new System.Drawing.Size(199, 20);
             this.Email.TabIndex = 3;
             // 
-            // Alta_Cliente
+            // btGuardarCambios
+            // 
+            this.btGuardarCambios.Location = new System.Drawing.Point(392, 332);
+            this.btGuardarCambios.Name = "btGuardarCambios";
+            this.btGuardarCambios.Size = new System.Drawing.Size(107, 23);
+            this.btGuardarCambios.TabIndex = 14;
+            this.btGuardarCambios.Text = "Guardar Cambios";
+            this.btGuardarCambios.UseVisualStyleBackColor = true;
+            this.btGuardarCambios.Click += new System.EventHandler(this.btGuardarCambios_Click);
+            // 
+            // BaseAltaModificacion_Cliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -399,7 +411,7 @@
             this.Controls.Add(this.groupBoxDomicilio);
             this.Controls.Add(this.Email);
             this.Controls.Add(this.groupBoxDatosPersonales);
-            this.Name = "Alta_Cliente";
+            this.Name = "BaseAltaModificacion_Cliente";
             this.Text = "Crear/Modificar Cliente";
             this.Load += new System.EventHandler(this.Alta_Cliente_Load);
             this.groupBoxDatosPersonales.ResumeLayout(false);
@@ -411,41 +423,42 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox Apellido;
+        public System.Windows.Forms.TextBox Apellido;
         private System.Windows.Forms.Label labelApellido;
-        private System.Windows.Forms.TextBox Nombre;
+        public System.Windows.Forms.TextBox Nombre;
         private System.Windows.Forms.Label labelNombre;
         private System.Windows.Forms.Label labelEmail;
-        private System.Windows.Forms.TextBox Piso;
+        public System.Windows.Forms.TextBox Piso;
         private System.Windows.Forms.Label labelPiso;
         private System.Windows.Forms.Label labelNumCalle;
-        private System.Windows.Forms.TextBox Calle;
+        public System.Windows.Forms.TextBox Calle;
         private System.Windows.Forms.Label labelCalle;
-        private System.Windows.Forms.TextBox Departamento;
+        public System.Windows.Forms.TextBox Departamento;
         private System.Windows.Forms.Label labelDpto;
         private System.Windows.Forms.Label labelFechaNaci;
-        private System.Windows.Forms.TextBox Nacionalidad;
+        public System.Windows.Forms.TextBox Nacionalidad;
         private System.Windows.Forms.Label labelNacionalidad;
-        private System.Windows.Forms.TextBox Pasaporte;
+        public System.Windows.Forms.TextBox Pasaporte;
         private System.Windows.Forms.Label labelNumPasap;
         private System.Windows.Forms.Button btGuardar;
         private System.Windows.Forms.Button btLimpiar;
         private System.Windows.Forms.GroupBox groupBoxDomicilio;
         private System.Windows.Forms.GroupBox groupBoxDatosPersonales;
         private System.Windows.Forms.Button btCancelar;
-        private System.Windows.Forms.TextBox Numero;
+        public System.Windows.Forms.TextBox Numero;
         private System.Windows.Forms.Label labelObligatorio;
         private System.Windows.Forms.Label labelObligatorio4;
         private System.Windows.Forms.Label labelObligatorio3;
         private System.Windows.Forms.Label labelObligatorio2;
         private System.Windows.Forms.Label labelObligatorio5;
-        private System.Windows.Forms.TextBox Email;
-        private System.Windows.Forms.TextBox Fecha;
+        public System.Windows.Forms.TextBox Email;
+        public System.Windows.Forms.TextBox Fecha;
         private System.Windows.Forms.Label lblPaisOrigen;
         private System.Windows.Forms.TextBox PaisOrigen;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.MonthCalendar monthCalendar;
         private System.Windows.Forms.Button btFechaNac;
+        private System.Windows.Forms.Button btGuardarCambios;
     }
   
 }

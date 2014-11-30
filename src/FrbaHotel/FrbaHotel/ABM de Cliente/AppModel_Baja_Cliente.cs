@@ -45,5 +45,10 @@ namespace FrbaHotel.ABM_de_Cliente
 
                 MessageBox.Show("Baja exitosa", "Baja de Cliente", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+        public override void levantar(StringBuilder sentence)
+        {
+           
+        }
     }
 }
