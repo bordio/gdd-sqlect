@@ -10,7 +10,7 @@ namespace FrbaHotel.ABM_de_Cliente {
 
     public abstract class AppModel_Base_Cliente {
 
-        public DataTable rowHotel = new DataTable();
+        public DataTable rowCliente = new DataTable();
         private Conexion sqlconexion = Conexion.Instance;
 
         public abstract void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, string fecha_Nac, string nacionalidad, string pasaporte_Nro, int idReserva);
@@ -52,20 +52,20 @@ namespace FrbaHotel.ABM_de_Cliente {
             }
         }
 
-        public void validarEmail(Control mail, StringBuilder mensajeValidacion)
+        public virtual void validarEmail(Control mail, StringBuilder mensajeValidacion)
         {
             StringBuilder query = new StringBuilder();
-            query.AppendFormat("SELECT * FROM SQLECT.Clientes c WHERE c.mail='{0}'", mail.Text);
+            query.AppendFormat("SELECT * FROM SQLECT.Clientes WHERE mail='{0}'", mail.Text);
             if (this.sqlconexion.ejecutarQuery(query.ToString()).Rows.Count > 0)
             {
                 mensajeValidacion.AppendLine(string.Format(" El email {0} ya existe.", mail.Text));
             };
         }
 
-        public void validarPasaporte(Control pasaporte, StringBuilder mensajeValidacion)
+        public virtual void validarPasaporte(Control pasaporte, StringBuilder mensajeValidacion)
         {
             StringBuilder query = new StringBuilder();
-            query.AppendFormat("SELECT * FROM SQLECT.Clientes c WHERE c.pasaporte_Nro='{0}'", pasaporte.Text);
+            query.AppendFormat("SELECT * FROM SQLECT.Clientes WHERE pasaporte_Nro='{0}'", pasaporte.Text);
             if (this.sqlconexion.ejecutarQuery(query.ToString()).Rows.Count > 0)
             {
                 mensajeValidacion.AppendLine(string.Format(" El pasaporte {0} ya existe.", pasaporte.Text));
@@ -94,7 +94,7 @@ namespace FrbaHotel.ABM_de_Cliente {
 
         }
 
-       //public abstract void levantar(StringBuilder nombre, StringBuilder apellido, StringBuilder email, StringBuilder fechaNacimiento, StringBuilder dom_Calle, StringBuilder nro_Calle, StringBuilder piso, StringBuilder depto, StringBuilder nacionalidad, StringBuilder pasaporte, StringBuilder habilitado);
+        public abstract void levantar(StringBuilder sentence);
     
     }
 }
