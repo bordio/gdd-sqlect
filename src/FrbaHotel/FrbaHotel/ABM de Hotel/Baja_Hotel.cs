@@ -6,12 +6,14 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrbaHotel.Commons.Database;
 
 namespace FrbaHotel.ABM_de_Hotel
 {
     public partial class Baja_Hotel : Form
     {
         private StringBuilder errores = new StringBuilder();
+        private Conexion connSql = Conexion.Instance;
         public Baja_Hotel(StringBuilder nombre, StringBuilder pais, StringBuilder ciudad, StringBuilder calle, Int32 nro_calle)
         {
             InitializeComponent();
@@ -78,8 +80,27 @@ namespace FrbaHotel.ABM_de_Hotel
 
         private void Dar_baja_Click(object sender, EventArgs e)
         {
-            if (!validar_formulario()) MessageBox.Show(errores.ToString(), "Fallo envio de formulario", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            validar_formulario();
+            if (validar_establecimiento_vacio()) errores.AppendLine("El establecimiento no se encuentra vacio en el rango de fechas seleccionado.");
+            if (errores.Length > 0) MessageBox.Show(errores.ToString(), "Errores al tratar de dar de baja", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
 
+        private bool validar_establecimiento_vacio()
+        {
+            StringBuilder sentece = new StringBuilder();
+
+            if (Desde.Text.Length > 0 && Hasta.Text.Length > 0)
+            {
+                StringBuilder fecha_desde = new StringBuilder();
+                fecha_desde.AppendFormat("{0}{1}{2}", DateTime.Parse(Desde.Text).Year.ToString(), (Int32.Parse(DateTime.Parse(Desde.Text).Month.ToString()) < 10) ? "0" + DateTime.Parse(Desde.Text).Month.ToString() : DateTime.Parse(Desde.Text).Month.ToString(), Int32.Parse(DateTime.Parse(Desde.Text).Day.ToString()) < 10 ? "0" + DateTime.Parse(Desde.Text).Day.ToString() : DateTime.Parse(Desde.Text).Day.ToString());
+
+                StringBuilder fecha_hasta = new StringBuilder();
+                fecha_hasta.AppendFormat("{0}{1}{2}", DateTime.Parse(Hasta.Text).Year.ToString(), (Int32.Parse(DateTime.Parse(Hasta.Text).Month.ToString()) < 10) ? "0" + DateTime.Parse(Hasta.Text).Month.ToString() : DateTime.Parse(Hasta.Text).Month.ToString(), Int32.Parse(DateTime.Parse(Hasta.Text).Day.ToString()) < 10 ? "0" + DateTime.Parse(Hasta.Text).Day.ToString() : DateTime.Parse(Hasta.Text).Day.ToString());
+
+                sentece.AppendFormat("SELECT id_reserva FROM SQLECT.Reservas WHERE NOT (estado_reserva in (2,3,4)) AND fecha_inicio BETWEEN '{0}' AND '{1}' OR fecha_inicio+cant_noches_reserva BETWEEN '{0}' AND '{1}'", fecha_desde.ToString(), fecha_hasta.ToString());
+                return this.connSql.ejecutarQuery(sentece.ToString()).Rows.Count > 0;
+            }
+            return false;
         }
 
         private bool validar_formulario()
