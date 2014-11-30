@@ -291,7 +291,7 @@ INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar habita
 INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Generar/modificar reservas','Permite operaciones de alta y modificaciones de RESERVAS')
 INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Cancelar reservas', 'Permite cancelaciones de reservas')
 INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar consumibles','Permite operaciones de alta, baja, y modificaciones de CONSUMIBLES')
-INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar estadias','Permite el registro del check-in y check-out de las estadías')
+INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar estadías','Permite el registro del check-in y check-out de las estadías')
 INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Facturación','Permite registrar facturas')
 INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Listado estadístico','Permite acceder a datos estadísticos, y emitir informes')
 
