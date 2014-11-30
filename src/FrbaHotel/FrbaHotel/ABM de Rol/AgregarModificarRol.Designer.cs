@@ -121,6 +121,7 @@
             this.bttnCancelar.TabIndex = 4;
             this.bttnCancelar.Text = "Cancelar";
             this.bttnCancelar.UseVisualStyleBackColor = true;
+            this.bttnCancelar.Click += new System.EventHandler(this.bttnCancelar_Click);
             // 
             // AgregarModificarRol
             // 
@@ -138,7 +139,6 @@
             this.Controls.Add(this.lblTitulo);
             this.Name = "AgregarModificarRol";
             this.Text = "AgregarModificarRol";
-            this.Load += new System.EventHandler(this.AgregarModificarRol_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

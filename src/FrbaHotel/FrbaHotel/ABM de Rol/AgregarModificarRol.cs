@@ -13,42 +13,49 @@ namespace FrbaHotel.ABM_de_Rol
 {
     public partial class AgregarModificarRol : Form
     {
-        private bool update;
         private Int32 idRol;
+        private DataTable funcsRol;
 
-        public AgregarModificarRol(Int32 elIdRol)
+        public AgregarModificarRol()
+        {
+            InitializeComponent();
+            funcsRol = new DataTable();
+            getFunciones();
+        }
+
+        public AgregarModificarRol(Int32 elIdRol, string nombre, string descripcion, DataTable funciones)
         {
             InitializeComponent();
 
             idRol = elIdRol;
-            update = true;
-        }
-
-        public AgregarModificarRol(string nombre, string descripcion)
-        {
-            InitializeComponent();
-
             txtNombre.Text = nombre;
             txtDescrip.Text = descripcion;
-            getFunciones();
-            update = false;
-        }
-
-        private void AgregarModificarRol_Load(object sender, EventArgs e)
-        {
+            funcsRol = funciones;
             getFunciones();
         }
 
         public void getFunciones()
         {
-           List<string> funcs = new List<string>();
 
-           DataTable tabla = Conexion.Instance.ejecutarQuery("SELECT id_funcion 'id', nombre 'Funcion' FROM SQLECT.Funcionalidades WHERE estado_func = 1");
+            DataTable tabla = Conexion.Instance.ejecutarQuery("SELECT id_funcion 'id', nombre 'Funcion' FROM SQLECT.Funcionalidades WHERE estado_func = 1");
 
-           for (int i = 0; i < tabla.Rows.Count; i++)
-           {
-               chkLstFunc.Items.Add(tabla.Rows[i]["Funcion"].ToString());
-           }
-       }
+            foreach(DataRow rowFuncs in tabla.Rows)
+            {
+                String funcX = rowFuncs["Funcion"].ToString();
+                bool check = false;
+                foreach (DataRow rowFRol in funcsRol.Rows)
+                {
+                    String funcRol = rowFRol["Funcion"].ToString();
+                    if (funcRol == funcX)
+                        check = true;
+                }
+                chkLstFunc.Items.Add(funcX, check);
+            }
+        }
+
+        private void bttnCancelar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

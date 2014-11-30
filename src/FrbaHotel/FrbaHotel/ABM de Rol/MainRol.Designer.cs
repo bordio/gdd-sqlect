@@ -66,7 +66,7 @@
             this.gridRoles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridRoles.Size = new System.Drawing.Size(395, 248);
             this.gridRoles.TabIndex = 0;
-            this.gridRoles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridRoles_CellContentClick);
+            this.gridRoles.SelectionChanged += new System.EventHandler(this.gridRoles_SelectionChanged);
             // 
             // bttnModificar
             // 
@@ -108,6 +108,7 @@
             this.bttnVolver.TabIndex = 4;
             this.bttnVolver.Text = "Volver";
             this.bttnVolver.UseVisualStyleBackColor = true;
+            this.bttnVolver.Click += new System.EventHandler(this.bttnVolver_Click);
             // 
             // gridFunciones
             // 
