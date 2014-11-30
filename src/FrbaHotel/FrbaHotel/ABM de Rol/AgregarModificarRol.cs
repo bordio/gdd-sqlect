@@ -13,69 +13,42 @@ namespace FrbaHotel.ABM_de_Rol
 {
     public partial class AgregarModificarRol : Form
     {
+        private bool update;
         private Int32 idRol;
-        private DataTable funcsRol;
-        private List<CheckBox> lstFuncs;
 
-        public AgregarModificarRol()
+        public AgregarModificarRol(Int32 elIdRol)
         {
             InitializeComponent();
-            llenarFuncs();
-
-            funcsRol = new DataTable();
-        }
-
-        public AgregarModificarRol(Int32 elIdRol, string nombre, string descripcion, DataTable funciones)
-        {
-            InitializeComponent();
-            llenarFuncs();
 
             idRol = elIdRol;
+            update = true;
+        }
+
+        public AgregarModificarRol(string nombre, string descripcion)
+        {
+            InitializeComponent();
+
             txtNombre.Text = nombre;
             txtDescrip.Text = descripcion;
-            funcsRol = funciones;
-            checkFunciones();
+            getFunciones();
+            update = false;
         }
 
-        private void checkFunciones()
+        private void AgregarModificarRol_Load(object sender, EventArgs e)
         {
-            foreach (CheckBox func in lstFuncs)
-            {
-                String funcX = func.Text;
-                func.Checked = false;
-                foreach (DataRow rowFRol in funcsRol.Rows)
-                {
-                    String funcRol = rowFRol["Funcion"].ToString();
-                    if (funcRol == funcX)
-                        func.Checked = true;
-                }
-            }
+            getFunciones();
         }
 
-        private void llenarFuncs()
+        public void getFunciones()
         {
-            List<CheckBox> lista = new List<CheckBox>();
+           List<string> funcs = new List<string>();
 
-            lista.Add(chkBxGestRol);
-            lista.Add(chkBxGestUsr);
-            lista.Add(chkBxGestCli);
-            lista.Add(chkBxGestHotel);
-            lista.Add(chkBxGestHab);
-            lista.Add(chkBxGestRes);
-            lista.Add(chkBxCancelRes);
-            lista.Add(chkBxGestConsu);
-            lista.Add(chkBxGestEstad);
-            lista.Add(chkBxGestFactu);
-            lista.Add(chkBxListados);
+           DataTable tabla = Conexion.Instance.ejecutarQuery("SELECT id_funcion 'id', nombre 'Funcion' FROM SQLECT.Funcionalidades WHERE estado_func = 1");
 
-            lstFuncs = lista;
-        }
-
-        private void bttnCancelar_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void 
+           for (int i = 0; i < tabla.Rows.Count; i++)
+           {
+               chkLstFunc.Items.Add(tabla.Rows[i]["Funcion"].ToString());
+           }
+       }
     }
 }

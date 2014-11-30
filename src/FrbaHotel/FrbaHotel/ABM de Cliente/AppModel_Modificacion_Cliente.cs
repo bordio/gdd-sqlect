@@ -11,7 +11,7 @@ namespace FrbaHotel.ABM_de_Cliente
     class AppModel_Modificacion_Cliente : AppModel_Base_Cliente
     {
         private Conexion sqlconexion = Conexion.Instance;
-        public Int32 idCliente;
+        
 
         public override void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, String fecha_Nac, string nacionalidad, string pasaporte_Nro, int idReserva)
         {
@@ -19,7 +19,6 @@ namespace FrbaHotel.ABM_de_Cliente
             System.Data.SqlClient.SqlCommand comandoACliente = new System.Data.SqlClient.SqlCommand();
             comandoACliente.CommandType = CommandType.StoredProcedure;
 
-            comandoACliente.Parameters.Add("@idCliente", SqlDbType.Int);
             comandoACliente.Parameters.Add("@Nombre", SqlDbType.VarChar);
             comandoACliente.Parameters.Add("@Apellido", SqlDbType.VarChar);
             comandoACliente.Parameters.Add("@Mail", SqlDbType.VarChar);
@@ -31,17 +30,16 @@ namespace FrbaHotel.ABM_de_Cliente
             comandoACliente.Parameters.Add("@Nacionalidad", SqlDbType.VarChar);
             comandoACliente.Parameters.Add("@Pasaporte_Nro", SqlDbType.BigInt);
 
-            comandoACliente.Parameters[0].Value = idCliente;
-            comandoACliente.Parameters[1].Value = nombre;
-            comandoACliente.Parameters[2].Value = apellido;
-            comandoACliente.Parameters[3].Value = mail;
-            comandoACliente.Parameters[4].Value = dom_Calle;
-            comandoACliente.Parameters[5].Value = nro_Calle;
-            comandoACliente.Parameters[6].Value = piso;
-            comandoACliente.Parameters[7].Value = depto;
-            comandoACliente.Parameters[8].Value = DateTime.Parse(fecha_Nac);
-            comandoACliente.Parameters[9].Value = nacionalidad;
-            comandoACliente.Parameters[10].Value = pasaporte_Nro;
+            comandoACliente.Parameters[0].Value = nombre;
+            comandoACliente.Parameters[1].Value = apellido;
+            comandoACliente.Parameters[2].Value = mail;
+            comandoACliente.Parameters[3].Value = dom_Calle;
+            comandoACliente.Parameters[4].Value = nro_Calle;
+            comandoACliente.Parameters[5].Value = piso;
+            comandoACliente.Parameters[6].Value = depto;
+            comandoACliente.Parameters[7].Value = DateTime.Parse(fecha_Nac);
+            comandoACliente.Parameters[8].Value = nacionalidad;
+            comandoACliente.Parameters[9].Value = pasaporte_Nro;
 
             comandoACliente.CommandText = "SQLECT.modificacionCliente";
             conexion.ejecutarQueryConSP(comandoACliente);
@@ -51,31 +49,11 @@ namespace FrbaHotel.ABM_de_Cliente
         
         }
 
-          public override void levantar(StringBuilder sentence)
-         {
-             rowCliente = Conexion.Instance.ejecutarQuery(sentence.ToString());
-             idCliente = Int32.Parse(rowCliente.Rows[0][10].ToString());
-         }
-
-          public override void validarPasaporte(Control pasaporte, StringBuilder mensajeValidacion)
-          {
-              StringBuilder query = new StringBuilder();
-              query.AppendFormat("SELECT * FROM SQLECT.Clientes WHERE pasaporte_Nro='{0}' AND id_cliente!='{1}'", pasaporte.Text, idCliente);
-              if (this.sqlconexion.ejecutarQuery(query.ToString()).Rows.Count > 0)
-              {
-                  mensajeValidacion.AppendLine(string.Format(" El pasaporte {0} ya existe. Debe modificarlo para poder Guardar los cambios", pasaporte.Text));
-              };
-          }
-
-          public override void validarEmail(Control mail, StringBuilder mensajeValidacion)
-          {
-              StringBuilder query = new StringBuilder();
-              query.AppendFormat("SELECT * FROM SQLECT.Clientes WHERE mail='{0}' AND id_Cliente!='{1}'", mail.Text, idCliente);
-              if (this.sqlconexion.ejecutarQuery(query.ToString()).Rows.Count > 0)
-              {
-                  mensajeValidacion.AppendLine(string.Format(" El email {0} ya existe. Debe modificarlo para poder Guardar los cambios", mail.Text));
-              };
-          }
+      /*  public override void levantar(StringBuilder nombre, StringBuilder apellido, StringBuilder email, StringBuilder fechaNacimiento, StringBuilder dom_Calle, StringBuilder nro_Calle, StringBuilder piso, StringBuilder depto, StringBuilder nacionalidad, StringBuilder pasaporte, StringBuilder habilitado)
+       {
+           //StringBuilder sentence = new StringBuilder().AppendFormat("SELECT nombre,apellido,mail,fecha_Nac,dom_Calle,nro_Calle,piso,depto,nacionalidad,pasaporte_Nro,habilitado FROM SQLECT.Clientes WHERE nombre='{0}' AND apellido='{1}' AND mail='{2}' AND fecha_Nac='{3}' AND dom_Calle='{4}' AND nro_Calle={5} AND piso={6} AND depto={7} AND nacionalidad={8} AND pasaporte_Nro={9} AND habilitado={10}", nombre.ToString(), apellido.ToString(), email.ToString(), fechaNacimiento, dom_Calle.ToString(), nro_Calle, piso, depto.ToString(), nacionalidad.ToString(), pasaporte.ToString(), habilitado);
+           //rowHotel = Conexion.Instance.ejecutarQuery(sentence.ToString());
+       }*/
 
     }
 }

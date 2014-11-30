@@ -178,12 +178,11 @@
             this.lstHoteles.MultiSelect = false;
             this.lstHoteles.Name = "lstHoteles";
             this.lstHoteles.ReadOnly = true;
-            this.lstHoteles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.lstHoteles.Size = new System.Drawing.Size(574, 255);
             this.lstHoteles.TabIndex = 4;
-            this.lstHoteles.SelectionChanged += new System.EventHandler(this.lstHoteles_SelectionChanged);
+            this.lstHoteles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.lstHoteles_CellContentClick);
             // 
-            // baja
+// baja
             // 
             this.baja.Enabled = false;
             this.baja.Location = new System.Drawing.Point(137, 396);
@@ -192,7 +191,6 @@
             this.baja.TabIndex = 2;
             this.baja.Text = "Dar de baja";
             this.baja.UseVisualStyleBackColor = true;
-            this.baja.Click += new System.EventHandler(this.baja_Click);
             // 
             // modificar
             // 
@@ -224,8 +222,7 @@
             this.cerrar.Text = "Volver";
             this.cerrar.UseVisualStyleBackColor = true;
             this.cerrar.Click += new System.EventHandler(this.cerrar_Click_1);
-            // 
-            // MainHotel
+            //            // MainHotel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

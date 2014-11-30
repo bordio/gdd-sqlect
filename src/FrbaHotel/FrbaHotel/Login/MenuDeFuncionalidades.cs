@@ -169,14 +169,14 @@ namespace FrbaHotel.Login
                     FrbaHotel.Registrar_Estadia.Form1 registrarEstadias = new FrbaHotel.Registrar_Estadia.Form1(usuarioDeSesion, idDeHotelElegido);
                     registrarEstadias.Show();
                     break;
-                case "Gestionar consumibles":
-                    //FrbaHotel.Registrar_Consumible.Form1 gestionarConsumibles = new FrbaHotel.Registrar_Consumible.Form1(idDeHotelElegido);
-                    //gestionarConsumibles.Show();
+                /*case "Gestionar consumibles":
+                    FrbaHotel.Registrar_Consumible.Form1 gestionarConsumibles = new FrbaHotel.Registrar_Consumible.Form1(idDeHotelElegido);
+                    gestionarConsumibles.Show();
                     break;
                 case "Facturación":
-                    //FrbaHotel.Registrar_Consumible.Form1 facturacion = new FrbaHotel.Registrar_Consumible.Form1(idDeHotelElegido);
-                    //facturacion.Show();
-                    break;
+                    FrbaHotel.Registrar_Consumible.Form1 facturacion = new FrbaHotel.Registrar_Consumible.Form1(idDeHotelElegido);
+                    facturacion.Show();
+                    break;*/
                 case "Listado estadístico":
                     FrbaHotel.Listado_Estadistico.Form1 listadoEstadistico = new FrbaHotel.Listado_Estadistico.Form1();
                     listadoEstadistico.Show();
