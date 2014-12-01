@@ -137,7 +137,8 @@ CREATE TABLE SQLECT.Clientes (
     depto VARCHAR(5),
     fecha_Nac DATETIME,
     nacionalidad VARCHAR(60),
-    pasaporte_Nro INTEGER,
+    tipoDocumento VARCHAR(30),
+    documento_Nro INTEGER,
     inconsistente TINYINT DEFAULT 0,
     habilitado TINYINT DEFAULT 1
 )
@@ -272,6 +273,7 @@ CREATE TABLE SQLECT.Funcionalidades_Roles (
     fk_funcion smallint references SQLECT.Funcionalidades(id_funcion)
 )
 
+
 	/* Migración de datos */
 INSERT INTO SQLECT.Roles(nombre,descripcion) VALUES ('Administrador General','Administra todos los aspectos de la aplicación')
 INSERT INTO SQLECT.Roles(nombre,descripcion) VALUES ('Recepcionista','Poseé funcionalidades de atención al público')
@@ -360,16 +362,18 @@ INSERT INTO SQLECT.Regimenes_Hoteles
 		(h.nro_calle = m.Hotel_Nro_Calle) )
 	ORDER BY 1
 
-INSERT INTO SQLECT.Clientes (nombre,apellido,mail,dom_Calle,nro_Calle,piso,depto,fecha_Nac,nacionalidad,pasaporte_Nro) 
+INSERT INTO SQLECT.Clientes (nombre,apellido,mail,dom_Calle,nro_Calle,piso,depto,fecha_Nac,nacionalidad,documento_Nro) 
 	(SELECT DISTINCT Cliente_Nombre, Cliente_Apellido, 
 	Cliente_Mail, Cliente_Dom_Calle, Cliente_Nro_Calle, Cliente_Piso, Cliente_Depto, 
 	Cliente_Fecha_Nac, Cliente_Nacionalidad, Cliente_Pasaporte_Nro 
 	FROM gd_esquema.Maestra)
 
+UPDATE SQLECT.Clientes SET tipoDocumento = 'PASAPORTE'
+
 INSERT INTO SQLECT.Reservas (id_reserva,fecha_inicio,cant_noches_reserva,fk_regimen,fk_cliente)
 	SELECT m.Reserva_Codigo, m.Reserva_Fecha_Inicio, m.Reserva_Cant_Noches, r.id_regimen, c.id_cliente
 	FROM gd_esquema.Maestra m JOIN SQLECT.Regimenes r ON (m.Regimen_Descripcion = r.descripcion) AND (m.Regimen_Precio = r.precio)
-							  JOIN SQLECT.Clientes c ON (m.Cliente_Fecha_Nac = c.fecha_Nac) AND (m.Cliente_Pasaporte_Nro = c.pasaporte_Nro)
+							  JOIN SQLECT.Clientes c ON (m.Cliente_Fecha_Nac = c.fecha_Nac) AND (m.Cliente_Pasaporte_Nro = c.documento_Nro)
 	WHERE m.Estadia_Fecha_Inicio is null
 
 INSERT INTO SQLECT.Estadias(fk_reserva,fecha_inicio,fecha_fin,cant_noches)
@@ -403,7 +407,6 @@ INSERT INTO SQLECT.Consumibles_Estadias_Habitaciones(fk_estadia,fk_habitacion,fk
 							 JOIN SQLECT.Habitaciones_Reservas hr ON (e.fk_reserva=hr.fk_reserva)							
 	   WHERE m.Consumible_Codigo IS NOT NULL )
 
-
 /*INSERT INTO SQLECT.Consumibles_Estadias_Habitaciones(fk_consumible,fk_estadia)
  (SELECT DISTINCT m.Consumible_Codigo,e.id_estadia
    FROM gd_esquema.Maestra m JOIN SQLECT.Estadias e ON (m.Reserva_Codigo=e.fk_reserva)
@@ -422,7 +425,7 @@ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.altaC
 DROP PROCEDURE SQLECT.altaCliente
 
 GO
-CREATE PROCEDURE SQLECT.altaCliente (@Nombre VARCHAR(60), @Apellido VARCHAR(60), @Mail VARCHAR(255), @Dom_Calle VARCHAR(90), @Nro_Calle INTEGER, @Piso TINYINT, @Depto VARCHAR(5), @Fecha_Nac DATETIME, @Nacionalidad VARCHAR(60), @Pasaporte_Nro INTEGER,@idReserva int)
+CREATE PROCEDURE SQLECT.altaCliente (@Nombre VARCHAR(60), @Apellido VARCHAR(60), @Mail VARCHAR(255), @Dom_Calle VARCHAR(90), @Nro_Calle INTEGER, @Piso TINYINT, @Depto VARCHAR(5), @Fecha_Nac DATETIME, @Nacionalidad VARCHAR(60), @Documento_Nro INTEGER,@idReserva int)
 AS
 BEGIN
 
@@ -430,14 +433,14 @@ BEGIN
 	DECLARE @PersonalDataId INT
 	DECLARE @idCliente INT
 	
-	SELECT * FROM SQLECT.Clientes C WHERE C.pasaporte_Nro=@Pasaporte_Nro OR C.mail=@Mail
+	SELECT * FROM SQLECT.Clientes C WHERE C.documento_Nro=@Documento_Nro OR C.mail=@Mail
 	IF (@@ROWCOUNT >0)
 	BEGIN
 		RETURN @@ROWCOUNT
 	END
 
-	INSERT INTO SQLECT.Clientes (nombre,apellido,mail,dom_Calle,nro_Calle,piso,depto,fecha_Nac,nacionalidad,pasaporte_Nro)
-	VALUES (@Nombre, @Apellido, @Mail, @Dom_Calle, @Nro_Calle, @Piso, @Depto, @Fecha_Nac, @Nacionalidad, @Pasaporte_Nro)
+	INSERT INTO SQLECT.Clientes (nombre,apellido,mail,dom_Calle,nro_Calle,piso,depto,fecha_Nac,nacionalidad,documento_Nro)
+	VALUES (@Nombre, @Apellido, @Mail, @Dom_Calle, @Nro_Calle, @Piso, @Depto, @Fecha_Nac, @Nacionalidad, @Documento_Nro)
 
 SET @idCliente = SCOPE_IDENTITY();
   IF (@idReserva<>0)
@@ -452,11 +455,11 @@ GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.modificacionCliente'))
 DROP PROCEDURE SQLECT.modificacionCliente
 GO
-CREATE PROCEDURE SQLECT.modificacionCliente (@idCliente INTEGER, @Nombre VARCHAR(60), @Apellido VARCHAR(60), @Mail VARCHAR(255), @Dom_Calle VARCHAR(90), @Nro_Calle INTEGER, @Piso TINYINT, @Depto VARCHAR(5), @Fecha_Nac DATETIME, @Nacionalidad VARCHAR(60), @Pasaporte_Nro INTEGER)
+CREATE PROCEDURE SQLECT.modificacionCliente (@idCliente INTEGER, @Nombre VARCHAR(60), @Apellido VARCHAR(60), @Mail VARCHAR(255), @Dom_Calle VARCHAR(90), @Nro_Calle INTEGER, @Piso TINYINT, @Depto VARCHAR(5), @Fecha_Nac DATETIME, @Nacionalidad VARCHAR(60), @Documento_Nro INTEGER)
 AS
 BEGIN
 	UPDATE SQLECT.Clientes
-	SET nombre=@Nombre, apellido=@Apellido, mail=@Mail, dom_Calle=@Dom_Calle, nro_Calle=@Nro_Calle, piso=@Piso, depto=@Depto, fecha_Nac=@Fecha_Nac, nacionalidad=@Nacionalidad, pasaporte_Nro=@Pasaporte_Nro
+	SET nombre=@Nombre, apellido=@Apellido, mail=@Mail, dom_Calle=@Dom_Calle, nro_Calle=@Nro_Calle, piso=@Piso, depto=@Depto, fecha_Nac=@Fecha_Nac, nacionalidad=@Nacionalidad, documento_Nro=@Documento_Nro
 	WHERE id_Cliente=@idCliente
 END
 GO
@@ -464,24 +467,24 @@ GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.inhabilitarCliente'))
 DROP PROCEDURE SQLECT.inhabilitarCliente
 GO
-CREATE PROCEDURE SQLECT.inhabilitarCliente (@Mail VARCHAR(255),@Pasaporte_Nro INTEGER)
+CREATE PROCEDURE SQLECT.inhabilitarCliente (@Mail VARCHAR(255),@Documento_Nro INTEGER)
 AS
 BEGIN
 	UPDATE SQLECT.Clientes
 	SET habilitado=0
-	WHERE mail=@Mail AND pasaporte_Nro=@Pasaporte_Nro
+	WHERE mail=@Mail AND documento_Nro=@Documento_Nro
 END
 GO
 /*---------------ALTA LOGICA (Habilitar)--------------------*/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.habilitarCliente'))
 DROP PROCEDURE SQLECT.habilitarCliente
 GO
-CREATE PROCEDURE SQLECT.habilitarCliente (@Mail VARCHAR(255),@Pasaporte_Nro INTEGER)
+CREATE PROCEDURE SQLECT.habilitarCliente (@Mail VARCHAR(255),@Documento_Nro INTEGER)
 AS
 BEGIN
 	UPDATE SQLECT.Clientes
 	SET habilitado=1
-	WHERE mail=@Mail AND pasaporte_Nro=@Pasaporte_Nro
+	WHERE mail=@Mail AND documento_Nro=@Documento_Nro
 END
 GO
 /*-----------------------------------ABM CLIENTE FIN----------------------------------------------------*/
@@ -495,14 +498,14 @@ CREATE PROC SQLECT.procInconsistenciasClientes
 AS
 BEGIN
 	UPDATE SQLECT.Clientes SET inconsistente = 1
-		WHERE	pasaporte_Nro IN (SELECT c.pasaporte_Nro
+		WHERE	documento_Nro IN (SELECT c.documento_Nro
 								FROM SQLECT.Clientes c
-								GROUP BY c.pasaporte_Nro
+								GROUP BY c.documento_Nro
 								HAVING COUNT(c.mail)>1 )
 				OR mail IN		(SELECT c.mail
 								FROM SQLECT.Clientes c
 								GROUP BY c.mail
-								HAVING COUNT(c.pasaporte_Nro)>1 )
+								HAVING COUNT(c.documento_Nro)>1 )
 END;
 GO
 
@@ -510,23 +513,23 @@ EXECUTE SQLECT.procInconsistenciasClientes
 
 
 /*							
-SELECT COUNT(pasaporte_Nro), mail
+SELECT COUNT(documento_Nro), mail
 FROM Clientes
 WHERE inconsistente = 1
 GROUP BY mail
-HAVING COUNT(pasaporte_Nro)>1
-ORDER BY COUNT(pasaporte_Nro) DESC 
+HAVING COUNT(documento_Nro)>1
+ORDER BY COUNT(documento_Nro) DESC 
 
-SELECT COUNT(mail), pasaporte_Nro
+SELECT COUNT(mail), documento_Nro
 FROM Clientes
 WHERE inconsistente = 1
-GROUP BY pasaporte_Nro
+GROUP BY documento_Nro
 HAVING COUNT(mail)>1
 ORDER BY COUNT(mail) DESC 
 							
 
 
-SELECT * from Clientes where inconsistente = 1 order by mail DESC, pasaporte_Nro DESC
+SELECT * from Clientes where inconsistente = 1 order by mail DESC, documento_Nro DESC
 */
 
 
@@ -1315,11 +1318,11 @@ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.adjun
 DROP PROCEDURE SQLECT.adjuntarClienteALaReserva
 
 GO
-CREATE PROCEDURE SQLECT.adjuntarClienteALaReserva(@email varchar(255),@pasaporte int,@idReserva int)
+CREATE PROCEDURE SQLECT.adjuntarClienteALaReserva(@email varchar(255),@documento_nro int,@idReserva int)
 AS
 BEGIN
 DECLARE @idCliente int
-SET @idCliente= (SELECT id_cliente FROM SQLECT.Clientes WHERE mail=@email AND pasaporte_Nro=@pasaporte)
+SET @idCliente= (SELECT id_cliente FROM SQLECT.Clientes WHERE mail=@email AND documento_Nro=@documento_nro)
 
 UPDATE SQLECT.Reservas SET fk_cliente=@idCliente
  WHERE id_reserva=@idReserva

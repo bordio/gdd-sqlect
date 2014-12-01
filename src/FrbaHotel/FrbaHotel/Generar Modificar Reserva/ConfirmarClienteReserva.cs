@@ -11,22 +11,22 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 {
     public partial class ConfirmarClienteReserva : Form
     {
-        public ConfirmarClienteReserva(string email, int pasaporte,int idReserva)
+        public ConfirmarClienteReserva(string email, int documento, int idReserva)
         {
             InitializeComponent();
             this.emailDelClienteDeLaReserva = email;
-            this.pasaporteDelClienteDeLaReserva = pasaporte;
+            this.documentoDelClienteDeLaReserva = documento;
             this.idReserva = idReserva;
         }
 
         AppModel_Reservas funcionesReservas = new AppModel_Reservas();
         string emailDelClienteDeLaReserva;
-        int pasaporteDelClienteDeLaReserva;
+        int documentoDelClienteDeLaReserva;
         int idReserva;
         private void ConfirmarClienteReserva_Load(object sender, EventArgs e)
         {
             Mail.Text = emailDelClienteDeLaReserva;
-            Pasaporte.Text = pasaporteDelClienteDeLaReserva.ToString();
+            Documento.Text = documentoDelClienteDeLaReserva.ToString();
 
         }
 
@@ -37,11 +37,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(Mail.Text) | Convert.ToInt32(Pasaporte.Text) == 0)
+            if (string.IsNullOrEmpty(Mail.Text) | Convert.ToInt32(Documento.Text) == 0)
                 MessageBox.Show("Error en la elección del cliente");
             else
             {
-                bool todoOk = funcionesReservas.adjudicarClienteALaReserva(emailDelClienteDeLaReserva, pasaporteDelClienteDeLaReserva, idReserva);
+                bool todoOk = funcionesReservas.adjudicarClienteALaReserva(emailDelClienteDeLaReserva, documentoDelClienteDeLaReserva, idReserva);
                 if (todoOk)
                 {
                     MessageBox.Show(string.Format("Registro correcto del cliente a la reserva, guarde el siguiente codigo para posibles modificaciones: {0}",funcionesReservas.obtenerCodigoReserva(idReserva)));
