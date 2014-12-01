@@ -14,7 +14,8 @@ namespace FrbaHotel.ABM_de_Hotel
     {
         private StringBuilder errores = new StringBuilder();
         private Conexion connSql = Conexion.Instance;
-        public Baja_Hotel(StringBuilder nombre, StringBuilder pais, StringBuilder ciudad, StringBuilder calle, Int32 nro_calle)
+        private int id_hotel;
+        public Baja_Hotel(StringBuilder nombre, StringBuilder pais, StringBuilder ciudad, StringBuilder calle, Int32 nro_calle, Int32 id_hotel)
         {
             InitializeComponent();
             Text = "Baja temporal de Hotel";
@@ -22,6 +23,7 @@ namespace FrbaHotel.ABM_de_Hotel
             Pais.Text = pais.ToString();
             Ciudad.Text = ciudad.ToString();
             Direccion.Text = new StringBuilder().AppendFormat("{0} {1}", calle.ToString(), nro_calle.ToString()).ToString();
+            this.id_hotel = id_hotel;
             SeleccionarHasta.Enabled = false;
         }
 
@@ -85,7 +87,22 @@ namespace FrbaHotel.ABM_de_Hotel
             if (errores.Length > 0) MessageBox.Show(errores.ToString(), "Errores al tratar de dar de baja", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
-                //stored procedure
+                Conexion cnn = Conexion.Instance;
+                System.Data.SqlClient.SqlCommand comando1 = new System.Data.SqlClient.SqlCommand();
+                comando1.CommandType = CommandType.StoredProcedure;
+
+                comando1.Parameters.Add("@id_hotel", SqlDbType.Int);
+                comando1.Parameters.Add("@desde", SqlDbType.DateTime);
+                comando1.Parameters.Add("@hasta", SqlDbType.DateTime);
+                comando1.Parameters.Add("@motivo", SqlDbType.Text);
+
+                comando1.Parameters[0].Value = this.id_hotel;
+                comando1.Parameters[1].Value = Desde.Text;
+                comando1.Parameters[2].Value = Hasta.Text;
+                comando1.Parameters[3].Value = txtMotivo.Text;
+
+                comando1.CommandText = "SQLECT.bajaHotel";
+                cnn.ejecutarQueryConSP(comando1);
                 MessageBox.Show("Se ha dado de baja temporal correctamente.", "Baja temporal", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }

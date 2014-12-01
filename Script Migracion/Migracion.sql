@@ -829,6 +829,18 @@ BEGIN
 END
 GO
 
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.bajaHotel'))
+DROP PROCEDURE SQLECT.bajaHotel
+
+GO
+CREATE PROCEDURE SQLECT.bajaHotel (@id_hotel INT, @desde DATETIME, @hasta DATETIME, @motivo TEXT)
+AS
+BEGIN
+
+	INSERT INTO SQLECT.Bajas_por_hotel(fk_hotel, fecha_inicio, fecha_fin, motivo) VALUES (@id_hotel,@desde,@hasta,@motivo)
+END
+GO
+
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.modificacionHotel'))
 DROP PROCEDURE SQLECT.modificacionHotel
 
