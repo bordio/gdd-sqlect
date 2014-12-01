@@ -18,7 +18,7 @@ namespace FrbaHotel.ABM_de_Hotel
 
         public bool actionHotel(Control nombre, Control email, Control cant_estrellas, Control fecha_creacion, bool all_inclusive, bool all_inclusive_moderado, bool pension_completa, bool media_pension, Control pais, Control ciudad, Control calle, Control nro_calle, StringBuilder errores)
         {
-            validarForm(nombre, email, cant_estrellas, fecha_creacion, all_inclusive, all_inclusive_moderado, pension_completa, media_pension, pais, ciudad, pais, nro_calle, errores);
+            validarForm(nombre, email, cant_estrellas, fecha_creacion, all_inclusive, all_inclusive_moderado, pension_completa, media_pension, pais, ciudad, calle, nro_calle, errores);
             if (errores.Length > 0)
             {
                 return false;
@@ -41,6 +41,9 @@ namespace FrbaHotel.ABM_de_Hotel
             {
                 errores.AppendLine("Email duplicado");
             }
+            if (!fallo_carga && this.hotelDuplicado(pais.Text,ciudad.Text,calle.Text,Int32.Parse(nro_calle.Text))) {
+                errores.AppendLine("Ya existe un hotel en ese pais, en esa ciudad y en la misma direccion.");
+            }
             if (!fallo_carga && !this.seleccionoAlgunRegimen(all_inclusive,all_inclusive_moderado,pension_completa,media_pension))
             {
                 errores.AppendLine("Debe seleccionar algun regimen");
@@ -62,10 +65,17 @@ namespace FrbaHotel.ABM_de_Hotel
             fallo_carga = false;
         }
 
+        public virtual bool hotelDuplicado(String pais, String ciudad, String calle, Int32 nro_calle)
+        {
+            StringBuilder sentece = new StringBuilder();
+            sentece.AppendFormat("SELECT id_hotel FROM SQLECT.Hoteles h WHERE UPPER(h.pais)=UPPER('{0}') AND UPPER(h.ciudad)=UPPER('{1}') AND UPPER(h.calle)=UPPER('{2}') AND h.nro_calle={3}", pais.ToString(),ciudad.ToString(),calle.ToString(),nro_calle);
+            return this.connSql.ejecutarQuery(sentece.ToString()).Rows.Count > 0;
+        }
+
         public virtual bool existeEmail(string email)
         {
             StringBuilder sentece = new StringBuilder();
-            sentece.AppendFormat("SELECT * FROM SQLECT.Hoteles h WHERE h.mail='{0}'", email);
+            sentece.AppendFormat("SELECT id_hotel FROM SQLECT.Hoteles h WHERE h.mail='{0}'", email);
             return this.connSql.ejecutarQuery(sentece.ToString()).Rows.Count > 0;
         }
 
