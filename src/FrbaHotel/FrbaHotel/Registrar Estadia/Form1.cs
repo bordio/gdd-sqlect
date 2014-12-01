@@ -68,7 +68,7 @@ namespace FrbaHotel.Registrar_Estadia
                         estadoReservaActual = Convert.ToInt32(fila[4].ToString());
                         cantHuespedes = Convert.ToInt32(fila[5].ToString());
 
-                        MessageBox.Show(string.Format("id={0},fechaInicio={1},cantNochesReserva={2},cantNochesEstadia={3},cantHuespedes={4}", idReservaActual, fechaInicioActual, cantNochesReserva, cantNochesEstadia, cantHuespedes));
+                        /* MessageBox.Show(string.Format("id={0},fechaInicio={1},cantNochesReserva={2},cantNochesEstadia={3},cantHuespedes={4}", idReservaActual, fechaInicioActual, cantNochesReserva, cantNochesEstadia, cantHuespedes)); */
                         botonCheckIn.Visible = true;
                         botonCheckOut.Visible = true;
                         botonAceptar.Enabled = false;
@@ -100,7 +100,7 @@ namespace FrbaHotel.Registrar_Estadia
                         this.Close();
                         if (cantHuespedes > 1)
                         {
-                            MessageBox.Show(string.Format("Debe registrar a {0} huéspedes", cantHuespedes));
+                            MessageBox.Show(string.Format("Debe registrar a {0} huéspedes", cantHuespedes-1));
                         }
                         this.Close();
                     }
@@ -127,6 +127,8 @@ namespace FrbaHotel.Registrar_Estadia
 
         private void botonCheckOut_Click(object sender, EventArgs e)
         {                        
+            if(!funcionesEstadias.chequearRealizacionDeCheckOut(codigoReserva.Text))
+           {
             if (estadoReservaActual == 5)
             {
                 if (funcionesEstadias.chequearRealizacionDeCheckIn(codigoReserva.Text))
@@ -149,14 +151,18 @@ namespace FrbaHotel.Registrar_Estadia
                           MessageBox.Show("No se encuentra dentro del período de la reserva"); }
                                   
                   }
-                    else
-                      MessageBox.Show("No puede retirarse antes de hacer el Check-In");
-                
+                else
+                    MessageBox.Show("No puede retirarse antes de hacer el Check-In");  
+                      
               }
+        }
             else
             {
              if ((estadoReservaActual == 2) | (estadoReservaActual == 3) | (estadoReservaActual == 4))
-                  MessageBox.Show("La reserva está cancelada");                                   
+                  MessageBox.Show("La reserva está cancelada");  
+             else
+                 MessageBox.Show("Ya se ha realizado el Check-Out");  
+                          
             }
         
         }        

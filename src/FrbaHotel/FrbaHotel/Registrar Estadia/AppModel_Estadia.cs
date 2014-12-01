@@ -113,5 +113,22 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             return yaHizoElCheckIn;   
         
         }
+
+        public bool chequearRealizacionDeCheckOut(string codigoReserva)
+        {
+            Conexion conexion = Conexion.Instance;
+            System.Data.SqlClient.SqlCommand comandoAReserva = new System.Data.SqlClient.SqlCommand();
+            comandoAReserva.CommandType = CommandType.StoredProcedure;
+
+            comandoAReserva.Parameters.Add("@codigoReserva", SqlDbType.VarChar);
+
+            comandoAReserva.Parameters[0].Value = codigoReserva;
+
+            comandoAReserva.CommandText = "SQLECT.chequearRealizacionDeCheckOut";
+            bool yaHizoElCheckOut = conexion.ejecutarEscalar(comandoAReserva);
+
+            return yaHizoElCheckOut;
+
+        }
     }
 }

@@ -21,6 +21,7 @@ namespace FrbaHotel.Registrar_Consumible
             this.codigoReservaActual = codigoReserva;
         }
 
+        AppModel_Consumible funcionesConsumibles = new AppModel_Consumible();
         AppModel_Alta_Usuario funcionesVarias = new AppModel_Alta_Usuario();
         AppModel_Reservas funcionesReservas = new AppModel_Reservas();
         private int idHotelEnCuestion;
@@ -29,31 +30,54 @@ namespace FrbaHotel.Registrar_Consumible
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT DISTINCT nombre FROM SQLECT.Items");
-            DataTable tabla = Conexion.Instance.ejecutarQuery(sentence.ToString());
 
-
+            DataTable tablaConsumibles = funcionesConsumibles.cargarConsumibles(codigoReservaActual);
+            tablaDeConsumibles.DataSource = tablaConsumibles.DefaultView;
 
         }
 
         private void botonConfirmar_Click(object sender, EventArgs e)
         {
-        
-        }
-
-        private void botonAgregarFila_Click(object sender, EventArgs e)
-        {
-           
-        }
-
-        private void tablaDeConsumibles_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-           
+            MessageBox.Show("Falta pasar a la facturación");
             
+            this.Close();
+        }
+
+        private void botonRegistrarConsumible_Click(object sender, EventArgs e)
+        {
+            RegistrarConsumible formRegistrarConsumible = new RegistrarConsumible(codigoReservaActual,"agregar");
+            if (formRegistrarConsumible.ShowDialog() == DialogResult.OK)
+            {
+                DataTable tablaConsumibles = funcionesConsumibles.cargarConsumibles(codigoReservaActual);
+                tablaDeConsumibles.DataSource = tablaConsumibles.DefaultView;
             
             }
+        }
 
-        
+        private void botonModificarConsumible_Click(object sender, EventArgs e)
+        {
+            RegistrarConsumible formRegistrarConsumible = new RegistrarConsumible(codigoReservaActual, "modificar");
+            if (formRegistrarConsumible.ShowDialog() == DialogResult.OK)
+            {
+                DataTable tablaConsumibles = funcionesConsumibles.cargarConsumibles(codigoReservaActual);
+                tablaDeConsumibles.DataSource = tablaConsumibles.DefaultView;
+
+            }
+        }
+
+        private void botonBorrarConsumible_Click(object sender, EventArgs e)
+        {
+            RegistrarConsumible formRegistrarConsumible = new RegistrarConsumible(codigoReservaActual, "borrar");
+            if (formRegistrarConsumible.ShowDialog() == DialogResult.OK)
+            {
+                DataTable tablaConsumibles = funcionesConsumibles.cargarConsumibles(codigoReservaActual);
+                tablaDeConsumibles.DataSource = tablaConsumibles.DefaultView;
+            }
+        }
+
+       
+
+  
   }
    
 }

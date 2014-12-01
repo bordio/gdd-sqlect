@@ -20,13 +20,13 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         int idReservaDelCliente;
         private void button1_Click(object sender, EventArgs e)
         {
-            FrbaHotel.ABM_de_Cliente.BaseAltaModificacion_Cliente formAltaCliente = new FrbaHotel.ABM_de_Cliente.Alta_Cliente(idReservaDelCliente);
+            FrbaHotel.ABM_de_Cliente.Alta_Cliente formAltaCliente = new FrbaHotel.ABM_de_Cliente.Alta_Cliente(idReservaDelCliente);
             formAltaCliente.Show();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            FrbaHotel.ABM_de_Cliente.ModificacionMain_Cliente formBuscarCliente = new FrbaHotel.ABM_de_Cliente.ModificacionMain_Cliente(idReservaDelCliente);
+            FrbaHotel.ABM_de_Cliente.Modificacion_Cliente formBuscarCliente = new FrbaHotel.ABM_de_Cliente.Modificacion_Cliente(idReservaDelCliente);
             formBuscarCliente.Show();
         
         }
