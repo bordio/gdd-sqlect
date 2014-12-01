@@ -22,7 +22,6 @@ namespace FrbaHotel.ABM_de_Cliente
 
         public override void validacionesAlGuardar()
         {
-            MessageBox.Show("Entra a validar alta bien", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
             base.validacionesAlGuardar();
             
         }
