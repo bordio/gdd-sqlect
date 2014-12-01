@@ -13,7 +13,7 @@ namespace FrbaHotel.ABM_de_Cliente
         private Conexion sqlconexion = Conexion.Instance;
         public Int32 idCliente;
 
-        public override void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, String fecha_Nac, string nacionalidad, string pasaporte_Nro, int idReserva)
+        public override void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, String fecha_Nac, string nacionalidad, string documento_Nro, int idReserva)
         {
             Conexion conexion = Conexion.Instance;
             System.Data.SqlClient.SqlCommand comandoACliente = new System.Data.SqlClient.SqlCommand();
@@ -29,7 +29,7 @@ namespace FrbaHotel.ABM_de_Cliente
             comandoACliente.Parameters.Add("@Depto", SqlDbType.VarChar);
             comandoACliente.Parameters.Add("@Fecha_Nac", SqlDbType.DateTime);
             comandoACliente.Parameters.Add("@Nacionalidad", SqlDbType.VarChar);
-            comandoACliente.Parameters.Add("@Pasaporte_Nro", SqlDbType.BigInt);
+            comandoACliente.Parameters.Add("@documento_Nro", SqlDbType.BigInt);
 
             comandoACliente.Parameters[0].Value = idCliente;
             comandoACliente.Parameters[1].Value = nombre;
@@ -41,7 +41,7 @@ namespace FrbaHotel.ABM_de_Cliente
             comandoACliente.Parameters[7].Value = depto;
             comandoACliente.Parameters[8].Value = DateTime.Parse(fecha_Nac);
             comandoACliente.Parameters[9].Value = nacionalidad;
-            comandoACliente.Parameters[10].Value = pasaporte_Nro;
+            comandoACliente.Parameters[10].Value = documento_Nro;
 
             comandoACliente.CommandText = "SQLECT.modificacionCliente";
             conexion.ejecutarQueryConSP(comandoACliente);
@@ -57,13 +57,13 @@ namespace FrbaHotel.ABM_de_Cliente
              idCliente = Int32.Parse(rowCliente.Rows[0][10].ToString());
          }
 
-          public override void validarPasaporte(Control pasaporte, StringBuilder mensajeValidacion)
+          public override void validarDocumento(Control documento, StringBuilder mensajeValidacion)
           {
               StringBuilder query = new StringBuilder();
-              query.AppendFormat("SELECT * FROM SQLECT.Clientes WHERE pasaporte_Nro='{0}' AND id_cliente!='{1}'", pasaporte.Text, idCliente);
+              query.AppendFormat("SELECT * FROM SQLECT.Clientes WHERE documento_Nro='{0}' AND id_cliente!='{1}'", documento.Text, idCliente);
               if (this.sqlconexion.ejecutarQuery(query.ToString()).Rows.Count > 0)
               {
-                  mensajeValidacion.AppendLine(string.Format(" El pasaporte {0} ya existe. Debe modificarlo para poder Guardar los cambios", pasaporte.Text));
+                  mensajeValidacion.AppendLine(string.Format(" El documento {0} ya existe. Debe modificarlo para poder Guardar los cambios", documento.Text));
               };
           }
 

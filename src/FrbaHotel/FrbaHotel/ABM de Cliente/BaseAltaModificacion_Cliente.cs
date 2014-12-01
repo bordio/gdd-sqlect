@@ -29,7 +29,7 @@ namespace FrbaHotel.ABM_de_Cliente
             this.idReservaDelCliente = idReserva;
         }
 
-        public BaseAltaModificacion_Cliente(DataGridView lsClientes, StringBuilder email, StringBuilder pasaport) //Para modificaciones. Lo usa clase hija Modificacion_Cliente
+        public BaseAltaModificacion_Cliente(DataGridView lsClientes, StringBuilder email, StringBuilder documento) //Para modificaciones. Lo usa clase hija Modificacion_Cliente
         {
             InitializeComponent();
             Text = "Modificacion de Cliente";
@@ -39,7 +39,7 @@ namespace FrbaHotel.ABM_de_Cliente
         public int idReservaDelCliente;
 
         public Boolean emailOk;
-        public Boolean pasapOk;
+        public Boolean documentoOk;
         public Boolean validaciones = false;
         public StringBuilder mensajeValidacion;
 
@@ -50,7 +50,7 @@ namespace FrbaHotel.ABM_de_Cliente
             this.appModel.validarNoVacio(Apellido, mensajeValidacion);
             emailOk = this.appModel.validarNoVacio(Email, mensajeValidacion);
             this.appModel.validarNoVacio(Fecha, mensajeValidacion);
-            pasapOk = this.appModel.validarNoVacio(Pasaporte, mensajeValidacion);
+            documentoOk = this.appModel.validarNoVacio(Documento, mensajeValidacion);
             this.appModel.validarNoVacio(Nacionalidad, mensajeValidacion);
             //Longitudes
             this.appModel.validarLongitud(Nombre, 60, mensajeValidacion);
@@ -61,17 +61,17 @@ namespace FrbaHotel.ABM_de_Cliente
             {
                 this.appModel.validarNumerico(Numero, mensajeValidacion);
             }
-            pasapOk = this.appModel.validarNumerico(Pasaporte, mensajeValidacion);
+            documentoOk = this.appModel.validarNumerico(Documento, mensajeValidacion);
 
             //Email repetido
             if (emailOk)
             {
                 this.appModel.validarEmail(Email, mensajeValidacion);
             }
-            //Pasaporte repetido
-            if (pasapOk)
+            //documento repetido
+            if (documentoOk)
             {
-                this.appModel.validarPasaporte(Pasaporte, mensajeValidacion);
+                this.appModel.validarDocumento(Documento, mensajeValidacion);
             }
 
         }
@@ -96,15 +96,15 @@ namespace FrbaHotel.ABM_de_Cliente
                 {
                     this.appModel.abmlCliente(
                        this.Nombre.Text, this.Apellido.Text, this.Email.Text,
-                       this.Calle.Text, this.Numero.Text, this.Piso.Text, this.Departamento.Text,
-                       this.Fecha.Text, this.Nacionalidad.Text, this.Pasaporte.Text, this.idReservaDelCliente); /* Cliente sin reserva*/
+                       this.Calle.Text, this.Numero.Text, this.Piso.Text, this.Localidad.Text,
+                       this.Fecha.Text, this.Nacionalidad.Text, this.Documento.Text, this.idReservaDelCliente); /* Cliente sin reserva*/
                 }
                 else
                 {
                     this.appModel.abmlCliente(
                            this.Nombre.Text, this.Apellido.Text, this.Email.Text,
-                           this.Calle.Text, this.Numero.Text, this.Piso.Text, this.Departamento.Text,
-                           this.Fecha.Text, this.Nacionalidad.Text, this.Pasaporte.Text, 0); /*Cliente con reserva*/
+                           this.Calle.Text, this.Numero.Text, this.Piso.Text, this.Localidad.Text,
+                           this.Fecha.Text, this.Nacionalidad.Text, this.Documento.Text, 0); /*Cliente con reserva*/
                 }
             
             
@@ -123,10 +123,10 @@ namespace FrbaHotel.ABM_de_Cliente
             this.Calle.Text = null;
             this.Numero.Text = null;
             this.Piso.Text = null;
-            this.Departamento.Text = null;
+            this.Localidad.Text = null;
             this.PaisOrigen.Text = null;
             this.Nacionalidad.Text = null;
-            this.Pasaporte.Text = null;
+            this.Documento.Text = null;
             mensajeValidacion = null;
         }
         private void btCancelar_Click(object sender, EventArgs e)
@@ -150,12 +150,6 @@ namespace FrbaHotel.ABM_de_Cliente
             monthCalendar.Visible = true;
         }
 
-        private void Alta_Cliente_Load(object sender, EventArgs e)
-        {
-
-        }
-
-     
     }
 
    

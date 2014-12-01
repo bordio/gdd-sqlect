@@ -37,8 +37,8 @@
             this.btBuscar = new System.Windows.Forms.Button();
             this.Email = new System.Windows.Forms.TextBox();
             this.Nacionalidad = new System.Windows.Forms.TextBox();
-            this.labelNumPasap = new System.Windows.Forms.Label();
-            this.Pasaporte = new System.Windows.Forms.TextBox();
+            this.labelNumDoc = new System.Windows.Forms.Label();
+            this.Documento = new System.Windows.Forms.TextBox();
             this.labelNacionalidad = new System.Windows.Forms.Label();
             this.labelEmail = new System.Windows.Forms.Label();
             this.gridClientes = new System.Windows.Forms.DataGridView();
@@ -46,6 +46,8 @@
             this.btInhabilitar = new System.Windows.Forms.Button();
             this.btHabilitar = new System.Windows.Forms.Button();
             this.btCancelar = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cbTipoDoc = new System.Windows.Forms.ComboBox();
             this.filtrosBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridClientes)).BeginInit();
             this.SuspendLayout();
@@ -84,14 +86,16 @@
             // 
             // filtrosBusqueda
             // 
+            this.filtrosBusqueda.Controls.Add(this.cbTipoDoc);
+            this.filtrosBusqueda.Controls.Add(this.label3);
             this.filtrosBusqueda.Controls.Add(this.btLimpiar);
             this.filtrosBusqueda.Controls.Add(this.btBuscar);
             this.filtrosBusqueda.Controls.Add(this.Email);
             this.filtrosBusqueda.Controls.Add(this.Nacionalidad);
             this.filtrosBusqueda.Controls.Add(this.label2);
             this.filtrosBusqueda.Controls.Add(this.Apellido);
-            this.filtrosBusqueda.Controls.Add(this.labelNumPasap);
-            this.filtrosBusqueda.Controls.Add(this.Pasaporte);
+            this.filtrosBusqueda.Controls.Add(this.labelNumDoc);
+            this.filtrosBusqueda.Controls.Add(this.Documento);
             this.filtrosBusqueda.Controls.Add(this.Nombre);
             this.filtrosBusqueda.Controls.Add(this.labelNacionalidad);
             this.filtrosBusqueda.Controls.Add(this.labelEmail);
@@ -132,26 +136,26 @@
             // 
             // Nacionalidad
             // 
-            this.Nacionalidad.Location = new System.Drawing.Point(498, 29);
+            this.Nacionalidad.Location = new System.Drawing.Point(505, 29);
             this.Nacionalidad.Name = "Nacionalidad";
             this.Nacionalidad.Size = new System.Drawing.Size(199, 20);
             this.Nacionalidad.TabIndex = 25;
             // 
-            // labelNumPasap
+            // labelNumDoc
             // 
-            this.labelNumPasap.AutoSize = true;
-            this.labelNumPasap.Location = new System.Drawing.Point(397, 55);
-            this.labelNumPasap.Name = "labelNumPasap";
-            this.labelNumPasap.Size = new System.Drawing.Size(95, 13);
-            this.labelNumPasap.TabIndex = 24;
-            this.labelNumPasap.Text = "Número Pasaporte";
+            this.labelNumDoc.AutoSize = true;
+            this.labelNumDoc.Location = new System.Drawing.Point(397, 83);
+            this.labelNumDoc.Name = "labelNumDoc";
+            this.labelNumDoc.Size = new System.Drawing.Size(102, 13);
+            this.labelNumDoc.TabIndex = 24;
+            this.labelNumDoc.Text = "Número Documento";
             // 
-            // Pasaporte
+            // Documento
             // 
-            this.Pasaporte.Location = new System.Drawing.Point(498, 55);
-            this.Pasaporte.Name = "Pasaporte";
-            this.Pasaporte.Size = new System.Drawing.Size(199, 20);
-            this.Pasaporte.TabIndex = 6;
+            this.Documento.Location = new System.Drawing.Point(505, 80);
+            this.Documento.Name = "Documento";
+            this.Documento.Size = new System.Drawing.Size(199, 20);
+            this.Documento.TabIndex = 6;
             // 
             // labelNacionalidad
             // 
@@ -227,6 +231,23 @@
             this.btCancelar.UseVisualStyleBackColor = true;
             this.btCancelar.Click += new System.EventHandler(this.btCancelar_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(397, 56);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(86, 13);
+            this.label3.TabIndex = 28;
+            this.label3.Text = "Tipo Documento";
+            // 
+            // cbTipoDoc
+            // 
+            this.cbTipoDoc.FormattingEnabled = true;
+            this.cbTipoDoc.Location = new System.Drawing.Point(505, 53);
+            this.cbTipoDoc.Name = "cbTipoDoc";
+            this.cbTipoDoc.Size = new System.Drawing.Size(121, 21);
+            this.cbTipoDoc.TabIndex = 29;
+            // 
             // ModificacionMain_Cliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -256,9 +277,9 @@
         private System.Windows.Forms.GroupBox filtrosBusqueda;
         private System.Windows.Forms.Label labelEmail;
         private System.Windows.Forms.TextBox Email;
-        private System.Windows.Forms.TextBox Pasaporte;
+        private System.Windows.Forms.TextBox Documento;
         private System.Windows.Forms.Label labelNacionalidad;
-        private System.Windows.Forms.Label labelNumPasap;
+        private System.Windows.Forms.Label labelNumDoc;
         private System.Windows.Forms.TextBox Nacionalidad;
         private System.Windows.Forms.Button btBuscar;
         private System.Windows.Forms.Button btLimpiar;
@@ -267,5 +288,7 @@
         private System.Windows.Forms.Button btInhabilitar;
         private System.Windows.Forms.Button btHabilitar;
         private System.Windows.Forms.Button btCancelar;
+        private System.Windows.Forms.ComboBox cbTipoDoc;
+        private System.Windows.Forms.Label label3;
     }
 }

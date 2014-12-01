@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.Mail = new System.Windows.Forms.TextBox();
-            this.Pasaporte = new System.Windows.Forms.TextBox();
+            this.Documento = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -45,13 +45,13 @@
             this.Mail.Size = new System.Drawing.Size(200, 20);
             this.Mail.TabIndex = 0;
             // 
-            // Pasaporte
+            // Documento
             // 
-            this.Pasaporte.Enabled = false;
-            this.Pasaporte.Location = new System.Drawing.Point(226, 127);
-            this.Pasaporte.Name = "Pasaporte";
-            this.Pasaporte.Size = new System.Drawing.Size(200, 20);
-            this.Pasaporte.TabIndex = 1;
+            this.Documento.Enabled = false;
+            this.Documento.Location = new System.Drawing.Point(226, 127);
+            this.Documento.Name = "Documento";
+            this.Documento.Size = new System.Drawing.Size(200, 20);
+            this.Documento.TabIndex = 1;
             // 
             // button1
             // 
@@ -89,9 +89,9 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(26, 127);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(163, 20);
+            this.label2.Size = new System.Drawing.Size(171, 20);
             this.label2.TabIndex = 5;
-            this.label2.Text = "Numero de pasaporte";
+            this.label2.Text = "Numero de documento";
             // 
             // label3
             // 
@@ -113,7 +113,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.Pasaporte);
+            this.Controls.Add(this.Documento);
             this.Controls.Add(this.Mail);
             this.Name = "ConfirmarClienteReserva";
             this.Text = "Confirmación del Cliente de la Reerva";
@@ -126,7 +126,7 @@
         #endregion
 
         private System.Windows.Forms.TextBox Mail;
-        private System.Windows.Forms.TextBox Pasaporte;
+        private System.Windows.Forms.TextBox Documento;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label1;
