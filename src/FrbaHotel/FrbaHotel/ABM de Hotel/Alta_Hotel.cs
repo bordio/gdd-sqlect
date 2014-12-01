@@ -79,8 +79,8 @@ namespace FrbaHotel.ABM_de_Hotel
         {
             StringBuilder errores = new StringBuilder();
             bool retValue = this.appModel.actionHotel(Nombre, Email, Cantidad_Estrellas, Fecha_creacion,
-                this.ckAllInclusive.Checked, this.ckAllInclusiveModerado.Checked, this.ckMediaPension.Checked,
-                this.ckPensionCompleta.Checked, Pais, Ciudad, Calle, Nro_calle, errores);
+                this.ckAllInclusive.Checked, this.ckAllInclusiveModerado.Checked, this.ckPensionCompleta.Checked,
+                this.ckMediaPension.Checked, Pais, Ciudad, Calle, Nro_calle, errores);
 
             if (retValue)
             {
