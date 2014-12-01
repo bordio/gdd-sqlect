@@ -105,7 +105,10 @@ namespace FrbaHotel.ABM_de_Hotel
 
         private void baja_Click(object sender, EventArgs e)
         {
-            Baja_Hotel formBaja = new Baja_Hotel(this.nombreSeleccionado, this.paisSeleccionado, this.ciudadSeleccionado, this.calleSeleccionado, this.nro_calleSeleccionado);
+            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT id_hotel FROM SQLECT.Hoteles WHERE pais='{0}' AND ciudad='{1}' AND calle='{2}' AND nro_calle={3}", this.paisSeleccionado.ToString(), this.ciudadSeleccionado.ToString(), this.calleSeleccionado.ToString(), Int32.Parse(this.nro_calleSeleccionado.ToString()));
+            DataTable row_id_hotel = Conexion.Instance.ejecutarQuery(sentence.ToString());
+            int id_hotel = Int32.Parse(row_id_hotel.Rows[0][0].ToString());
+            Baja_Hotel formBaja = new Baja_Hotel(this.nombreSeleccionado, this.paisSeleccionado, this.ciudadSeleccionado, this.calleSeleccionado, this.nro_calleSeleccionado, id_hotel);
             formBaja.Show();
         }
 
