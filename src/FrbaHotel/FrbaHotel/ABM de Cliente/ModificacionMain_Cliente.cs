@@ -51,13 +51,6 @@ namespace FrbaHotel.ABM_de_Cliente
         int pasaporteDeLaReservaDelCliente;
         int idReservaDelCliente;
 
-        private void Modificacion_Cliente_Load(object sender, EventArgs e)
-        {
-            /*string seleccion = "SELECT nombre 'Nombre', apellido 'Apellido', mail 'Email', fecha_Nac 'Fecha Nacimiento', dom_Calle 'Calle', nro_calle 'Nro Calle', piso 'Piso', depto 'Departamento', nacionalidad 'Nacionalidad', pasaporte_Nro 'Pasaporte', habilitado 'Habilitado' FROM SQLECT.Clientes";
-            gridClientes.DataSource = this.appModel_Modificar.cargar_lista(this.appModel_Modificar.getAllInstances(seleccion)).DefaultView;
-            gridClientes.AllowUserToAddRows = false;*/
-        }
-
         private void btBuscar_Click(object sender, EventArgs e)
         {
             StringBuilder sentence = new StringBuilder();
@@ -73,8 +66,9 @@ namespace FrbaHotel.ABM_de_Cliente
                 this.appModel_Modificar.appendASentencia(Nacionalidad.Text, sentence, "nacionalidad");
                 this.appModel_Modificar.appendASentencia(Pasaporte.Text, sentence, "pasaporte_Nro");
 
-                StringBuilder sentenceFiltro = new StringBuilder().AppendFormat(sentence.ToString().Substring(0, sentence.Length - 5));
+                StringBuilder sentenceFiltro = new StringBuilder().AppendFormat(sentence.ToString().Substring(0, sentence.Length - 5)); //Si se agrega una nueva condicion al WHERE. Se debe cambiar el 5 a 6 y así.. Horrible, A cambiar si queda tiempo.
                 gridClientes.DataSource = this.appModel_Modificar.cargar_lista(sentenceFiltro).DefaultView;
+                //gridClientes.
                 gridClientes.AllowUserToAddRows = false;
             
             }
@@ -102,22 +96,12 @@ namespace FrbaHotel.ABM_de_Cliente
             emailDeLaReservaDelCliente = gridClientes.CurrentRow.Cells[2].Value.ToString();
             pasaporteDeLaReservaDelCliente = Convert.ToInt32(gridClientes.CurrentRow.Cells[9].Value.ToString());
 
-            /*DataGridViewRow a = gridClientes.CurrentRow;
-            StringBuilder b = new StringBuilder().AppendFormat("Nombre: {0}, Apellido: {1}, Email: {2}", a.Cells[1].Value.ToString(), a.Cells[2].Value.ToString(), a.Cells[3].Value.ToString());
-            */
-
             DataGridViewRow celda_actual = gridClientes.CurrentRow;
             emailSeleccionado.Remove(0, emailSeleccionado.Length);
-            fechaNacimientoSeleccionado.Remove(0, fechaNacimientoSeleccionado.Length);
             pasaporteSeleccionado.Remove(0, pasaporteSeleccionado.Length);
 
             emailSeleccionado.AppendFormat("{0}", celda_actual.Cells[2].Value.ToString());
-            fechaNacimientoSeleccionado.AppendFormat("{0}", celda_actual.Cells[3].Value.ToString());
             pasaporteSeleccionado.AppendFormat("{0}", celda_actual.Cells[9].Value.ToString());
-           
-
-           // btmodificar.Enabled = true;
-           // baja.Enabled = true;
         }
 
         private void btModificar_Click(object sender, EventArgs e)
@@ -132,6 +116,41 @@ namespace FrbaHotel.ABM_de_Cliente
                 BaseAltaModificacion_Cliente formAlta = new Modificacion_Cliente(this.gridClientes, this.emailSeleccionado,this.pasaporteSeleccionado); //Chequear despues si esta bien solo usar email
                 formAlta.Show();
             }
+        }
+
+        public void btInhabilitar_Click(object sender, EventArgs e)
+        {
+            AppModel_Baja_Cliente appModel;
+            appModel = new AppModel_Baja_Cliente();
+            if(validacionesAlBorrar()){
+                appModel.inhabilitarCliente(this.emailSeleccionado, this.pasaporteSeleccionado);
+                btInhabilitar.Visible = false;
+                btHabilitar.Visible = true;
+            }
+        }
+
+        public void btHabilitar_Click(object sender, EventArgs e)
+        {
+            AppModel_Baja_Cliente appModel;
+            appModel = new AppModel_Baja_Cliente();
+            if(validacionesAlBorrar()){
+                appModel.habilitarCliente(this.emailSeleccionado, this.pasaporteSeleccionado);
+                btHabilitar.Visible = false;
+                btInhabilitar.Visible = true;
+            }
+        }
+
+       // public StringBuilder mensajeValidacion = new StringBuilder();
+
+        public Boolean validacionesAlBorrar()
+        {
+            //Segun enunciado:
+            //Si el cliente ya tiene reservas y se lo inhabilita. Al hacer el checkInt no se le dejara ingresar
+            //emailSeleccionado
+            //pasaporteSeleccionado
+            //No dice que tengamos que validar algo. Estoy chequeandolo.
+            return true;
+
         }
 }
 }

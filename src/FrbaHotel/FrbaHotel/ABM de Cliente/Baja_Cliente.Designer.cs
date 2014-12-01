@@ -196,7 +196,7 @@
             this.dataGridView1.Size = new System.Drawing.Size(591, 150);
             this.dataGridView1.TabIndex = 5;
             // 
-            // Filtrar_Cliente
+            // Baja_Cliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -204,7 +204,8 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.filtrosBusqueda);
-            this.Name = "Filtrar_Cliente";
+            this.Name = "Baja_Cliente";
+            this.Text = "Baja Clientes";
             this.filtrosBusqueda.ResumeLayout(false);
             this.filtrosBusqueda.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
