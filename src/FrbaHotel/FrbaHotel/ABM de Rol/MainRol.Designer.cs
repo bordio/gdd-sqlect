@@ -67,7 +67,7 @@
             this.gridRoles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridRoles.Size = new System.Drawing.Size(395, 248);
             this.gridRoles.TabIndex = 0;
-            this.gridRoles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridRoles_CellContentClick);
+           // this.gridRoles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridRoles_CellContentClick);
             // 
             // bttnModificar
             // 

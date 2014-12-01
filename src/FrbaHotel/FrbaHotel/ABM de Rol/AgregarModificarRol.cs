@@ -60,7 +60,7 @@ namespace FrbaHotel.ABM_de_Rol
         {
             List<CheckBox> lista = new List<CheckBox>();
 
-            lista.Add(chkBxGestRol);
+            /*lista.Add(chkBxGestRol);
             lista.Add(chkBxGestUsr);
             lista.Add(chkBxGestCli);
             lista.Add(chkBxGestHotel);
@@ -70,7 +70,7 @@ namespace FrbaHotel.ABM_de_Rol
             lista.Add(chkBxGestConsu);
             lista.Add(chkBxGestEstad);
             lista.Add(chkBxGestFactu);
-            lista.Add(chkBxListados);
+            lista.Add(chkBxListados);*/
 
             lstFuncs = lista;
         }
@@ -93,37 +93,37 @@ namespace FrbaHotel.ABM_de_Rol
             cmd.Parameters[1].Value = txtDescrip.Text;
 
             cmd.Parameters.Add("@gestRol", SqlDbType.Int);
-            cmd.Parameters[2].Value = ((chkBxGestRol.Checked) ? 1 : 0);
+           // cmd.Parameters[2].Value = ((chkBxGestRol.Checked) ? 1 : 0);
 
             cmd.Parameters.Add("@gestUsr", SqlDbType.Int);
-            cmd.Parameters[3].Value = ((chkBxGestUsr.Checked) ? 1 : 0);
+           // cmd.Parameters[3].Value = ((chkBxGestUsr.Checked) ? 1 : 0);
 
             cmd.Parameters.Add("@gestCli", SqlDbType.Int);
-            cmd.Parameters[4].Value = ((chkBxGestCli.Checked) ? 1 : 0);
+           // cmd.Parameters[4].Value = ((chkBxGestCli.Checked) ? 1 : 0);
 
             cmd.Parameters.Add("@gestHotel", SqlDbType.Int);
-            cmd.Parameters[5].Value = ((chkBxGestHotel.Checked) ? 1 : 0);
+           // cmd.Parameters[5].Value = ((chkBxGestHotel.Checked) ? 1 : 0);
 
             cmd.Parameters.Add("@gestHab", SqlDbType.Int);
-            cmd.Parameters[6].Value = ((chkBxGestHab.Checked) ? 1 : 0);
+         //   cmd.Parameters[6].Value = ((chkBxGestHab.Checked) ? 1 : 0);
 
             cmd.Parameters.Add("@gestRes", SqlDbType.Int);
-            cmd.Parameters[7].Value = ((chkBxGestRes.Checked) ? 1 : 0);
+          //  cmd.Parameters[7].Value = ((chkBxGestRes.Checked) ? 1 : 0);
 
             cmd.Parameters.Add("@cancelRes", SqlDbType.Int);
-            cmd.Parameters[8].Value = ((chkBxCancelRes.Checked) ? 1 : 0);
+           // cmd.Parameters[8].Value = ((chkBxCancelRes.Checked) ? 1 : 0);
 
             cmd.Parameters.Add("@gestConsu", SqlDbType.Int);
-            cmd.Parameters[9].Value = ((chkBxGestConsu.Checked) ? 1 : 0);
+           // cmd.Parameters[9].Value = ((chkBxGestConsu.Checked) ? 1 : 0);
 
             cmd.Parameters.Add("@gestEstad", SqlDbType.Int);
-            cmd.Parameters[10].Value = ((chkBxGestEstad.Checked) ? 1 : 0);
+           // cmd.Parameters[10].Value = ((chkBxGestEstad.Checked) ? 1 : 0);
 
             cmd.Parameters.Add("@gestFactu", SqlDbType.Int);
-            cmd.Parameters[11].Value = ((chkBxGestFactu.Checked) ? 1 : 0);
+           // cmd.Parameters[11].Value = ((chkBxGestFactu.Checked) ? 1 : 0);
 
             cmd.Parameters.Add("@listados", SqlDbType.Int);
-            cmd.Parameters[12].Value = ((chkBxListados.Checked) ? 1 : 0);
+            //cmd.Parameters[12].Value = ((chkBxListados.Checked) ? 1 : 0);
 
             if (idRol > 0)
             {
