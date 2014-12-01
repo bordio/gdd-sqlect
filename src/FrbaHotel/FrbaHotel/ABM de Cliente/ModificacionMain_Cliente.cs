@@ -13,22 +13,19 @@ namespace FrbaHotel.ABM_de_Cliente
     {
         private AppModel_Modificacion_Cliente appModel_Modificar;
 
-        private StringBuilder nombreSeleccionado = new StringBuilder();
-        private StringBuilder apellidoSeleccionado = new StringBuilder();
-        private StringBuilder emailSeleccionado = new StringBuilder();
-        private StringBuilder fechaNacimientoSeleccionado = new StringBuilder();
-        private StringBuilder dom_CalleSeleccionado = new StringBuilder();
-        private StringBuilder nro_CalleSeleccionado = new StringBuilder();
-        private StringBuilder pisoSeleccionado = new StringBuilder();
-        private StringBuilder deptoSeleccionado = new StringBuilder();
-        private StringBuilder nacionalidadSeleccionado = new StringBuilder();
-        private StringBuilder pasaporteSeleccionado = new StringBuilder();
-        private StringBuilder habilitadoSeleccionado = new StringBuilder();
-        
+        public StringBuilder emailSeleccionado = new StringBuilder();
+        public StringBuilder pasaporteSeleccionado = new StringBuilder();
+
+        int idReservaDelCliente;
+
         public ModificacionMain_Cliente()
         {
             InitializeComponent();
             appModel_Modificar = new AppModel_Modificacion_Cliente();
+            btHabilitar.Enabled = false;
+            btInhabilitar.Enabled = false;
+            btModificar.Enabled = false;
+
         }
 
         public ModificacionMain_Cliente(int idReserva)
@@ -46,10 +43,6 @@ namespace FrbaHotel.ABM_de_Cliente
             this.btModificar.Text = "Seleccionar";
             this.btModificar.Visible = true;
         }
-
-        string emailDeLaReservaDelCliente;
-        int pasaporteDeLaReservaDelCliente;
-        int idReservaDelCliente;
 
         private void btBuscar_Click(object sender, EventArgs e)
         {
@@ -70,6 +63,10 @@ namespace FrbaHotel.ABM_de_Cliente
                 gridClientes.DataSource = this.appModel_Modificar.cargar_lista(sentenceFiltro).DefaultView;
                 //gridClientes.
                 gridClientes.AllowUserToAddRows = false;
+
+                btHabilitar.Enabled = true;
+                btInhabilitar.Enabled = true;
+                btModificar.Enabled = true;
             
             }
 
@@ -89,13 +86,14 @@ namespace FrbaHotel.ABM_de_Cliente
             Email.Text = null;
             Nacionalidad.Text = null;
             Pasaporte.Text = null;
+
+            btHabilitar.Enabled = false;
+            btInhabilitar.Enabled = false;
+            btModificar.Enabled = false;
         }
 
         private void gridClientes_CellContentClick(object sender, EventArgs e)
         {
-            emailDeLaReservaDelCliente = gridClientes.CurrentRow.Cells[2].Value.ToString();
-            pasaporteDeLaReservaDelCliente = Convert.ToInt32(gridClientes.CurrentRow.Cells[9].Value.ToString());
-
             DataGridViewRow celda_actual = gridClientes.CurrentRow;
             emailSeleccionado.Remove(0, emailSeleccionado.Length);
             pasaporteSeleccionado.Remove(0, pasaporteSeleccionado.Length);
@@ -108,7 +106,7 @@ namespace FrbaHotel.ABM_de_Cliente
         {
             if (btModificar.Text=="Seleccionar") // Viene de reservas. Analizar. No entiendo por que la responsabilidad esta aca
             {
-                FrbaHotel.Generar_Modificar_Reserva.ConfirmarClienteReserva formConfirmarCliente = new FrbaHotel.Generar_Modificar_Reserva.ConfirmarClienteReserva(emailDeLaReservaDelCliente, pasaporteDeLaReservaDelCliente, idReservaDelCliente);
+                FrbaHotel.Generar_Modificar_Reserva.ConfirmarClienteReserva formConfirmarCliente = new FrbaHotel.Generar_Modificar_Reserva.ConfirmarClienteReserva(emailSeleccionado.ToString(), Convert.ToInt32(pasaporteSeleccionado.ToString()), idReservaDelCliente);
                 formConfirmarCliente.Show();
             }
             else // Se quiere modificar a un cliente de verdad
@@ -124,8 +122,6 @@ namespace FrbaHotel.ABM_de_Cliente
             appModel = new AppModel_Baja_Cliente();
             if(validacionesAlBorrar()){
                 appModel.inhabilitarCliente(this.emailSeleccionado, this.pasaporteSeleccionado);
-                btInhabilitar.Visible = false;
-                btHabilitar.Visible = true;
             }
         }
 
@@ -135,8 +131,6 @@ namespace FrbaHotel.ABM_de_Cliente
             appModel = new AppModel_Baja_Cliente();
             if(validacionesAlBorrar()){
                 appModel.habilitarCliente(this.emailSeleccionado, this.pasaporteSeleccionado);
-                btHabilitar.Visible = false;
-                btInhabilitar.Visible = true;
             }
         }
 

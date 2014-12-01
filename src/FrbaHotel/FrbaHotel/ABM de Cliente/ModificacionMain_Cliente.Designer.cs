@@ -203,7 +203,7 @@
             this.btInhabilitar.TabIndex = 7;
             this.btInhabilitar.Text = "Inhabilitar";
             this.btInhabilitar.UseVisualStyleBackColor = true;
-            this.btModificar.Click += new System.EventHandler(this.btInhabilitar_Click);
+            this.btInhabilitar.Click += new System.EventHandler(this.btInhabilitar_Click);
             // 
             // btHabilitar
             // 
@@ -213,7 +213,7 @@
             this.btHabilitar.TabIndex = 8;
             this.btHabilitar.Text = "Habilitar";
             this.btHabilitar.UseVisualStyleBackColor = true;
-            this.btModificar.Click += new System.EventHandler(this.btHabilitar_Click);
+            this.btHabilitar.Click += new System.EventHandler(this.btHabilitar_Click);
             // 
             // ModificacionMain_Cliente
             // 

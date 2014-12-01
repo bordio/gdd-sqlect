@@ -19,8 +19,8 @@ namespace FrbaHotel.ABM_de_Cliente
                 comandoACliente.Parameters.Add("@Mail", SqlDbType.VarChar);
                 comandoACliente.Parameters.Add("@Pasaporte_Nro", SqlDbType.BigInt);
 
-                comandoACliente.Parameters[0].Value = email;
-                comandoACliente.Parameters[1].Value = pasaporte_Nro;
+                comandoACliente.Parameters[0].Value = email.ToString();
+                comandoACliente.Parameters[1].Value = pasaporte_Nro.ToString();
         }
 
         public void inhabilitarCliente(StringBuilder email, StringBuilder pasaporte_Nro)
