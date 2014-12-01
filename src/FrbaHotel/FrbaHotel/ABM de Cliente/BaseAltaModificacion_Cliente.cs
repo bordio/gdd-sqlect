@@ -15,14 +15,11 @@ namespace FrbaHotel.ABM_de_Cliente
         public AppModel_Base_Cliente appModel;
         public DataGridView listaClientes; // memento
 
-
-
         public BaseAltaModificacion_Cliente() //Para altas sin reserva. Lo usa clase hija Alta_Cliente
         {
             InitializeComponent();
             appModel = new AppModel_Alta_Cliente();
             Text = "Alta de Cliente";
-            
         }
 
         public BaseAltaModificacion_Cliente(int idReserva) //Para altas con reserva. Lo usa clase hija Alta_Cliente
@@ -39,17 +36,15 @@ namespace FrbaHotel.ABM_de_Cliente
             btGuardar.Text = "Guardar Cambios";
         }
 
-
-
         public int idReservaDelCliente;
 
         public Boolean emailOk;
         public Boolean pasapOk;
         public Boolean validaciones = false;
-        public StringBuilder mensajeValidacion = new StringBuilder();
+        public StringBuilder mensajeValidacion;
 
         public virtual void validacionesAlGuardar() {
-            
+            mensajeValidacion = new StringBuilder();
             //Campos Obligatorios
             this.appModel.validarNoVacio(Nombre, mensajeValidacion);
             this.appModel.validarNoVacio(Apellido, mensajeValidacion);
@@ -62,7 +57,10 @@ namespace FrbaHotel.ABM_de_Cliente
             this.appModel.validarLongitud(Apellido, 60, mensajeValidacion);
             emailOk = this.appModel.validarLongitud(Email, 255, mensajeValidacion);
             //Campos numericos
-            this.appModel.validarNumerico(Numero, mensajeValidacion);
+            if (Numero.Text != "") //No es obligatorio este campo
+            {
+                this.appModel.validarNumerico(Numero, mensajeValidacion);
+            }
             pasapOk = this.appModel.validarNumerico(Pasaporte, mensajeValidacion);
 
             //Email repetido
@@ -129,6 +127,7 @@ namespace FrbaHotel.ABM_de_Cliente
             this.PaisOrigen.Text = null;
             this.Nacionalidad.Text = null;
             this.Pasaporte.Text = null;
+            mensajeValidacion = null;
         }
         private void btCancelar_Click(object sender, EventArgs e)
         {

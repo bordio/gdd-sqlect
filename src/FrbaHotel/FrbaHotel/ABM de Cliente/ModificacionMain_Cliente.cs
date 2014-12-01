@@ -146,5 +146,10 @@ namespace FrbaHotel.ABM_de_Cliente
             return true;
 
         }
+
+        private void btCancelar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
 }
 }

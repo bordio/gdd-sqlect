@@ -279,6 +279,9 @@
     <EmbeddedResource Include="ABM de Cliente\Clientes.resx">
       <DependentUpon>Clientes.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Cliente\ModificacionMain_Cliente.resx">
+      <DependentUpon>ModificacionMain_Cliente.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ABM de Habitacion\FormHabitacion.resx">
       <DependentUpon>FormHabitacion.cs</DependentUpon>
     </EmbeddedResource>
