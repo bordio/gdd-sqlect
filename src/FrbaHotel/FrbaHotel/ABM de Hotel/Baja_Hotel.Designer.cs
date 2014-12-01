@@ -31,7 +31,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.Dar_baja = new System.Windows.Forms.Button();
             this.Volver = new System.Windows.Forms.Button();
-            this.Motivo = new System.Windows.Forms.Label();
+            this.label845 = new System.Windows.Forms.Label();
             this.monthCalendar2 = new System.Windows.Forms.MonthCalendar();
             this.SeleccionarHasta = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
@@ -58,7 +58,7 @@
             // 
             this.groupBox1.Controls.Add(this.Dar_baja);
             this.groupBox1.Controls.Add(this.Volver);
-            this.groupBox1.Controls.Add(this.Motivo);
+            this.groupBox1.Controls.Add(this.label845);
             this.groupBox1.Controls.Add(this.monthCalendar2);
             this.groupBox1.Controls.Add(this.SeleccionarHasta);
             this.groupBox1.Controls.Add(this.label5);
@@ -95,14 +95,14 @@
             this.Volver.UseVisualStyleBackColor = true;
             this.Volver.Click += new System.EventHandler(this.Volver_Click);
             // 
-            // Motivo
+            // label845
             // 
-            this.Motivo.AutoSize = true;
-            this.Motivo.Location = new System.Drawing.Point(23, 242);
-            this.Motivo.Name = "Motivo";
-            this.Motivo.Size = new System.Drawing.Size(39, 13);
-            this.Motivo.TabIndex = 27;
-            this.Motivo.Text = "Motivo";
+            this.label845.AutoSize = true;
+            this.label845.Location = new System.Drawing.Point(23, 242);
+            this.label845.Name = "label845";
+            this.label845.Size = new System.Drawing.Size(39, 13);
+            this.label845.TabIndex = 27;
+            this.label845.Text = "Motivo";
             // 
             // monthCalendar2
             // 
@@ -321,6 +321,6 @@
         private System.Windows.Forms.Button Dar_baja;
         private System.Windows.Forms.Button Volver;
         private System.Windows.Forms.TextBox txtMotivo;
-        private System.Windows.Forms.Label Motivo;
+        private System.Windows.Forms.Label label845;
     }
 }
