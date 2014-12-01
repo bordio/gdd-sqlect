@@ -32,10 +32,11 @@
             this.gridRoles = new System.Windows.Forms.DataGridView();
             this.bttnModificar = new System.Windows.Forms.Button();
             this.bttnNuevo = new System.Windows.Forms.Button();
-            this.bttnEliminar = new System.Windows.Forms.Button();
+            this.bttnActivar = new System.Windows.Forms.Button();
             this.bttnVolver = new System.Windows.Forms.Button();
             this.gridFunciones = new System.Windows.Forms.DataGridView();
             this.lblFuncionalidades = new System.Windows.Forms.Label();
+            this.bttnDesact = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.gridRoles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridFunciones)).BeginInit();
             this.SuspendLayout();
@@ -66,7 +67,7 @@
             this.gridRoles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridRoles.Size = new System.Drawing.Size(395, 248);
             this.gridRoles.TabIndex = 0;
-            this.gridRoles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridRoles_CellContentClick);
+           // this.gridRoles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridRoles_CellContentClick);
             // 
             // bttnModificar
             // 
@@ -89,15 +90,16 @@
             this.bttnNuevo.UseVisualStyleBackColor = true;
             this.bttnNuevo.Click += new System.EventHandler(this.bttnNuevo_Click);
             // 
-            // bttnEliminar
+            // bttnActivar
             // 
-            this.bttnEliminar.Enabled = false;
-            this.bttnEliminar.Location = new System.Drawing.Point(174, 286);
-            this.bttnEliminar.Name = "bttnEliminar";
-            this.bttnEliminar.Size = new System.Drawing.Size(75, 23);
-            this.bttnEliminar.TabIndex = 3;
-            this.bttnEliminar.Text = "Eliminar";
-            this.bttnEliminar.UseVisualStyleBackColor = true;
+            this.bttnActivar.Enabled = false;
+            this.bttnActivar.Location = new System.Drawing.Point(174, 286);
+            this.bttnActivar.Name = "bttnActivar";
+            this.bttnActivar.Size = new System.Drawing.Size(75, 23);
+            this.bttnActivar.TabIndex = 3;
+            this.bttnActivar.Text = "Activar";
+            this.bttnActivar.UseVisualStyleBackColor = true;
+            this.bttnActivar.Click += new System.EventHandler(this.bttnActivar_Click);
             // 
             // bttnVolver
             // 
@@ -139,15 +141,27 @@
             this.lblFuncionalidades.TabIndex = 6;
             this.lblFuncionalidades.Text = "Funcionalidades";
             // 
+            // bttnDesact
+            // 
+            this.bttnDesact.Enabled = false;
+            this.bttnDesact.Location = new System.Drawing.Point(255, 286);
+            this.bttnDesact.Name = "bttnDesact";
+            this.bttnDesact.Size = new System.Drawing.Size(75, 23);
+            this.bttnDesact.TabIndex = 7;
+            this.bttnDesact.Text = "Desactivar";
+            this.bttnDesact.UseVisualStyleBackColor = true;
+            this.bttnDesact.Click += new System.EventHandler(this.bttnDesact_Click);
+            // 
             // MainRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(606, 313);
+            this.Controls.Add(this.bttnDesact);
             this.Controls.Add(this.lblFuncionalidades);
             this.Controls.Add(this.gridFunciones);
             this.Controls.Add(this.bttnVolver);
-            this.Controls.Add(this.bttnEliminar);
+            this.Controls.Add(this.bttnActivar);
             this.Controls.Add(this.bttnNuevo);
             this.Controls.Add(this.bttnModificar);
             this.Controls.Add(this.gridRoles);
@@ -170,10 +184,11 @@
         private System.Windows.Forms.DataGridView gridRoles;
         private System.Windows.Forms.Button bttnModificar;
         private System.Windows.Forms.Button bttnNuevo;
-        private System.Windows.Forms.Button bttnEliminar;
+        private System.Windows.Forms.Button bttnActivar;
         private System.Windows.Forms.Button bttnVolver;
         private System.Windows.Forms.DataGridView gridFunciones;
         private System.Windows.Forms.Label lblFuncionalidades;
+        private System.Windows.Forms.Button bttnDesact;
 
 
     }

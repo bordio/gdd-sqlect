@@ -112,6 +112,7 @@
             this.bttnAceptar.TabIndex = 3;
             this.bttnAceptar.Text = "Aceptar";
             this.bttnAceptar.UseVisualStyleBackColor = true;
+            this.bttnAceptar.Click += new System.EventHandler(this.bttnAceptar_Click);
             // 
             // bttnCancelar
             // 
@@ -138,7 +139,7 @@
             this.Controls.Add(this.lblTitulo);
             this.Name = "AgregarModificarRol";
             this.Text = "AgregarModificarRol";
-            this.Load += new System.EventHandler(this.AgregarModificarRol_Load);
+           // this.Load += new System.EventHandler(this.AgregarModificarRol_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

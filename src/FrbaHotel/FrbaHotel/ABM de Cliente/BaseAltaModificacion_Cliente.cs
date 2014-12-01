@@ -116,9 +116,6 @@ namespace FrbaHotel.ABM_de_Cliente
         
         }
 
-        public virtual void btGuardarCambios_Click(object sender, EventArgs e) { 
-        
-        }
 
         private void btLimpiar_Click(object sender, EventArgs e) {
             this.Nombre.Text = null;

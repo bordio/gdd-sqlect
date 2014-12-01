@@ -19,39 +19,28 @@ namespace FrbaHotel.ABM_de_Rol
         }
 
         private Int32 idRolSelecc = -1;
-        private List<String> funcionesRolSelecc = null;
+        private DataTable funcionesRolSelecc = new DataTable();
 
         private void MainRol_Load(object sender, EventArgs e)
         {
-            gridRoles.DataSource = refrescarLista();
+            getRoles();
         }
 
-        private DataTable refrescarLista() {
-            return Conexion.Instance.ejecutarQuery("SELECT id_rol 'ID', nombre 'Rol', descripcion 'Descripción', estado_rol 'Activo' FROM SQLECT.Roles");
+        public void getRoles() {
+            gridRoles.DataSource = Conexion.Instance.ejecutarQuery("SELECT id_rol 'ID', nombre 'Rol', descripcion 'Descripción', estado_rol 'Activo' FROM SQLECT.Roles");
         }
 
         private void bttnNuevo_Click(object sender, EventArgs e)
         {
-            AgregarModificarRol formNuevo = new AgregarModificarRol(idRolSelecc);
+            AgregarModificarRol formNuevo = new AgregarModificarRol(this);
             formNuevo.Show();
         }
 
-        public DataTable getFuncionesRolSelecc()
+        private DataTable getFuncionesRolSelecc()
         {
-            List<string> funcs = new List<string>();
             StringBuilder sentence = new StringBuilder();
-            sentence.AppendFormat("SELECT f.id_funcion 'ID', f.nombre 'Función' FROM SQLECT.Roles r, SQLECT.Funcionalidades f, SQLECT.Funcionalidades_Roles fr WHERE r.id_rol = {0} AND fr.fk_rol = {0} AND f.id_funcion = fr.fk_funcion AND r.estado_rol = 1", this.idRolSelecc);
-            
+            sentence.AppendFormat("SELECT f.id_funcion 'ID', f.nombre 'Funcion' FROM SQLECT.Roles r, SQLECT.Funcionalidades f, SQLECT.Funcionalidades_Roles fr WHERE r.id_rol = {0} AND fr.fk_rol = {0} AND f.id_funcion = fr.fk_funcion AND r.estado_rol = 1", this.idRolSelecc);
             return Conexion.Instance.ejecutarQuery(sentence.ToString());
-        }
-
-        private void gridRoles_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            idRolSelecc = Int32.Parse(gridRoles.CurrentRow.Cells[0].Value.ToString());
-            gridFunciones.DataSource = getFuncionesRolSelecc();
-
-            bttnEliminar.Enabled = true;
-            bttnModificar.Enabled = true;
         }
 
         private void bttnModificar_Click(object sender, EventArgs e)
@@ -59,8 +48,40 @@ namespace FrbaHotel.ABM_de_Rol
             string nombreRolSelecc = gridRoles.CurrentRow.Cells[1].Value.ToString();
             string descripRolSelecc = gridRoles.CurrentRow.Cells[2].Value.ToString();
             
-            AgregarModificarRol formNuevo = new AgregarModificarRol(nombreRolSelecc, descripRolSelecc);
-            formNuevo.Show();
+            AgregarModificarRol formModif = new AgregarModificarRol(this, idRolSelecc ,nombreRolSelecc, descripRolSelecc, funcionesRolSelecc);
+            formModif.Show();
+        }
+
+        public void gridRoles_SelectionChanged(object sender, EventArgs e)
+        {
+            idRolSelecc = Int32.Parse(gridRoles.CurrentRow.Cells[0].Value.ToString());
+            funcionesRolSelecc = getFuncionesRolSelecc();
+            gridFunciones.DataSource = funcionesRolSelecc;
+
+            bttnModificar.Enabled = true;
+            bttnActivar.Enabled = ((Int32.Parse(gridRoles.CurrentRow.Cells[3].Value.ToString()) == 1) ? false : true);
+            bttnDesact.Enabled = ((Int32.Parse(gridRoles.CurrentRow.Cells[3].Value.ToString()) == 1) ? true : false);
+        }
+
+        private void bttnVolver_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void bttnActivar_Click(object sender, EventArgs e)
+        {
+            StringBuilder sentence = new StringBuilder();
+            sentence.AppendFormat("UPDATE SQLECT.Roles SET estado_rol = 1 WHERE id_rol = {0}", this.idRolSelecc);
+            Conexion.Instance.ejecutarQuery(sentence.ToString());
+            getRoles();
+        }
+
+        private void bttnDesact_Click(object sender, EventArgs e)
+        {
+            StringBuilder sentence = new StringBuilder();
+            sentence.AppendFormat("UPDATE SQLECT.Roles SET estado_rol = 0 WHERE id_rol = {0}", this.idRolSelecc);
+            Conexion.Instance.ejecutarQuery(sentence.ToString());
+            getRoles();
         }
     }
 }

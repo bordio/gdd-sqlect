@@ -26,7 +26,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void button2_Click(object sender, EventArgs e)
         {
-            FrbaHotel.ABM_de_Cliente.Modificacion_Cliente formBuscarCliente = new FrbaHotel.ABM_de_Cliente.Modificacion_Cliente(idReservaDelCliente);
+            FrbaHotel.ABM_de_Cliente.ModificacionMain_Cliente formBuscarCliente = new FrbaHotel.ABM_de_Cliente.ModificacionMain_Cliente(idReservaDelCliente);
             formBuscarCliente.Show();
         
         }

@@ -52,7 +52,6 @@
             this.btCancelar = new System.Windows.Forms.Button();
             this.Numero = new System.Windows.Forms.TextBox();
             this.Email = new System.Windows.Forms.TextBox();
-            this.btGuardarCambios = new System.Windows.Forms.Button();
             this.groupBoxDatosPersonales.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -226,7 +225,6 @@
             // 
             // groupBoxDatosPersonales
             // 
-            this.groupBoxDatosPersonales.Controls.Add(this.btGuardarCambios);
             this.groupBoxDatosPersonales.Controls.Add(this.monthCalendar);
             this.groupBoxDatosPersonales.Controls.Add(this.btFechaNac);
             this.groupBoxDatosPersonales.Controls.Add(this.lblPaisOrigen);
@@ -372,16 +370,6 @@
             this.Email.Size = new System.Drawing.Size(199, 20);
             this.Email.TabIndex = 3;
             // 
-            // btGuardarCambios
-            // 
-            this.btGuardarCambios.Location = new System.Drawing.Point(392, 332);
-            this.btGuardarCambios.Name = "btGuardarCambios";
-            this.btGuardarCambios.Size = new System.Drawing.Size(107, 23);
-            this.btGuardarCambios.TabIndex = 14;
-            this.btGuardarCambios.Text = "Guardar Cambios";
-            this.btGuardarCambios.UseVisualStyleBackColor = true;
-            this.btGuardarCambios.Click += new System.EventHandler(this.btGuardarCambios_Click);
-            // 
             // BaseAltaModificacion_Cliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -458,7 +446,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.MonthCalendar monthCalendar;
         private System.Windows.Forms.Button btFechaNac;
-        private System.Windows.Forms.Button btGuardarCambios;
     }
   
 }

@@ -43,6 +43,8 @@
             this.labelEmail = new System.Windows.Forms.Label();
             this.gridClientes = new System.Windows.Forms.DataGridView();
             this.btModificar = new System.Windows.Forms.Button();
+            this.btInhabilitar = new System.Windows.Forms.Button();
+            this.btHabilitar = new System.Windows.Forms.Button();
             this.filtrosBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridClientes)).BeginInit();
             this.SuspendLayout();
@@ -185,7 +187,7 @@
             // 
             // btModificar
             // 
-            this.btModificar.Location = new System.Drawing.Point(227, 348);
+            this.btModificar.Location = new System.Drawing.Point(42, 348);
             this.btModificar.Name = "btModificar";
             this.btModificar.Size = new System.Drawing.Size(156, 23);
             this.btModificar.TabIndex = 6;
@@ -193,18 +195,39 @@
             this.btModificar.UseVisualStyleBackColor = true;
             this.btModificar.Click += new System.EventHandler(this.btModificar_Click);
             // 
-            // Modificacion_Cliente
+            // btInhabilitar
+            // 
+            this.btInhabilitar.Location = new System.Drawing.Point(404, 348);
+            this.btInhabilitar.Name = "btInhabilitar";
+            this.btInhabilitar.Size = new System.Drawing.Size(155, 23);
+            this.btInhabilitar.TabIndex = 7;
+            this.btInhabilitar.Text = "Inhabilitar";
+            this.btInhabilitar.UseVisualStyleBackColor = true;
+            this.btInhabilitar.Click += new System.EventHandler(this.btInhabilitar_Click);
+            // 
+            // btHabilitar
+            // 
+            this.btHabilitar.Location = new System.Drawing.Point(228, 348);
+            this.btHabilitar.Name = "btHabilitar";
+            this.btHabilitar.Size = new System.Drawing.Size(155, 23);
+            this.btHabilitar.TabIndex = 8;
+            this.btHabilitar.Text = "Habilitar";
+            this.btHabilitar.UseVisualStyleBackColor = true;
+            this.btHabilitar.Click += new System.EventHandler(this.btHabilitar_Click);
+            // 
+            // ModificacionMain_Cliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(617, 392);
+            this.Controls.Add(this.btHabilitar);
+            this.Controls.Add(this.btInhabilitar);
             this.Controls.Add(this.btModificar);
             this.Controls.Add(this.gridClientes);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.filtrosBusqueda);
-            this.Name = "Modificacion_Cliente";
-            this.Text = "Modificar Clientes";
-            this.Load += new System.EventHandler(this.Modificacion_Cliente_Load);
+            this.Name = "ModificacionMain_Cliente";
+            this.Text = "Modificar/Inhabilitar Clientes";
             this.filtrosBusqueda.ResumeLayout(false);
             this.filtrosBusqueda.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridClientes)).EndInit();
@@ -230,5 +253,7 @@
         private System.Windows.Forms.Button btLimpiar;
         private System.Windows.Forms.DataGridView gridClientes;
         private System.Windows.Forms.Button btModificar;
+        private System.Windows.Forms.Button btInhabilitar;
+        private System.Windows.Forms.Button btHabilitar;
     }
 }
