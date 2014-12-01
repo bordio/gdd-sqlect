@@ -416,7 +416,7 @@ INSERT INTO SQLECT.Consumibles_Estadias_Habitaciones(fk_estadia,fk_habitacion,fk
 /* Creación de Procedimientos */
 
 
-/*------------------------------------ABM CLIENTE--------------------------------------------------*/
+/*------------------------------------ABM CLIENTE--------------------------------------------------------------------------------------*/
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.altaCliente'))
 DROP PROCEDURE SQLECT.altaCliente
@@ -446,6 +446,42 @@ SET @idCliente = SCOPE_IDENTITY();
 			WHERE id_reserva=@idReserva
 	END
 
+END
+GO
+/*---------------MODIFICACIONES--------------------------------*/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.modificacionCliente'))
+DROP PROCEDURE SQLECT.modificacionCliente
+GO
+CREATE PROCEDURE SQLECT.modificacionCliente (@idCliente INTEGER, @Nombre VARCHAR(60), @Apellido VARCHAR(60), @Mail VARCHAR(255), @Dom_Calle VARCHAR(90), @Nro_Calle INTEGER, @Piso TINYINT, @Depto VARCHAR(5), @Fecha_Nac DATETIME, @Nacionalidad VARCHAR(60), @Pasaporte_Nro INTEGER)
+AS
+BEGIN
+	UPDATE SQLECT.Clientes
+	SET nombre=@Nombre, apellido=@Apellido, mail=@Mail, dom_Calle=@Dom_Calle, nro_Calle=@Nro_Calle, piso=@Piso, depto=@Depto, fecha_Nac=@Fecha_Nac, nacionalidad=@Nacionalidad, pasaporte_Nro=@Pasaporte_Nro
+	WHERE id_Cliente=@idCliente
+END
+GO
+/*---------------BAJA LOGICA (Deshabilitar)--------------------*/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.inhabilitarCliente'))
+DROP PROCEDURE SQLECT.inhabilitarCliente
+GO
+CREATE PROCEDURE SQLECT.inhabilitarCliente (@Mail VARCHAR(255),@Pasaporte_Nro INTEGER)
+AS
+BEGIN
+	UPDATE SQLECT.Clientes
+	SET habilitado=0
+	WHERE mail=@Mail AND pasaporte_Nro=@Pasaporte_Nro
+END
+GO
+/*---------------ALTA LOGICA (Habilitar)--------------------*/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.habilitarCliente'))
+DROP PROCEDURE SQLECT.habilitarCliente
+GO
+CREATE PROCEDURE SQLECT.habilitarCliente (@Mail VARCHAR(255),@Pasaporte_Nro INTEGER)
+AS
+BEGIN
+	UPDATE SQLECT.Clientes
+	SET habilitado=1
+	WHERE mail=@Mail AND pasaporte_Nro=@Pasaporte_Nro
 END
 GO
 /*-----------------------------------ABM CLIENTE FIN----------------------------------------------------*/
