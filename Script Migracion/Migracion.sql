@@ -370,9 +370,6 @@ INSERT INTO SQLECT.Clientes (nombre,apellido,mail,dom_Calle,nro_Calle,piso,depto
 
 UPDATE SQLECT.Clientes SET tipoDocumento = 'PASAPORTE'
 
-INSERT INTO SQLECT.Usuarios_Hoteles (fk_hotel,fk_usuario) /*Asignamos todos los hoteles al Administrador General*/
- (SELECT id_hotel,1 FROM SQLECT.Hoteles)
-
 INSERT INTO SQLECT.Reservas (id_reserva,fecha_inicio,cant_noches_reserva,fk_regimen,fk_cliente)
 	SELECT m.Reserva_Codigo, m.Reserva_Fecha_Inicio, m.Reserva_Cant_Noches, r.id_regimen, c.id_cliente
 	FROM gd_esquema.Maestra m JOIN SQLECT.Regimenes r ON (m.Regimen_Descripcion = r.descripcion) AND (m.Regimen_Precio = r.precio)
