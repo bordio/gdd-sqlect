@@ -1622,4 +1622,68 @@ SET @idReserva=(SELECT id_reserva FROM SQLECT.Reservas WHERE codigo_reserva=@cod
 SELECT fecha_inicio FROM SQLECT.Estadias WHERE fk_reserva=@idReserva AND fecha_inicio IS NOT NULL
 
 END
-GO 
+GO
+
+
+/* ABM Roles */
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.altaRol'))
+DROP PROCEDURE SQLECT.altaRol
+
+GO
+CREATE PROCEDURE SQLECT.altaRol (@nombre VARCHAR(30), @descrip VARCHAR(90), @gestRol INT, @gestUsr INT, @gestCli INT,
+								@gestHotel INT, @gestHab INT, @gestRes INT, @cancelRes INT, @gestConsu INT, @gestEstad INT,
+								@gestFactu INT, @listados INT) AS
+BEGIN
+
+	DECLARE @RolId INT
+	
+	INSERT INTO SQLECT.Roles(nombre, descripcion, estado_rol)
+	VALUES (@nombre, @descrip, 1)
+	
+	SET @RolId = SCOPE_IDENTITY()
+	
+	IF (@gestRol = 1) INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol,fk_funcion) VALUES (@RolId,1)
+	IF (@gestUsr = 1) INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol,fk_funcion) VALUES (@RolId,2)
+	IF (@gestCli = 1) INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol,fk_funcion) VALUES (@RolId,3)
+	IF (@gestHotel = 1) INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol,fk_funcion) VALUES (@RolId,4)
+	IF (@gestHab = 1) INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol,fk_funcion) VALUES (@RolId,5)
+	IF (@gestRes = 1) INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol,fk_funcion) VALUES (@RolId,6)
+	IF (@cancelRes = 1) INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol,fk_funcion) VALUES (@RolId,7)
+	IF (@gestConsu = 1) INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol,fk_funcion) VALUES (@RolId,8)
+	IF (@gestEstad = 1) INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol,fk_funcion) VALUES (@RolId,9)
+	IF (@gestFactu = 1) INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol,fk_funcion) VALUES (@RolId,10)
+	IF (@listados = 1) INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol,fk_funcion) VALUES (@RolId,11)
+	
+END
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.modifRol'))
+DROP PROCEDURE SQLECT.modifRol
+
+GO
+CREATE PROCEDURE SQLECT.modifRol (@nombre VARCHAR(30), @descrip VARCHAR(90), @gestRol INT, @gestUsr INT, @gestCli INT,
+								@gestHotel INT, @gestHab INT, @gestRes INT, @cancelRes INT, @gestConsu INT, @gestEstad INT,
+								@gestFactu INT, @listados INT, @RolId INT) AS
+BEGIN
+	
+	UPDATE SQLECT.Roles
+	SET nombre = @nombre, descripcion = @descrip, estado_rol = 1
+	WHERE id_rol = @RolId
+	
+	DELETE FROM SQLECT.Funcionalidades_Roles WHERE fk_rol = @RolId
+	
+	IF (@gestRol = 1) INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol,fk_funcion) VALUES (@RolId,1)
+	IF (@gestUsr = 1) INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol,fk_funcion) VALUES (@RolId,2)
+	IF (@gestCli = 1) INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol,fk_funcion) VALUES (@RolId,3)
+	IF (@gestHotel = 1) INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol,fk_funcion) VALUES (@RolId,4)
+	IF (@gestHab = 1) INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol,fk_funcion) VALUES (@RolId,5)
+	IF (@gestRes = 1) INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol,fk_funcion) VALUES (@RolId,6)
+	IF (@cancelRes = 1) INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol,fk_funcion) VALUES (@RolId,7)
+	IF (@gestConsu = 1) INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol,fk_funcion) VALUES (@RolId,8)
+	IF (@gestEstad = 1) INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol,fk_funcion) VALUES (@RolId,9)
+	IF (@gestFactu = 1) INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol,fk_funcion) VALUES (@RolId,10)
+	IF (@listados = 1) INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol,fk_funcion) VALUES (@RolId,11)
+	
+END
+GO

@@ -16,19 +16,23 @@ namespace FrbaHotel.ABM_de_Rol
         private Int32 idRol;
         private DataTable funcsRol;
         private List<CheckBox> lstFuncs;
+        private ABM_de_Rol.MainRol padre;
 
-        public AgregarModificarRol()
+        public AgregarModificarRol(ABM_de_Rol.MainRol owner)
         {
             InitializeComponent();
             llenarFuncs();
+            padre = owner;
 
+            idRol = -1;
             funcsRol = new DataTable();
         }
 
-        public AgregarModificarRol(Int32 elIdRol, string nombre, string descripcion, DataTable funciones)
+        public AgregarModificarRol(ABM_de_Rol.MainRol owner, Int32 elIdRol, string nombre, string descripcion, DataTable funciones)
         {
             InitializeComponent();
             llenarFuncs();
+            padre = owner;
 
             idRol = elIdRol;
             txtNombre.Text = nombre;
@@ -73,9 +77,69 @@ namespace FrbaHotel.ABM_de_Rol
 
         private void bttnCancelar_Click(object sender, EventArgs e)
         {
+            padre.getRoles();
             this.Close();
         }
 
-        private void 
+        private void bttnAceptar_Click(object sender, EventArgs e)
+        {
+            System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@nombre", SqlDbType.VarChar);
+            cmd.Parameters[0].Value = txtNombre.Text;
+
+            cmd.Parameters.Add("@descrip", SqlDbType.VarChar);
+            cmd.Parameters[1].Value = txtDescrip.Text;
+
+            cmd.Parameters.Add("@gestRol", SqlDbType.Int);
+            cmd.Parameters[2].Value = ((chkBxGestRol.Checked) ? 1 : 0);
+
+            cmd.Parameters.Add("@gestUsr", SqlDbType.Int);
+            cmd.Parameters[3].Value = ((chkBxGestUsr.Checked) ? 1 : 0);
+
+            cmd.Parameters.Add("@gestCli", SqlDbType.Int);
+            cmd.Parameters[4].Value = ((chkBxGestCli.Checked) ? 1 : 0);
+
+            cmd.Parameters.Add("@gestHotel", SqlDbType.Int);
+            cmd.Parameters[5].Value = ((chkBxGestHotel.Checked) ? 1 : 0);
+
+            cmd.Parameters.Add("@gestHab", SqlDbType.Int);
+            cmd.Parameters[6].Value = ((chkBxGestHab.Checked) ? 1 : 0);
+
+            cmd.Parameters.Add("@gestRes", SqlDbType.Int);
+            cmd.Parameters[7].Value = ((chkBxGestRes.Checked) ? 1 : 0);
+
+            cmd.Parameters.Add("@cancelRes", SqlDbType.Int);
+            cmd.Parameters[8].Value = ((chkBxCancelRes.Checked) ? 1 : 0);
+
+            cmd.Parameters.Add("@gestConsu", SqlDbType.Int);
+            cmd.Parameters[9].Value = ((chkBxGestConsu.Checked) ? 1 : 0);
+
+            cmd.Parameters.Add("@gestEstad", SqlDbType.Int);
+            cmd.Parameters[10].Value = ((chkBxGestEstad.Checked) ? 1 : 0);
+
+            cmd.Parameters.Add("@gestFactu", SqlDbType.Int);
+            cmd.Parameters[11].Value = ((chkBxGestFactu.Checked) ? 1 : 0);
+
+            cmd.Parameters.Add("@listados", SqlDbType.Int);
+            cmd.Parameters[12].Value = ((chkBxListados.Checked) ? 1 : 0);
+
+            if (idRol > 0)
+            {
+                cmd.Parameters.Add("@RolId", SqlDbType.Int);
+                cmd.Parameters[13].Value = idRol;
+                cmd.CommandText = "SQLECT.modifRol";
+            }
+            else
+            {
+                cmd.CommandText = "SQLECT.altaRol";
+            }
+
+            Conexion.Instance.ejecutarQueryConSP(cmd);
+            MessageBox.Show("Operación exitosa", "ABM de Rol", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            padre.getRoles();
+            this.Close();
+        }
     }
 }
