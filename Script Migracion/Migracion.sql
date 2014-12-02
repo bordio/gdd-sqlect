@@ -1784,7 +1784,9 @@ SET @idHabitacion=(SELECT DISTINCT h.id_habitacion FROM SQLECT.Habitaciones h JO
 DELETE FROM SQLECT.Consumibles_Estadias_Habitaciones
  WHERE fk_estadia=@idEstadia AND fk_habitacion=@idHabitacion AND fk_consumible=@idConsumible
 END
+GO
 
+GO
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.descontarConsumiblesPorRegimen'))
 DROP PROCEDURE SQLECT.descontarConsumiblesPorRegimen
@@ -1866,7 +1868,7 @@ SET @nochesFaltantes = (SELECT (cant_noches_reserva-@nochesEfectivas) FROM SQLEC
 SET @idReserva = (SELECT id_reserva FROM SQLECT.Reservas WHERE codigo_reserva=@codigoReserva)
 SET @recargoHotel = (SELECT (cant_estrellas*recarga_estrella) FROM SQLECT.Hoteles WHERE id_hotel=@idHotel)
 
-SET @montoEstadia = (SELECT (SUM(@precioRegimen*(ha.tipo_habitacion-1000)*t.porcentual)+@recargoHotel) FROM SQLECT.Habitaciones_Reservas hr JOIN SQLECT.Habitaciones ha ON (ha.id_habitacion=hr.fk_habitacion)
+SET @montoEstadia = (SELECT SUM((@precioRegimen*(ha.tipo_habitacion-1000)*t.porcentual)+@recargoHotel) FROM SQLECT.Habitaciones_Reservas hr JOIN SQLECT.Habitaciones ha ON (ha.id_habitacion=hr.fk_habitacion)
 																												JOIN SQLECT.Tipos_Habitaciones t ON (t.id_tipo_habitacion=ha.tipo_habitacion)
                              WHERE hr.fk_reserva=@idReserva
                              GROUP BY hr.fk_reserva)
