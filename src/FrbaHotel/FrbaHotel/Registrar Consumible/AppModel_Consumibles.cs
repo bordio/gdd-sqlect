@@ -17,7 +17,7 @@ namespace FrbaHotel.Registrar_Consumible
 
         public DataTable cargarConsumibles(string codigoReservaActual)
     {
-        StringBuilder sentence = new StringBuilder().AppendFormat(string.Format("SELECT DISTINCT h.nro_habitacion,c.descripcion,ceh.cantidad FROM SQLECT.Consumibles_Estadias_Habitaciones ceh JOIN SQLECT.Consumibles c ON (ceh.fk_consumible=c.id_consumible) JOIN SQLECT.Habitaciones h ON (ceh.fk_habitacion=h.id_habitacion) JOIN SQLECT.Estadias e ON (e.id_estadia=ceh.fk_estadia) JOIN SQLECT.Reservas r ON (e.fk_reserva=r.id_reserva) WHERE r.codigo_reserva='{0}' AND ceh.cantidad>0", codigoReservaActual));
+        StringBuilder sentence = new StringBuilder().AppendFormat(string.Format("SELECT DISTINCT h.nro_habitacion'Habitación',c.descripcion'Descripción',ceh.cantidad'Cantidad' FROM SQLECT.Consumibles_Estadias_Habitaciones ceh JOIN SQLECT.Consumibles c ON (ceh.fk_consumible=c.id_consumible) JOIN SQLECT.Habitaciones h ON (ceh.fk_habitacion=h.id_habitacion) JOIN SQLECT.Estadias e ON (e.id_estadia=ceh.fk_estadia) JOIN SQLECT.Reservas r ON (e.fk_reserva=r.id_reserva) WHERE r.codigo_reserva='{0}' AND ceh.cantidad>0", codigoReservaActual));
         DataTable tablaConsumibles = Conexion.Instance.ejecutarQuery(sentence.ToString());
 
         return tablaConsumibles;
@@ -102,9 +102,39 @@ namespace FrbaHotel.Registrar_Consumible
             conexion.ejecutarSP(comandoAReserva);
         
         }
-    
 
+       /* public void descontarConsumiblesPorRegimen(string codigoReserva)
+        {
+            Conexion conexion = Conexion.Instance;
+            System.Data.SqlClient.SqlCommand comandoAFactura = new System.Data.SqlClient.SqlCommand();
+            comandoAFactura.CommandType = CommandType.StoredProcedure;
 
+            comandoAFactura.Parameters.Add("@codigoReserva", SqlDbType.VarChar);
+
+            comandoAFactura.Parameters[0].Value = codigoReserva;
+
+            comandoAFactura.CommandText = "SQLECT.descontarConsumiblesPorRegimen";
+            conexion.ejecutarSP(comandoAFactura);
+        
+        
+        }
+
+        public void generarFactura(string codigoReserva, int idHotel)
+        {
+            Conexion conexion = Conexion.Instance;
+            System.Data.SqlClient.SqlCommand comandoAReserva = new System.Data.SqlClient.SqlCommand();
+            comandoAReserva.CommandType = CommandType.StoredProcedure;
+
+            comandoAReserva.Parameters.Add("@codigoReserva", SqlDbType.VarChar);
+            comandoAReserva.Parameters.Add("@idHotel", SqlDbType.Int);
+
+            comandoAReserva.Parameters[0].Value = codigoReserva;
+            comandoAReserva.Parameters[1].Value = idHotel;
+
+            comandoAReserva.CommandText = "SQLECT.generarFactura";
+            conexion.ejecutarSP(comandoAReserva);
+
+        }*/
     }
 
 
