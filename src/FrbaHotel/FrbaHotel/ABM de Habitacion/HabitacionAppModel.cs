@@ -16,8 +16,8 @@ namespace FrbaHotel.ABM_de_Habitacion
         protected List<Int32> id_hotels = new List<Int32>();
         protected List<Int32> id_tipo_habitaciones = new List<Int32>();
         protected bool fallo_carga = false;
-        public abstract void doActionHabitacion(ComboBox cmb_hotel, Control numero_habitacion, Control piso, ComboBox cmb_tipo_habitacion, RadioButton exterior, RadioButton interior, Control descripcion);
-
+        public virtual void doActionHabitacion(ComboBox cmb_hotel, Control numero_habitacion, Control piso, ComboBox cmb_tipo_habitacion, RadioButton exterior, RadioButton interior, Control descripcion) { }
+        
         public bool actionHabitacion(ComboBox cmb_hotel, Control numero_habitacion, Control piso, ComboBox cmb_tipo_habitacion, RadioButton exterior, RadioButton interior, Control descripcion, StringBuilder errores)
         {
             validarForm(cmb_hotel, numero_habitacion, piso, cmb_tipo_habitacion, exterior, interior, descripcion, errores);

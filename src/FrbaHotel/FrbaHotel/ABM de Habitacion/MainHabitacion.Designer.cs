@@ -62,6 +62,7 @@
             this.btBaja.TabIndex = 2;
             this.btBaja.Text = "Baja";
             this.btBaja.UseVisualStyleBackColor = true;
+            this.btBaja.Click += new System.EventHandler(this.btBaja_Click);
             // 
             // btModificar
             // 

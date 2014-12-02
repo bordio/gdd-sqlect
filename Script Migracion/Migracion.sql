@@ -931,6 +931,18 @@ GO
 
 /* ABM de Habitaciones */
 
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.Habitaciones_Vista'))
+DROP VIEW SQLECT.Habitaciones_Vista
+
+GO
+
+CREATE VIEW SQLECT.Habitaciones_Vista AS 
+(SELECT ho.id_hotel, th.id_tipo_habitacion, ho.nombre "hotel", hab.nro_habitacion, hab.piso, hab.frente, th.descripcion "tipo_habitacion" 
+FROM SQLECT.Habitaciones hab, SQLECT.Hoteles ho, SQLECT.Tipos_Habitaciones th
+WHERE (hab.fk_hotel = ho.id_hotel) AND (hab.tipo_habitacion = th.id_tipo_habitacion))
+
+GO
+
 /* Alta habitacion */
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.altaHabitacion'))
 DROP PROCEDURE SQLECT.altaHabitacion
