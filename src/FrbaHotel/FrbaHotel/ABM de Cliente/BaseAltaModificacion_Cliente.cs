@@ -13,7 +13,7 @@ namespace FrbaHotel.ABM_de_Cliente
     public partial class BaseAltaModificacion_Cliente : Form
     {
         public AppModel_Base_Cliente appModel;
-        public DataGridView listaClientes; // memento
+        public ABM_de_Cliente.ModificacionMain_Cliente pantallaAnteriorFiltros;
 
         public BaseAltaModificacion_Cliente() //Para altas sin reserva. Lo usa clase hija Alta_Cliente
         {
@@ -31,12 +31,13 @@ namespace FrbaHotel.ABM_de_Cliente
             llenarComboDocumentos();
         }
 
-        public BaseAltaModificacion_Cliente(DataGridView lsClientes, StringBuilder email, StringBuilder documento, StringBuilder tipo) //Para modificaciones. Lo usa clase hija Modificacion_Cliente
+        public BaseAltaModificacion_Cliente(ABM_de_Cliente.ModificacionMain_Cliente pantallaFiltros,DataGridView lsClientes, StringBuilder email, StringBuilder documento, StringBuilder tipo) //Para modificaciones. Lo usa clase hija Modificacion_Cliente
         {
             InitializeComponent();
             Text = "Modificacion de Cliente";
             llenarComboDocumentos();
             btGuardar.Text = "Guardar Cambios";
+            pantallaAnteriorFiltros = pantallaFiltros;
         }
 
         public int idReservaDelCliente;
@@ -116,7 +117,7 @@ namespace FrbaHotel.ABM_de_Cliente
                        this.Nombre.Text, this.Apellido.Text, this.Email.Text,
                        this.Calle.Text, this.Numero.Text, this.Piso.Text, this.Depto.Text,
                        this.Fecha.Text, this.Nacionalidad.Text, this.Documento.Text, 
-                       this.idReservaDelCliente,this.cbTipoDoc.SelectedItem.ToString(), this.Telefono.Text); /* Cliente CON reserva*/
+                       this.idReservaDelCliente,this.cbTipoDoc.SelectedItem.ToString(), this.Telefono.Text, this.Localidad.Text); /* Cliente CON reserva*/
                 }
                 else
                 {
@@ -124,9 +125,9 @@ namespace FrbaHotel.ABM_de_Cliente
                            this.Nombre.Text, this.Apellido.Text, this.Email.Text,this.Calle.Text, 
                            this.Numero.Text, this.Piso.Text, this.Depto.Text,
                            this.Fecha.Text, this.Nacionalidad.Text, this.Documento.Text, 0, 
-                           this.cbTipoDoc.SelectedItem.ToString(), this.Telefono.Text); /*Cliente SIN reserva*/
+                           this.cbTipoDoc.SelectedItem.ToString(), this.Telefono.Text, this.Localidad.Text); /*Cliente SIN reserva*/
                 }
-           
+                this.pantallaAnteriorFiltros.refrescarPantalla();
             
             }
         

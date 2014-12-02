@@ -428,7 +428,7 @@ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.altaC
 DROP PROCEDURE SQLECT.altaCliente
 
 GO
-CREATE PROCEDURE SQLECT.altaCliente (@Nombre VARCHAR(60), @Apellido VARCHAR(60), @Mail VARCHAR(255), @Dom_Calle VARCHAR(90), @Nro_Calle INTEGER, @Piso TINYINT, @Depto VARCHAR(5), @Fecha_Nac DATETIME, @Nacionalidad VARCHAR(60), @Documento_Nro INTEGER,@idReserva int, @tipodocumento VARCHAR(30),@telefono INTEGER = null)
+CREATE PROCEDURE SQLECT.altaCliente (@Nombre VARCHAR(60), @Apellido VARCHAR(60), @Mail VARCHAR(255), @Dom_Calle VARCHAR(90), @Nro_Calle INTEGER, @Piso TINYINT, @Depto VARCHAR(5), @Fecha_Nac DATETIME, @Nacionalidad VARCHAR(60), @Documento_Nro INTEGER,@idReserva int, @tipodocumento VARCHAR(30),@telefono INTEGER = null, @localidad VARCHAR(60))
 AS
 BEGIN
 
@@ -442,8 +442,8 @@ BEGIN
 		RETURN @@ROWCOUNT
 	END
 
-	INSERT INTO SQLECT.Clientes (nombre,apellido,mail,telefono,dom_Calle,nro_Calle,piso,depto,fecha_Nac,nacionalidad,documento_Nro,tipoDocumento)
-	VALUES (@Nombre, @Apellido, @Mail, @telefono,@Dom_Calle, @Nro_Calle, @Piso, @Depto, @Fecha_Nac, @Nacionalidad, @Documento_Nro, @tipodocumento)
+	INSERT INTO SQLECT.Clientes (nombre,apellido,mail,telefono,dom_Calle,nro_Calle,piso,depto,localidad,fecha_Nac,nacionalidad,documento_Nro,tipoDocumento)
+	VALUES (@Nombre, @Apellido, @Mail, @telefono,@Dom_Calle, @Nro_Calle, @Piso, @Depto, @localidad, @Fecha_Nac, @Nacionalidad, @Documento_Nro, @tipodocumento)
 
 SET @idCliente = SCOPE_IDENTITY();
   IF (@idReserva<>0)
@@ -458,12 +458,12 @@ GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.modificacionCliente'))
 DROP PROCEDURE SQLECT.modificacionCliente
 GO
-CREATE PROCEDURE SQLECT.modificacionCliente (@idCliente INTEGER, @Nombre VARCHAR(60), @Apellido VARCHAR(60), @Mail VARCHAR(255), @Dom_Calle VARCHAR(90), @Nro_Calle INTEGER, @Piso TINYINT, @Depto VARCHAR(5), @Fecha_Nac DATETIME, @Nacionalidad VARCHAR(60), @Documento_Nro INTEGER, @tipodocumento VARCHAR(30),@telefono INTEGER = null)
+CREATE PROCEDURE SQLECT.modificacionCliente (@idCliente INTEGER, @Nombre VARCHAR(60), @Apellido VARCHAR(60), @Mail VARCHAR(255), @Dom_Calle VARCHAR(90), @Nro_Calle INTEGER, @Piso TINYINT, @Depto VARCHAR(5), @Fecha_Nac DATETIME, @Nacionalidad VARCHAR(60), @Documento_Nro INTEGER, @tipodocumento VARCHAR(30),@telefono INTEGER = null, @localidad VARCHAR(60))
 
 AS
 BEGIN
 	UPDATE SQLECT.Clientes
-	SET nombre=@Nombre, apellido=@Apellido, mail=@Mail, telefono=@telefono, dom_Calle=@Dom_Calle, nro_Calle=@Nro_Calle, piso=@Piso, depto=@Depto, fecha_Nac=@Fecha_Nac, nacionalidad=@Nacionalidad, documento_Nro=@Documento_Nro, tipoDocumento=@tipodocumento
+	SET nombre=@Nombre, apellido=@Apellido, mail=@Mail, telefono=@telefono, dom_Calle=@Dom_Calle, nro_Calle=@Nro_Calle, piso=@Piso, depto=@Depto, localidad=@localidad, fecha_Nac=@Fecha_Nac, nacionalidad=@Nacionalidad, documento_Nro=@Documento_Nro, tipoDocumento=@tipodocumento
 	WHERE id_Cliente=@idCliente
 END
 GO

@@ -13,7 +13,7 @@ namespace FrbaHotel.ABM_de_Cliente {
         public DataTable rowCliente = new DataTable();
         private Conexion sqlconexion = Conexion.Instance;
 
-        public abstract void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, string fecha_Nac, string nacionalidad, string documento_Nro, int idReserva, string tipodocumento, string telefono);
+        public abstract void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, string fecha_Nac, string nacionalidad, string documento_Nro, int idReserva, string tipodocumento, string telefono, string localidad);
         
         /*Validacion de campos*/
 
@@ -115,7 +115,7 @@ namespace FrbaHotel.ABM_de_Cliente {
 
         }
 
-        public abstract void levantar(StringBuilder sentence);
+        public abstract void levantar(StringBuilder sentence, int posicionId);
     
     }
 }

@@ -52,8 +52,11 @@ namespace FrbaHotel.ABM_de_Cliente
             cbTipoDoc.Items.Add("PASAPORTE");
             
         }
+        public void refrescarPantalla() { //Para refrescar la pantalla de Busqueda luego de una Modificacion. Lo llama la Pantalla de Modificaciones, pero la responsabilidad sigue siendo de ModificacionMain_Cliente
+            this.btBuscar_Click("Buscar",null);
+        }
 
-        private void btBuscar_Click(object sender, EventArgs e)
+        public void btBuscar_Click(object sender, EventArgs e)
         {
             StringBuilder sentence = new StringBuilder();
             string select = "SELECT nombre 'Nombre', apellido 'Apellido', mail 'Email', telefono 'Telefono',fecha_Nac 'Fecha Nacimiento', dom_Calle 'Calle', nro_calle 'Nro Calle', piso 'Piso', depto 'Departamento', localidad 'Localidad', paisOrigen 'Pais', nacionalidad 'Nacionalidad', tipoDocumento 'Tipo de Documento',documento_Nro 'Número de Documento', habilitado 'Habilitado' FROM SQLECT.Clientes";
@@ -127,7 +130,7 @@ namespace FrbaHotel.ABM_de_Cliente
             }
             else // Se quiere modificar a un cliente de verdad
             {
-                BaseAltaModificacion_Cliente form = new Modificacion_Cliente(this.gridClientes, this.emailSeleccionado, this.documentoSeleccionado, this.tipodocSeleccionado); //Chequear despues si esta bien solo usar email
+                BaseAltaModificacion_Cliente form = new Modificacion_Cliente(this,this.gridClientes, this.emailSeleccionado, this.documentoSeleccionado, this.tipodocSeleccionado); //Chequear despues si esta bien solo usar email
                 form.Show();
             }
         }
@@ -138,6 +141,7 @@ namespace FrbaHotel.ABM_de_Cliente
             appModel = new AppModel_Baja_Cliente();
             if(validacionesAlBorrar()){
                 appModel.inhabilitarCliente(this.emailSeleccionado, this.documentoSeleccionado, this.tipodocSeleccionado);
+                this.refrescarPantalla();
             }
         }
 
@@ -147,6 +151,7 @@ namespace FrbaHotel.ABM_de_Cliente
             appModel = new AppModel_Baja_Cliente();
             if(validacionesAlBorrar()){
                 appModel.habilitarCliente(this.emailSeleccionado, this.documentoSeleccionado, this.tipodocSeleccionado);
+                this.refrescarPantalla();
             }
         }
 
