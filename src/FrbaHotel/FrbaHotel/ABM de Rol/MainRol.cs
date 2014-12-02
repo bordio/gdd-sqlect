@@ -54,13 +54,18 @@ namespace FrbaHotel.ABM_de_Rol
 
         public void gridRoles_SelectionChanged(object sender, EventArgs e)
         {
-            idRolSelecc = Int32.Parse(gridRoles.CurrentRow.Cells[0].Value.ToString());
-            funcionesRolSelecc = getFuncionesRolSelecc();
-            gridFunciones.DataSource = funcionesRolSelecc;
+            DataGridViewRow filaActual = gridRoles.CurrentRow;
 
-            bttnModificar.Enabled = true;
-            bttnActivar.Enabled = ((Int32.Parse(gridRoles.CurrentRow.Cells[3].Value.ToString()) == 1) ? false : true);
-            bttnDesact.Enabled = ((Int32.Parse(gridRoles.CurrentRow.Cells[3].Value.ToString()) == 1) ? true : false);
+            if (filaActual != null)
+            {
+                idRolSelecc = Int32.Parse(filaActual.Cells[0].Value.ToString());
+                funcionesRolSelecc = getFuncionesRolSelecc();
+                gridFunciones.DataSource = funcionesRolSelecc;
+
+                bttnModificar.Enabled = true;
+                bttnActivar.Enabled = ((Int32.Parse(filaActual.Cells[3].Value.ToString()) == 1) ? false : true);
+                bttnDesact.Enabled = ((Int32.Parse(filaActual.Cells[3].Value.ToString()) == 1) ? true : false);
+            }
         }
 
         private void bttnVolver_Click(object sender, EventArgs e)
