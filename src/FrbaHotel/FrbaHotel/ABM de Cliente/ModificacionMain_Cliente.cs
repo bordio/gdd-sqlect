@@ -60,7 +60,7 @@ namespace FrbaHotel.ABM_de_Cliente
             
             sentence = this.appModel_Modificar.getAllInstances(select);
 
-            if ((Nombre.Text != "") || (Apellido.Text != "") || (Email.Text != "") || (Nacionalidad.Text != "") || (Documento.Text != "") || (cbTipoDoc.SelectedItem.ToString() != ""))
+            if ((Nombre.Text != "") || (Apellido.Text != "") || (Email.Text != "") || (Nacionalidad.Text != "") || (Documento.Text != "") || (cbTipoDoc.SelectedItem != null))
             {
                 sentence.Append(" WHERE ");
                 this.appModel_Modificar.appendASentencia(Nombre.Text, sentence, "nombre");
@@ -68,7 +68,7 @@ namespace FrbaHotel.ABM_de_Cliente
                 this.appModel_Modificar.appendASentencia(Email.Text, sentence, "mail");
                 this.appModel_Modificar.appendASentencia(Nacionalidad.Text, sentence, "nacionalidad");
                 this.appModel_Modificar.appendASentencia(Documento.Text, sentence, "documento_Nro");
-                this.appModel_Modificar.appendASentencia(cbTipoDoc.SelectedItem.ToString(), sentence, "tipoDocumento");
+                this.appModel_Modificar.appendASentencia(cbTipoDoc, sentence, "tipoDocumento");
 
                 StringBuilder sentenceFiltro = new StringBuilder().AppendFormat(sentence.ToString().Substring(0, sentence.Length - 4));
                 gridClientes.DataSource = this.appModel_Modificar.cargar_lista(sentenceFiltro).DefaultView;
@@ -113,8 +113,8 @@ namespace FrbaHotel.ABM_de_Cliente
             if (celda_actual != null)
             {
                 emailSeleccionado.AppendFormat("{0}", celda_actual.Cells[2].Value.ToString());
-                documentoSeleccionado.AppendFormat("{0}", celda_actual.Cells[11].Value.ToString());
-                tipodocSeleccionado.AppendFormat("{0}", celda_actual.Cells[10].Value.ToString());
+                documentoSeleccionado.AppendFormat("{0}", celda_actual.Cells[13].Value.ToString());
+                tipodocSeleccionado.AppendFormat("{0}", celda_actual.Cells[12].Value.ToString());
             }
         }
 
