@@ -1,20 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Data;
-using FrbaHotel.Commons.Database;
 using System.Windows.Forms;
+using FrbaHotel.Commons.Database;
 
 namespace FrbaHotel.ABM_de_Habitacion
 {
     public abstract class HabitacionAppModel
     {
         private Conexion connSql = Conexion.Instance;
+        private List<Int32> id_hotels = new List<Int32>();
         protected bool fallo_carga = false;
-        public abstract void doActionHabitacion(Control cmb_hotel, Control numero_habitacion, Control piso, Control cmb_tipo_habitacion, Control exterior, Control interior, Control descripcion);
+        public abstract void doActionHabitacion(ComboBox cmb_hotel, Control numero_habitacion, Control piso, ComboBox cmb_tipo_habitacion, Control exterior, Control interior, Control descripcion);
 
-        public bool actionHabitacion(Control cmb_hotel, Control numero_habitacion, Control piso, Control cmb_tipo_habitacion, Control exterior, Control interior, Control descripcion, StringBuilder errores)
+        public bool actionHabitacion(ComboBox cmb_hotel, Control numero_habitacion, Control piso, ComboBox cmb_tipo_habitacion, Control exterior, Control interior, Control descripcion, StringBuilder errores)
         {
             validarForm(cmb_hotel, numero_habitacion, piso, cmb_tipo_habitacion, exterior, interior, descripcion, errores);
             if (errores.Length > 0)
@@ -28,53 +31,65 @@ namespace FrbaHotel.ABM_de_Habitacion
             }
         }
 
-        public void validarForm(Control cmb_hotel, Control numero_habitacion, Control piso, Control cmb_tipo_habitacion, Control exterior, Control interior, Control descripcion, StringBuilder errores)
+        public virtual void cargarHoteles(ComboBox cmbHoteles) {
+            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT nombre,id_hotel FROM SQLECT.Hoteles");
+            DataTable tabla = Conexion.Instance.ejecutarQuery(sentence.ToString());
+
+            for (int i = 0; i < tabla.Rows.Count; i++)
+            {
+                cmbHoteles.Items.Add(tabla.Rows[i]["nombre"].ToString());
+                this.id_hotels.Add(Int32.Parse(tabla.Rows[i]["id_hotel"].ToString()));
+            }
+        }
+
+        public virtual void cargarTipoHabitaciones(ComboBox cmbTipoHabitaciones)
         {
-            /*
-            if (nombre.Text == "" || email.Text == "" || cant_estrellas.Text == "" || pais.Text == "" || ciudad.Text == "" || calle.Text == "" || nro_calle.Text == "")
+            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT descripcion FROM SQLECT.Tipos_Habitaciones");
+            DataTable tabla = Conexion.Instance.ejecutarQuery(sentence.ToString());
+
+            for (int i = 0; i < tabla.Rows.Count; i++)
+            {
+                cmbTipoHabitaciones.Items.Add(tabla.Rows[i]["descripcion"].ToString());
+            }
+        }
+
+        public void validarForm(ComboBox cmb_hotel, Control numero_habitacion, Control piso, ComboBox cmb_tipo_habitacion, Control exterior, Control interior, Control descripcion, StringBuilder errores)
+        {
+            if (numero_habitacion.Text == "" || piso.Text == "")
             {
                 errores.AppendLine("No debe dejar los campos obligatorios en blanco");
                 fallo_carga = true;
             }
-            if (!fallo_carga && this.existeEmail(email.Text))
+            if (!fallo_carga && !esNumerico(numero_habitacion))
             {
-                errores.AppendLine("Email duplicado");
+                errores.AppendLine("El numero de habitacion debe ser numerico");
             }
-            if (!fallo_carga && !this.seleccionoAlgunRegimen(all_inclusive, all_inclusive_moderado, pension_completa, media_pension))
+            if (!fallo_carga && !esNumerico(piso))
             {
-                errores.AppendLine("Debe seleccionar algun regimen");
+                errores.AppendLine("El numero de piso debe ser numerico");
             }
-            if (!fallo_carga && esNumerico(errores, cant_estrellas))
+            if (!fallo_carga && esNumerico(piso))
             {
-                if (Int32.Parse(cant_estrellas.Text) < 0)
+                if (Int32.Parse(piso.Text) < 0)
                 {
-                    errores.AppendLine("La cantidad de estrellas debe ser un numero positivo");
+                    errores.AppendLine("El piso dentro del hotel debe ser un numero positivo");
                 }
             }
-            if (!fallo_carga && esNumerico(errores, nro_calle))
+            if (!fallo_carga && esNumerico(numero_habitacion) && nroHabitacionDuplicado(cmb_hotel, numero_habitacion))
             {
-                if (Int32.Parse(nro_calle.Text) < 0)
-                {
-                    errores.AppendLine("El numero de calle debe ser un numero positivo");
-                }
-            }*/
+                errores.AppendLine("El numero de habitacion esta duplicado para este hotel");
+            }
             fallo_carga = false;
         }
 
-        public virtual bool existeEmail(string email)
+        private bool nroHabitacionDuplicado(ComboBox cmb_hotel, Control numero_habitacion)
         {
             StringBuilder sentece = new StringBuilder();
-            sentece.AppendFormat("SELECT * FROM SQLECT.Hoteles h WHERE h.mail='{0}'", email);
+            sentece.AppendFormat("SELECT id_habitacion FROM SQLECT.Habitaciones WHERE fk_hotel={0} AND nro_habitacion={1}", id_hotels[cmb_hotel.SelectedIndex],Int32.Parse(numero_habitacion.Text));
             return this.connSql.ejecutarQuery(sentece.ToString()).Rows.Count > 0;
         }
 
-        private bool seleccionoAlgunRegimen(bool all_inclusive, bool all_inclusive_moderado, bool pension_completa, bool media_pension)
-        {
-            if (all_inclusive || all_inclusive_moderado || pension_completa || media_pension) return true;
-            else return false;
-        }
-
-        private bool esNumerico(StringBuilder mensajeValidacion, Control control)
+        private bool esNumerico(Control control)
         {
             try
             {
@@ -83,7 +98,6 @@ namespace FrbaHotel.ABM_de_Habitacion
             }
             catch
             {
-                mensajeValidacion.AppendLine(string.Format(" El campo {0} debe ser numerico.", control.Name));
                 return false;
             }
         }

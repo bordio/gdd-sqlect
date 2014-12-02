@@ -118,14 +118,17 @@ namespace FrbaHotel.ABM_de_Hotel
             nombreSeleccionado.Remove(0, nombreSeleccionado.Length);
             nro_calleSeleccionado = 0;
 
-            nombreSeleccionado.AppendFormat("{0}", celda_actual.Cells[0].Value.ToString());
-            paisSeleccionado.AppendFormat("{0}", celda_actual.Cells[1].Value.ToString());
-            ciudadSeleccionado.AppendFormat("{0}", celda_actual.Cells[2].Value.ToString());
-            calleSeleccionado.AppendFormat("{0}", celda_actual.Cells[3].Value.ToString());
-            nro_calleSeleccionado = Int32.Parse(celda_actual.Cells[4].Value.ToString());
+            if (celda_actual != null)
+            {
+                nombreSeleccionado.AppendFormat("{0}", celda_actual.Cells[0].Value.ToString());
+                paisSeleccionado.AppendFormat("{0}", celda_actual.Cells[1].Value.ToString());
+                ciudadSeleccionado.AppendFormat("{0}", celda_actual.Cells[2].Value.ToString());
+                calleSeleccionado.AppendFormat("{0}", celda_actual.Cells[3].Value.ToString());
+                nro_calleSeleccionado = Int32.Parse(celda_actual.Cells[4].Value.ToString());
 
-            modificar.Enabled = true;
-            baja.Enabled = true;
+                modificar.Enabled = true;
+                baja.Enabled = true;
+            }
         }
     }
 }
