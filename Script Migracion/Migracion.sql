@@ -928,6 +928,27 @@ END
 
 GO
 
+
+/* ABM de Habitaciones */
+
+/* Alta habitacion */
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.altaHabitacion'))
+DROP PROCEDURE SQLECT.altaHabitacion
+
+GO
+CREATE PROCEDURE SQLECT.altaHabitacion (@nro_habitacion INT, @fk_hotel INT,
+									 @piso INT, @frente CHAR, @tipo_habitacion INT)
+AS
+BEGIN
+	
+	INSERT INTO SQLECT.Habitaciones (nro_habitacion, fk_hotel, piso, frente, tipo_habitacion)
+	VALUES (@nro_habitacion, @fk_hotel, @piso, @frente, @tipo_habitacion)
+	
+END
+GO
+
+/* --- FIN ABM HABITACIONES ---*/
+
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.buscarHotelesDisponibles'))
 DROP PROCEDURE SQLECT.buscarHotelesDisponibles
 
