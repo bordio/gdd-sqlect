@@ -131,6 +131,7 @@ CREATE TABLE SQLECT.Clientes (
     nombre VARCHAR(60),
     apellido VARCHAR(60),
     mail VARCHAR(255),
+    telefono integer,
     dom_Calle VARCHAR(90),
     nro_Calle INTEGER,
     piso TINYINT,
@@ -425,7 +426,7 @@ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.altaC
 DROP PROCEDURE SQLECT.altaCliente
 
 GO
-CREATE PROCEDURE SQLECT.altaCliente (@Nombre VARCHAR(60), @Apellido VARCHAR(60), @Mail VARCHAR(255), @Dom_Calle VARCHAR(90), @Nro_Calle INTEGER, @Piso TINYINT, @Depto VARCHAR(5), @Fecha_Nac DATETIME, @Nacionalidad VARCHAR(60), @Documento_Nro INTEGER,@idReserva int)
+CREATE PROCEDURE SQLECT.altaCliente (@Nombre VARCHAR(60), @Apellido VARCHAR(60), @Mail VARCHAR(255), @Dom_Calle VARCHAR(90), @Nro_Calle INTEGER, @Piso TINYINT, @Depto VARCHAR(5), @Fecha_Nac DATETIME, @Nacionalidad VARCHAR(60), @Documento_Nro INTEGER,@idReserva int, @tipodocumento VARCHAR(30),@telefono integer)
 AS
 BEGIN
 
@@ -433,14 +434,14 @@ BEGIN
 	DECLARE @PersonalDataId INT
 	DECLARE @idCliente INT
 	
-	SELECT * FROM SQLECT.Clientes C WHERE C.documento_Nro=@Documento_Nro OR C.mail=@Mail
+	SELECT * FROM SQLECT.Clientes C WHERE (C.documento_Nro=@Documento_Nro AND C.tipoDocumento=@tipodocumento) OR C.mail=@Mail
 	IF (@@ROWCOUNT >0)
 	BEGIN
 		RETURN @@ROWCOUNT
 	END
 
-	INSERT INTO SQLECT.Clientes (nombre,apellido,mail,dom_Calle,nro_Calle,piso,depto,fecha_Nac,nacionalidad,documento_Nro)
-	VALUES (@Nombre, @Apellido, @Mail, @Dom_Calle, @Nro_Calle, @Piso, @Depto, @Fecha_Nac, @Nacionalidad, @Documento_Nro)
+	INSERT INTO SQLECT.Clientes (nombre,apellido,mail,telefono,dom_Calle,nro_Calle,piso,depto,fecha_Nac,nacionalidad,documento_Nro,tipoDocumento)
+	VALUES (@Nombre, @Apellido, @Mail, @telefono,@Dom_Calle, @Nro_Calle, @Piso, @Depto, @Fecha_Nac, @Nacionalidad, @Documento_Nro, @tipodocumento)
 
 SET @idCliente = SCOPE_IDENTITY();
   IF (@idReserva<>0)
@@ -455,11 +456,11 @@ GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.modificacionCliente'))
 DROP PROCEDURE SQLECT.modificacionCliente
 GO
-CREATE PROCEDURE SQLECT.modificacionCliente (@idCliente INTEGER, @Nombre VARCHAR(60), @Apellido VARCHAR(60), @Mail VARCHAR(255), @Dom_Calle VARCHAR(90), @Nro_Calle INTEGER, @Piso TINYINT, @Depto VARCHAR(5), @Fecha_Nac DATETIME, @Nacionalidad VARCHAR(60), @Documento_Nro INTEGER)
+CREATE PROCEDURE SQLECT.modificacionCliente (@idCliente INTEGER, @Nombre VARCHAR(60), @Apellido VARCHAR(60), @Mail VARCHAR(255), @Dom_Calle VARCHAR(90), @Nro_Calle INTEGER, @Piso TINYINT, @Depto VARCHAR(5), @Fecha_Nac DATETIME, @Nacionalidad VARCHAR(60), @Documento_Nro INTEGER, @tipodocumento VARCHAR(30),@telefono integer)
 AS
 BEGIN
 	UPDATE SQLECT.Clientes
-	SET nombre=@Nombre, apellido=@Apellido, mail=@Mail, dom_Calle=@Dom_Calle, nro_Calle=@Nro_Calle, piso=@Piso, depto=@Depto, fecha_Nac=@Fecha_Nac, nacionalidad=@Nacionalidad, documento_Nro=@Documento_Nro
+	SET nombre=@Nombre, apellido=@Apellido, mail=@Mail, telefono = @telefono, dom_Calle=@Dom_Calle, nro_Calle=@Nro_Calle, piso=@Piso, depto=@Depto, fecha_Nac=@Fecha_Nac, nacionalidad=@Nacionalidad, documento_Nro=@Documento_Nro, tipoDocumento = @tipodocumento
 	WHERE id_Cliente=@idCliente
 END
 GO
@@ -467,24 +468,24 @@ GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.inhabilitarCliente'))
 DROP PROCEDURE SQLECT.inhabilitarCliente
 GO
-CREATE PROCEDURE SQLECT.inhabilitarCliente (@Mail VARCHAR(255),@Documento_Nro INTEGER)
+CREATE PROCEDURE SQLECT.inhabilitarCliente (@Mail VARCHAR(255),@Documento_Nro INTEGER, @tipodocumento VARCHAR(30))
 AS
 BEGIN
 	UPDATE SQLECT.Clientes
 	SET habilitado=0
-	WHERE mail=@Mail AND documento_Nro=@Documento_Nro
+	WHERE mail=@Mail AND documento_Nro=@Documento_Nro AND tipoDocumento=@tipodocumento
 END
 GO
 /*---------------ALTA LOGICA (Habilitar)--------------------*/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.habilitarCliente'))
 DROP PROCEDURE SQLECT.habilitarCliente
 GO
-CREATE PROCEDURE SQLECT.habilitarCliente (@Mail VARCHAR(255),@Documento_Nro INTEGER)
+CREATE PROCEDURE SQLECT.habilitarCliente (@Mail VARCHAR(255),@Documento_Nro INTEGER, @tipodocumento VARCHAR(30))
 AS
 BEGIN
 	UPDATE SQLECT.Clientes
 	SET habilitado=1
-	WHERE mail=@Mail AND documento_Nro=@Documento_Nro
+	WHERE mail=@Mail AND documento_Nro=@Documento_Nro AND tipoDocumento=@tipodocumento
 END
 GO
 /*-----------------------------------ABM CLIENTE FIN----------------------------------------------------*/

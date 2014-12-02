@@ -20,6 +20,7 @@ namespace FrbaHotel.ABM_de_Cliente
             InitializeComponent();
             appModel = new AppModel_Alta_Cliente();
             Text = "Alta de Cliente";
+            llenarComboDocumentos();
         }
 
         public BaseAltaModificacion_Cliente(int idReserva) //Para altas con reserva. Lo usa clase hija Alta_Cliente
@@ -27,12 +28,14 @@ namespace FrbaHotel.ABM_de_Cliente
             appModel = new AppModel_Alta_Cliente();
             Text = "Alta de Cliente";
             this.idReservaDelCliente = idReserva;
+            llenarComboDocumentos();
         }
 
-        public BaseAltaModificacion_Cliente(DataGridView lsClientes, StringBuilder email, StringBuilder documento) //Para modificaciones. Lo usa clase hija Modificacion_Cliente
+        public BaseAltaModificacion_Cliente(DataGridView lsClientes, StringBuilder email, StringBuilder documento, StringBuilder tipo) //Para modificaciones. Lo usa clase hija Modificacion_Cliente
         {
             InitializeComponent();
             Text = "Modificacion de Cliente";
+            llenarComboDocumentos();
             btGuardar.Text = "Guardar Cambios";
         }
 
@@ -42,6 +45,13 @@ namespace FrbaHotel.ABM_de_Cliente
         public Boolean documentoOk;
         public Boolean validaciones = false;
         public StringBuilder mensajeValidacion;
+
+        public void llenarComboDocumentos()
+        {
+            cbTipoDoc.Items.Add("DNI");
+            cbTipoDoc.Items.Add("PASAPORTE");
+            cbTipoDoc.SelectedIndex = 0;
+        }
 
         public virtual void validacionesAlGuardar() {
             mensajeValidacion = new StringBuilder();
@@ -71,7 +81,7 @@ namespace FrbaHotel.ABM_de_Cliente
             //documento repetido
             if (documentoOk)
             {
-                this.appModel.validarDocumento(Documento, mensajeValidacion);
+                this.appModel.validarDocumento(Documento, cbTipoDoc.SelectedItem.ToString(), mensajeValidacion);
             }
 
         }
@@ -97,14 +107,14 @@ namespace FrbaHotel.ABM_de_Cliente
                     this.appModel.abmlCliente(
                        this.Nombre.Text, this.Apellido.Text, this.Email.Text,
                        this.Calle.Text, this.Numero.Text, this.Piso.Text, this.Localidad.Text,
-                       this.Fecha.Text, this.Nacionalidad.Text, this.Documento.Text, this.idReservaDelCliente); /* Cliente sin reserva*/
+                       this.Fecha.Text, this.Nacionalidad.Text, this.Documento.Text, this.idReservaDelCliente,this.cbTipoDoc.SelectedItem.ToString(), this.Telefono.Text); /* Cliente CON reserva*/
                 }
                 else
                 {
                     this.appModel.abmlCliente(
                            this.Nombre.Text, this.Apellido.Text, this.Email.Text,
                            this.Calle.Text, this.Numero.Text, this.Piso.Text, this.Localidad.Text,
-                           this.Fecha.Text, this.Nacionalidad.Text, this.Documento.Text, 0); /*Cliente con reserva*/
+                           this.Fecha.Text, this.Nacionalidad.Text, this.Documento.Text, 0, this.cbTipoDoc.SelectedItem.ToString(), this.Telefono.Text); /*Cliente SIN reserva*/
                 }
             
             
@@ -127,6 +137,7 @@ namespace FrbaHotel.ABM_de_Cliente
             this.PaisOrigen.Text = null;
             this.Nacionalidad.Text = null;
             this.Documento.Text = null;
+            this.cbTipoDoc.SelectedItem = null;
             mensajeValidacion = null;
         }
         private void btCancelar_Click(object sender, EventArgs e)

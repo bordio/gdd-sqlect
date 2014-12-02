@@ -15,6 +15,7 @@ namespace FrbaHotel.ABM_de_Cliente
 
         public StringBuilder emailSeleccionado = new StringBuilder();
         public StringBuilder documentoSeleccionado = new StringBuilder();
+        public StringBuilder tipodocSeleccionado = new StringBuilder();
 
         int idReservaDelCliente;
 
@@ -25,7 +26,7 @@ namespace FrbaHotel.ABM_de_Cliente
             btHabilitar.Enabled = false;
             btInhabilitar.Enabled = false;
             btModificar.Enabled = false;
-
+            llenarComboDocumentos();
         }
 
         public ModificacionMain_Cliente(int idReserva)
@@ -42,12 +43,21 @@ namespace FrbaHotel.ABM_de_Cliente
             this.Nacionalidad.Visible = false;
             this.btModificar.Text = "Seleccionar";
             this.btModificar.Visible = true;
+            llenarComboDocumentos();
+
+        }
+        public void llenarComboDocumentos()
+        {
+            cbTipoDoc.Items.Add("DNI");
+            cbTipoDoc.Items.Add("PASAPORTE");
+            
         }
 
         private void btBuscar_Click(object sender, EventArgs e)
         {
             StringBuilder sentence = new StringBuilder();
-            string select = "SELECT nombre 'Nombre', apellido 'Apellido', mail 'Email', fecha_Nac 'Fecha Nacimiento', dom_Calle 'Calle', nro_calle 'Nro Calle', piso 'Piso', depto 'Departamento', nacionalidad 'Nacionalidad', documento_Nro 'Documento', habilitado 'Habilitado' FROM SQLECT.Clientes";
+            string select = "SELECT nombre 'Nombre', apellido 'Apellido', mail 'Email', telefono 'Telefono',fecha_Nac 'Fecha Nacimiento', dom_Calle 'Calle', nro_calle 'Nro Calle', piso 'Piso', depto 'Departamento', nacionalidad 'Nacionalidad', tipoDocumento 'Tipo de Documento',documento_Nro 'Número de Documento', habilitado 'Habilitado' FROM SQLECT.Clientes";
+            
             sentence = this.appModel_Modificar.getAllInstances(select);
 
             if ((Nombre.Text != "") || (Apellido.Text != "") || (Email.Text != "") || (Nacionalidad.Text != "") || (Documento.Text != ""))
@@ -61,7 +71,7 @@ namespace FrbaHotel.ABM_de_Cliente
 
                 StringBuilder sentenceFiltro = new StringBuilder().AppendFormat(sentence.ToString().Substring(0, sentence.Length - 5)); //Si se agrega una nueva condicion al WHERE. Se debe cambiar el 5 a 6 y así.. Horrible, A cambiar si queda tiempo.
                 gridClientes.DataSource = this.appModel_Modificar.cargar_lista(sentenceFiltro).DefaultView;
-                //gridClientes.
+               
                 gridClientes.AllowUserToAddRows = false;
 
                 btHabilitar.Enabled = true;
@@ -86,7 +96,7 @@ namespace FrbaHotel.ABM_de_Cliente
             Email.Text = null;
             Nacionalidad.Text = null;
             Documento.Text = null;
-
+            this.cbTipoDoc.SelectedItem = null;
             btHabilitar.Enabled = false;
             btInhabilitar.Enabled = false;
             btModificar.Enabled = false;
@@ -97,22 +107,24 @@ namespace FrbaHotel.ABM_de_Cliente
             DataGridViewRow celda_actual = gridClientes.CurrentRow;
             emailSeleccionado.Remove(0, emailSeleccionado.Length);
             documentoSeleccionado.Remove(0, documentoSeleccionado.Length);
+            tipodocSeleccionado.Remove(0, tipodocSeleccionado.Length);
 
             emailSeleccionado.AppendFormat("{0}", celda_actual.Cells[2].Value.ToString());
-            documentoSeleccionado.AppendFormat("{0}", celda_actual.Cells[9].Value.ToString());
+            documentoSeleccionado.AppendFormat("{0}", celda_actual.Cells[11].Value.ToString());
+            tipodocSeleccionado.AppendFormat("{0}", celda_actual.Cells[10].Value.ToString());
         }
 
         private void btModificar_Click(object sender, EventArgs e)
         {
-            if (btModificar.Text=="Seleccionar") // Viene de reservas. Analizar. No entiendo por que la responsabilidad esta aca
+            if (btModificar.Text=="Seleccionar") // La reserva utiliza esta view tambien. Cambiando el nombre del boton "Modificar" por "Seleccionar"
             {
                 FrbaHotel.Generar_Modificar_Reserva.ConfirmarClienteReserva formConfirmarCliente = new FrbaHotel.Generar_Modificar_Reserva.ConfirmarClienteReserva(emailSeleccionado.ToString(), Convert.ToInt32(documentoSeleccionado.ToString()), idReservaDelCliente);
                 formConfirmarCliente.Show();
             }
             else // Se quiere modificar a un cliente de verdad
             {
-                BaseAltaModificacion_Cliente formAlta = new Modificacion_Cliente(this.gridClientes, this.emailSeleccionado, this.documentoSeleccionado); //Chequear despues si esta bien solo usar email
-                formAlta.Show();
+                BaseAltaModificacion_Cliente form = new Modificacion_Cliente(this.gridClientes, this.emailSeleccionado, this.documentoSeleccionado, this.tipodocSeleccionado); //Chequear despues si esta bien solo usar email
+                form.Show();
             }
         }
 
