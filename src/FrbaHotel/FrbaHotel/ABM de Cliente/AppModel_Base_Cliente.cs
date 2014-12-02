@@ -99,8 +99,18 @@ namespace FrbaHotel.ABM_de_Cliente {
 
         public void appendASentencia(String control, StringBuilder sentence, String campo){
 
-            if(control != ""){
+            if((control != "") || (control != null)){
                 sentence.AppendFormat(" ({0} LIKE '%{1}%') AND ", campo, control);
+            }
+
+        }
+
+        public void appendASentencia(ComboBox control, StringBuilder sentence, String campo)
+        {
+
+            if ((control.SelectedItem != null))
+            {
+                sentence.AppendFormat(" ({0} LIKE '%{1}%') AND ", campo, control.ToString());
             }
 
         }
