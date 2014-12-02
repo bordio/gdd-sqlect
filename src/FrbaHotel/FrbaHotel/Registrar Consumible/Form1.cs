@@ -21,6 +21,7 @@ namespace FrbaHotel.Registrar_Consumible
             this.codigoReservaActual = codigoReserva;
         }
 
+        AppModel_Facturacion funcionesFacturacion = new AppModel_Facturacion();
         AppModel_Consumible funcionesConsumibles = new AppModel_Consumible();
         AppModel_Alta_Usuario funcionesVarias = new AppModel_Alta_Usuario();
         AppModel_Reservas funcionesReservas = new AppModel_Reservas();
@@ -38,9 +39,11 @@ namespace FrbaHotel.Registrar_Consumible
 
         private void botonConfirmar_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Falta pasar a la facturación");
-            
-            this.Close();
+            funcionesFacturacion.generarFactura(codigoReservaActual, idHotelEnCuestion);
+            funcionesFacturacion.descontarConsumiblesPorRegimen(codigoReservaActual);
+           
+            FrbaHotel.Registrar_Consumible.Facturacion formFacturacion = new Facturacion(codigoReservaActual,idHotelEnCuestion);
+            formFacturacion.Show();
         }
 
         private void botonRegistrarConsumible_Click(object sender, EventArgs e)

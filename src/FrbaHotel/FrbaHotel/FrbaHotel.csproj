@@ -357,8 +357,17 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Registrar Consumible\Agradecimiento.resx">
+      <DependentUpon>Agradecimiento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registrar Consumible\Facturacion.resx">
+      <DependentUpon>Facturacion.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Registrar Consumible\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registrar Consumible\FormaDePago.resx">
+      <DependentUpon>FormaDePago.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Registrar Consumible\RegistrarConsumible.resx">
       <DependentUpon>RegistrarConsumible.cs</DependentUpon>
@@ -380,12 +389,31 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Registrar Consumible\Agradecimiento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registrar Consumible\Agradecimiento.Designer.cs">
+      <DependentUpon>Agradecimiento.cs</DependentUpon>
+    </Compile>
     <Compile Include="Registrar Consumible\AppModel_Consumibles.cs" />
+    <Compile Include="Registrar Consumible\AppModel_Facturacion.cs" />
+    <Compile Include="Registrar Consumible\Facturacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registrar Consumible\Facturacion.Designer.cs">
+      <DependentUpon>Facturacion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Registrar Consumible\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Registrar Consumible\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Registrar Consumible\FormaDePago.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registrar Consumible\FormaDePago.Designer.cs">
+      <DependentUpon>FormaDePago.cs</DependentUpon>
     </Compile>
     <Compile Include="Registrar Consumible\RegistrarConsumible.cs">
       <SubType>Form</SubType>
