@@ -136,6 +136,8 @@ CREATE TABLE SQLECT.Clientes (
     nro_Calle INTEGER,
     piso TINYINT,
     depto VARCHAR(5),
+    localidad VARCHAR(60),
+    paisOrigen VARCHAR(60),
     fecha_Nac DATETIME,
     nacionalidad VARCHAR(60),
     tipoDocumento VARCHAR(30),
@@ -426,7 +428,7 @@ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.altaC
 DROP PROCEDURE SQLECT.altaCliente
 
 GO
-CREATE PROCEDURE SQLECT.altaCliente (@Nombre VARCHAR(60), @Apellido VARCHAR(60), @Mail VARCHAR(255), @Dom_Calle VARCHAR(90), @Nro_Calle INTEGER, @Piso TINYINT, @Depto VARCHAR(5), @Fecha_Nac DATETIME, @Nacionalidad VARCHAR(60), @Documento_Nro INTEGER,@idReserva int, @tipodocumento VARCHAR(30),@telefono integer)
+CREATE PROCEDURE SQLECT.altaCliente (@Nombre VARCHAR(60), @Apellido VARCHAR(60), @Mail VARCHAR(255), @Dom_Calle VARCHAR(90), @Nro_Calle INTEGER, @Piso TINYINT, @Depto VARCHAR(5), @Fecha_Nac DATETIME, @Nacionalidad VARCHAR(60), @Documento_Nro INTEGER,@idReserva int, @tipodocumento VARCHAR(30),@telefono INTEGER = null)
 AS
 BEGIN
 
@@ -456,11 +458,12 @@ GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.modificacionCliente'))
 DROP PROCEDURE SQLECT.modificacionCliente
 GO
-CREATE PROCEDURE SQLECT.modificacionCliente (@idCliente INTEGER, @Nombre VARCHAR(60), @Apellido VARCHAR(60), @Mail VARCHAR(255), @Dom_Calle VARCHAR(90), @Nro_Calle INTEGER, @Piso TINYINT, @Depto VARCHAR(5), @Fecha_Nac DATETIME, @Nacionalidad VARCHAR(60), @Documento_Nro INTEGER, @tipodocumento VARCHAR(30),@telefono integer)
+CREATE PROCEDURE SQLECT.modificacionCliente (@idCliente INTEGER, @Nombre VARCHAR(60), @Apellido VARCHAR(60), @Mail VARCHAR(255), @Dom_Calle VARCHAR(90), @Nro_Calle INTEGER, @Piso TINYINT, @Depto VARCHAR(5), @Fecha_Nac DATETIME, @Nacionalidad VARCHAR(60), @Documento_Nro INTEGER, @tipodocumento VARCHAR(30),@telefono INTEGER = null)
+
 AS
 BEGIN
 	UPDATE SQLECT.Clientes
-	SET nombre=@Nombre, apellido=@Apellido, mail=@Mail, telefono = @telefono, dom_Calle=@Dom_Calle, nro_Calle=@Nro_Calle, piso=@Piso, depto=@Depto, fecha_Nac=@Fecha_Nac, nacionalidad=@Nacionalidad, documento_Nro=@Documento_Nro, tipoDocumento = @tipodocumento
+	SET nombre=@Nombre, apellido=@Apellido, mail=@Mail, telefono=@telefono, dom_Calle=@Dom_Calle, nro_Calle=@Nro_Calle, piso=@Piso, depto=@Depto, fecha_Nac=@Fecha_Nac, nacionalidad=@Nacionalidad, documento_Nro=@Documento_Nro, tipoDocumento=@tipodocumento
 	WHERE id_Cliente=@idCliente
 END
 GO
@@ -1781,7 +1784,9 @@ SET @idHabitacion=(SELECT DISTINCT h.id_habitacion FROM SQLECT.Habitaciones h JO
 DELETE FROM SQLECT.Consumibles_Estadias_Habitaciones
  WHERE fk_estadia=@idEstadia AND fk_habitacion=@idHabitacion AND fk_consumible=@idConsumible
 END
+GO
 
+GO
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.descontarConsumiblesPorRegimen'))
 DROP PROCEDURE SQLECT.descontarConsumiblesPorRegimen
@@ -1863,7 +1868,7 @@ SET @nochesFaltantes = (SELECT (cant_noches_reserva-@nochesEfectivas) FROM SQLEC
 SET @idReserva = (SELECT id_reserva FROM SQLECT.Reservas WHERE codigo_reserva=@codigoReserva)
 SET @recargoHotel = (SELECT (cant_estrellas*recarga_estrella) FROM SQLECT.Hoteles WHERE id_hotel=@idHotel)
 
-SET @montoEstadia = (SELECT (SUM(@precioRegimen*(ha.tipo_habitacion-1000)*t.porcentual)+@recargoHotel) FROM SQLECT.Habitaciones_Reservas hr JOIN SQLECT.Habitaciones ha ON (ha.id_habitacion=hr.fk_habitacion)
+SET @montoEstadia = (SELECT SUM((@precioRegimen*(ha.tipo_habitacion-1000)*t.porcentual)+@recargoHotel) FROM SQLECT.Habitaciones_Reservas hr JOIN SQLECT.Habitaciones ha ON (ha.id_habitacion=hr.fk_habitacion)
 																												JOIN SQLECT.Tipos_Habitaciones t ON (t.id_tipo_habitacion=ha.tipo_habitacion)
                              WHERE hr.fk_reserva=@idReserva
                              GROUP BY hr.fk_reserva)

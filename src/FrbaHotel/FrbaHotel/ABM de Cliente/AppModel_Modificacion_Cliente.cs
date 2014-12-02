@@ -38,14 +38,16 @@ namespace FrbaHotel.ABM_de_Cliente
             comandoACliente.Parameters[2].Value = apellido;
             comandoACliente.Parameters[3].Value = mail;
             comandoACliente.Parameters[4].Value = dom_Calle;
-            comandoACliente.Parameters[5].Value = nro_Calle;
-            comandoACliente.Parameters[6].Value = piso;
+            comandoACliente.Parameters[5].Value = Int32.Parse(nro_Calle);
+            comandoACliente.Parameters[6].Value = Int32.Parse(piso);
             comandoACliente.Parameters[7].Value = depto;
             comandoACliente.Parameters[8].Value = DateTime.Parse(fecha_Nac);
             comandoACliente.Parameters[9].Value = nacionalidad;
             comandoACliente.Parameters[10].Value = documento_Nro;
             comandoACliente.Parameters[11].Value = tipo_documento;
-            comandoACliente.Parameters[12].Value = telefono;
+            if (telefono != "") comandoACliente.Parameters[12].Value = Int32.Parse(telefono);
+            else comandoACliente.Parameters[12].Value = null;
+            
 
             comandoACliente.CommandText = "SQLECT.modificacionCliente";
             conexion.ejecutarQueryConSP(comandoACliente);
@@ -58,13 +60,13 @@ namespace FrbaHotel.ABM_de_Cliente
           public override void levantar(StringBuilder sentence)
          {
              rowCliente = Conexion.Instance.ejecutarQuery(sentence.ToString());
-             idCliente = Int32.Parse(rowCliente.Rows[0][11].ToString());
+             idCliente = Int32.Parse(rowCliente.Rows[0][12].ToString());
          }
 
           public override void validarDocumento(Control documento, string tipo, StringBuilder mensajeValidacion)
           {
               StringBuilder query = new StringBuilder();
-              query.AppendFormat("SELECT * FROM SQLECT.Clientes WHERE documento_Nro='{0}' AND tipodocumento='{1}' AND id_cliente!='{2}'", documento.Text, tipo, idCliente);
+              query.AppendFormat("SELECT * FROM SQLECT.Clientes WHERE ((id_cliente!='{0}' AND documento_Nro='{1}' AND tipodocumento='{2}'))", idCliente,documento.Text, tipo);
               if (this.sqlconexion.ejecutarQuery(query.ToString()).Rows.Count > 0)
               {
                   mensajeValidacion.AppendLine(string.Format(" El documento {0} ya existe. Debe modificarlo para poder Guardar los cambios", documento.Text));
