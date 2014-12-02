@@ -1785,6 +1785,7 @@ DELETE FROM SQLECT.Consumibles_Estadias_Habitaciones
  WHERE fk_estadia=@idEstadia AND fk_habitacion=@idHabitacion AND fk_consumible=@idConsumible
 END
 
+GO
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.descontarConsumiblesPorRegimen'))
 DROP PROCEDURE SQLECT.descontarConsumiblesPorRegimen
