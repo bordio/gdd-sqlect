@@ -59,12 +59,6 @@
     <Compile Include="ABM de Cliente\AppModel_Baja_Cliente.cs" />
     <Compile Include="ABM de Cliente\AppModel_Base_Cliente.cs" />
     <Compile Include="ABM de Cliente\AppModel_Modificacion_Cliente.cs" />
-    <Compile Include="ABM de Cliente\Baja_Cliente.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ABM de Cliente\Baja_Cliente.Designer.cs">
-      <DependentUpon>Baja_Cliente.cs</DependentUpon>
-    </Compile>
     <Compile Include="ABM de Cliente\BaseAltaModificacion_Cliente.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -111,6 +105,7 @@
     <Compile Include="ABM de Hotel\Alta_Hotel.Designer.cs">
       <DependentUpon>Alta_Hotel.cs</DependentUpon>
     </Compile>
+    <Compile Include="ABM de Hotel\BajaAppModel.cs" />
     <Compile Include="ABM de Hotel\HotelAppModel.cs" />
     <Compile Include="ABM de Hotel\MainHotel.cs">
       <SubType>Form</SubType>
@@ -270,14 +265,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ABM de Cliente\Baja_Cliente.resx">
-      <DependentUpon>Baja_Cliente.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ABM de Cliente\BaseAltaModificacion_Cliente.resx">
       <DependentUpon>BaseAltaModificacion_Cliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Cliente\Clientes.resx">
       <DependentUpon>Clientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Cliente\ModificacionMain_Cliente.resx">
+      <DependentUpon>ModificacionMain_Cliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Habitacion\FormHabitacion.resx">
       <DependentUpon>FormHabitacion.cs</DependentUpon>
@@ -287,6 +282,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Hotel\Alta_Hotel.resx">
       <DependentUpon>Alta_Hotel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM de Hotel\Baja_Hotel.resx">
+      <DependentUpon>Baja_Hotel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM de Hotel\MainHotel.resx">
       <DependentUpon>MainHotel.cs</DependentUpon>

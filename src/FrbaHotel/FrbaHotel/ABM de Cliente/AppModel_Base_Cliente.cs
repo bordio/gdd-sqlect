@@ -13,7 +13,7 @@ namespace FrbaHotel.ABM_de_Cliente {
         public DataTable rowCliente = new DataTable();
         private Conexion sqlconexion = Conexion.Instance;
 
-        public abstract void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, string fecha_Nac, string nacionalidad, string pasaporte_Nro, int idReserva);
+        public abstract void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, string fecha_Nac, string nacionalidad, string documento_Nro, int idReserva, string tipodocumento, string telefono);
         
         /*Validacion de campos*/
 
@@ -61,15 +61,17 @@ namespace FrbaHotel.ABM_de_Cliente {
             };
         }
 
-        public virtual void validarPasaporte(Control pasaporte, StringBuilder mensajeValidacion)
+        public virtual void validarDocumento(Control documento, string tipo, StringBuilder mensajeValidacion)
         {
             StringBuilder query = new StringBuilder();
-            query.AppendFormat("SELECT * FROM SQLECT.Clientes WHERE pasaporte_Nro='{0}'", pasaporte.Text);
+            query.AppendFormat("SELECT * FROM SQLECT.Clientes WHERE documento_Nro='{0}' AND tipoDocumento='{1}'", documento.Text, tipo);
             if (this.sqlconexion.ejecutarQuery(query.ToString()).Rows.Count > 0)
             {
-                mensajeValidacion.AppendLine(string.Format(" El pasaporte {0} ya existe.", pasaporte.Text));
+                mensajeValidacion.AppendLine(string.Format(" El documento {0} ya existe.", documento.Text));
             };
         }
+
+        public virtual void validarDocumento(Control documento, StringBuilder mensajeValidacion) { }
 
         /*Para listar segun un filtrado determinado*/
 

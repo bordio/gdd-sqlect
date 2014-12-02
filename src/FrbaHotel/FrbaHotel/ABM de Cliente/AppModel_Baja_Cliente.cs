@@ -12,24 +12,24 @@ namespace FrbaHotel.ABM_de_Cliente
     {
         private Conexion sqlconexion = Conexion.Instance;
         System.Data.SqlClient.SqlCommand comandoACliente;
-                
 
-        public void comandoCliente(StringBuilder email, StringBuilder pasaporte_Nro)
+
+        public void comandoCliente(StringBuilder email, StringBuilder documento_Nro)
         {       
                 comandoACliente.Parameters.Add("@Mail", SqlDbType.VarChar);
-                comandoACliente.Parameters.Add("@Pasaporte_Nro", SqlDbType.BigInt);
+                comandoACliente.Parameters.Add("@documento_Nro", SqlDbType.BigInt);
 
-                comandoACliente.Parameters[0].Value = email;
-                comandoACliente.Parameters[1].Value = pasaporte_Nro;
+                comandoACliente.Parameters[0].Value = email.ToString();
+                comandoACliente.Parameters[1].Value = documento_Nro.ToString();
         }
 
-        public void inhabilitarCliente(StringBuilder email, StringBuilder pasaporte_Nro)
+        public void inhabilitarCliente(StringBuilder email, StringBuilder documento_Nro)
         {
             Conexion conexion = Conexion.Instance;
             comandoACliente = new System.Data.SqlClient.SqlCommand();
             comandoACliente.CommandType = CommandType.StoredProcedure;
 
-            comandoCliente(email, pasaporte_Nro);
+            comandoCliente(email, documento_Nro);
 
             comandoACliente.CommandText = "SQLECT.inhabilitarCliente";
             conexion.ejecutarQueryConSP(comandoACliente);
@@ -37,13 +37,13 @@ namespace FrbaHotel.ABM_de_Cliente
             MessageBox.Show("Inhabilitacion exitosa", "Inhabilitacion del Cliente", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        public void habilitarCliente(StringBuilder email, StringBuilder pasaporte_Nro)
+        public void habilitarCliente(StringBuilder email, StringBuilder documento_Nro)
         {
             Conexion conexion = Conexion.Instance;
             comandoACliente = new System.Data.SqlClient.SqlCommand();
             comandoACliente.CommandType = CommandType.StoredProcedure;
 
-            comandoCliente(email, pasaporte_Nro);
+            comandoCliente(email, documento_Nro);
 
             comandoACliente.CommandText = "SQLECT.habilitarCliente";
             conexion.ejecutarQueryConSP(comandoACliente);
@@ -52,6 +52,6 @@ namespace FrbaHotel.ABM_de_Cliente
         }
         
         public override void levantar(StringBuilder sentence){}
-        public override void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, string fecha_Nac, string nacionalidad, string pasaporte_Nro,int idReserva){ }
+        public override void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, string fecha_Nac, string nacionalidad, string documento_Nro, int idReserva, string tipo, string tel) { }
     }
 }
