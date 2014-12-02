@@ -61,7 +61,14 @@ namespace FrbaHotel.ABM_de_Hotel
             MessageBox.Show("Modificacion exitosa", "Modificacion de Hotel", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        public override bool existeEmail(string email)
+        public override bool hotelDuplicado(String pais, String ciudad, String calle, Int32 nro_calle)
+        {
+            StringBuilder sentece = new StringBuilder();
+            sentece.AppendFormat("SELECT id_hotel FROM SQLECT.Hoteles h WHERE UPPER(h.pais)=UPPER('{0}') AND UPPER(h.ciudad)=UPPER('{1}') AND UPPER(h.calle)=UPPER('{2}') AND h.nro_calle={3} AND id_hotel!={4}", pais.ToString(), ciudad.ToString(), calle.ToString(), nro_calle,this.idHotel);
+            return this.connSql.ejecutarQuery(sentece.ToString()).Rows.Count > 0;
+        }
+
+        public override bool existeEmail(String email)
         {
             StringBuilder sentece = new StringBuilder();
             sentece.AppendFormat("SELECT * FROM SQLECT.Hoteles h WHERE h.mail='{0}' AND h.id_hotel!={1}", email,this.idHotel);
