@@ -27,7 +27,8 @@ namespace FrbaHotel.ABM_de_Rol
         }
 
         public void getRoles() {
-            gridRoles.DataSource = Conexion.Instance.ejecutarQuery("SELECT id_rol 'ID', nombre 'Rol', descripcion 'Descripción', estado_rol 'Activo' FROM SQLECT.Roles");
+            gridRoles.DataSource = Conexion.Instance.ejecutarQuery("SELECT id_rol 'ID', nombre 'Rol', descripcion 'Descripción', CASE estado_rol WHEN 1 THEN 'SI' ELSE 'NO' END 'Activo' FROM SQLECT.Roles");
+            gridRoles.Columns[0].Visible = false;
         }
 
         private void bttnNuevo_Click(object sender, EventArgs e)
@@ -61,10 +62,11 @@ namespace FrbaHotel.ABM_de_Rol
                 idRolSelecc = Int32.Parse(filaActual.Cells[0].Value.ToString());
                 funcionesRolSelecc = getFuncionesRolSelecc();
                 gridFunciones.DataSource = funcionesRolSelecc;
+                gridFunciones.Columns[0].Visible = false;
 
                 bttnModificar.Enabled = true;
-                bttnActivar.Enabled = ((Int32.Parse(filaActual.Cells[3].Value.ToString()) == 1) ? false : true);
-                bttnDesact.Enabled = ((Int32.Parse(filaActual.Cells[3].Value.ToString()) == 1) ? true : false);
+                bttnActivar.Enabled = ((filaActual.Cells[3].Value.ToString() == "SI") ? false : true);
+                bttnDesact.Enabled = ((filaActual.Cells[3].Value.ToString() == "SI") ? true : false);
             }
         }
 
