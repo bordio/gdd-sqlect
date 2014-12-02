@@ -23,12 +23,18 @@ namespace FrbaHotel.ABM_de_Rol
 
         private void MainRol_Load(object sender, EventArgs e)
         {
-            getRoles();
+            refrescarListas();
         }
 
-        public void getRoles() {
-            gridRoles.DataSource = Conexion.Instance.ejecutarQuery("SELECT id_rol 'ID', nombre 'Rol', descripcion 'Descripción', CASE estado_rol WHEN 1 THEN 'SI' ELSE 'NO' END 'Activo' FROM SQLECT.Roles");
+        public void refrescarListas() 
+        {
+            gridRoles.DataSource = getRoles();
             gridRoles.Columns[0].Visible = false;
+        }
+
+        public DataTable getRoles()
+        {
+            return Conexion.Instance.ejecutarQuery("SELECT id_rol 'ID', nombre 'Rol', descripcion 'Descripción', CASE estado_rol WHEN 1 THEN 'SI' ELSE 'NO' END 'Activo' FROM SQLECT.Roles");
         }
 
         private void bttnNuevo_Click(object sender, EventArgs e)
@@ -64,7 +70,7 @@ namespace FrbaHotel.ABM_de_Rol
                 gridFunciones.DataSource = funcionesRolSelecc;
                 gridFunciones.Columns[0].Visible = false;
 
-                bttnModificar.Enabled = true;
+                bttnModificar.Enabled = ((filaActual.Cells[3].Value.ToString() == "SI") ? true : false);
                 bttnActivar.Enabled = ((filaActual.Cells[3].Value.ToString() == "SI") ? false : true);
                 bttnDesact.Enabled = ((filaActual.Cells[3].Value.ToString() == "SI") ? true : false);
             }
@@ -80,7 +86,7 @@ namespace FrbaHotel.ABM_de_Rol
             StringBuilder sentence = new StringBuilder();
             sentence.AppendFormat("UPDATE SQLECT.Roles SET estado_rol = 1 WHERE id_rol = {0}", this.idRolSelecc);
             Conexion.Instance.ejecutarQuery(sentence.ToString());
-            getRoles();
+            refrescarListas();
         }
 
         private void bttnDesact_Click(object sender, EventArgs e)
@@ -88,7 +94,7 @@ namespace FrbaHotel.ABM_de_Rol
             StringBuilder sentence = new StringBuilder();
             sentence.AppendFormat("UPDATE SQLECT.Roles SET estado_rol = 0 WHERE id_rol = {0}", this.idRolSelecc);
             Conexion.Instance.ejecutarQuery(sentence.ToString());
-            getRoles();
+            refrescarListas();
         }
     }
 }
