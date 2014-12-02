@@ -15,13 +15,11 @@ namespace FrbaHotel.ABM_de_Rol
     {
         private Int32 idRol;
         private DataTable funcsRol;
-        private List<CheckBox> lstFuncs;
         private ABM_de_Rol.MainRol padre;
 
         public AgregarModificarRol(ABM_de_Rol.MainRol owner)
         {
             InitializeComponent();
-            llenarFuncs();
             padre = owner;
 
             idRol = -1;
@@ -31,7 +29,6 @@ namespace FrbaHotel.ABM_de_Rol
         public AgregarModificarRol(ABM_de_Rol.MainRol owner, Int32 elIdRol, string nombre, string descripcion, DataTable funciones)
         {
             InitializeComponent();
-            llenarFuncs();
             padre = owner;
 
             idRol = elIdRol;
@@ -43,45 +40,40 @@ namespace FrbaHotel.ABM_de_Rol
 
         private void checkFunciones()
         {
-            foreach (CheckBox func in lstFuncs)
-            {
-                String funcX = func.Text;
-                func.Checked = false;
-                foreach (DataRow rowFRol in funcsRol.Rows)
-                {
-                    String funcRol = rowFRol["Funcion"].ToString();
-                    if (funcRol == funcX)
-                        func.Checked = true;
-                }
-            }
-        }
+            List<int> idsFuncs = new List<int>();
 
-        private void llenarFuncs()
-        {
-            List<CheckBox> lista = new List<CheckBox>();
+            foreach (DataRow rowFRol in funcsRol.Rows)
+                idsFuncs.Add(Int32.Parse(rowFRol["ID"].ToString()));
 
-            lista.Add(chkBxGestRol);
-            lista.Add(chkBxGestUsr);
-            lista.Add(chkBxGestCli);
-            lista.Add(chkBxGestHotel);
-            lista.Add(chkBxGestHab);
-            lista.Add(chkBxGestRes);
-            lista.Add(chkBxCancelRes);
-            lista.Add(chkBxGestConsu);
-            lista.Add(chkBxGestEstad);
-            lista.Add(chkBxGestFactu);
-            lista.Add(chkBxListados);
-
-            lstFuncs = lista;
+            chkBxGestRol.Checked = ((idsFuncs.Contains(1)) ? true : false);
+            chkBxGestUsr.Checked = ((idsFuncs.Contains(2)) ? true : false);
+            chkBxGestCli.Checked = ((idsFuncs.Contains(3)) ? true : false);
+            chkBxGestHotel.Checked = ((idsFuncs.Contains(4)) ? true : false);
+            chkBxGestHab.Checked = ((idsFuncs.Contains(5)) ? true : false);
+            chkBxGestRes.Checked = ((idsFuncs.Contains(6)) ? true : false);
+            chkBxCancelRes.Checked = ((idsFuncs.Contains(7)) ? true : false);
+            chkBxGestConsu.Checked = ((idsFuncs.Contains(8)) ? true : false);
+            chkBxGestEstad.Checked = ((idsFuncs.Contains(9)) ? true : false);
+            chkBxGestFactu.Checked = ((idsFuncs.Contains(10)) ? true : false);
+            chkBxListados.Checked = ((idsFuncs.Contains(11)) ? true : false);
         }
 
         private void bttnCancelar_Click(object sender, EventArgs e)
         {
-            padre.getRoles();
+            padre.refrescarListas();
             this.Close();
         }
 
         private void bttnAceptar_Click(object sender, EventArgs e)
+        {
+            StringBuilder errores = new StringBuilder();
+            if (!validarDatos(errores))
+                doAceptar();
+            else
+                MessageBox.Show(errores.ToString(), "Errores en el formulario", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void doAceptar()
         {
             System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
@@ -138,8 +130,49 @@ namespace FrbaHotel.ABM_de_Rol
 
             Conexion.Instance.ejecutarQueryConSP(cmd);
             MessageBox.Show("Operación exitosa", "ABM de Rol", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            padre.getRoles();
+            padre.refrescarListas();
             this.Close();
         }
+
+        private bool validarDatos(StringBuilder errores)
+        {
+            bool retorno = false;
+            retorno = retorno || validarNombre(errores);
+            retorno = retorno || validarDescrip(errores);
+            return retorno;
+        }
+
+        private bool validarNombre(StringBuilder e)
+        {
+            if (txtNombre.Text == "")
+            {
+                e.AppendLine("Debe definir un nombre!");
+                return true;
+            }
+            else
+            {
+                StringBuilder querry = new StringBuilder();
+                querry.AppendFormat(((idRol > 0) ? "SELECT nombre FROM SQLECT.Roles WHERE nombre = '{1}' AND id_rol != {0}" : "SELECT nombre FROM SQLECT.Roles WHERE nombre = '{1}'"), idRol, txtNombre.Text);
+                if (Conexion.Instance.ejecutarQuery(querry.ToString()).Rows.Count > 0)
+                {
+                    e.AppendLine("Ya existe un rol con ese nombre!");
+                    return true;
+                }
+                else
+                    return false;
+            }
+        }
+
+        private bool validarDescrip(StringBuilder e)
+        {
+            if (txtDescrip.Text == "")
+            {
+                e.AppendLine("Debe dar una descripción para el rol!");
+                return true;
+            }
+            else
+                return false;
+        }
+
     }
 }
