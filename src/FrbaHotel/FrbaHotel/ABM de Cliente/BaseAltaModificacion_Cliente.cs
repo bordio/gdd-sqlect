@@ -20,6 +20,7 @@ namespace FrbaHotel.ABM_de_Cliente
             InitializeComponent();
             appModel = new AppModel_Alta_Cliente();
             Text = "Alta de Cliente";
+            llenarComboDocumentos();
         }
 
         public BaseAltaModificacion_Cliente(int idReserva) //Para altas con reserva. Lo usa clase hija Alta_Cliente
@@ -27,12 +28,14 @@ namespace FrbaHotel.ABM_de_Cliente
             appModel = new AppModel_Alta_Cliente();
             Text = "Alta de Cliente";
             this.idReservaDelCliente = idReserva;
+            llenarComboDocumentos();
         }
 
-        public BaseAltaModificacion_Cliente(DataGridView lsClientes, StringBuilder email, StringBuilder documento) //Para modificaciones. Lo usa clase hija Modificacion_Cliente
+        public BaseAltaModificacion_Cliente(DataGridView lsClientes, StringBuilder email, StringBuilder documento, StringBuilder tipo) //Para modificaciones. Lo usa clase hija Modificacion_Cliente
         {
             InitializeComponent();
             Text = "Modificacion de Cliente";
+            llenarComboDocumentos();
             btGuardar.Text = "Guardar Cambios";
         }
 
@@ -43,23 +46,38 @@ namespace FrbaHotel.ABM_de_Cliente
         public Boolean validaciones = false;
         public StringBuilder mensajeValidacion;
 
+        public void llenarComboDocumentos()
+        {
+            cbTipoDoc.Items.Add("DNI");
+            cbTipoDoc.Items.Add("PASAPORTE");
+            cbTipoDoc.SelectedIndex = 0;
+        }
+
         public virtual void validacionesAlGuardar() {
             mensajeValidacion = new StringBuilder();
-            //Campos Obligatorios
+            //Campos Obligatorios: Que no esten vacios
             this.appModel.validarNoVacio(Nombre, mensajeValidacion);
             this.appModel.validarNoVacio(Apellido, mensajeValidacion);
             emailOk = this.appModel.validarNoVacio(Email, mensajeValidacion);
             this.appModel.validarNoVacio(Fecha, mensajeValidacion);
             documentoOk = this.appModel.validarNoVacio(Documento, mensajeValidacion);
+            this.appModel.validarNoVaciocb(cbTipoDoc.SelectedItem.ToString(),mensajeValidacion);
             this.appModel.validarNoVacio(Nacionalidad, mensajeValidacion);
+            
             //Longitudes
             this.appModel.validarLongitud(Nombre, 60, mensajeValidacion);
             this.appModel.validarLongitud(Apellido, 60, mensajeValidacion);
             emailOk = this.appModel.validarLongitud(Email, 255, mensajeValidacion);
+            
             //Campos numericos
             if (Numero.Text != "") //No es obligatorio este campo
             {
                 this.appModel.validarNumerico(Numero, mensajeValidacion);
+            }
+
+            if (Piso.Text != "") //No es obligatorio este campo
+            {
+                this.appModel.validarNumerico(Piso, mensajeValidacion);
             }
             documentoOk = this.appModel.validarNumerico(Documento, mensajeValidacion);
 
@@ -71,7 +89,7 @@ namespace FrbaHotel.ABM_de_Cliente
             //documento repetido
             if (documentoOk)
             {
-                this.appModel.validarDocumento(Documento, mensajeValidacion);
+                this.appModel.validarDocumento(Documento, cbTipoDoc.SelectedItem.ToString(), mensajeValidacion);
             }
 
         }
@@ -96,18 +114,19 @@ namespace FrbaHotel.ABM_de_Cliente
                 {
                     this.appModel.abmlCliente(
                        this.Nombre.Text, this.Apellido.Text, this.Email.Text,
-                       this.Calle.Text, this.Numero.Text, this.Piso.Text, this.Localidad.Text,
-                       this.Fecha.Text, this.Nacionalidad.Text, this.Documento.Text, this.idReservaDelCliente); /* Cliente sin reserva*/
+                       this.Calle.Text, this.Numero.Text, this.Piso.Text, this.Depto.Text,
+                       this.Fecha.Text, this.Nacionalidad.Text, this.Documento.Text, 
+                       this.idReservaDelCliente,this.cbTipoDoc.SelectedItem.ToString(), this.Telefono.Text); /* Cliente CON reserva*/
                 }
                 else
                 {
                     this.appModel.abmlCliente(
-                           this.Nombre.Text, this.Apellido.Text, this.Email.Text,
-                           this.Calle.Text, this.Numero.Text, this.Piso.Text, this.Localidad.Text,
-                           this.Fecha.Text, this.Nacionalidad.Text, this.Documento.Text, 0); /*Cliente con reserva*/
+                           this.Nombre.Text, this.Apellido.Text, this.Email.Text,this.Calle.Text, 
+                           this.Numero.Text, this.Piso.Text, this.Depto.Text,
+                           this.Fecha.Text, this.Nacionalidad.Text, this.Documento.Text, 0, 
+                           this.cbTipoDoc.SelectedItem.ToString(), this.Telefono.Text); /*Cliente SIN reserva*/
                 }
-            
-            
+           
             
             }
         
@@ -127,6 +146,7 @@ namespace FrbaHotel.ABM_de_Cliente
             this.PaisOrigen.Text = null;
             this.Nacionalidad.Text = null;
             this.Documento.Text = null;
+            this.cbTipoDoc.SelectedItem = null;
             mensajeValidacion = null;
         }
         private void btCancelar_Click(object sender, EventArgs e)

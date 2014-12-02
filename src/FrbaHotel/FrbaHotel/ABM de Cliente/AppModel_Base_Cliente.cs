@@ -13,7 +13,7 @@ namespace FrbaHotel.ABM_de_Cliente {
         public DataTable rowCliente = new DataTable();
         private Conexion sqlconexion = Conexion.Instance;
 
-        public abstract void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, string fecha_Nac, string nacionalidad, string documento_Nro, int idReserva);
+        public abstract void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, string fecha_Nac, string nacionalidad, string documento_Nro, int idReserva, string tipodocumento, string telefono);
         
         /*Validacion de campos*/
 
@@ -22,6 +22,16 @@ namespace FrbaHotel.ABM_de_Cliente {
             if (string.IsNullOrEmpty(control.Text))
             {
                 mensajeValidacion.AppendLine(string.Format(" El campo {0} no puede estar en blanco.", control.Name));
+                return false;
+            }
+            return true;
+        }
+
+        public bool validarNoVaciocb(string comboItem, StringBuilder mensajeValidacion)
+        {
+            if (string.IsNullOrEmpty(comboItem))
+            {
+                mensajeValidacion.AppendLine(string.Format(" El campo {0} no puede estar en blanco.", comboItem));
                 return false;
             }
             return true;
@@ -61,15 +71,17 @@ namespace FrbaHotel.ABM_de_Cliente {
             };
         }
 
-        public virtual void validarDocumento(Control documento, StringBuilder mensajeValidacion)
+        public virtual void validarDocumento(Control documento, string tipo, StringBuilder mensajeValidacion)
         {
             StringBuilder query = new StringBuilder();
-            query.AppendFormat("SELECT * FROM SQLECT.Clientes WHERE documento_Nro='{0}'", documento.Text);
+            query.AppendFormat("SELECT * FROM SQLECT.Clientes WHERE documento_Nro='{0}' AND tipoDocumento='{1}'", documento.Text, tipo);
             if (this.sqlconexion.ejecutarQuery(query.ToString()).Rows.Count > 0)
             {
                 mensajeValidacion.AppendLine(string.Format(" El documento {0} ya existe.", documento.Text));
             };
         }
+
+        public virtual void validarDocumento(Control documento, StringBuilder mensajeValidacion) { }
 
         /*Para listar segun un filtrado determinado*/
 

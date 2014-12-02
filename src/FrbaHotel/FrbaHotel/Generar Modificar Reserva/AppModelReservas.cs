@@ -245,7 +245,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             conexion.ejecutarSP(comandoAReserva);        
         }
 
-        public bool adjudicarClienteALaReserva(string email, int pasaporte, int idReserva)
+        public bool adjudicarClienteALaReserva(string email, int documento, int idReserva)
         
         {
             Conexion conexion = Conexion.Instance;
@@ -253,11 +253,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             comandoAReserva.CommandType = CommandType.StoredProcedure;
 
             comandoAReserva.Parameters.Add("@email", SqlDbType.VarChar);
-            comandoAReserva.Parameters.Add("@pasaporte", SqlDbType.Int);
+            comandoAReserva.Parameters.Add("@documento_nro", SqlDbType.Int);
             comandoAReserva.Parameters.Add("@idReserva", SqlDbType.Int);
 
             comandoAReserva.Parameters[0].Value = email;
-            comandoAReserva.Parameters[1].Value = pasaporte;
+            comandoAReserva.Parameters[1].Value = documento;
             comandoAReserva.Parameters[2].Value = idReserva;
           
             comandoAReserva.CommandText = "SQLECT.adjuntarClienteALaReserva";
