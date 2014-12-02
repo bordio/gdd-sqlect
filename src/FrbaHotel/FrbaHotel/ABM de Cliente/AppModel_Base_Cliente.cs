@@ -27,6 +27,16 @@ namespace FrbaHotel.ABM_de_Cliente {
             return true;
         }
 
+        public bool validarNoVaciocb(string comboItem, StringBuilder mensajeValidacion)
+        {
+            if (string.IsNullOrEmpty(comboItem))
+            {
+                mensajeValidacion.AppendLine(string.Format(" El campo {0} no puede estar en blanco.", comboItem));
+                return false;
+            }
+            return true;
+        }
+
         public bool validarLongitud(Control control, int maxLength, StringBuilder mensajeValidacion)
         {
             if ((control.Text.Length <= 0) && (control.Text.Length > maxLength))

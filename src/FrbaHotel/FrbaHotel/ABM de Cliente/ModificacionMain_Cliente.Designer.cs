@@ -33,6 +33,8 @@
             this.Apellido = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.filtrosBusqueda = new System.Windows.Forms.GroupBox();
+            this.cbTipoDoc = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.btLimpiar = new System.Windows.Forms.Button();
             this.btBuscar = new System.Windows.Forms.Button();
             this.Email = new System.Windows.Forms.TextBox();
@@ -46,8 +48,6 @@
             this.btInhabilitar = new System.Windows.Forms.Button();
             this.btHabilitar = new System.Windows.Forms.Button();
             this.btCancelar = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.cbTipoDoc = new System.Windows.Forms.ComboBox();
             this.filtrosBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridClientes)).BeginInit();
             this.SuspendLayout();
@@ -73,7 +73,7 @@
             this.Apellido.Location = new System.Drawing.Point(76, 52);
             this.Apellido.Name = "Apellido";
             this.Apellido.Size = new System.Drawing.Size(199, 20);
-            this.Apellido.TabIndex = 3;
+            this.Apellido.TabIndex = 2;
             // 
             // label2
             // 
@@ -103,16 +103,34 @@
             this.filtrosBusqueda.Location = new System.Drawing.Point(12, 12);
             this.filtrosBusqueda.Name = "filtrosBusqueda";
             this.filtrosBusqueda.Size = new System.Drawing.Size(789, 152);
-            this.filtrosBusqueda.TabIndex = 4;
+            this.filtrosBusqueda.TabIndex = 0;
             this.filtrosBusqueda.TabStop = false;
             this.filtrosBusqueda.Text = "Filtros de Búsqueda";
+            // 
+            // cbTipoDoc
+            // 
+            this.cbTipoDoc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbTipoDoc.FormattingEnabled = true;
+            this.cbTipoDoc.Location = new System.Drawing.Point(505, 53);
+            this.cbTipoDoc.Name = "cbTipoDoc";
+            this.cbTipoDoc.Size = new System.Drawing.Size(121, 21);
+            this.cbTipoDoc.TabIndex = 5;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(397, 56);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(86, 13);
+            this.label3.TabIndex = 28;
+            this.label3.Text = "Tipo Documento";
             // 
             // btLimpiar
             // 
             this.btLimpiar.Location = new System.Drawing.Point(368, 116);
             this.btLimpiar.Name = "btLimpiar";
             this.btLimpiar.Size = new System.Drawing.Size(103, 23);
-            this.btLimpiar.TabIndex = 27;
+            this.btLimpiar.TabIndex = 8;
             this.btLimpiar.Text = "Limpiar";
             this.btLimpiar.UseVisualStyleBackColor = true;
             this.btLimpiar.Click += new System.EventHandler(this.btLimpiar_Click);
@@ -122,7 +140,7 @@
             this.btBuscar.Location = new System.Drawing.Point(242, 116);
             this.btBuscar.Name = "btBuscar";
             this.btBuscar.Size = new System.Drawing.Size(103, 23);
-            this.btBuscar.TabIndex = 26;
+            this.btBuscar.TabIndex = 7;
             this.btBuscar.Text = "Buscar";
             this.btBuscar.UseVisualStyleBackColor = true;
             this.btBuscar.Click += new System.EventHandler(this.btBuscar_Click);
@@ -132,14 +150,14 @@
             this.Email.Location = new System.Drawing.Point(76, 80);
             this.Email.Name = "Email";
             this.Email.Size = new System.Drawing.Size(199, 20);
-            this.Email.TabIndex = 5;
+            this.Email.TabIndex = 3;
             // 
             // Nacionalidad
             // 
             this.Nacionalidad.Location = new System.Drawing.Point(505, 29);
             this.Nacionalidad.Name = "Nacionalidad";
             this.Nacionalidad.Size = new System.Drawing.Size(199, 20);
-            this.Nacionalidad.TabIndex = 25;
+            this.Nacionalidad.TabIndex = 4;
             // 
             // labelNumDoc
             // 
@@ -188,7 +206,7 @@
             this.gridClientes.ReadOnly = true;
             this.gridClientes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridClientes.Size = new System.Drawing.Size(789, 150);
-            this.gridClientes.TabIndex = 5;
+            this.gridClientes.TabIndex = 0;
             this.gridClientes.SelectionChanged += new System.EventHandler(this.gridClientes_CellContentClick);
             // 
             // btModificar
@@ -196,7 +214,7 @@
             this.btModificar.Location = new System.Drawing.Point(42, 348);
             this.btModificar.Name = "btModificar";
             this.btModificar.Size = new System.Drawing.Size(156, 23);
-            this.btModificar.TabIndex = 6;
+            this.btModificar.TabIndex = 9;
             this.btModificar.Text = "Modificar";
             this.btModificar.UseVisualStyleBackColor = true;
             this.btModificar.Click += new System.EventHandler(this.btModificar_Click);
@@ -206,7 +224,7 @@
             this.btInhabilitar.Location = new System.Drawing.Point(404, 348);
             this.btInhabilitar.Name = "btInhabilitar";
             this.btInhabilitar.Size = new System.Drawing.Size(155, 23);
-            this.btInhabilitar.TabIndex = 7;
+            this.btInhabilitar.TabIndex = 11;
             this.btInhabilitar.Text = "Inhabilitar";
             this.btInhabilitar.UseVisualStyleBackColor = true;
             this.btInhabilitar.Click += new System.EventHandler(this.btInhabilitar_Click);
@@ -216,7 +234,7 @@
             this.btHabilitar.Location = new System.Drawing.Point(228, 348);
             this.btHabilitar.Name = "btHabilitar";
             this.btHabilitar.Size = new System.Drawing.Size(155, 23);
-            this.btHabilitar.TabIndex = 8;
+            this.btHabilitar.TabIndex = 10;
             this.btHabilitar.Text = "Habilitar";
             this.btHabilitar.UseVisualStyleBackColor = true;
             this.btHabilitar.Click += new System.EventHandler(this.btHabilitar_Click);
@@ -226,27 +244,10 @@
             this.btCancelar.Location = new System.Drawing.Point(588, 348);
             this.btCancelar.Name = "btCancelar";
             this.btCancelar.Size = new System.Drawing.Size(155, 23);
-            this.btCancelar.TabIndex = 9;
+            this.btCancelar.TabIndex = 12;
             this.btCancelar.Text = "Cancelar";
             this.btCancelar.UseVisualStyleBackColor = true;
             this.btCancelar.Click += new System.EventHandler(this.btCancelar_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(397, 56);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(86, 13);
-            this.label3.TabIndex = 28;
-            this.label3.Text = "Tipo Documento";
-            // 
-            // cbTipoDoc
-            // 
-            this.cbTipoDoc.FormattingEnabled = true;
-            this.cbTipoDoc.Location = new System.Drawing.Point(505, 53);
-            this.cbTipoDoc.Name = "cbTipoDoc";
-            this.cbTipoDoc.Size = new System.Drawing.Size(121, 21);
-            this.cbTipoDoc.TabIndex = 29;
             // 
             // ModificacionMain_Cliente
             // 

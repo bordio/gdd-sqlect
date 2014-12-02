@@ -32,21 +32,22 @@ namespace FrbaHotel.ABM_de_Cliente
                 comandoACliente.Parameters.Add("@documento_Nro", SqlDbType.BigInt);
                 comandoACliente.Parameters.Add("@idReserva", SqlDbType.Int);
                 comandoACliente.Parameters.Add("@tipodocumento", SqlDbType.VarChar);
-                //comandoACliente.Parameters.Add("@telefono", SqlDbType.Int);
+                comandoACliente.Parameters.Add("@telefono", SqlDbType.Int);
 
                 comandoACliente.Parameters[0].Value = nombre;
                 comandoACliente.Parameters[1].Value = apellido;
                 comandoACliente.Parameters[2].Value = mail;
                 comandoACliente.Parameters[3].Value = dom_Calle;
-                comandoACliente.Parameters[4].Value = nro_Calle;
-                comandoACliente.Parameters[5].Value = piso;
+                comandoACliente.Parameters[4].Value = Int32.Parse(nro_Calle);
+                comandoACliente.Parameters[5].Value = Int32.Parse(piso); //si lo deja en blanco el parse explota.
                 comandoACliente.Parameters[6].Value = depto;
                 comandoACliente.Parameters[7].Value = DateTime.Parse(fecha_Nac);
                 comandoACliente.Parameters[8].Value = nacionalidad;
                 comandoACliente.Parameters[9].Value = documento_Nro;
                 comandoACliente.Parameters[10].Value = idReserva;
                 comandoACliente.Parameters[11].Value = tipo_documento;
-                //comandoACliente.Parameters[12].Value = telefono;
+                if (telefono != "") comandoACliente.Parameters[12].Value = Int32.Parse(telefono);
+                else comandoACliente.Parameters[12].Value = null;
 
                 comandoACliente.CommandText = "SQLECT.altaCliente";
                 conexion.ejecutarQueryConSP(comandoACliente);

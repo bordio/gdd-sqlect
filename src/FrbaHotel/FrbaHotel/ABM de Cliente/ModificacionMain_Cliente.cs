@@ -56,11 +56,11 @@ namespace FrbaHotel.ABM_de_Cliente
         private void btBuscar_Click(object sender, EventArgs e)
         {
             StringBuilder sentence = new StringBuilder();
-            string select = "SELECT nombre 'Nombre', apellido 'Apellido', mail 'Email', telefono 'Telefono',fecha_Nac 'Fecha Nacimiento', dom_Calle 'Calle', nro_calle 'Nro Calle', piso 'Piso', depto 'Departamento', nacionalidad 'Nacionalidad', tipoDocumento 'Tipo de Documento',documento_Nro 'Número de Documento', habilitado 'Habilitado' FROM SQLECT.Clientes";
+            string select = "SELECT nombre 'Nombre', apellido 'Apellido', mail 'Email', telefono 'Telefono',fecha_Nac 'Fecha Nacimiento', dom_Calle 'Calle', nro_calle 'Nro Calle', piso 'Piso', depto 'Departamento', localidad 'Localidad', paisOrigen 'Pais', nacionalidad 'Nacionalidad', tipoDocumento 'Tipo de Documento',documento_Nro 'Número de Documento', habilitado 'Habilitado' FROM SQLECT.Clientes";
             
             sentence = this.appModel_Modificar.getAllInstances(select);
 
-            if ((Nombre.Text != "") || (Apellido.Text != "") || (Email.Text != "") || (Nacionalidad.Text != "") || (Documento.Text != ""))
+            if ((Nombre.Text != "") || (Apellido.Text != "") || (Email.Text != "") || (Nacionalidad.Text != "") || (Documento.Text != "") || (cbTipoDoc.SelectedItem.ToString() != ""))
             {
                 sentence.Append(" WHERE ");
                 this.appModel_Modificar.appendASentencia(Nombre.Text, sentence, "nombre");
@@ -68,8 +68,9 @@ namespace FrbaHotel.ABM_de_Cliente
                 this.appModel_Modificar.appendASentencia(Email.Text, sentence, "mail");
                 this.appModel_Modificar.appendASentencia(Nacionalidad.Text, sentence, "nacionalidad");
                 this.appModel_Modificar.appendASentencia(Documento.Text, sentence, "documento_Nro");
+                this.appModel_Modificar.appendASentencia(cbTipoDoc.SelectedItem.ToString(), sentence, "tipoDocumento");
 
-                StringBuilder sentenceFiltro = new StringBuilder().AppendFormat(sentence.ToString().Substring(0, sentence.Length - 5)); //Si se agrega una nueva condicion al WHERE. Se debe cambiar el 5 a 6 y así.. Horrible, A cambiar si queda tiempo.
+                StringBuilder sentenceFiltro = new StringBuilder().AppendFormat(sentence.ToString().Substring(0, sentence.Length - 4));
                 gridClientes.DataSource = this.appModel_Modificar.cargar_lista(sentenceFiltro).DefaultView;
                
                 gridClientes.AllowUserToAddRows = false;
@@ -109,9 +110,12 @@ namespace FrbaHotel.ABM_de_Cliente
             documentoSeleccionado.Remove(0, documentoSeleccionado.Length);
             tipodocSeleccionado.Remove(0, tipodocSeleccionado.Length);
 
-            emailSeleccionado.AppendFormat("{0}", celda_actual.Cells[2].Value.ToString());
-            documentoSeleccionado.AppendFormat("{0}", celda_actual.Cells[11].Value.ToString());
-            tipodocSeleccionado.AppendFormat("{0}", celda_actual.Cells[10].Value.ToString());
+            if (celda_actual != null)
+            {
+                emailSeleccionado.AppendFormat("{0}", celda_actual.Cells[2].Value.ToString());
+                documentoSeleccionado.AppendFormat("{0}", celda_actual.Cells[11].Value.ToString());
+                tipodocSeleccionado.AppendFormat("{0}", celda_actual.Cells[10].Value.ToString());
+            }
         }
 
         private void btModificar_Click(object sender, EventArgs e)
@@ -133,7 +137,7 @@ namespace FrbaHotel.ABM_de_Cliente
             AppModel_Baja_Cliente appModel;
             appModel = new AppModel_Baja_Cliente();
             if(validacionesAlBorrar()){
-                appModel.inhabilitarCliente(this.emailSeleccionado, this.documentoSeleccionado);
+                appModel.inhabilitarCliente(this.emailSeleccionado, this.documentoSeleccionado, this.tipodocSeleccionado);
             }
         }
 
@@ -142,7 +146,7 @@ namespace FrbaHotel.ABM_de_Cliente
             AppModel_Baja_Cliente appModel;
             appModel = new AppModel_Baja_Cliente();
             if(validacionesAlBorrar()){
-                appModel.habilitarCliente(this.emailSeleccionado, this.documentoSeleccionado);
+                appModel.habilitarCliente(this.emailSeleccionado, this.documentoSeleccionado, this.tipodocSeleccionado);
             }
         }
 
