@@ -14,7 +14,7 @@ namespace FrbaHotel.ABM_de_Cliente
         private Conexion sqlconexion = Conexion.Instance;
         AppModel_Reservas funcionesReservas = new AppModel_Reservas();
 
-        public override void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, string fecha_Nac, string nacionalidad, string documento_Nro, int idReserva, string tipo_documento, string telefono)
+        public override void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, string fecha_Nac, string nacionalidad, string documento_Nro, int idReserva, string tipo_documento, string telefono, string localidad)
         {
                 Conexion conexion = Conexion.Instance;
                 System.Data.SqlClient.SqlCommand comandoACliente = new System.Data.SqlClient.SqlCommand();
@@ -33,6 +33,7 @@ namespace FrbaHotel.ABM_de_Cliente
                 comandoACliente.Parameters.Add("@idReserva", SqlDbType.Int);
                 comandoACliente.Parameters.Add("@tipodocumento", SqlDbType.VarChar);
                 comandoACliente.Parameters.Add("@telefono", SqlDbType.Int);
+                comandoACliente.Parameters.Add("@localidad", SqlDbType.VarChar);
 
                 comandoACliente.Parameters[0].Value = nombre;
                 comandoACliente.Parameters[1].Value = apellido;
@@ -48,6 +49,7 @@ namespace FrbaHotel.ABM_de_Cliente
                 comandoACliente.Parameters[11].Value = tipo_documento;
                 if (telefono != "") comandoACliente.Parameters[12].Value = Int32.Parse(telefono);
                 else comandoACliente.Parameters[12].Value = null;
+                comandoACliente.Parameters[13].Value = localidad;
 
                 comandoACliente.CommandText = "SQLECT.altaCliente";
                 conexion.ejecutarQueryConSP(comandoACliente);
@@ -58,7 +60,7 @@ namespace FrbaHotel.ABM_de_Cliente
                   MessageBox.Show("Alta exitosa", "Alta de Cliente", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        public override void levantar(StringBuilder sentence)
+        public override void levantar(StringBuilder sentence, int posicionId)
         {
            
         }

@@ -70,10 +70,13 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     idHotelElegido = funcionesVarias.obtenerIDHotel(listaHotelAElegir.SelectedItem.ToString());
                 else
                     idHotelElegido = idDeHotelDeSesion;
+
+                FrbaHotel.Generar_Modificar_Reserva.GenerarReserva formGenerarReserva = new FrbaHotel.Generar_Modificar_Reserva.GenerarReserva(idHotelElegido, usuarioDeSesion);
+                formGenerarReserva.Show();
             }
 
-            FrbaHotel.Generar_Modificar_Reserva.GenerarReserva formGenerarReserva = new FrbaHotel.Generar_Modificar_Reserva.GenerarReserva(idHotelElegido,usuarioDeSesion);
-            formGenerarReserva.Show();
+            /*FrbaHotel.Generar_Modificar_Reserva.GenerarReserva formGenerarReserva = new FrbaHotel.Generar_Modificar_Reserva.GenerarReserva(idHotelElegido,usuarioDeSesion);
+            formGenerarReserva.Show();*/
 
 
 
@@ -93,10 +96,13 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     idHotelElegido = funcionesVarias.obtenerIDHotel(listaHotelAElegir.SelectedItem.ToString());
                 else
                     idHotelElegido = idDeHotelDeSesion;
+
+                FrbaHotel.Cancelar_Reserva.Form1 formModificarReserva = new FrbaHotel.Cancelar_Reserva.Form1(idDeHotelDeSesion, usuarioDeSesion, false);
+                formModificarReserva.Show();
             }
 
-            FrbaHotel.Cancelar_Reserva.Form1 formModificarReserva = new FrbaHotel.Cancelar_Reserva.Form1(idDeHotelDeSesion, usuarioDeSesion, false);
-            formModificarReserva.Show();
+            /*FrbaHotel.Cancelar_Reserva.Form1 formModificarReserva = new FrbaHotel.Cancelar_Reserva.Form1(idDeHotelDeSesion, usuarioDeSesion, false);
+            formModificarReserva.Show();*/
 
         }
     }
