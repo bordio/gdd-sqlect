@@ -40,7 +40,7 @@ namespace FrbaHotel.Registrar_Consumible
                 contactoHotel.Text = filaHotel[3].ToString();
             }
 
-            StringBuilder sentencia = new StringBuilder().AppendFormat("SELECT nombre+' '+apellido,dom_Calle+' '+CAST(nro_Calle as varchar),pasaporte_Nro,mail FROM SQLECT.Reservas r JOIN SQLECT.Clientes c ON (r.fk_cliente = c.id_cliente) WHERE codigo_reserva='{0}'", codigoReservaActual);
+            StringBuilder sentencia = new StringBuilder().AppendFormat("SELECT nombre+' '+apellido,dom_Calle+' '+CAST(nro_Calle as varchar),documento_Nro,mail FROM SQLECT.Reservas r JOIN SQLECT.Clientes c ON (r.fk_cliente = c.id_cliente) WHERE codigo_reserva='{0}'", codigoReservaActual);
             DataTable datosCliente = Conexion.Instance.ejecutarQuery(sentencia.ToString());
 
             foreach (DataRow filaCliente in datosCliente.Rows)
