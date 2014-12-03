@@ -161,6 +161,8 @@ namespace FrbaHotel.Registrar_Estadia
         }
             else
             {
+
+
              if ((estadoReservaActual == 2) | (estadoReservaActual == 3) | (estadoReservaActual == 4))
                   MessageBox.Show("La reserva está cancelada");  
              else
