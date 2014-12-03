@@ -22,12 +22,14 @@ namespace FrbaHotel.ABM_de_Habitacion
             comando1.Parameters.Add("@piso", SqlDbType.Int);
             comando1.Parameters.Add("@frente", SqlDbType.Char);
             comando1.Parameters.Add("@tipo_habitacion", SqlDbType.Int);
+            comando1.Parameters.Add("@descripcion", SqlDbType.Text);
 
             comando1.Parameters[0].Value = Int32.Parse(numero_habitacion.Text);
             comando1.Parameters[1].Value = this.id_hotels[cmb_hotel.SelectedIndex];
             comando1.Parameters[2].Value = Int32.Parse(piso.Text);
             comando1.Parameters[3].Value = (exterior.Checked ? 'S' : 'N');
             comando1.Parameters[4].Value = this.id_tipo_habitaciones[cmb_tipo_habitacion.SelectedIndex];
+            comando1.Parameters[5].Value = descripcion.Text;
 
             comando1.CommandText = "SQLECT.altaHabitacion";
             cnn.ejecutarQueryConSP(comando1);
