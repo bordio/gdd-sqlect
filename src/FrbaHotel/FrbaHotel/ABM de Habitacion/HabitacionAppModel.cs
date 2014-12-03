@@ -13,11 +13,12 @@ namespace FrbaHotel.ABM_de_Habitacion
     public abstract class HabitacionAppModel
     {
         private Conexion connSql = Conexion.Instance;
-        private List<Int32> id_hotels = new List<Int32>();
+        protected List<Int32> id_hotels = new List<Int32>();
+        protected List<Int32> id_tipo_habitaciones = new List<Int32>();
         protected bool fallo_carga = false;
-        public abstract void doActionHabitacion(ComboBox cmb_hotel, Control numero_habitacion, Control piso, ComboBox cmb_tipo_habitacion, Control exterior, Control interior, Control descripcion);
-
-        public bool actionHabitacion(ComboBox cmb_hotel, Control numero_habitacion, Control piso, ComboBox cmb_tipo_habitacion, Control exterior, Control interior, Control descripcion, StringBuilder errores)
+        public virtual void doActionHabitacion(ComboBox cmb_hotel, Control numero_habitacion, Control piso, ComboBox cmb_tipo_habitacion, RadioButton exterior, RadioButton interior, Control descripcion) { }
+        
+        public bool actionHabitacion(ComboBox cmb_hotel, Control numero_habitacion, Control piso, ComboBox cmb_tipo_habitacion, RadioButton exterior, RadioButton interior, Control descripcion, StringBuilder errores)
         {
             validarForm(cmb_hotel, numero_habitacion, piso, cmb_tipo_habitacion, exterior, interior, descripcion, errores);
             if (errores.Length > 0)
@@ -44,27 +45,28 @@ namespace FrbaHotel.ABM_de_Habitacion
 
         public virtual void cargarTipoHabitaciones(ComboBox cmbTipoHabitaciones)
         {
-            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT descripcion FROM SQLECT.Tipos_Habitaciones");
+            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT descripcion,id_tipo_habitacion FROM SQLECT.Tipos_Habitaciones");
             DataTable tabla = Conexion.Instance.ejecutarQuery(sentence.ToString());
 
             for (int i = 0; i < tabla.Rows.Count; i++)
             {
                 cmbTipoHabitaciones.Items.Add(tabla.Rows[i]["descripcion"].ToString());
+                this.id_tipo_habitaciones.Add(Int32.Parse(tabla.Rows[i]["id_tipo_habitacion"].ToString()));
             }
         }
 
-        public void validarForm(ComboBox cmb_hotel, Control numero_habitacion, Control piso, ComboBox cmb_tipo_habitacion, Control exterior, Control interior, Control descripcion, StringBuilder errores)
+        public void validarForm(ComboBox cmb_hotel, Control numero_habitacion, Control piso, ComboBox cmb_tipo_habitacion, RadioButton exterior, RadioButton interior, Control descripcion, StringBuilder errores)
         {
             if (numero_habitacion.Text == "" || piso.Text == "")
             {
                 errores.AppendLine("No debe dejar los campos obligatorios en blanco");
                 fallo_carga = true;
             }
-            if (!fallo_carga && !esNumerico(numero_habitacion))
+            if (numero_habitacion.Text != null && !esNumerico(numero_habitacion))
             {
                 errores.AppendLine("El numero de habitacion debe ser numerico");
             }
-            if (!fallo_carga && !esNumerico(piso))
+            if (piso.Text != null && !esNumerico(piso))
             {
                 errores.AppendLine("El numero de piso debe ser numerico");
             }

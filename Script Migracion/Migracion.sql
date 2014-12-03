@@ -312,9 +312,9 @@ INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar hotele
 INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar habitaciones','Permite operaciones de alta, baja, y modificaciones de HABITACIONES')
 INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Generar/modificar reservas','Permite operaciones de alta y modificaciones de RESERVAS')
 INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Cancelar reservas', 'Permite cancelaciones de reservas')
-/*INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar consumibles','Permite operaciones de alta, baja, y modificaciones de CONSUMIBLES')*/
-INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar estadias','Permite el registro del check-in y check-out de las estadías')
-/*INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Facturación','Permite registrar facturas')*/
+INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar consumibles','Permite operaciones de alta, baja, y modificaciones de CONSUMIBLES')
+INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Gestionar estadías','Permite el registro del check-in y check-out de las estadías')
+INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Facturación','Permite registrar facturas')
 INSERT INTO SQLECT.Funcionalidades(nombre, descripcion) VALUES('Listado estadístico','Permite acceder a datos estadísticos, y emitir informes')
 
 
@@ -327,8 +327,8 @@ INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,6)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,7)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,8)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,9)
-/*INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,10)
-INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,11)*/
+INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,10)
+INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(1,11)
 
 																		/*Funcionalidades del Recepcionista*/
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(2,3)
@@ -345,7 +345,7 @@ INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,6)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,7)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,8)
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,9)
-/*INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,10)*/
+INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(3,10)
 																	    /*Funcionalidades del Guest*/
 INSERT INTO SQLECT.Funcionalidades_Roles(fk_rol, fk_funcion) VALUES(4,6)
 
@@ -951,6 +951,39 @@ BEGIN
 END
 
 GO
+
+
+/* ABM de Habitaciones */
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.Habitaciones_Vista'))
+DROP VIEW SQLECT.Habitaciones_Vista
+
+GO
+
+CREATE VIEW SQLECT.Habitaciones_Vista AS 
+(SELECT ho.id_hotel, th.id_tipo_habitacion, ho.nombre "hotel", hab.nro_habitacion, hab.piso, hab.frente, th.descripcion "tipo_habitacion" 
+FROM SQLECT.Habitaciones hab, SQLECT.Hoteles ho, SQLECT.Tipos_Habitaciones th
+WHERE (hab.fk_hotel = ho.id_hotel) AND (hab.tipo_habitacion = th.id_tipo_habitacion))
+
+GO
+
+/* Alta habitacion */
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.altaHabitacion'))
+DROP PROCEDURE SQLECT.altaHabitacion
+
+GO
+CREATE PROCEDURE SQLECT.altaHabitacion (@nro_habitacion INT, @fk_hotel INT,
+									 @piso INT, @frente CHAR, @tipo_habitacion INT)
+AS
+BEGIN
+	
+	INSERT INTO SQLECT.Habitaciones (nro_habitacion, fk_hotel, piso, frente, tipo_habitacion)
+	VALUES (@nro_habitacion, @fk_hotel, @piso, @frente, @tipo_habitacion)
+	
+END
+GO
+
+/* --- FIN ABM HABITACIONES ---*/
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.buscarHotelesDisponibles'))
 DROP PROCEDURE SQLECT.buscarHotelesDisponibles

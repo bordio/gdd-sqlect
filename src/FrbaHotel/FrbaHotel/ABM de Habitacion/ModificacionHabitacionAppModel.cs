@@ -10,7 +10,7 @@ namespace FrbaHotel.ABM_de_Habitacion
 {
     class ModificacionHabitacionAppModel : HabitacionAppModel
     {
-        public override void doActionHabitacion(ComboBox cmb_hotel, Control numero_habitacion, Control piso, ComboBox cmb_tipo_habitacion, Control exterior, Control interior, Control descripcion)
+        public override void doActionHabitacion(ComboBox cmb_hotel, Control numero_habitacion, Control piso, ComboBox cmb_tipo_habitacion, RadioButton exterior, RadioButton interior, Control descripcion)
         {
             MessageBox.Show("TO DO: Mas que en el otro!");
         }

@@ -55,7 +55,7 @@
             // 
             this.gridRoles.AllowUserToAddRows = false;
             this.gridRoles.AllowUserToDeleteRows = false;
-            this.gridRoles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.gridRoles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gridRoles.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.gridRoles.BackgroundColor = System.Drawing.SystemColors.Control;
             this.gridRoles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -65,7 +65,7 @@
             this.gridRoles.ReadOnly = true;
             this.gridRoles.RowHeadersVisible = false;
             this.gridRoles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridRoles.Size = new System.Drawing.Size(395, 248);
+            this.gridRoles.Size = new System.Drawing.Size(413, 248);
             this.gridRoles.TabIndex = 0;
             this.gridRoles.SelectionChanged += new System.EventHandler(this.gridRoles_SelectionChanged);
             // 
@@ -116,27 +116,28 @@
             // 
             this.gridFunciones.AllowUserToAddRows = false;
             this.gridFunciones.AllowUserToDeleteRows = false;
-            this.gridFunciones.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.gridFunciones.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gridFunciones.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.gridFunciones.BackgroundColor = System.Drawing.SystemColors.Control;
             this.gridFunciones.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.gridFunciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridFunciones.ColumnHeadersVisible = false;
             this.gridFunciones.Enabled = false;
-            this.gridFunciones.Location = new System.Drawing.Point(413, 32);
+            this.gridFunciones.Location = new System.Drawing.Point(431, 32);
             this.gridFunciones.MultiSelect = false;
             this.gridFunciones.Name = "gridFunciones";
             this.gridFunciones.ReadOnly = true;
             this.gridFunciones.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.gridFunciones.RowHeadersVisible = false;
-            this.gridFunciones.Size = new System.Drawing.Size(181, 248);
+            this.gridFunciones.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridFunciones.Size = new System.Drawing.Size(163, 248);
             this.gridFunciones.TabIndex = 5;
             // 
             // lblFuncionalidades
             // 
             this.lblFuncionalidades.AutoSize = true;
             this.lblFuncionalidades.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFuncionalidades.Location = new System.Drawing.Point(409, 9);
+            this.lblFuncionalidades.Location = new System.Drawing.Point(427, 9);
             this.lblFuncionalidades.Name = "lblFuncionalidades";
             this.lblFuncionalidades.Size = new System.Drawing.Size(140, 20);
             this.lblFuncionalidades.TabIndex = 6;
