@@ -13,7 +13,7 @@ namespace FrbaHotel.ABM_de_Cliente
         private Conexion sqlconexion = Conexion.Instance;
         public Int32 idCliente;
 
-        public override void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, String fecha_Nac, string nacionalidad, string documento_Nro, int idReserva, string tipo_documento, string telefono, string localidad)
+        public override void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, String fecha_Nac, string nacionalidad, string documento_Nro, int idReserva, string tipo_documento, string telefono, string localidad, ComboBox pais)
         {
             Conexion conexion = Conexion.Instance;
             System.Data.SqlClient.SqlCommand comandoACliente = new System.Data.SqlClient.SqlCommand();
@@ -33,25 +33,37 @@ namespace FrbaHotel.ABM_de_Cliente
             comandoACliente.Parameters.Add("@tipodocumento", SqlDbType.VarChar);
             comandoACliente.Parameters.Add("@telefono", SqlDbType.Int);
             comandoACliente.Parameters.Add("@localidad", SqlDbType.VarChar);
+            comandoACliente.Parameters.Add("@pais", SqlDbType.VarChar);
 
-            comandoACliente.Parameters[0].Value = idCliente;
+            comandoACliente.Parameters[0].Value = idCliente; // Como estamos modificando. Necesitamos enviar el id para un update univoco bien seguro.
             comandoACliente.Parameters[1].Value = nombre;
             comandoACliente.Parameters[2].Value = apellido;
             comandoACliente.Parameters[3].Value = mail;
             comandoACliente.Parameters[4].Value = dom_Calle;
-            comandoACliente.Parameters[5].Value = Int32.Parse(nro_Calle);
-            comandoACliente.Parameters[6].Value = Int32.Parse(piso);
+
+            if (nro_Calle != "") comandoACliente.Parameters[5].Value = Int32.Parse(nro_Calle);
+            else comandoACliente.Parameters[5].Value = null;
+
+            if (piso != "") comandoACliente.Parameters[6].Value = Int32.Parse(piso);
+            else comandoACliente.Parameters[6].Value = null;
+
             comandoACliente.Parameters[7].Value = depto;
             comandoACliente.Parameters[8].Value = DateTime.Parse(fecha_Nac);
             comandoACliente.Parameters[9].Value = nacionalidad;
             comandoACliente.Parameters[10].Value = documento_Nro;
             comandoACliente.Parameters[11].Value = tipo_documento;
+
             if (telefono != "") comandoACliente.Parameters[12].Value = Int32.Parse(telefono);
             else comandoACliente.Parameters[12].Value = null;
+
             comandoACliente.Parameters[13].Value = localidad;
 
+            //El Pais Origen no es un campo obligatorio. Por lo cual, puede venir en blanco:
+            if (pais.SelectedItem != null) { comandoACliente.Parameters[14].Value = pais.SelectedItem.ToString(); }
+            else comandoACliente.Parameters[14].Value = "";
+
             comandoACliente.CommandText = "SQLECT.modificacionCliente";
-            conexion.ejecutarQueryConSP(comandoACliente);
+            conexion.ejecutarQueryConSP(comandoACliente); //Pedimos la ejecucion del StoredProcedure SQLECT.modificacionCliente
 
             MessageBox.Show("Modificacion exitosa", "Modificacion de Cliente", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -82,6 +94,10 @@ namespace FrbaHotel.ABM_de_Cliente
               {
                   mensajeValidacion.AppendLine(string.Format(" El email {0} ya existe. Debe modificarlo para poder Guardar los cambios", mail.Text));
               };
+          }
+
+          public override void refrescarPantalla(ABM_de_Cliente.ModificacionMain_Cliente pantallaAnteriorFiltros) { 
+          pantallaAnteriorFiltros.refrescarPantalla();
           }
 
     }
