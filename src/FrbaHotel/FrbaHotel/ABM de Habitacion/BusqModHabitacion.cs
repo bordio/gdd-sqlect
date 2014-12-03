@@ -10,7 +10,7 @@ namespace FrbaHotel.ABM_de_Habitacion
         public override void showForm(Int32 id_habitacion, StringBuilder hotelSeleccionado, StringBuilder tipo_habitacionSeleccionado, FormBusqueda formBusq)
         {
             FormHabitacion formModificacion = new FormHabitacion(new ModificacionHabitacionAppModel(id_habitacion,hotelSeleccionado,tipo_habitacionSeleccionado,formBusq));
-            formModificacion.Show();
+            formModificacion.ShowDialog(formBusq);
             formModificacion.Text = "Modificacion de habitacion";
         }
     }

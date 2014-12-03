@@ -11,7 +11,7 @@ namespace FrbaHotel.ABM_de_Habitacion
         public override void showForm(Int32 id_habitacion, StringBuilder hotelSeleccionado, StringBuilder tipo_habitacionSeleccionado, FormBusqueda formBusq)
         {
             FormHabitacion formBaja = new FormHabitacion(new BajaHabitacionAppModel(id_habitacion, hotelSeleccionado, tipo_habitacionSeleccionado, formBusq));
-            formBaja.Show();
+            formBaja.ShowDialog(formBusq);
             formBaja.Text = "Baja temporal de habitacion";
         }
 
