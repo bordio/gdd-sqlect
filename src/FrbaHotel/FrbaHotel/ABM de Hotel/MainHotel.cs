@@ -13,11 +13,14 @@ namespace FrbaHotel.ABM_de_Hotel
 {
     public partial class MainHotel : Form
     {
-        public MainHotel()
+        public MainHotel(int idUsuario)
         {
             InitializeComponent();
             Text = "Gestor de hoteles";
+            this.idUsuarioActual = idUsuario;
         }
+        
+        private int idUsuarioActual;
         private StringBuilder paisSeleccionado = new StringBuilder();
         private StringBuilder ciudadSeleccionado = new StringBuilder();
         private StringBuilder calleSeleccionado = new StringBuilder();

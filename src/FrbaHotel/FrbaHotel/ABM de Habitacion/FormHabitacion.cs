@@ -11,16 +11,15 @@ namespace FrbaHotel.ABM_de_Habitacion
 {
     public partial class FormHabitacion : Form
     {
-        private HabitacionAppModel appModel;
+        public HabitacionAppModel appModel;
         public FormHabitacion(HabitacionAppModel appmodel)
         {
             this.appModel = appmodel;
             InitializeComponent();
             appModel.cargarHoteles(cmbHoteles);
             appModel.cargarTipoHabitaciones(cmbTipoHabitacion);
-            cmbHoteles.SelectedIndex = 0;
-            cmbTipoHabitacion.SelectedIndex = 0;
             rdExterior.Checked = true;
+            appModel.preload(this);
         }
 
         private void Volver_Click(object sender, EventArgs e)

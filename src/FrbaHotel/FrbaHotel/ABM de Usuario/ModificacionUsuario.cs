@@ -66,7 +66,7 @@ namespace FrbaHotel.ABM_de_Usuario
                 comboHoteles.Items.Add(dat[0]);
             }
 
-            StringBuilder sentenciaRoles = new StringBuilder().AppendFormat("SELECT DISTINCT r.nombre FROM SQLECT.Roles r WHERE r.estado_rol=1 AND r.nombre<>'{0}'",idDeRolActual,usuarioActual);
+            StringBuilder sentenciaRoles = new StringBuilder().AppendFormat("SELECT DISTINCT r.nombre FROM SQLECT.Roles r WHERE r.estado_rol=1 AND r.nombre<>'{0}' AND r.nombre<>'Guest'",idDeRolActual,usuarioActual);
             DataTable tablaRoles = Conexion.Instance.ejecutarQuery(sentenciaRoles.ToString());
 
             foreach (DataRow dat in tablaRoles.Rows)

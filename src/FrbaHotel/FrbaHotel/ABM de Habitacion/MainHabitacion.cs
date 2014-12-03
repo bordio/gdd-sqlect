@@ -24,14 +24,14 @@ namespace FrbaHotel.ABM_de_Habitacion
         private void btAlta_Click(object sender, EventArgs e)
         {
             FormHabitacion formAlta = new FormHabitacion(new AltaHabitacionAppModel());
-            formAlta.Show();
+            formAlta.ShowDialog(this);
             formAlta.Text = "Alta de habitacion";
         }
 
         private void btModificar_Click(object sender, EventArgs e)
         {
             FormBusqueda formBusquedaMod = new FormBusqueda(new BusqModHabitacion());
-            formBusquedaMod.Show();
+            formBusquedaMod.ShowDialog(this);
             formBusquedaMod.Text = "Busqueda de habitacion para modificacion";
             formBusquedaMod.btAccion.Text = "Modificar";
         }
@@ -39,7 +39,7 @@ namespace FrbaHotel.ABM_de_Habitacion
         private void btBaja_Click(object sender, EventArgs e)
         {
             FormBusqueda formBusquedaBaja = new FormBusqueda(new BusqBajaHabitacion());
-            formBusquedaBaja.Show();
+            formBusquedaBaja.ShowDialog(this);
             formBusquedaBaja.Text = "Busqueda de habitacion para dar de baja temporal";
             formBusquedaBaja.btAccion.Text = "Dar de baja";
         }

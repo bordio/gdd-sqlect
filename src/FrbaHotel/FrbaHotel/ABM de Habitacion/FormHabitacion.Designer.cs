@@ -273,25 +273,25 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.RadioButton rdInterior;
-        private System.Windows.Forms.RadioButton rdExterior;
-        private System.Windows.Forms.ComboBox cmbHoteles;
-        private System.Windows.Forms.TextBox Numero_Habitacion;
-        private System.Windows.Forms.TextBox Piso;
-        private System.Windows.Forms.ComboBox cmbTipoHabitacion;
-        private System.Windows.Forms.TextBox Descripcion;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Button Guardar;
-        private System.Windows.Forms.Button Volver;
+        public System.Windows.Forms.Label label1;
+        public System.Windows.Forms.Label label2;
+        public System.Windows.Forms.Label label3;
+        public System.Windows.Forms.Label label4;
+        public System.Windows.Forms.Label label5;
+        public System.Windows.Forms.GroupBox groupBox1;
+        public System.Windows.Forms.RadioButton rdInterior;
+        public System.Windows.Forms.RadioButton rdExterior;
+        public System.Windows.Forms.ComboBox cmbHoteles;
+        public System.Windows.Forms.TextBox Numero_Habitacion;
+        public System.Windows.Forms.TextBox Piso;
+        public System.Windows.Forms.ComboBox cmbTipoHabitacion;
+        public System.Windows.Forms.TextBox Descripcion;
+        public System.Windows.Forms.Label label6;
+        public System.Windows.Forms.Label label7;
+        public System.Windows.Forms.Label label8;
+        public System.Windows.Forms.Label label9;
+        public System.Windows.Forms.Label label10;
+        public System.Windows.Forms.Button Guardar;
+        public System.Windows.Forms.Button Volver;
     }
 }
