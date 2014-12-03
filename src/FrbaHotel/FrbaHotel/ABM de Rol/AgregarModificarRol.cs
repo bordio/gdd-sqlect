@@ -67,7 +67,8 @@ namespace FrbaHotel.ABM_de_Rol
         private void bttnAceptar_Click(object sender, EventArgs e)
         {
             StringBuilder errores = new StringBuilder();
-            if (!validarDatos(errores))
+            validarDatos(errores);
+            if (errores.Length<=1)
                 doAceptar();
             else
                 MessageBox.Show(errores.ToString(), "Errores en el formulario", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -134,44 +135,29 @@ namespace FrbaHotel.ABM_de_Rol
             this.Close();
         }
 
-        private bool validarDatos(StringBuilder errores)
+        private void validarDatos(StringBuilder errores)
         {
-            bool retorno = false;
-            retorno = retorno || validarNombre(errores);
-            retorno = retorno || validarDescrip(errores);
-            return retorno;
+            validarNombre(errores);
+            validarDescrip(errores);
         }
 
-        private bool validarNombre(StringBuilder e)
+        private void validarNombre(StringBuilder e)
         {
             if (txtNombre.Text == "")
-            {
                 e.AppendLine("Debe definir un nombre!");
-                return true;
-            }
             else
             {
                 StringBuilder querry = new StringBuilder();
                 querry.AppendFormat(((idRol > 0) ? "SELECT nombre FROM SQLECT.Roles WHERE nombre = '{1}' AND id_rol != {0}" : "SELECT nombre FROM SQLECT.Roles WHERE nombre = '{1}'"), idRol, txtNombre.Text);
                 if (Conexion.Instance.ejecutarQuery(querry.ToString()).Rows.Count > 0)
-                {
                     e.AppendLine("Ya existe un rol con ese nombre!");
-                    return true;
-                }
-                else
-                    return false;
             }
         }
 
-        private bool validarDescrip(StringBuilder e)
+        private void validarDescrip(StringBuilder e)
         {
             if (txtDescrip.Text == "")
-            {
                 e.AppendLine("Debe dar una descripción para el rol!");
-                return true;
-            }
-            else
-                return false;
         }
 
     }

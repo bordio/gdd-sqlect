@@ -13,11 +13,13 @@ namespace FrbaHotel.ABM_de_Rol
 {
     public partial class MainRol : Form
     {
-        public MainRol()
+        public MainRol(Login.MenuDeFuncionalidades owner)
         {
             InitializeComponent();
+            padre = owner;
         }
 
+        private Login.MenuDeFuncionalidades padre;
         private Int32 idRolSelecc = -1;
         private DataTable funcionesRolSelecc = new DataTable();
 
@@ -78,6 +80,7 @@ namespace FrbaHotel.ABM_de_Rol
 
         private void bttnVolver_Click(object sender, EventArgs e)
         {
+            padre.Show();
             this.Close();
         }
 

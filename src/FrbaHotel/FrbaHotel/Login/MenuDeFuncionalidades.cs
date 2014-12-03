@@ -29,19 +29,19 @@ namespace FrbaHotel.Login
 
         private void MenuDeFuncionalidades_Load(object sender, EventArgs e)
         {
-
+            mostrarHotelesACargo();
         }
 
-        public void mostrarHotelesACargo(string nombreDeUsuario, string rolElegido)
+        public void mostrarHotelesACargo()
         {
-            DataTable tabla = buscarHotelesDisponibles(nombreDeUsuario);
+            DataTable tabla = buscarHotelesDisponibles(usuarioDeSesion);
 
             foreach (DataRow dat in tabla.Rows)
             {
                 listaHotelesHabilitados.Items.Add(dat[0]);
             }
 
-            cargarFuncionalidades(rolElegido);
+            cargarFuncionalidades(nombreRolDeSesion);
 
         }
 
@@ -138,7 +138,7 @@ namespace FrbaHotel.Login
             switch (funcionalidad)
             {
                 case "Gestionar roles": 
-                   FrbaHotel.ABM_de_Rol.MainRol gestionarRoles = new FrbaHotel.ABM_de_Rol.MainRol();
+                   FrbaHotel.ABM_de_Rol.MainRol gestionarRoles = new FrbaHotel.ABM_de_Rol.MainRol(this);
                    gestionarRoles.Show();
                     break;
                 case "Gestionar usuarios":
@@ -181,9 +181,8 @@ namespace FrbaHotel.Login
                     FrbaHotel.Listado_Estadistico.Form1 listadoEstadistico = new FrbaHotel.Listado_Estadistico.Form1();
                     listadoEstadistico.Show();
                     break;
-
             }
-
+            this.Hide();
         }
 
         private void button2_Click(object sender, EventArgs e)
