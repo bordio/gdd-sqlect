@@ -2092,9 +2092,3 @@ BEGIN
 	
 END
 GO
-
-SELECT nombrePais,id_pais FROM SQLECT.Paises
-
-SELECT nombre 'Nombre', apellido 'Apellido', mail 'Email', telefono 'Telefono',fecha_Nac 'Fecha Nacimiento', dom_Calle 'Calle', nro_calle 'Nro Calle', piso 'Piso', depto 'Departamento', localidad 'Localidad', fk_paisOrigen 'Pais', nacionalidad 'Nacionalidad', tipoDocumento 'Tipo de Documento',documento_Nro 'Número de Documento', habilitado 'Habilitado' 
-FROM SQLECT.Clientes
-
