@@ -16,7 +16,7 @@ namespace FrbaHotel.ABM_de_Cliente
         { 
         }
 
-        public Alta_Cliente(int idReserva) : base(idReserva)
+        public Alta_Cliente(int idReserva, FrbaHotel.Generar_Modificar_Reserva.RegistroCliente formulario) : base(idReserva, formulario)
         {  
         }
 

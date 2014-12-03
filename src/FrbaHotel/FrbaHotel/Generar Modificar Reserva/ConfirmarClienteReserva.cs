@@ -11,9 +11,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 {
     public partial class ConfirmarClienteReserva : Form
     {
-        public ConfirmarClienteReserva(string email, int documento, int idReserva)
+        public FrbaHotel.ABM_de_Cliente.ModificacionMain_Cliente formAnterior = null;
+        public ConfirmarClienteReserva(string email, int documento, int idReserva, FrbaHotel.ABM_de_Cliente.ModificacionMain_Cliente formulario)
         {
             InitializeComponent();
+            formAnterior = formulario;
             this.emailDelClienteDeLaReserva = email;
             this.documentoDelClienteDeLaReserva = documento;
             this.idReserva = idReserva;
@@ -45,6 +47,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 if (todoOk)
                 {
                     MessageBox.Show(string.Format("Registro correcto del cliente a la reserva, guarde el siguiente codigo para posibles modificaciones: {0}", funcionesReservas.obtenerCodigoReserva(idReserva)));
+                    this.Close();
+                    this.formAnterior.cerrate();
                 }
             }
         }

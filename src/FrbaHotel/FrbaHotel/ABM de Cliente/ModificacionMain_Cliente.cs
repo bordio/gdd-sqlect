@@ -18,6 +18,7 @@ namespace FrbaHotel.ABM_de_Cliente
         public StringBuilder tipodocSeleccionado = new StringBuilder();
 
         int idReservaDelCliente;
+        FrbaHotel.Generar_Modificar_Reserva.RegistroCliente formularioAnterior;
 
         public ModificacionMain_Cliente()
         {
@@ -29,12 +30,12 @@ namespace FrbaHotel.ABM_de_Cliente
             llenarComboDocumentos();
         }
 
-        public ModificacionMain_Cliente(int idReserva)
+        public ModificacionMain_Cliente(int idReserva, FrbaHotel.Generar_Modificar_Reserva.RegistroCliente formulario)
         {
             InitializeComponent();
             appModel_Modificar = new AppModel_Modificacion_Cliente();
             this.idReservaDelCliente = idReserva;
-            
+            formularioAnterior = formulario;
             this.label1.Visible = false;
             this.label2.Visible = false;
             this.labelNacionalidad.Visible = false;
@@ -127,7 +128,7 @@ namespace FrbaHotel.ABM_de_Cliente
         {
             if (btModificar.Text=="Seleccionar") // La reserva utiliza esta view tambien. Cambiando el nombre del boton "Modificar" por "Seleccionar"
             {
-                FrbaHotel.Generar_Modificar_Reserva.ConfirmarClienteReserva formConfirmarCliente = new FrbaHotel.Generar_Modificar_Reserva.ConfirmarClienteReserva(emailSeleccionado.ToString(), Convert.ToInt32(documentoSeleccionado.ToString()), idReservaDelCliente);
+                FrbaHotel.Generar_Modificar_Reserva.ConfirmarClienteReserva formConfirmarCliente = new FrbaHotel.Generar_Modificar_Reserva.ConfirmarClienteReserva(emailSeleccionado.ToString(), Convert.ToInt32(documentoSeleccionado.ToString()), idReservaDelCliente, this);
                 formConfirmarCliente.Show();
             }
             else // Se quiere modificar a un cliente de verdad
@@ -145,6 +146,11 @@ namespace FrbaHotel.ABM_de_Cliente
                 appModel.inhabilitarCliente(this.emailSeleccionado, this.documentoSeleccionado, this.tipodocSeleccionado);
                 this.refrescarPantalla();
             }
+        }
+
+        public void cerrate() {
+            this.Close();
+            this.formularioAnterior.Cerrate(false);
         }
 
         public void btHabilitar_Click(object sender, EventArgs e)
