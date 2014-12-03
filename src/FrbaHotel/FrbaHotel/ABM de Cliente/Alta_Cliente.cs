@@ -16,7 +16,7 @@ namespace FrbaHotel.ABM_de_Cliente
         { 
         }
 
-        public Alta_Cliente(int idReserva) : base()
+        public Alta_Cliente(int idReserva) : base(idReserva)
         {  
         }
 

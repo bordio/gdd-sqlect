@@ -44,7 +44,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 bool todoOk = funcionesReservas.adjudicarClienteALaReserva(emailDelClienteDeLaReserva, documentoDelClienteDeLaReserva, idReserva);
                 if (todoOk)
                 {
-                    MessageBox.Show(string.Format("Registro correcto del cliente a la reserva, guarde el siguiente codigo para posibles modificaciones: {0}",funcionesReservas.obtenerCodigoReserva(idReserva)));
+                    MessageBox.Show(string.Format("Registro correcto del cliente a la reserva, guarde el siguiente codigo para posibles modificaciones: {0}", funcionesReservas.obtenerCodigoReserva(idReserva)));
                 }
             }
         }

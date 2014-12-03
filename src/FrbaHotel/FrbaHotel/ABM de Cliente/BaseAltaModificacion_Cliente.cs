@@ -12,6 +12,10 @@ namespace FrbaHotel.ABM_de_Cliente
     
     public partial class BaseAltaModificacion_Cliente : Form
     {
+        public Boolean emailOk, documentoOk, nombreOk, apellidoOk;
+        public Boolean validaciones = false;
+        public int idReservaDelCliente;
+        public StringBuilder mensajeValidacion;
         public AppModel_Base_Cliente appModel;
         public ABM_de_Cliente.ModificacionMain_Cliente pantallaAnteriorFiltros = null;
 
@@ -26,12 +30,12 @@ namespace FrbaHotel.ABM_de_Cliente
 
         public BaseAltaModificacion_Cliente(int idReserva) //Para altas con reserva. Lo usa clase hija Alta_Cliente
         {
-            appModel = new AppModel_Alta_Cliente();
-            Text = "Alta de Cliente";
+            InitializeComponent();
             this.idReservaDelCliente = idReserva;
+            appModel = new AppModel_Alta_Cliente(idReservaDelCliente);
+            Text = "Alta de Cliente";
             llenarComboDocumentos();
             appModel.cargarPaises(PaisOrigen);
-
         }
 
         public BaseAltaModificacion_Cliente(ABM_de_Cliente.ModificacionMain_Cliente pantallaFiltros,DataGridView lsClientes, StringBuilder email, StringBuilder documento, StringBuilder tipo) //Para modificaciones. Lo usa clase hija Modificacion_Cliente
@@ -43,12 +47,6 @@ namespace FrbaHotel.ABM_de_Cliente
             pantallaAnteriorFiltros = pantallaFiltros;
             
         }
-
-        public int idReservaDelCliente;
-
-        public Boolean emailOk, documentoOk, nombreOk, apellidoOk;
-        public Boolean validaciones = false;
-        public StringBuilder mensajeValidacion;
 
         public void llenarComboDocumentos()
         {
