@@ -59,7 +59,6 @@ namespace FrbaHotel.Login
                           
                           Login.MenuDeFuncionalidades listadoDeFuncionalidades = new MenuDeFuncionalidades(textUsuario.Text,comboBoxRol.SelectedItem.ToString());
                           listadoDeFuncionalidades.Show();
-                          listadoDeFuncionalidades.mostrarHotelesACargo(textUsuario.Text,comboBoxRol.SelectedItem.ToString());
                           
                           
                       }
