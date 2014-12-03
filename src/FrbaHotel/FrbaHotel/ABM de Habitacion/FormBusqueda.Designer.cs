@@ -88,6 +88,7 @@
             this.lstHabitaciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.lstHabitaciones.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.lstHabitaciones.Location = new System.Drawing.Point(20, 137);
+            this.lstHabitaciones.MultiSelect = false;
             this.lstHabitaciones.Name = "lstHabitaciones";
             this.lstHabitaciones.ReadOnly = true;
             this.lstHabitaciones.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;

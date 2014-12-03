@@ -84,6 +84,7 @@
       <DependentUpon>Modificacion_Cliente.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM de Habitacion\AltaHabitacionAppModel.cs" />
+    <Compile Include="ABM de Habitacion\BajaHabitacionAppModel.cs" />
     <Compile Include="ABM de Habitacion\BusqBajaHabitacion.cs" />
     <Compile Include="ABM de Habitacion\BusqModHabitacion.cs" />
     <Compile Include="ABM de Habitacion\BusquedaHabitacionAppModel.cs" />

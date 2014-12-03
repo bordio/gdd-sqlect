@@ -11,7 +11,7 @@ namespace FrbaHotel.ABM_de_Habitacion
 {
     public partial class FormHabitacion : Form
     {
-        private HabitacionAppModel appModel;
+        public HabitacionAppModel appModel;
         public FormHabitacion(HabitacionAppModel appmodel)
         {
             this.appModel = appmodel;
@@ -19,7 +19,7 @@ namespace FrbaHotel.ABM_de_Habitacion
             appModel.cargarHoteles(cmbHoteles);
             appModel.cargarTipoHabitaciones(cmbTipoHabitacion);
             rdExterior.Checked = true;
-            appModel.preload(Numero_Habitacion, Piso, rdExterior, rdInterior, Descripcion);
+            appModel.preload(this);
         }
 
         private void Volver_Click(object sender, EventArgs e)

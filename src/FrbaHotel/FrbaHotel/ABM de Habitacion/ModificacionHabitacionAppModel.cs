@@ -11,14 +11,15 @@ namespace FrbaHotel.ABM_de_Habitacion
     class ModificacionHabitacionAppModel : HabitacionAppModel
     {
         private Conexion connSql = Conexion.Instance;
-        private StringBuilder hotelSeleccionado = new StringBuilder();
-        private StringBuilder tipo_habitacionSeleccionado = new StringBuilder();
-        private string nro_habitacion = null;
-        private string piso = null;
-        private string frente = null;
-        private string descripcion = null;
-        private int id_habitacion = 0;
-        private FormBusqueda formBusq;
+        protected StringBuilder hotelSeleccionado = new StringBuilder();
+        protected StringBuilder tipo_habitacionSeleccionado = new StringBuilder();
+        protected string nro_habitacion = null;
+        protected string piso = null;
+        protected string frente = null;
+        protected string descripcion = null;
+        protected int id_habitacion = 0;
+        protected int estado_habitacion = 0;
+        protected FormBusqueda formBusq;
 
         public ModificacionHabitacionAppModel(Int32 id_habitacion, StringBuilder hotelSeleccionado, StringBuilder tipo_habitacionSeleccionado, FormBusqueda formBusq)
         {
@@ -27,13 +28,14 @@ namespace FrbaHotel.ABM_de_Habitacion
             this.id_habitacion = id_habitacion;
             this.formBusq = formBusq;
             StringBuilder sentece = new StringBuilder();
-            sentece.AppendFormat("SELECT nro_habitacion, piso, frente, descripcion FROM SQLECT.Habitaciones WHERE id_habitacion={0}",id_habitacion);
+            sentece.AppendFormat("SELECT nro_habitacion, piso, frente, descripcion,estado_habitacion FROM SQLECT.Habitaciones WHERE id_habitacion={0}", id_habitacion);
             DataTable tabla = this.connSql.ejecutarQuery(sentece.ToString());
 
             nro_habitacion = tabla.Rows[0]["nro_habitacion"].ToString();
             piso = tabla.Rows[0]["piso"].ToString();
             frente = tabla.Rows[0]["frente"].ToString();
             descripcion = tabla.Rows[0]["descripcion"].ToString();
+            this.estado_habitacion = Int32.Parse(tabla.Rows[0]["estado_habitacion"].ToString());
         }
 
         public override void doActionHabitacion(ComboBox cmb_hotel, Control numero_habitacion, Control piso, ComboBox cmb_tipo_habitacion, RadioButton exterior, RadioButton interior, Control descripcion)
@@ -96,12 +98,12 @@ namespace FrbaHotel.ABM_de_Habitacion
             cmbTipoHabitaciones.Enabled = false;
         }
 
-        public override void preload(Control Numero_Habitacion, Control Piso, RadioButton rdExterior, RadioButton rdInterior, Control Descripcion)
+        public override void preload(FormHabitacion formHab)
         {
-            Numero_Habitacion.Text = nro_habitacion;
-            Piso.Text = piso;
-            (frente == "S" ? rdExterior : rdInterior).Checked = true;
-            Descripcion.Text = descripcion;
+            formHab.Numero_Habitacion.Text = nro_habitacion;
+            formHab.Piso.Text = piso;
+            (frente == "S" ? formHab.rdExterior : formHab.rdInterior).Checked = true;
+            formHab.Descripcion.Text = descripcion;
         }
 
         public override bool nroHabitacionDuplicado(ComboBox cmb_hotel, Control numero_habitacion)

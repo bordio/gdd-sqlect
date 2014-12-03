@@ -14,7 +14,7 @@ namespace FrbaHotel.ABM_de_Habitacion
         public DataTable searchByExample(ComboBox hotel, Control nro_habitacion, Control piso, ComboBox tipo_habitacion)
         {
             StringBuilder sentence = new StringBuilder();
-            sentence.Append("SELECT id_habitacion , hotel, nro_habitacion, piso, frente, tipo_habitacion FROM SQLECT.Habitaciones_Vista");
+            sentence.Append("SELECT id_habitacion , hotel, nro_habitacion, piso, frente, tipo_habitacion, activado FROM SQLECT.Habitaciones_Vista");
 
             if ((nro_habitacion.Text != "") || (piso.Text != "") || (hotel.SelectedIndex > 0) || (tipo_habitacion.SelectedIndex > 0))
             {
@@ -56,5 +56,7 @@ namespace FrbaHotel.ABM_de_Habitacion
                 return tabla;
             }
         }
+
+        public virtual void actualizarBoton(Button btAccion, string Estado) { }
     }
 }

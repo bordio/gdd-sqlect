@@ -72,6 +72,7 @@ namespace FrbaHotel.ABM_de_Habitacion
                 tipo_habitacionSeleccionado.AppendFormat("{0}", celda_actual.Cells[5].Value.ToString());
 
                 btAccion.Enabled = true;
+                this.appModel.actualizarBoton(btAccion, celda_actual.Cells[6].Value.ToString());
             }
 
         }

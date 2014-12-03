@@ -18,7 +18,7 @@ namespace FrbaHotel.ABM_de_Habitacion
         protected bool fallo_carga = false;
         
         public virtual void doActionHabitacion(ComboBox cmb_hotel, Control numero_habitacion, Control piso, ComboBox cmb_tipo_habitacion, RadioButton exterior, RadioButton interior, Control descripcion) { }
-        public virtual void preload(Control Numero_Habitacion, Control Piso, RadioButton rdExterior, RadioButton rdInterior, Control Descripcion) { }
+        public virtual void preload(FormHabitacion formHab) { }
         
         public bool actionHabitacion(ComboBox cmb_hotel, Control numero_habitacion, Control piso, ComboBox cmb_tipo_habitacion, RadioButton exterior, RadioButton interior, Control descripcion, StringBuilder errores)
         {
