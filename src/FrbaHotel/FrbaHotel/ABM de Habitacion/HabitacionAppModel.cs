@@ -16,7 +16,9 @@ namespace FrbaHotel.ABM_de_Habitacion
         protected List<Int32> id_hotels = new List<Int32>();
         protected List<Int32> id_tipo_habitaciones = new List<Int32>();
         protected bool fallo_carga = false;
+        
         public virtual void doActionHabitacion(ComboBox cmb_hotel, Control numero_habitacion, Control piso, ComboBox cmb_tipo_habitacion, RadioButton exterior, RadioButton interior, Control descripcion) { }
+        public virtual void preload(Control Numero_Habitacion, Control Piso, RadioButton rdExterior, RadioButton rdInterior, Control Descripcion) { }
         
         public bool actionHabitacion(ComboBox cmb_hotel, Control numero_habitacion, Control piso, ComboBox cmb_tipo_habitacion, RadioButton exterior, RadioButton interior, Control descripcion, StringBuilder errores)
         {
@@ -41,6 +43,7 @@ namespace FrbaHotel.ABM_de_Habitacion
                 cmbHoteles.Items.Add(tabla.Rows[i]["nombre"].ToString());
                 this.id_hotels.Add(Int32.Parse(tabla.Rows[i]["id_hotel"].ToString()));
             }
+            cmbHoteles.SelectedIndex = 0;
         }
 
         public virtual void cargarTipoHabitaciones(ComboBox cmbTipoHabitaciones)
@@ -53,6 +56,7 @@ namespace FrbaHotel.ABM_de_Habitacion
                 cmbTipoHabitaciones.Items.Add(tabla.Rows[i]["descripcion"].ToString());
                 this.id_tipo_habitaciones.Add(Int32.Parse(tabla.Rows[i]["id_tipo_habitacion"].ToString()));
             }
+            cmbTipoHabitaciones.SelectedIndex = 0;
         }
 
         public void validarForm(ComboBox cmb_hotel, Control numero_habitacion, Control piso, ComboBox cmb_tipo_habitacion, RadioButton exterior, RadioButton interior, Control descripcion, StringBuilder errores)
@@ -84,7 +88,7 @@ namespace FrbaHotel.ABM_de_Habitacion
             fallo_carga = false;
         }
 
-        private bool nroHabitacionDuplicado(ComboBox cmb_hotel, Control numero_habitacion)
+        public virtual bool nroHabitacionDuplicado(ComboBox cmb_hotel, Control numero_habitacion)
         {
             StringBuilder sentece = new StringBuilder();
             sentece.AppendFormat("SELECT id_habitacion FROM SQLECT.Habitaciones WHERE fk_hotel={0} AND nro_habitacion={1}", id_hotels[cmb_hotel.SelectedIndex],Int32.Parse(numero_habitacion.Text));

@@ -10,7 +10,7 @@ namespace FrbaHotel.ABM_de_Habitacion
 {
     public abstract class BusquedaHabitacionAppModel : HabitacionAppModel
     {
-        public virtual void showForm() { }
+        public virtual void showForm(Int32 id_habitacion, StringBuilder hotelSeleccionado, StringBuilder tipo_habitacionSeleccionado, FormBusqueda formBusq) { }
         public DataTable searchByExample(ComboBox hotel, Control nro_habitacion, Control piso, ComboBox tipo_habitacion)
         {
             StringBuilder sentence = new StringBuilder();

@@ -18,9 +18,8 @@ namespace FrbaHotel.ABM_de_Habitacion
             InitializeComponent();
             appModel.cargarHoteles(cmbHoteles);
             appModel.cargarTipoHabitaciones(cmbTipoHabitacion);
-            cmbHoteles.SelectedIndex = 0;
-            cmbTipoHabitacion.SelectedIndex = 0;
             rdExterior.Checked = true;
+            appModel.preload(Numero_Habitacion, Piso, rdExterior, rdInterior, Descripcion);
         }
 
         private void Volver_Click(object sender, EventArgs e)

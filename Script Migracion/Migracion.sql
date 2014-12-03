@@ -110,6 +110,7 @@ CREATE TABLE SQLECT.Habitaciones (
 	piso tinyint,
 	frente char(1),
 	tipo_habitacion int REFERENCES SQLECT.Tipos_Habitaciones(id_tipo_habitacion),
+	descripcion text,
 	estado_habitacion tinyint DEFAULT 1 
 )
 
@@ -949,12 +950,28 @@ DROP PROCEDURE SQLECT.altaHabitacion
 
 GO
 CREATE PROCEDURE SQLECT.altaHabitacion (@nro_habitacion INT, @fk_hotel INT,
-									 @piso INT, @frente CHAR, @tipo_habitacion INT)
+									 @piso INT, @frente CHAR, @tipo_habitacion INT, @descripcion TEXT)
 AS
 BEGIN
 	
-	INSERT INTO SQLECT.Habitaciones (nro_habitacion, fk_hotel, piso, frente, tipo_habitacion)
-	VALUES (@nro_habitacion, @fk_hotel, @piso, @frente, @tipo_habitacion)
+	INSERT INTO SQLECT.Habitaciones (nro_habitacion, fk_hotel, piso, frente, tipo_habitacion, descripcion)
+	VALUES (@nro_habitacion, @fk_hotel, @piso, @frente, @tipo_habitacion, @descripcion)
+	
+END
+GO
+
+/* Modificacion habitacion */
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.modificacionHabitacion'))
+DROP PROCEDURE SQLECT.modificacionHabitacion
+
+GO
+CREATE PROCEDURE SQLECT.modificacionHabitacion (@id_habitacion INT,@nro_habitacion INT, @fk_hotel INT,
+									 @piso INT, @frente CHAR, @descripcion TEXT)
+AS
+BEGIN
+	
+	UPDATE SQLECT.Habitaciones SET nro_habitacion=@nro_habitacion, fk_hotel=@fk_hotel, piso=@piso, frente=@frente, descripcion=@descripcion
+	WHERE id_habitacion=@id_habitacion
 	
 END
 GO

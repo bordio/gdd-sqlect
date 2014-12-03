@@ -35,7 +35,7 @@ namespace FrbaHotel.ABM_de_Habitacion
 
         private void btAccion_Click(object sender, EventArgs e)
         {
-            this.appModel.showForm();
+            this.appModel.showForm(id_habitacionSeleccionado,hotelSeleccionado,tipo_habitacionSeleccionado, this);
         }
 
         private void Limpiar_Click(object sender, EventArgs e)
@@ -47,10 +47,15 @@ namespace FrbaHotel.ABM_de_Habitacion
             lstHabitaciones.DataSource = null;
         }
 
-        private void Filtrar_Click(object sender, EventArgs e)
+        public void filtrar()
         {
             lstHabitaciones.DataSource = this.appModel.searchByExample(cmbHoteles, nro_habitacion, piso, cmbTipoHabitacion).DefaultView;
             lstHabitaciones.Columns[0].Visible = false; //id_habitacion
+        }
+
+        private void Filtrar_Click(object sender, EventArgs e)
+        {
+            this.filtrar();
         }
 
         private void lstHabitaciones_SelectionChanged(object sender, EventArgs e)

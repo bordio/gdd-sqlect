@@ -7,9 +7,9 @@ namespace FrbaHotel.ABM_de_Habitacion
 {
     class BusqModHabitacion : BusquedaHabitacionAppModel
     {
-        public override void showForm()
+        public override void showForm(Int32 id_habitacion, StringBuilder hotelSeleccionado, StringBuilder tipo_habitacionSeleccionado, FormBusqueda formBusq)
         {
-            FormHabitacion formModificacion = new FormHabitacion(new ModificacionHabitacionAppModel());
+            FormHabitacion formModificacion = new FormHabitacion(new ModificacionHabitacionAppModel(id_habitacion,hotelSeleccionado,tipo_habitacionSeleccionado,formBusq));
             formModificacion.Show();
             formModificacion.Text = "Modificacion de habitacion";
         }
