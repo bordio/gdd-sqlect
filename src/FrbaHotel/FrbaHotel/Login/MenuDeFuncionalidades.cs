@@ -29,19 +29,19 @@ namespace FrbaHotel.Login
 
         private void MenuDeFuncionalidades_Load(object sender, EventArgs e)
         {
-
+            mostrarHotelesACargo();
         }
 
-        public void mostrarHotelesACargo(string nombreDeUsuario, string rolElegido)
+        public void mostrarHotelesACargo()
         {
-            DataTable tabla = buscarHotelesDisponibles(nombreDeUsuario);
+            DataTable tabla = buscarHotelesDisponibles(usuarioDeSesion);
 
             foreach (DataRow dat in tabla.Rows)
             {
                 listaHotelesHabilitados.Items.Add(dat[0]);
             }
 
-            cargarFuncionalidades(rolElegido);
+            cargarFuncionalidades(nombreRolDeSesion);
 
         }
 
@@ -138,7 +138,7 @@ namespace FrbaHotel.Login
             switch (funcionalidad)
             {
                 case "Gestionar roles": 
-                   FrbaHotel.ABM_de_Rol.MainRol gestionarRoles = new FrbaHotel.ABM_de_Rol.MainRol();
+                   FrbaHotel.ABM_de_Rol.MainRol gestionarRoles = new FrbaHotel.ABM_de_Rol.MainRol(this);
                    gestionarRoles.Show();
                     break;
                 case "Gestionar usuarios":
@@ -165,25 +165,22 @@ namespace FrbaHotel.Login
                     FrbaHotel.Cancelar_Reserva.Form1 cancelarReservas = new FrbaHotel.Cancelar_Reserva.Form1(idDeHotelElegido,usuarioDeSesion,nombreRolDeSesion,true);
                     cancelarReservas.Show();
                     break;
-                case "Gestionar estadias":
+                case "Gestionar estadías":
                     FrbaHotel.Registrar_Estadia.Form1 registrarEstadias = new FrbaHotel.Registrar_Estadia.Form1(usuarioDeSesion, idDeHotelElegido);
                     registrarEstadias.Show();
                     break;
-                /*case "Gestionar consumibles":
-                    FrbaHotel.Registrar_Consumible.Form1 gestionarConsumibles = new FrbaHotel.Registrar_Consumible.Form1(idDeHotelElegido);
-                    gestionarConsumibles.Show();
+                case "Gestionar consumibles":
+                    MessageBox.Show("Debe realizar primero el Check-Out");
                     break;
                 case "Facturación":
-                    FrbaHotel.Registrar_Consumible.Form1 facturacion = new FrbaHotel.Registrar_Consumible.Form1(idDeHotelElegido);
-                    facturacion.Show();
-                    break;*/
+                    MessageBox.Show("Debe realizar primero el respectivo registro de consumibles");
+                    break;
                 case "Listado estadístico":
                     FrbaHotel.Listado_Estadistico.Form1 listadoEstadistico = new FrbaHotel.Listado_Estadistico.Form1();
                     listadoEstadistico.Show();
                     break;
-
             }
-
+            this.Hide();
         }
 
         private void button2_Click(object sender, EventArgs e)
