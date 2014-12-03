@@ -909,6 +909,33 @@ BEGIN
 END
 GO
 
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.funcQuitarRegimen'))
+DROP FUNCTION SQLECT.funcQuitarRegimen
+
+
+GO
+CREATE FUNCTION SQLECT.funcQuitaRegimen (@id_hotel INT, @regimen VARCHAR(60), @fecha DATE)
+RETURNS INT
+AS
+BEGIN
+
+DECLARE @idReg INT
+DECLARE @ret INT
+
+SET @idReg = (SELECT id_regimen FROM SQLECT.Regimenes WHERE descripcion = @regimen)
+
+IF EXISTS
+(SELECT id_reserva FROM SQLECT.Reservas
+WHERE fk_regimen = @idReg AND DATEADD(day,cant_noches_reserva,fecha_inicio) > @fecha AND estado_reserva IN (0,1,5))
+	SET @ret = 0
+ELSE
+	SET @ret = 1	
+	
+RETURN @ret
+END
+GO
+
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.modificacionHotel'))
 DROP PROCEDURE SQLECT.modificacionHotel
 
