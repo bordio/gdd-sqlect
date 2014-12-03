@@ -30,9 +30,18 @@ namespace FrbaHotel.ABM_de_Habitacion
 
         private void btModificar_Click(object sender, EventArgs e)
         {
-            FormHabitacion formModificacion = new FormHabitacion(new ModificacionHabitacionAppModel());
-            formModificacion.Show();
-            formModificacion.Text = "Modificacion de habitacion";
+            FormBusqueda formBusquedaMod = new FormBusqueda(new BusqModHabitacion());
+            formBusquedaMod.Show();
+            formBusquedaMod.Text = "Busqueda de habitacion para modificacion";
+            formBusquedaMod.btAccion.Text = "Modificar";
+        }
+
+        private void btBaja_Click(object sender, EventArgs e)
+        {
+            FormBusqueda formBusquedaBaja = new FormBusqueda(new BusqBajaHabitacion());
+            formBusquedaBaja.Show();
+            formBusquedaBaja.Text = "Busqueda de habitacion para dar de baja temporal";
+            formBusquedaBaja.btAccion.Text = "Dar de baja";
         }
     }
 }

@@ -37,9 +37,11 @@
             this.btGuardar = new System.Windows.Forms.Button();
             this.btLimpiar = new System.Windows.Forms.Button();
             this.groupBoxDomicilio = new System.Windows.Forms.GroupBox();
+            this.PaisOrigen = new System.Windows.Forms.ComboBox();
             this.Depto = new System.Windows.Forms.TextBox();
             this.labelLocalidad = new System.Windows.Forms.Label();
             this.Numero = new System.Windows.Forms.TextBox();
+            this.lblPaisOrigen = new System.Windows.Forms.Label();
             this.groupBoxDatosPersonales = new System.Windows.Forms.GroupBox();
             this.btCancelar = new System.Windows.Forms.Button();
             this.Telefono = new System.Windows.Forms.TextBox();
@@ -48,7 +50,6 @@
             this.labelTipoDoc = new System.Windows.Forms.Label();
             this.monthCalendar = new System.Windows.Forms.MonthCalendar();
             this.btFechaNac = new System.Windows.Forms.Button();
-            this.lblPaisOrigen = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.Fecha = new System.Windows.Forms.TextBox();
             this.labelObligatorio5 = new System.Windows.Forms.Label();
@@ -56,7 +57,6 @@
             this.labelObligatorio3 = new System.Windows.Forms.Label();
             this.labelObligatorio2 = new System.Windows.Forms.Label();
             this.labelObligatorio = new System.Windows.Forms.Label();
-            this.PaisOrigen = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.labeltelAdvertencia = new System.Windows.Forms.Label();
             this.Email = new System.Windows.Forms.TextBox();
@@ -225,6 +225,7 @@
             // 
             // groupBoxDomicilio
             // 
+            this.groupBoxDomicilio.Controls.Add(this.PaisOrigen);
             this.groupBoxDomicilio.Controls.Add(this.Depto);
             this.groupBoxDomicilio.Controls.Add(this.labelLocalidad);
             this.groupBoxDomicilio.Controls.Add(this.Localidad);
@@ -236,7 +237,6 @@
             this.groupBoxDomicilio.Controls.Add(this.labelPiso);
             this.groupBoxDomicilio.Controls.Add(this.lblPaisOrigen);
             this.groupBoxDomicilio.Controls.Add(this.Calle);
-            this.groupBoxDomicilio.Controls.Add(this.PaisOrigen);
             this.groupBoxDomicilio.ForeColor = System.Drawing.SystemColors.ControlText;
             this.groupBoxDomicilio.Location = new System.Drawing.Point(16, 281);
             this.groupBoxDomicilio.Name = "groupBoxDomicilio";
@@ -244,6 +244,15 @@
             this.groupBoxDomicilio.TabIndex = 0;
             this.groupBoxDomicilio.TabStop = false;
             this.groupBoxDomicilio.Text = "Domicilio";
+            // 
+            // PaisOrigen
+            // 
+            this.PaisOrigen.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.PaisOrigen.FormattingEnabled = true;
+            this.PaisOrigen.Location = new System.Drawing.Point(88, 155);
+            this.PaisOrigen.Name = "PaisOrigen";
+            this.PaisOrigen.Size = new System.Drawing.Size(199, 21);
+            this.PaisOrigen.TabIndex = 15;
             // 
             // Depto
             // 
@@ -267,6 +276,15 @@
             this.Numero.Name = "Numero";
             this.Numero.Size = new System.Drawing.Size(199, 20);
             this.Numero.TabIndex = 10;
+            // 
+            // lblPaisOrigen
+            // 
+            this.lblPaisOrigen.AutoSize = true;
+            this.lblPaisOrigen.Location = new System.Drawing.Point(6, 159);
+            this.lblPaisOrigen.Name = "lblPaisOrigen";
+            this.lblPaisOrigen.Size = new System.Drawing.Size(76, 13);
+            this.lblPaisOrigen.TabIndex = 0;
+            this.lblPaisOrigen.Text = "Pais de Origen";
             // 
             // groupBoxDatosPersonales
             // 
@@ -362,15 +380,6 @@
             this.btFechaNac.UseVisualStyleBackColor = true;
             this.btFechaNac.Click += new System.EventHandler(this.btFechaNac_Click);
             // 
-            // lblPaisOrigen
-            // 
-            this.lblPaisOrigen.AutoSize = true;
-            this.lblPaisOrigen.Location = new System.Drawing.Point(6, 159);
-            this.lblPaisOrigen.Name = "lblPaisOrigen";
-            this.lblPaisOrigen.Size = new System.Drawing.Size(76, 13);
-            this.lblPaisOrigen.TabIndex = 0;
-            this.lblPaisOrigen.Text = "Pais de Origen";
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -439,13 +448,6 @@
             this.labelObligatorio.Size = new System.Drawing.Size(64, 13);
             this.labelObligatorio.TabIndex = 1;
             this.labelObligatorio.Text = "* Obligatorio";
-            // 
-            // PaisOrigen
-            // 
-            this.PaisOrigen.Location = new System.Drawing.Point(88, 155);
-            this.PaisOrigen.Name = "PaisOrigen";
-            this.PaisOrigen.Size = new System.Drawing.Size(199, 20);
-            this.PaisOrigen.TabIndex = 14;
             // 
             // label2
             // 
@@ -532,7 +534,6 @@
         public System.Windows.Forms.TextBox Email;
         public System.Windows.Forms.TextBox Fecha;
         private System.Windows.Forms.Label lblPaisOrigen;
-        private System.Windows.Forms.TextBox PaisOrigen;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.MonthCalendar monthCalendar;
         private System.Windows.Forms.Button btFechaNac;
@@ -544,6 +545,7 @@
         public System.Windows.Forms.TextBox Telefono;
         private System.Windows.Forms.Label labelTel;
         private System.Windows.Forms.Label label2;
+        public System.Windows.Forms.ComboBox PaisOrigen;
     }
   
 }

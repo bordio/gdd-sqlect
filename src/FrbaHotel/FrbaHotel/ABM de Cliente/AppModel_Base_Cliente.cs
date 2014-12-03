@@ -13,7 +13,7 @@ namespace FrbaHotel.ABM_de_Cliente {
         public DataTable rowCliente = new DataTable();
         private Conexion sqlconexion = Conexion.Instance;
 
-        public abstract void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, string fecha_Nac, string nacionalidad, string documento_Nro, int idReserva, string tipodocumento, string telefono);
+        public abstract void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, string fecha_Nac, string nacionalidad, string documento_Nro, int idReserva, string tipodocumento, string telefono, string localidad, ComboBox pais);
         
         /*Validacion de campos*/
 
@@ -39,10 +39,22 @@ namespace FrbaHotel.ABM_de_Cliente {
 
         public bool validarLongitud(Control control, int maxLength, StringBuilder mensajeValidacion)
         {
-            if ((control.Text.Length <= 0) && (control.Text.Length > maxLength))
+            if (control.Text.Length > maxLength)
             {
                 mensajeValidacion.AppendLine(string.Format(" Incorrecta cantidad de caracteres en el campo {0}.", control.Name));
                 return false;
+            }
+            return true;
+        }
+
+        public bool validarNumeroNegativo(Control control, StringBuilder mensajeValidacion) {
+            if (validarNumerico(control,mensajeValidacion))
+            {
+                if (Int32.Parse((control.Text)) < 0)
+                {
+                    mensajeValidacion.AppendLine(string.Format(" El {0} no puede ser un numero negativo.", control.Name));
+                    return false;
+                }
             }
             return true;
         }
@@ -59,6 +71,29 @@ namespace FrbaHotel.ABM_de_Cliente {
                 mensajeValidacion.AppendLine(string.Format(" El campo {0} debe ser numerico.", control.Name));
                 return false;
             }
+        }
+        public bool validarNumericoSinMensaje(Control control)
+        {
+            try
+            {
+                int esNumero = Convert.ToInt32(control.Text);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool validarNoNumerico(Control control, StringBuilder mensajeValidacion)
+        {   if(control.Text != "")
+            {
+                if (validarNumericoSinMensaje(control)) {
+                    mensajeValidacion.AppendLine(string.Format(" El campo {0} no puede ser numerico.", control.Name));
+                    return false;
+                }
+            }
+            return true;
         }
 
         public virtual void validarEmail(Control mail, StringBuilder mensajeValidacion)
@@ -96,6 +131,18 @@ namespace FrbaHotel.ABM_de_Cliente {
             DataTable tabla = Conexion.Instance.ejecutarQuery(sentence.ToString());
             return tabla;
         }
+       
+        public void cargarPaises(ComboBox PaisOrigen)
+        {
+            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT nombrePais,id_pais FROM SQLECT.Paises");
+            DataTable tabla = Conexion.Instance.ejecutarQuery(sentence.ToString());
+
+            for (int i = 0; i < tabla.Rows.Count; i++)
+            {
+                PaisOrigen.Items.Add(tabla.Rows[i]["nombrePais"].ToString());
+            }
+           
+        }
 
         public void appendASentencia(String control, StringBuilder sentence, String campo){
 
@@ -115,7 +162,8 @@ namespace FrbaHotel.ABM_de_Cliente {
 
         }
 
-        public abstract void levantar(StringBuilder sentence);
+        public abstract void levantar(StringBuilder sentence, int posicionId);
+        public abstract void refrescarPantalla(ABM_de_Cliente.ModificacionMain_Cliente pantallaAnteriorFiltros);
     
     }
 }

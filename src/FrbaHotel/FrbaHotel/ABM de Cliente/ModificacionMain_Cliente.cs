@@ -52,12 +52,17 @@ namespace FrbaHotel.ABM_de_Cliente
             cbTipoDoc.Items.Add("PASAPORTE");
             
         }
+        public void refrescarPantalla() { //Para refrescar la pantalla de Busqueda luego de una Modificacion. Lo llama la Pantalla de Modificaciones, pero la responsabilidad sigue siendo de ModificacionMain_Cliente
+            this.btBuscar_Click("Buscar",null);
+            gridClientes.Columns[15].Visible = false;
+        }
 
-        private void btBuscar_Click(object sender, EventArgs e)
+        public void btBuscar_Click(object sender, EventArgs e)
         {
             StringBuilder sentence = new StringBuilder();
-            string select = "SELECT nombre 'Nombre', apellido 'Apellido', mail 'Email', telefono 'Telefono',fecha_Nac 'Fecha Nacimiento', dom_Calle 'Calle', nro_calle 'Nro Calle', piso 'Piso', depto 'Departamento', localidad 'Localidad', paisOrigen 'Pais', nacionalidad 'Nacionalidad', tipoDocumento 'Tipo de Documento',documento_Nro 'Número de Documento', habilitado 'Habilitado' FROM SQLECT.Clientes";
-            
+
+            string select = "SELECT c.nombre 'Nombre', c.apellido 'Apellido',c.mail 'Email',c.telefono 'Telefono',c.fecha_Nac 'Fecha Nacimiento', c.dom_Calle 'Calle', c.nro_calle 'Nro Calle', c.piso 'Piso',c.depto 'Departamento', c.localidad 'Localidad', p.nombrePais 'Pais', c.nacionalidad 'Nacionalidad', c.tipoDocumento 'Tipo de Documento',c.documento_Nro 'Número de Documento', c.habilitado 'Habilitado', c.fk_paisOrigen FROM SQLECT.Clientes c LEFT JOIN SQLECT.Paises p ON (p.id_pais = c.fk_paisOrigen)";
+
             sentence = this.appModel_Modificar.getAllInstances(select);
 
             if ((Nombre.Text != "") || (Apellido.Text != "") || (Email.Text != "") || (Nacionalidad.Text != "") || (Documento.Text != "") || (cbTipoDoc.SelectedItem != null))
@@ -72,7 +77,7 @@ namespace FrbaHotel.ABM_de_Cliente
 
                 StringBuilder sentenceFiltro = new StringBuilder().AppendFormat(sentence.ToString().Substring(0, sentence.Length - 4));
                 gridClientes.DataSource = this.appModel_Modificar.cargar_lista(sentenceFiltro).DefaultView;
-               
+                gridClientes.Columns[15].Visible = false; //columna del fkPais
                 gridClientes.AllowUserToAddRows = false;
 
                 btHabilitar.Enabled = true;
@@ -127,7 +132,7 @@ namespace FrbaHotel.ABM_de_Cliente
             }
             else // Se quiere modificar a un cliente de verdad
             {
-                BaseAltaModificacion_Cliente form = new Modificacion_Cliente(this.gridClientes, this.emailSeleccionado, this.documentoSeleccionado, this.tipodocSeleccionado); //Chequear despues si esta bien solo usar email
+                BaseAltaModificacion_Cliente form = new Modificacion_Cliente(this,this.gridClientes, this.emailSeleccionado, this.documentoSeleccionado, this.tipodocSeleccionado); //Chequear despues si esta bien solo usar email
                 form.Show();
             }
         }
@@ -138,6 +143,7 @@ namespace FrbaHotel.ABM_de_Cliente
             appModel = new AppModel_Baja_Cliente();
             if(validacionesAlBorrar()){
                 appModel.inhabilitarCliente(this.emailSeleccionado, this.documentoSeleccionado, this.tipodocSeleccionado);
+                this.refrescarPantalla();
             }
         }
 
@@ -147,6 +153,7 @@ namespace FrbaHotel.ABM_de_Cliente
             appModel = new AppModel_Baja_Cliente();
             if(validacionesAlBorrar()){
                 appModel.habilitarCliente(this.emailSeleccionado, this.documentoSeleccionado, this.tipodocSeleccionado);
+                this.refrescarPantalla();
             }
         }
 
