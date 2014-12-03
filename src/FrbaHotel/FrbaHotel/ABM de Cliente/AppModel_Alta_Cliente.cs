@@ -13,6 +13,15 @@ namespace FrbaHotel.ABM_de_Cliente
     {
         private Conexion sqlconexion = Conexion.Instance;
         AppModel_Reservas funcionesReservas = new AppModel_Reservas();
+        public int idReservaDelCliente;
+
+        public AppModel_Alta_Cliente(int idReserva) { 
+            this.idReservaDelCliente = idReserva;
+        }
+
+        public AppModel_Alta_Cliente()
+        {
+        }
 
         public override void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, string fecha_Nac, string nacionalidad, string documento_Nro, int idReserva, string tipo_documento, string telefono, string localidad, ComboBox pais)
         {
@@ -66,18 +75,13 @@ namespace FrbaHotel.ABM_de_Cliente
                 comandoACliente.CommandText = "SQLECT.altaCliente";
                 conexion.ejecutarQueryConSP(comandoACliente); //Pedimos la ejecucion del StoredProcedure SQLECT.altaCliente
 
-                if (idReserva != 0)
+                if (idReservaDelCliente != 0)
                   MessageBox.Show(string.Format("Alta exitosa, guarde el siguiente código para posteriores modificaciones: {0}", funcionesReservas.obtenerCodigoReserva(idReserva))); 
                 else           
                   MessageBox.Show("Alta exitosa", "Alta de Cliente", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         public override void levantar(StringBuilder sentence, int posicionId)
-        {
-           
-        }
-
-        public override void refrescarPantalla(ABM_de_Cliente.ModificacionMain_Cliente pantallaAnteriorFiltros)
         {
            
         }

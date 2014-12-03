@@ -13,7 +13,7 @@ namespace FrbaHotel.ABM_de_Cliente
         private Conexion sqlconexion = Conexion.Instance;
         public Int32 idCliente;
 
-        public override void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, String fecha_Nac, string nacionalidad, string documento_Nro, int idReserva, string tipo_documento, string telefono, string localidad, ComboBox pais)
+          public override void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, String fecha_Nac, string nacionalidad, string documento_Nro, int idReserva, string tipo_documento, string telefono, string localidad, ComboBox pais)
         {
             Conexion conexion = Conexion.Instance;
             System.Data.SqlClient.SqlCommand comandoACliente = new System.Data.SqlClient.SqlCommand();
@@ -99,6 +99,5 @@ namespace FrbaHotel.ABM_de_Cliente
           public override void refrescarPantalla(ABM_de_Cliente.ModificacionMain_Cliente pantallaAnteriorFiltros) { 
           pantallaAnteriorFiltros.refrescarPantalla();
           }
-
     }
 }
