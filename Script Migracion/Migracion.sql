@@ -72,8 +72,12 @@ DROP TABLE SQLECT.Facturas
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Consumibles') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE SQLECT.Consumibles
 
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Paises') AND OBJECTPROPERTY(id, 'IsUserTable') = 1)
+DROP TABLE SQLECT.Paises
+
 
 /* Creamos las tablas */
+
 CREATE TABLE SQLECT.Hoteles (
 	id_hotel integer PRIMARY KEY identity(1,1),
 	nombre varchar(60),
@@ -127,6 +131,11 @@ CREATE TABLE SQLECT.Regimenes_Hoteles (
 	primary key (fk_hotel,fk_regimen)
 )
 
+CREATE TABLE SQLECT.Paises(
+	id_pais integer PRIMARY KEY identity(1,1),
+	nombrePais varchar(50)
+)
+
 CREATE TABLE SQLECT.Clientes (
     id_cliente INTEGER PRIMARY KEY IDENTITY(1,1),
     nombre VARCHAR(60),
@@ -138,13 +147,14 @@ CREATE TABLE SQLECT.Clientes (
     piso TINYINT,
     depto VARCHAR(5),
     localidad VARCHAR(60),
-    paisOrigen VARCHAR(60),
+    fk_paisOrigen INTEGER,
     fecha_Nac DATETIME,
     nacionalidad VARCHAR(60),
     tipoDocumento VARCHAR(30),
     documento_Nro INTEGER,
     inconsistente TINYINT DEFAULT 0,
-    habilitado TINYINT DEFAULT 1
+    habilitado TINYINT DEFAULT 1,
+    foreign key (fk_paisOrigen) references SQLECT.Paises (id_pais)
 )
 
 CREATE TABLE SQLECT.Facturas (
@@ -279,6 +289,12 @@ CREATE TABLE SQLECT.Funcionalidades_Roles (
 
 
 	/* Migración de datos */
+INSERT INTO SQLECT.Paises(nombrePais) VALUES('ARGENTINA')
+INSERT INTO SQLECT.Paises(nombrePais) VALUES('URUGUAY')
+INSERT INTO SQLECT.Paises(nombrePais) VALUES('CHILE')
+INSERT INTO SQLECT.Paises(nombrePais) VALUES('BOLIVIA')
+INSERT INTO SQLECT.Paises(nombrePais) VALUES('PARAGUAY')
+
 INSERT INTO SQLECT.Roles(nombre,descripcion) VALUES ('Administrador General','Administra todos los aspectos de la aplicación')
 INSERT INTO SQLECT.Roles(nombre,descripcion) VALUES ('Recepcionista','Poseé funcionalidades de atención al público')
 INSERT INTO SQLECT.Roles(nombre,descripcion) VALUES	('Administrador','Gestiona el/los hotel/es que tiene a cargo')
@@ -420,7 +436,7 @@ INSERT INTO SQLECT.Consumibles_Estadias_Habitaciones(fk_estadia,fk_habitacion,fk
     WHERE m.Consumible_Codigo IS NOT NULL )*/
 
 
-/* Creación de Procedimientos */
+/* Creación de Procedimientos */         
 
 
 /*------------------------------------ABM CLIENTE--------------------------------------------------------------------------------------*/
@@ -429,22 +445,25 @@ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.altaC
 DROP PROCEDURE SQLECT.altaCliente
 
 GO
-CREATE PROCEDURE SQLECT.altaCliente (@Nombre VARCHAR(60), @Apellido VARCHAR(60), @Mail VARCHAR(255), @Dom_Calle VARCHAR(90), @Nro_Calle INTEGER, @Piso TINYINT, @Depto VARCHAR(5), @Fecha_Nac DATETIME, @Nacionalidad VARCHAR(60), @Documento_Nro INTEGER,@idReserva int, @tipodocumento VARCHAR(30),@telefono INTEGER = null, @localidad VARCHAR(60))
+CREATE PROCEDURE SQLECT.altaCliente (@Nombre VARCHAR(60), @Apellido VARCHAR(60), @Mail VARCHAR(255), @Dom_Calle VARCHAR(90), @Nro_Calle INTEGER = null, @Piso TINYINT = null, @Depto VARCHAR(5), @Fecha_Nac DATETIME, @Nacionalidad VARCHAR(60), @Documento_Nro INTEGER,@idReserva int, @tipodocumento VARCHAR(30),@telefono INTEGER = null, @localidad VARCHAR(60), @Pais VARCHAR(50))
 AS
 BEGIN
 
 	DECLARE @UserId INT
 	DECLARE @PersonalDataId INT
 	DECLARE @idCliente INT
+	DECLARE @idPais INT
 	
 	SELECT * FROM SQLECT.Clientes C WHERE (C.documento_Nro=@Documento_Nro AND C.tipoDocumento=@tipodocumento) OR C.mail=@Mail
 	IF (@@ROWCOUNT >0)
 	BEGIN
 		RETURN @@ROWCOUNT
 	END
+	
+	SET @idPais = (SELECT id_pais FROM SQLECT.Paises where nombrePais = @Pais) /*podria ser una vista*/
 
-	INSERT INTO SQLECT.Clientes (nombre,apellido,mail,telefono,dom_Calle,nro_Calle,piso,depto,localidad,fecha_Nac,nacionalidad,documento_Nro,tipoDocumento)
-	VALUES (@Nombre, @Apellido, @Mail, @telefono,@Dom_Calle, @Nro_Calle, @Piso, @Depto, @localidad, @Fecha_Nac, @Nacionalidad, @Documento_Nro, @tipodocumento)
+	INSERT INTO SQLECT.Clientes (nombre,apellido,mail,telefono,dom_Calle,nro_Calle,piso,depto,localidad,fk_paisOrigen,fecha_Nac,nacionalidad,documento_Nro,tipoDocumento)
+	VALUES (@Nombre, @Apellido, @Mail, @telefono,@Dom_Calle, @Nro_Calle, @Piso, @Depto, @localidad, @idPais ,@Fecha_Nac, @Nacionalidad, @Documento_Nro, @tipodocumento)
 
 SET @idCliente = SCOPE_IDENTITY();
   IF (@idReserva<>0)
@@ -455,16 +474,21 @@ SET @idCliente = SCOPE_IDENTITY();
 
 END
 GO
+
 /*---------------MODIFICACIONES--------------------------------*/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.modificacionCliente'))
 DROP PROCEDURE SQLECT.modificacionCliente
 GO
-CREATE PROCEDURE SQLECT.modificacionCliente (@idCliente INTEGER, @Nombre VARCHAR(60), @Apellido VARCHAR(60), @Mail VARCHAR(255), @Dom_Calle VARCHAR(90), @Nro_Calle INTEGER, @Piso TINYINT, @Depto VARCHAR(5), @Fecha_Nac DATETIME, @Nacionalidad VARCHAR(60), @Documento_Nro INTEGER, @tipodocumento VARCHAR(30),@telefono INTEGER = null, @localidad VARCHAR(60))
+CREATE PROCEDURE SQLECT.modificacionCliente (@idCliente INTEGER, @Nombre VARCHAR(60), @Apellido VARCHAR(60), @Mail VARCHAR(255), @Dom_Calle VARCHAR(90), @Nro_Calle INTEGER = null, @Piso TINYINT = null, @Depto VARCHAR(5), @Fecha_Nac DATETIME, @Nacionalidad VARCHAR(60), @Documento_Nro INTEGER, @tipodocumento VARCHAR(30),@telefono INTEGER = null, @localidad VARCHAR(60), @Pais VARCHAR(50))
 
 AS
 BEGIN
+
+	DECLARE @idPais INT
+	SET @idPais = (SELECT id_pais FROM SQLECT.Paises where nombrePais = @Pais) /*podria ser una vista*/
+	
 	UPDATE SQLECT.Clientes
-	SET nombre=@Nombre, apellido=@Apellido, mail=@Mail, telefono=@telefono, dom_Calle=@Dom_Calle, nro_Calle=@Nro_Calle, piso=@Piso, depto=@Depto, localidad=@localidad, fecha_Nac=@Fecha_Nac, nacionalidad=@Nacionalidad, documento_Nro=@Documento_Nro, tipoDocumento=@tipodocumento
+	SET nombre=@Nombre, apellido=@Apellido, mail=@Mail, telefono=@telefono, dom_Calle=@Dom_Calle, nro_Calle=@Nro_Calle, piso=@Piso, depto=@Depto, localidad=@localidad, fk_paisOrigen=@idPais,fecha_Nac=@Fecha_Nac, nacionalidad=@Nacionalidad, documento_Nro=@Documento_Nro, tipoDocumento=@tipodocumento
 	WHERE id_Cliente=@idCliente
 END
 GO
@@ -883,6 +907,33 @@ AS
 BEGIN
 
 	INSERT INTO SQLECT.Bajas_por_hotel(fk_hotel, fecha_inicio, fecha_fin, motivo) VALUES (@id_hotel,@desde,@hasta,@motivo)
+END
+GO
+
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.funcQuitarRegimen'))
+DROP FUNCTION SQLECT.funcQuitarRegimen
+
+
+GO
+CREATE FUNCTION SQLECT.funcQuitaRegimen (@id_hotel INT, @regimen VARCHAR(60), @fecha DATE)
+RETURNS INT
+AS
+BEGIN
+
+DECLARE @idReg INT
+DECLARE @ret INT
+
+SET @idReg = (SELECT id_regimen FROM SQLECT.Regimenes WHERE descripcion = @regimen)
+
+IF EXISTS
+(SELECT id_reserva FROM SQLECT.Reservas
+WHERE fk_regimen = @idReg AND DATEADD(day,cant_noches_reserva,fecha_inicio) > @fecha AND estado_reserva IN (0,1,5))
+	SET @ret = 0
+ELSE
+	SET @ret = 1	
+	
+RETURN @ret
 END
 GO
 

@@ -13,8 +13,17 @@ namespace FrbaHotel.ABM_de_Cliente
     {
         private Conexion sqlconexion = Conexion.Instance;
         AppModel_Reservas funcionesReservas = new AppModel_Reservas();
+        public int idReservaDelCliente;
 
-        public override void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, string fecha_Nac, string nacionalidad, string documento_Nro, int idReserva, string tipo_documento, string telefono, string localidad)
+        public AppModel_Alta_Cliente(int idReserva) { 
+            this.idReservaDelCliente = idReserva;
+        }
+
+        public AppModel_Alta_Cliente()
+        {
+        }
+
+        public override void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, string fecha_Nac, string nacionalidad, string documento_Nro, int idReserva, string tipo_documento, string telefono, string localidad, ComboBox pais)
         {
                 Conexion conexion = Conexion.Instance;
                 System.Data.SqlClient.SqlCommand comandoACliente = new System.Data.SqlClient.SqlCommand();
@@ -34,27 +43,39 @@ namespace FrbaHotel.ABM_de_Cliente
                 comandoACliente.Parameters.Add("@tipodocumento", SqlDbType.VarChar);
                 comandoACliente.Parameters.Add("@telefono", SqlDbType.Int);
                 comandoACliente.Parameters.Add("@localidad", SqlDbType.VarChar);
+                comandoACliente.Parameters.Add("@pais", SqlDbType.VarChar);
 
                 comandoACliente.Parameters[0].Value = nombre;
                 comandoACliente.Parameters[1].Value = apellido;
                 comandoACliente.Parameters[2].Value = mail;
                 comandoACliente.Parameters[3].Value = dom_Calle;
-                comandoACliente.Parameters[4].Value = Int32.Parse(nro_Calle);
-                comandoACliente.Parameters[5].Value = Int32.Parse(piso); //si lo deja en blanco el parse explota.
+
+                if (nro_Calle != "") comandoACliente.Parameters[4].Value = Int32.Parse(nro_Calle);
+                else comandoACliente.Parameters[4].Value = null;
+
+                if (piso != "") comandoACliente.Parameters[5].Value = Int32.Parse(piso); //si lo deja en blanco el parse explota.
+                else comandoACliente.Parameters[5].Value = null;
+            
                 comandoACliente.Parameters[6].Value = depto;
                 comandoACliente.Parameters[7].Value = DateTime.Parse(fecha_Nac);
                 comandoACliente.Parameters[8].Value = nacionalidad;
                 comandoACliente.Parameters[9].Value = documento_Nro;
                 comandoACliente.Parameters[10].Value = idReserva;
                 comandoACliente.Parameters[11].Value = tipo_documento;
+
                 if (telefono != "") comandoACliente.Parameters[12].Value = Int32.Parse(telefono);
                 else comandoACliente.Parameters[12].Value = null;
+
                 comandoACliente.Parameters[13].Value = localidad;
 
-                comandoACliente.CommandText = "SQLECT.altaCliente";
-                conexion.ejecutarQueryConSP(comandoACliente);
+                //El Pais Origen no es un campo obligatorio. Por lo cual, puede venir en blanco:
+                if (pais.SelectedItem != null) { comandoACliente.Parameters[14].Value = pais.SelectedItem.ToString(); }
+                else comandoACliente.Parameters[14].Value = "";
 
-                if (idReserva != 0)
+                comandoACliente.CommandText = "SQLECT.altaCliente";
+                conexion.ejecutarQueryConSP(comandoACliente); //Pedimos la ejecucion del StoredProcedure SQLECT.altaCliente
+
+                if (idReservaDelCliente != 0)
                   MessageBox.Show(string.Format("Alta exitosa, guarde el siguiente código para posteriores modificaciones: {0}", funcionesReservas.obtenerCodigoReserva(idReserva))); 
                 else           
                   MessageBox.Show("Alta exitosa", "Alta de Cliente", MessageBoxButtons.OK, MessageBoxIcon.Information);

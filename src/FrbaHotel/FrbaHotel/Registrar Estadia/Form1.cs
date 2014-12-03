@@ -97,10 +97,13 @@ namespace FrbaHotel.Registrar_Estadia
                         funcionesEstadias.realizarCheckIn(codigoReserva.Text, usuarioDeSesionActual);
 
                         MessageBox.Show("Check-In realizado correctamente");
-                        this.Close();
+                        
                         if (cantHuespedes > 1)
                         {
-                            MessageBox.Show(string.Format("Debe registrar a {0} huéspedes", cantHuespedes-1));
+                          MessageBox.Show(string.Format("Debe registrar a {0} huéspedes como clientes", cantHuespedes - 1));
+                          FrbaHotel.ABM_de_Cliente.BaseAltaModificacion_Cliente formRegistrarClientes = new FrbaHotel.ABM_de_Cliente.BaseAltaModificacion_Cliente();
+                          formRegistrarClientes.Show();
+                            
                         }
                         this.Close();
                     }
@@ -158,6 +161,8 @@ namespace FrbaHotel.Registrar_Estadia
         }
             else
             {
+
+
              if ((estadoReservaActual == 2) | (estadoReservaActual == 3) | (estadoReservaActual == 4))
                   MessageBox.Show("La reserva está cancelada");  
              else

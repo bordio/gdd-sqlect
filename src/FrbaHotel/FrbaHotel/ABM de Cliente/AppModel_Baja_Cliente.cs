@@ -53,7 +53,5 @@ namespace FrbaHotel.ABM_de_Cliente
             MessageBox.Show("Habilitacion exitosa", "Habilitacion del Cliente", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         
-        public override void levantar(StringBuilder sentence, int posicionId){}
-        public override void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, string fecha_Nac, string nacionalidad, string documento_Nro, int idReserva, string tipo, string tel, string localidad) { }
     }
 }
