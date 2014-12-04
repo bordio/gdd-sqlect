@@ -106,12 +106,18 @@ namespace FrbaHotel.Registrar_Estadia
                             formRegistrarClientes.ShowDialog();
 
                         }
-                        this.Close();
+                        //this.Close();
                     }
                     else
                     {
-                        funcionesEstadias.cancelarReservaPorNoShow(codigoReserva.Text,funcionesReservas.devolverFechaAppConfig());
-                        MessageBox.Show("La reserva ha sido cancelada por no presentarse en fecha.");
+                        if (funcionesEstadias.faltaParaElCheckIn(fechaInicioActual))
+                        { MessageBox.Show(string.Format("No puede ingresar antes la fecha de inicio de la reserva,que es el :{0}", fechaInicioActual.ToShortDateString())); }
+
+                        else
+                        {
+                            funcionesEstadias.cancelarReservaPorNoShow(codigoReserva.Text, funcionesReservas.devolverFechaAppConfig());
+                            MessageBox.Show("La reserva ha sido cancelada por no presentarse en fecha.");
+                        }
                         botonCheckIn.Enabled = false;
                         botonCheckOut.Enabled = false;
                     }

@@ -221,7 +221,7 @@ CREATE TABLE SQLECT.Items(
     nro_item INTEGER IDENTITY(1,1),
     fk_consumible INTEGER,
     cantidad_prod INTEGER,
-    monto_item INTEGER,
+    monto_item decimal(8,2),
     descripcion VARCHAR(30) DEFAULT 'Estadía',
     primary key (fk_factura,nro_item),
     foreign key (fk_consumible) references SQLECT.Consumibles (id_consumible),
@@ -1928,7 +1928,7 @@ BEGIN
 
 IF EXISTS(SELECT fk_regimen FROM SQLECT.Reservas WHERE codigo_reserva=@codigoReserva AND fk_regimen=3)
  BEGIN
-  DECLARE @idFactura int,@idReserva int,@descuentoPorRegimen int
+  DECLARE @idFactura int,@idReserva int,@descuentoPorRegimen decimal(8,2)
   SET @idReserva=(SELECT id_reserva FROM SQLECT.Reservas WHERE codigo_reserva=@codigoReserva)
   SET @idFactura = (SELECT f.id_factura FROM SQLECT.Facturas f JOIN SQLECT.Estadias e ON (f.fk_estadia = e.id_estadia)
 											WHERE e.fk_reserva=@idReserva)
@@ -1988,7 +1988,7 @@ AS
 					WHERE codigo_reserva=@codigoReserva)*/
 BEGIN
 
-DECLARE @idEstadia int,@idReserva int,@idRegimen int,@nochesEfectivas int, @nochesFaltantes int,@precioRegimen decimal(6,2),@montoEstadia int,@recargoHotel int,@idFactura int
+DECLARE @idEstadia int,@idReserva int,@idRegimen int,@nochesEfectivas int, @nochesFaltantes int,@precioRegimen decimal(6,2),@montoEstadia decimal(8,2),@recargoHotel int,@idFactura int
 SET @idEstadia = (SELECT id_estadia FROM SQLECT.Estadias JOIN SQLECT.Reservas ON (fk_reserva=id_reserva)
                     WHERE codigo_reserva=@codigoReserva)
 SET @idRegimen = (SELECT fk_regimen FROM SQLECT.Reservas WHERE codigo_reserva=@codigoReserva)
@@ -2005,7 +2005,7 @@ SET @montoEstadia = (SELECT SUM((@precioRegimen*(ha.tipo_habitacion-1000)*t.porc
 
 IF NOT EXISTS(SELECT id_factura FROM SQLECT.Facturas WHERE fk_estadia=@idEstadia)
 BEGIN
- DECLARE @totalFactura int
+ DECLARE @totalFactura decimal(8,2)
  
   SET @idFactura=SQLECT.obtenerIdFacturaSiguiente()
    
