@@ -23,11 +23,13 @@ namespace FrbaHotel
             //Application.Run(new FrbaHotel.ABM_de_Habitacion.MainHabitacion());            
 			//Application.Run(new FrbaHotel.Cancelar_Reserva.Form1(1,"admin","Administrador General",true));
             //Application.Run(new FrbaHotel.Generar_Modificar_Reserva.GenerarReserva(1,"guest"));
-           // Application.Run(new FrbaHotel.Generar_Modificar_Reserva.GenerarReserva(1,"guest"));
+            //Application.Run(new FrbaHotel.Generar_Modificar_Reserva.GenerarReserva(1,"guest"));
             //Application.Run(new FrbaHotel.Generar_Modificar_Reserva.GenerarReserva(1,"admin"));
             //Application.Run(new FrbaHotel.Generar_Modificar_Reserva.ModificarReserva("admin","761e2028",1));
             //Application.Run( new FrbaHotel.Registrar_Consumible.Form1(1,"11111111"));
-            //Application.Run(new ABM_de_Cliente.ModificacionMain_Cliente());            //Application.Run(new ABM_de_Cliente.Alta_Cliente());
+            //Application.Run(new ABM_de_Cliente.ModificacionMain_Cliente());            
+            //Application.Run(new ABM_de_Cliente.Alta_Cliente());
+            Application.Run(new FrbaHotel.Registrar_Consumible.Facturacion("f9e7d2b7", 11));
            
         }
     }

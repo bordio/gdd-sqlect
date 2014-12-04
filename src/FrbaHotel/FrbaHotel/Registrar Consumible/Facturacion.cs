@@ -56,12 +56,16 @@ namespace FrbaHotel.Registrar_Consumible
             
             /*funcionesFacturacion.generarFactura(codigoReservaActual, idHotelEnCuestion);*/
 
+            StringBuilder montoEnDolares = new StringBuilder();
+
             DataTable detallesFactura = funcionesFacturacion.obtenerDetallesFactura(codigoReservaActual);
             tablaFactura.DataSource = detallesFactura.DefaultView;
 
             numeroFactura.Text = funcionesFacturacion.obtenerNumeroFactura(codigoReservaActual).ToString();
-            totalFactura.Text = funcionesFacturacion.obtenerMontoTotalFactura(codigoReservaActual).ToString();
-
+    
+            montoEnDolares.Append("U$S ");
+            montoEnDolares.Append(Convert.ToDouble(funcionesFacturacion.obtenerMontoTotalFactura(codigoReservaActual)).ToString() );
+            totalFactura.Text = montoEnDolares.ToString();
 
         }
 

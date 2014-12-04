@@ -6,6 +6,7 @@ using System.Data;
 using FrbaHotel.Commons.Database;
 using System.Windows.Forms;
 using FrbaHotel.Commons.FuncionalidadesVarias;
+using FrbaHotel.Generar_Modificar_Reserva;
 
 namespace FrbaHotel.Generar_Modificar_Reserva
 {
@@ -14,6 +15,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
     {
         private Conexion sqlconexion = Conexion.Instance;
         Funcionalidades funcionesVarias = new Funcionalidades();
+        AppModel_Reservas funcionesReservas = new AppModel_Reservas();
 
         public bool chequearFechaDeIngreso(string codigoReserva,int fechaDelSistema)
         {
@@ -142,5 +144,15 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             return yaHizoElCheckOut;
 
         }
+        public bool faltaParaElCheckIn(DateTime fehaInicioDeLaReserva)
+        {
+            int fechaInicioParseada = funcionesReservas.pasarDateTimeAInt(fehaInicioDeLaReserva);
+            int fechaActualParseada = funcionesReservas.devolverFechaAppConfig();
+            if (fechaActualParseada < fechaInicioParseada)
+                return true;
+            else
+                return false;
+        }
+    
     }
 }
