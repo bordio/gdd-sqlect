@@ -27,17 +27,29 @@ DROP TABLE SQLECT.Reservas_Canceladas
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Consumibles_Estadias_Habitaciones') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE SQLECT.Consumibles_Estadias_Habitaciones
 
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Regimenes_Hoteles') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+DROP TABLE SQLECT.Regimenes_Hoteles
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Bajas_por_hotel') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+DROP TABLE SQLECT.Bajas_por_hotel
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Items') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+DROP TABLE SQLECT.Items
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Facturas') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+DROP TABLE SQLECT.Facturas
+
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Estadias') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE SQLECT.Estadias
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Habitaciones_Reservas') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+DROP TABLE SQLECT.Habitaciones_Reservas
 
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Reservas') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE SQLECT.Reservas
 
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Usuarios') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE SQLECT.Usuarios
-
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Empleados') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE SQLECT.Empleados
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Regimenes') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+DROP TABLE SQLECT.Regimenes
 
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Clientes') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE SQLECT.Clientes
@@ -45,29 +57,17 @@ DROP TABLE SQLECT.Clientes
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Habitaciones') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE SQLECT.Habitaciones
 
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Habitaciones_Reservas') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE SQLECT.Habitaciones_Reservas
-
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Tipos_Habitaciones') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE SQLECT.Tipos_Habitaciones
-
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Regimenes_Hoteles') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE SQLECT.Regimenes_Hoteles
-
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Bajas_por_hotel') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE SQLECT.Bajas_por_hotel
 
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Hoteles') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE SQLECT.Hoteles
 
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Regimenes') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE SQLECT.Regimenes
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Usuarios') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+DROP TABLE SQLECT.Usuarios
 
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Items') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE SQLECT.Items
-
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Facturas') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE SQLECT.Facturas
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Empleados') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+DROP TABLE SQLECT.Empleados
 
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('SQLECT.Consumibles') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE SQLECT.Consumibles
@@ -78,13 +78,17 @@ DROP TABLE SQLECT.Paises
 
 /* Creamos las tablas */
 
+CREATE TABLE SQLECT.Paises(
+	id_pais integer PRIMARY KEY identity(1,1),
+	nombrePais varchar(50)
+)
+
 CREATE TABLE SQLECT.Hoteles (
 	id_hotel integer PRIMARY KEY identity(1,1),
 	nombre varchar(60),
 	mail varchar(255),
 	fecha_creacion datetime,
-	fk_pais int DEFAULT 1,
-	ciudad varchar(30),
+	fk_pais integer REFERENCES SQLECT.Paises (id_pais) DEFAULT 1,	ciudad varchar(30),
 	calle varchar(60),
 	nro_calle integer,
 	cant_estrellas tinyint,
@@ -130,11 +134,6 @@ CREATE TABLE SQLECT.Regimenes_Hoteles (
 	primary key (fk_hotel,fk_regimen)
 )
 
-CREATE TABLE SQLECT.Paises(
-	id_pais integer PRIMARY KEY identity(1,1),
-	nombrePais varchar(50)
-)
-
 CREATE TABLE SQLECT.Clientes (
     id_cliente INTEGER PRIMARY KEY IDENTITY(1,1),
     nombre VARCHAR(60),
@@ -156,13 +155,59 @@ CREATE TABLE SQLECT.Clientes (
     foreign key (fk_paisOrigen) references SQLECT.Paises (id_pais)
 )
 
+CREATE TABLE SQLECT.Empleados (
+	id_empleado smallint identity(1,1) PRIMARY KEY,
+	dni_tipo char(4),
+	dni_nro integer,
+	nombre varchar(30),
+	apellido varchar(60),
+	email varchar(255),
+	telefono integer,
+	direccion varchar(90),
+	fecha_nacimiento datetime
+)
+
+
+CREATE TABLE SQLECT.Usuarios (
+	id_usuario integer PRIMARY KEY identity(1,1),
+	usr_name varchar(30) NOT NULL UNIQUE,
+	pssword char(64) NOT NULL,
+	fk_empleado smallint REFERENCES SQLECT.Empleados(id_empleado),
+	estado_usr tinyint DEFAULT 1
+ )
+
+CREATE TABLE SQLECT.Reservas (
+    id_reserva integer PRIMARY KEY,
+    fecha_inicio datetime,
+    cant_noches_reserva tinyint,
+    cant_noches_estadia tinyint,
+    fk_usuario_reserva integer REFERENCES SQLECT.Usuarios (id_usuario),
+    fk_usuario_ultima_modificacion integer REFERENCES SQLECT.Usuarios (id_usuario),
+    fk_regimen tinyint references SQLECT.Regimenes(id_regimen),
+    fk_cliente integer references SQLECT.Clientes(id_cliente),
+    estado_reserva tinyint DEFAULT 0,
+    fecha_reserva datetime DEFAULT NULL,
+    codigo_reserva varchar(9) DEFAULT NULL,
+    cantidad_huespedes int DEFAULT 1
+)
+
+CREATE TABLE SQLECT.Estadias (
+    id_estadia integer PRIMARY KEY identity(1,1),
+    fk_reserva integer REFERENCES SQLECT.Reservas(id_reserva),
+	fecha_inicio datetime,
+	fecha_fin datetime DEFAULT NULL,
+	cant_noches tinyint,
+	fk_usuario_checkin int DEFAULT NULL REFERENCES SQLECT.Usuarios (id_usuario),
+	fk_usuario_checkout int DEFAULT NULL REFERENCES SQLECT.Usuarios (id_usuario)
+)
+
 CREATE TABLE SQLECT.Facturas (
     id_factura INTEGER PRIMARY KEY,
     fecha DATETIME,
     total_factura INTEGER,
     forma_pago VARCHAR(30),
     detalle_forma_pago VARCHAR(120),
-    fk_estadia integer,
+    fk_estadia integer REFERENCES SQLECT.Estadias (id_estadia),
 )
 
 CREATE TABLE SQLECT.Consumibles(
@@ -183,21 +228,6 @@ CREATE TABLE SQLECT.Items(
     foreign key (fk_factura) references SQLECT.Facturas (id_factura)
 )
 
-CREATE TABLE SQLECT.Reservas (
-    id_reserva integer PRIMARY KEY,
-    fecha_inicio datetime,
-    cant_noches_reserva tinyint,
-    cant_noches_estadia tinyint,
-    fk_usuario_reserva integer,
-    fk_usuario_ultima_modificacion integer,
-    fk_regimen tinyint references SQLECT.Regimenes(id_regimen),
-    fk_cliente integer references SQLECT.Clientes(id_cliente),
-    estado_reserva tinyint DEFAULT 0,
-    fecha_reserva datetime DEFAULT NULL,
-    codigo_reserva varchar(9) DEFAULT NULL,
-    cantidad_huespedes int DEFAULT 1
-)
-
 CREATE TABLE SQLECT.Reservas_Canceladas (
 	fk_reserva integer PRIMARY KEY REFERENCES SQLECT.Reservas(id_reserva),
 	motivo varchar(120),
@@ -205,42 +235,19 @@ CREATE TABLE SQLECT.Reservas_Canceladas (
 )
 
 CREATE TABLE SQLECT.Habitaciones_Reservas (
-    fk_habitacion integer,
-    fk_reserva integer,
+    fk_habitacion integer REFERENCES SQLECT.Habitaciones (id_habitacion),
+    fk_reserva integer REFERENCES SQLECT.Reservas (id_reserva),
     estado_ocupacion char(1) DEFAULT 'O' CHECK (estado_ocupacion IN ('D','O')), /*O: Ocupada o Por ocupar; D: Desocupada*/
     PRIMARY KEY (fk_habitacion,fk_reserva)
 )
 
-CREATE TABLE SQLECT.Estadias (
-    id_estadia integer PRIMARY KEY identity(1,1),
-    fk_reserva integer REFERENCES SQLECT.Reservas(id_reserva),
-	fecha_inicio datetime,
-	fecha_fin datetime DEFAULT NULL,
-	cant_noches tinyint,
-	fk_usuario_checkin int DEFAULT NULL,
-	fk_usuario_checkout int DEFAULT NULL
-
-)
-
 CREATE TABLE SQLECT.Consumibles_Estadias_Habitaciones(
-	fk_consumible smallint,
-	fk_estadia integer,
-	fk_habitacion integer,
+	fk_consumible integer REFERENCES SQLECT.Consumibles (id_consumible),
+	fk_estadia integer REFERENCES SQLECT.Estadias (id_estadia),
+	fk_habitacion integer REFERENCES SQLECT.Habitaciones (id_habitacion),
 	cantidad integer,
 	PRIMARY KEY(fk_consumible,fk_estadia,fk_habitacion)
 
-)
-
-CREATE TABLE SQLECT.Empleados (
-	id_empleado smallint identity(1,1) PRIMARY KEY,
-	dni_tipo char(4),
-	dni_nro integer,
-	nombre varchar(30),
-	apellido varchar(60),
-	email varchar(255),
-	telefono integer,
-	direccion varchar(90),
-	fecha_nacimiento datetime
 )
 
 CREATE TABLE SQLECT.Roles (
@@ -249,16 +256,6 @@ CREATE TABLE SQLECT.Roles (
 	descripcion varchar(90),
 	estado_rol tinyint DEFAULT 1
  ) 
-
-
-CREATE TABLE SQLECT.Usuarios (
-	id_usuario integer PRIMARY KEY identity(1,1),
-	usr_name varchar(30) NOT NULL UNIQUE,
-	pssword char(64) NOT NULL,
-	fk_empleado smallint REFERENCES SQLECT.Empleados(id_empleado),
-	estado_usr tinyint DEFAULT 1
-	
- )
 
 
 CREATE TABLE SQLECT.Roles_Usuarios (
@@ -1075,7 +1072,7 @@ AS
 BEGIN
 SELECT DISTINCT h.nombre FROM SQLECT.Usuarios_Hoteles uh JOIN SQLECT.Usuarios u ON (uh.fk_usuario=u.id_usuario)
 												   JOIN SQLECT.Hoteles h ON (h.id_hotel=uh.fk_hotel)
- WHERE u.usr_name=@usuario AND h.estado_hotel=1	
+ WHERE u.usr_name=@usuario
 END
 GO
 
