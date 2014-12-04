@@ -107,5 +107,6 @@ namespace FrbaHotel.Registrar_Consumible
         {
             this.Close();
         }
+
     }
 }

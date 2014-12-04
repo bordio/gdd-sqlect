@@ -93,6 +93,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             comandoAReserva.Parameters[1].Value = usuario;
 
             comandoAReserva.CommandText = "SQLECT.realizarCheckOut";
+            conexion.ejecutarQuery("BEGIN TRANSACTION"); // Comienza transaccion del CheckOut La misma termina con un commit en AppModel_Facturacion: registrarFormaDePago()
             conexion.ejecutarSP(comandoAReserva);
         
         }

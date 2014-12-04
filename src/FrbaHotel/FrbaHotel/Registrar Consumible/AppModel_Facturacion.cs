@@ -115,17 +115,8 @@ namespace FrbaHotel.Registrar_Consumible
 
             comandoAFactura.CommandText = "SQLECT.registrarFormaDePago";
             conexion.ejecutarSP(comandoAFactura);
+            conexion.ejecutarQuery("COMMIT"); // Se commitea la transaccion. Fin del proceso de Checkout
 
-             
-        
-        
         }
-
-
-
     }
-
-    
-
-
 }
