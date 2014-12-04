@@ -53,13 +53,13 @@ namespace FrbaHotel.ABM_de_Hotel
         private void modificar_Click(object sender, EventArgs e)
         {
             Alta_Hotel formAlta = new Alta_Hotel(this.lstHoteles,this.paisSeleccionado,this.ciudadSeleccionado,this.calleSeleccionado,this.nro_calleSeleccionado);
-            formAlta.Show();
+            formAlta.ShowDialog(this);
         }
 
         private void agregar_Click(object sender, EventArgs e)
         {
             Alta_Hotel formAlta = new Alta_Hotel(this.lstHoteles,this.idUsuarioActual);
-            formAlta.Show();
+            formAlta.ShowDialog(this);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -109,7 +109,7 @@ namespace FrbaHotel.ABM_de_Hotel
         private void baja_Click(object sender, EventArgs e)
         {
             Baja_Hotel formBaja = new Baja_Hotel(this.nombreSeleccionado, this.paisSeleccionado, this.ciudadSeleccionado, this.calleSeleccionado, this.nro_calleSeleccionado);
-            formBaja.Show();
+            formBaja.ShowDialog(this);
         }
 
         private void lstHoteles_SelectionChanged(object sender, EventArgs e)
