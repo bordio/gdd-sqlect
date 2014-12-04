@@ -143,6 +143,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
 
             comandoAReserva.CommandText = "SQLECT.realizarReserva";
+            conexion.ejecutarQuery("BEGIN TRANSACTION");
             conexion.ejecutarSP(comandoAReserva);
 
             return true;
@@ -262,7 +263,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
           
             comandoAReserva.CommandText = "SQLECT.adjuntarClienteALaReserva";
             conexion.ejecutarSP(comandoAReserva);
-
+            conexion.ejecutarQuery("COMMIT");
             return true;
         
         }

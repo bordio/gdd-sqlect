@@ -83,6 +83,7 @@
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Name = "RegistroCliente";
             this.Text = "RegistroCliente";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(RegistroCliente_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

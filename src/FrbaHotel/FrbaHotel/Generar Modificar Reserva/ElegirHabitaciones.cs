@@ -16,9 +16,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 {
     public partial class ElegirHabitaciones : Form
     {
-        public ElegirHabitaciones(int idHotelEnCuestion, string fechaDesde, string fechaHasta, int cantSimples, int cantDobles, int cantTriples, int cantCuadruples, int cantQuintuples,string usuarioDeSesion,string regimenElegido,int cantHuespedes)
+        Form formularioAnterior;
+        public ElegirHabitaciones(int idHotelEnCuestion, string fechaDesde, string fechaHasta, int cantSimples, int cantDobles, int cantTriples, int cantCuadruples, int cantQuintuples, string usuarioDeSesion, string regimenElegido, int cantHuespedes, Form formulario)
         {
             InitializeComponent();
+            formularioAnterior = formulario;
             this.idHotelActual = idHotelEnCuestion;
             this.fechaDesdeActual = fechaDesde;
             this.fechaHastaActual = fechaHasta;
@@ -130,9 +132,9 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     funcionesReservas.adjuntarCodigoALaReserva(idReserva, codigoReserva); /* Asignamos el código a la reserva*/
 
                     MessageBox.Show("Reserva hecha correctamente");
-                    this.Close();
+                    //this.Close();
 
-                    FrbaHotel.Generar_Modificar_Reserva.RegistroCliente formRegistroCliente = new FrbaHotel.Generar_Modificar_Reserva.RegistroCliente(idReserva);
+                    FrbaHotel.Generar_Modificar_Reserva.RegistroCliente formRegistroCliente = new FrbaHotel.Generar_Modificar_Reserva.RegistroCliente(idReserva, this);
                     formRegistroCliente.Show();
                 }
             }
@@ -178,6 +180,10 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             this.Close();
         }
 
+        public void Cerrate(){
+            this.Close();
+            formularioAnterior.Close();
+        }
       
     }
 
