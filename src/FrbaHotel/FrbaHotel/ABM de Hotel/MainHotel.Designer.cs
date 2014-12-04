@@ -30,7 +30,6 @@
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.Pais = new System.Windows.Forms.TextBox();
             this.Ciudad = new System.Windows.Forms.TextBox();
             this.CantidadEstrellas = new System.Windows.Forms.TextBox();
             this.Nombre = new System.Windows.Forms.TextBox();
@@ -45,6 +44,7 @@
             this.modificar = new System.Windows.Forms.Button();
             this.agregar = new System.Windows.Forms.Button();
             this.cerrar = new System.Windows.Forms.Button();
+            this.cmbPais = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lstHoteles)).BeginInit();
@@ -65,7 +65,7 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.Pais);
+            this.groupBox2.Controls.Add(this.cmbPais);
             this.groupBox2.Controls.Add(this.Ciudad);
             this.groupBox2.Controls.Add(this.CantidadEstrellas);
             this.groupBox2.Controls.Add(this.Nombre);
@@ -82,18 +82,11 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Filtros";
             // 
-            // Pais
-            // 
-            this.Pais.Location = new System.Drawing.Point(326, 61);
-            this.Pais.Name = "Pais";
-            this.Pais.Size = new System.Drawing.Size(100, 20);
-            this.Pais.TabIndex = 15;
-            // 
             // Ciudad
             // 
-            this.Ciudad.Location = new System.Drawing.Point(326, 29);
+            this.Ciudad.Location = new System.Drawing.Point(324, 29);
             this.Ciudad.Name = "Ciudad";
-            this.Ciudad.Size = new System.Drawing.Size(100, 20);
+            this.Ciudad.Size = new System.Drawing.Size(108, 20);
             this.Ciudad.TabIndex = 14;
             // 
             // CantidadEstrellas
@@ -225,6 +218,15 @@
             this.cerrar.UseVisualStyleBackColor = true;
             this.cerrar.Click += new System.EventHandler(this.cerrar_Click_1);
             // 
+            // cmbPais
+            // 
+            this.cmbPais.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbPais.FormattingEnabled = true;
+            this.cmbPais.Location = new System.Drawing.Point(324, 57);
+            this.cmbPais.Name = "cmbPais";
+            this.cmbPais.Size = new System.Drawing.Size(110, 21);
+            this.cmbPais.TabIndex = 15;
+            // 
             // MainHotel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -257,7 +259,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox Pais;
         private System.Windows.Forms.TextBox Ciudad;
         private System.Windows.Forms.TextBox CantidadEstrellas;
         private System.Windows.Forms.TextBox Nombre;
@@ -265,5 +266,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cmbPais;
     }
 }

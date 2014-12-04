@@ -83,13 +83,12 @@ CREATE TABLE SQLECT.Hoteles (
 	nombre varchar(60),
 	mail varchar(255),
 	fecha_creacion datetime,
-	pais varchar(50) DEFAULT 'Argentina',
+	fk_pais int DEFAULT 1,
 	ciudad varchar(30),
 	calle varchar(60),
 	nro_calle integer,
 	cant_estrellas tinyint,
-	recarga_estrella smallint,
-	estado_hotel tinyint DEFAULT 1 
+	recarga_estrella smallint
 )
 
 CREATE TABLE SQLECT.Bajas_por_hotel(
@@ -895,9 +894,12 @@ AS
 BEGIN
 
 	DECLARE @HotelId INT
+	DECLARE @PaisId INT
 	
-	INSERT INTO SQLECT.Hoteles (nombre, mail, fecha_creacion, ciudad, calle, nro_calle, cant_estrellas, recarga_estrella, pais)
-	VALUES (@nombre, @email, @fecha_creacion, @ciudad, @calle, @nro_calle, @cant_estrellas, 10, @pais)
+	SET @PaisId = (SELECT id_pais FROM SQLECT.Paises WHERE nombrePais=@pais)
+	
+	INSERT INTO SQLECT.Hoteles (nombre, mail, fecha_creacion, ciudad, calle, nro_calle, cant_estrellas, recarga_estrella, fk_pais)
+	VALUES (@nombre, @email, @fecha_creacion, @ciudad, @calle, @nro_calle, @cant_estrellas, 10, @PaisId)
 	
 	SET @HotelId = SCOPE_IDENTITY()
 	
@@ -964,8 +966,12 @@ CREATE PROCEDURE SQLECT.modificacionHotel (@id_hotel INT, @nombre VARCHAR(60), @
 AS
 BEGIN
 
+	DECLARE @PaisID INT
+	
+	SET @PaisID = (SELECT id_pais FROM Paises WHERE nombrePais=@pais)
+
 	UPDATE SQLECT.Hoteles SET nombre = @nombre, mail = @email, fecha_creacion = @fecha_creacion,
-	 ciudad = @ciudad, calle = @calle, nro_calle = @nro_calle, cant_estrellas = @cant_estrellas, pais = @pais
+	 ciudad = @ciudad, calle = @calle, nro_calle = @nro_calle, cant_estrellas = @cant_estrellas, fk_pais = @PaisID
 	 WHERE id_hotel=@id_hotel
 	
 	IF (@all_inclusive=0) DELETE FROM SQLECT.Regimenes_Hoteles WHERE fk_hotel=@id_hotel AND fk_regimen=3
