@@ -25,7 +25,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         int idHotelEnCuestion;
         string usuarioDeSesion;
         bool soyDesde = false;
-        DateTime fechaActual = DateTime.Today;
+        private int fechaActual;
+        //DateTime fechaActual = DateTime.Today;
 
         AppModel_Alta_Usuario funciones = new AppModel_Alta_Usuario();
         StringBuilder mensajeValidacion = new StringBuilder();
@@ -33,7 +34,9 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         private void GenerarReserva_Load(object sender, EventArgs e)
         {
+            fechaActual = funcionesReservas.devolverFechaAppConfig();
             
+
             monthCalendar.Visible = false;
 
             StringBuilder sentence = new StringBuilder().AppendFormat("SELECT r.descripcion FROM SQLECT.Regimenes_Hoteles rh JOIN SQLECT.Hoteles h ON (rh.fk_hotel=h.id_hotel) JOIN SQLECT.Regimenes r ON (r.id_regimen=rh.fk_regimen) WHERE h.id_hotel={0}",idHotelEnCuestion);
@@ -132,7 +135,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
             if (fechaDesdeOK & fechaHastaOK)
             {
-                if (Convert.ToDateTime(fechaDesde.Text) < fechaActual | Convert.ToDateTime(fechaHasta.Text) < fechaActual)
+                if (funcionesReservas.pasarDateTimeAInt(DateTime.Parse(fechaDesde.Text)) < fechaActual | funcionesReservas.pasarDateTimeAInt(DateTime.Parse(fechaHasta.Text)) < fechaActual)
                     MessageBox.Show("No puede elegir fechas anterior a la actual");
 
                 else

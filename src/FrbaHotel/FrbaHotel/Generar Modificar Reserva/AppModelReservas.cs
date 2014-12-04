@@ -15,6 +15,19 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         Funcionalidades funcionesVarias = new Funcionalidades();
 
 
+        public int devolverFechaAppConfig()
+        {
+            int fechaFormateada = Int32.Parse(System.Configuration.ConfigurationManager.AppSettings["Año"].ToString()) * 10000 + Int32.Parse(System.Configuration.ConfigurationManager.AppSettings["Mes"].ToString()) * 100 + Int32.Parse(System.Configuration.ConfigurationManager.AppSettings["Dia"].ToString());
+            return fechaFormateada;
+        }
+
+        public int pasarDateTimeAInt(DateTime fecha)
+        {
+            int fechaInt = fecha.Year * 10000 + fecha.Month * 100 + fecha.Day;
+            return fechaInt;
+        
+        }
+
         public DataTable habitacionesMaximasDisponibles(string fechaDesde, string fechaHasta, int idHotel)
         {
             Conexion conexion = Conexion.Instance;
@@ -120,9 +133,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         public bool realizarReserva(string fechaInicio, int cantidadNoches, string usuarioDeSesion, string tipoRegimen, int idDeHotel,int cantidadHuespedes)
         {
-            DateTime fechaActual = DateTime.Today;
-
-
+            string fechaActual = Convert.ToString(this.devolverFechaAppConfig());
+            
             Conexion conexion = Conexion.Instance;
             System.Data.SqlClient.SqlCommand comandoAReserva = new System.Data.SqlClient.SqlCommand();
             comandoAReserva.CommandType = CommandType.StoredProcedure;
@@ -133,6 +145,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             comandoAReserva.Parameters.Add("@tipoRegimen", SqlDbType.VarChar);
             comandoAReserva.Parameters.Add("@idHotel", SqlDbType.Int);
             comandoAReserva.Parameters.Add("@cantHuespedes", SqlDbType.Int);
+            comandoAReserva.Parameters.Add("@fechaDelSistema", SqlDbType.VarChar);
          
             comandoAReserva.Parameters[0].Value = DateTime.Parse(fechaInicio);
             comandoAReserva.Parameters[1].Value = cantidadNoches;
@@ -140,6 +153,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             comandoAReserva.Parameters[3].Value = tipoRegimen;
             comandoAReserva.Parameters[4].Value = idDeHotel;
             comandoAReserva.Parameters[5].Value = cantidadHuespedes;
+            comandoAReserva.Parameters[6].Value = fechaActual;
 
 
             comandoAReserva.CommandText = "SQLECT.realizarReserva";
@@ -305,14 +319,14 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         public bool chequearHabilitacionDeCancelacion(string codigoReserva)
     
         {
-            DateTime fechaActual = DateTime.Now;
+            string fechaActual = Convert.ToString(this.devolverFechaAppConfig());
             
             Conexion conexion = Conexion.Instance;
             System.Data.SqlClient.SqlCommand comandoAReserva = new System.Data.SqlClient.SqlCommand();
             comandoAReserva.CommandType = CommandType.StoredProcedure;
 
             comandoAReserva.Parameters.Add("@codigoReserva", SqlDbType.VarChar);
-            comandoAReserva.Parameters.Add("@fechaActual", SqlDbType.DateTime);
+            comandoAReserva.Parameters.Add("@fechaActual", SqlDbType.VarChar);
 
             comandoAReserva.Parameters[0].Value = codigoReserva;
             comandoAReserva.Parameters[1].Value = fechaActual;

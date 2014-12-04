@@ -16,6 +16,26 @@ namespace FrbaHotel.Commons.FuncionalidadesVarias
     public class Funcionalidades
     {
 
+        public int devolverFechaAppConfig()
+        {
+            int fechaFormateada = Int32.Parse(System.Configuration.ConfigurationManager.AppSettings["Año"].ToString()) * 10000 + Int32.Parse(System.Configuration.ConfigurationManager.AppSettings["Mes"].ToString()) * 100 + Int32.Parse(System.Configuration.ConfigurationManager.AppSettings["Dia"].ToString());
+            return fechaFormateada;
+        }
+
+        public string pasarIntADatetime()
+        
+        {
+            StringBuilder fecha = new StringBuilder();
+            fecha.Append(System.Configuration.ConfigurationManager.AppSettings["Dia"].ToString());
+            fecha.Append("/");
+            fecha.Append(System.Configuration.ConfigurationManager.AppSettings["Mes"].ToString());
+            fecha.Append("/");
+            fecha.Append(System.Configuration.ConfigurationManager.AppSettings["Año"].ToString());
+
+            return fecha.ToString();
+        
+        }
+
         public bool chequearExistenciaDeUsuarioYRol(string nombreUsuario, string rolElegido)
         {
             Conexion cnn = Conexion.Instance;

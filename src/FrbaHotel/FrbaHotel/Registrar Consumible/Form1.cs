@@ -39,7 +39,7 @@ namespace FrbaHotel.Registrar_Consumible
 
         private void botonConfirmar_Click(object sender, EventArgs e)
         {
-            funcionesFacturacion.generarFactura(codigoReservaActual, idHotelEnCuestion);
+            funcionesFacturacion.generarFactura(codigoReservaActual, idHotelEnCuestion,funcionesReservas.devolverFechaAppConfig());
             funcionesFacturacion.descontarConsumiblesPorRegimen(codigoReservaActual);
            
             FrbaHotel.Registrar_Consumible.Facturacion formFacturacion = new Facturacion(codigoReservaActual,idHotelEnCuestion);

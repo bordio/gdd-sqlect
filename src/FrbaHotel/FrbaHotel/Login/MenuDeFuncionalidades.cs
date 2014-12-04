@@ -36,7 +36,7 @@ namespace FrbaHotel.Login
 
         public void mostrarHotelesACargo()
         {
-            DataTable tabla = buscarHotelesDisponibles(usuarioDeSesion);
+            DataTable tabla = buscarHotelesDisponibles(usuarioDeSesion,Convert.ToString(funcionesVarias.devolverFechaAppConfig()));
 
             foreach (DataRow dat in tabla.Rows)
             {
@@ -100,7 +100,7 @@ namespace FrbaHotel.Login
         }
 
 
-        public DataTable buscarHotelesDisponibles(string nombreUsuario)
+        public DataTable buscarHotelesDisponibles(string nombreUsuario, string fechaDelSistema)
         {
             Conexion cnn = Conexion.Instance;
 
@@ -109,10 +109,13 @@ namespace FrbaHotel.Login
             comandoHotelesDisponibles.CommandType = CommandType.StoredProcedure;
             int contador = 0;
 
-            comandoHotelesDisponibles.Parameters.Add("@usuario", SqlDbType.VarChar);
+            comandoHotelesDisponibles.Parameters.Add("@usuario", SqlDbType.VarChar);            
             comandoHotelesDisponibles.Parameters[contador].Value = nombreUsuario;
             contador++;
 
+            comandoHotelesDisponibles.Parameters.Add("@fechaDelSistema", SqlDbType.VarChar);
+            comandoHotelesDisponibles.Parameters[contador].Value = fechaDelSistema;
+            contador++;
 
             comandoHotelesDisponibles.CommandText = "SQLECT.buscarHotelesDisponibles";
             DataTable tablaHoteles = cnn.ejecutarQueryConSP(comandoHotelesDisponibles);

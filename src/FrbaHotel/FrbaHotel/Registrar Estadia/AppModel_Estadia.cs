@@ -9,20 +9,24 @@ using FrbaHotel.Commons.FuncionalidadesVarias;
 
 namespace FrbaHotel.Generar_Modificar_Reserva
 {
+
     class AppModel_Estadias
     {
         private Conexion sqlconexion = Conexion.Instance;
         Funcionalidades funcionesVarias = new Funcionalidades();
 
-        public bool chequearFechaDeIngreso(string codigoReserva)
+        public bool chequearFechaDeIngreso(string codigoReserva,int fechaDelSistema)
         {
+     
             Conexion conexion = Conexion.Instance;
             System.Data.SqlClient.SqlCommand comandoAReserva = new System.Data.SqlClient.SqlCommand();
             comandoAReserva.CommandType = CommandType.StoredProcedure;
 
             comandoAReserva.Parameters.Add("@codigoReserva", SqlDbType.VarChar);
+            comandoAReserva.Parameters.Add("@fechaDelSistema", SqlDbType.VarChar);
 
             comandoAReserva.Parameters[0].Value = codigoReserva;
+            comandoAReserva.Parameters[1].Value = Convert.ToString(fechaDelSistema);
 
             comandoAReserva.CommandText = "SQLECT.chequearFechaDeIngreso";
             bool mismoDiaQueElInicioDeLaReserva = conexion.ejecutarEscalar(comandoAReserva);
@@ -30,22 +34,24 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             return mismoDiaQueElInicioDeLaReserva;       
         }
 
-        public void cancelarReservaPorNoShow(string codigoReserva)
+        public void cancelarReservaPorNoShow(string codigoReserva,int fechaDelSistema)
         {
             Conexion conexion = Conexion.Instance;
             System.Data.SqlClient.SqlCommand comandoAReserva = new System.Data.SqlClient.SqlCommand();
             comandoAReserva.CommandType = CommandType.StoredProcedure;
 
             comandoAReserva.Parameters.Add("@codigoReserva", SqlDbType.VarChar);
+            comandoAReserva.Parameters.Add("@fechaDelSistema", SqlDbType.VarChar);
 
             comandoAReserva.Parameters[0].Value = codigoReserva;
+            comandoAReserva.Parameters[1].Value = Convert.ToString(fechaDelSistema);
 
             comandoAReserva.CommandText = "SQLECT.cancelarReservaPorNoShow";
             conexion.ejecutarSP(comandoAReserva);
       
         }
 
-        public void realizarCheckIn(string codigoReserva, string usuario)
+        public void realizarCheckIn(string codigoReserva, string usuario,int fechaDelSistema)
         
         {
             Conexion conexion = Conexion.Instance;
@@ -54,24 +60,28 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
             comandoAReserva.Parameters.Add("@codigoReserva", SqlDbType.VarChar);
             comandoAReserva.Parameters.Add("@usuario", SqlDbType.VarChar);
+            comandoAReserva.Parameters.Add("@fechaDelSistema", SqlDbType.VarChar);
 
             comandoAReserva.Parameters[0].Value = codigoReserva;
             comandoAReserva.Parameters[1].Value = usuario;
+            comandoAReserva.Parameters[2].Value= Convert.ToString(fechaDelSistema);
 
             comandoAReserva.CommandText = "SQLECT.realizarCheckIn";
             conexion.ejecutarSP(comandoAReserva);
         
         }
 
-        public bool chequearFechaDeEgreso(string codigoReserva)
+        public bool chequearFechaDeEgreso(string codigoReserva,int fechaDelSistema)
     
         {   Conexion conexion = Conexion.Instance;
             System.Data.SqlClient.SqlCommand comandoAReserva = new System.Data.SqlClient.SqlCommand();
             comandoAReserva.CommandType = CommandType.StoredProcedure;
 
             comandoAReserva.Parameters.Add("@codigoReserva", SqlDbType.VarChar);
+            comandoAReserva.Parameters.Add("@fechaDelSistema", SqlDbType.VarChar);
 
             comandoAReserva.Parameters[0].Value = codigoReserva;
+            comandoAReserva.Parameters[1].Value = Convert.ToString(fechaDelSistema);
 
             comandoAReserva.CommandText = "SQLECT.chequearFechaDeEgreso";
             bool mismoDiaQueElInicioDeLaReserva = conexion.ejecutarEscalar(comandoAReserva);
@@ -80,7 +90,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                
         }
 
-        public void realizarCheckOut(string codigoReserva, string usuario)
+        public void realizarCheckOut(string codigoReserva, string usuario,int fechaDelSistema)
         {
             Conexion conexion = Conexion.Instance;
             System.Data.SqlClient.SqlCommand comandoAReserva = new System.Data.SqlClient.SqlCommand();
@@ -88,9 +98,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
             comandoAReserva.Parameters.Add("@codigoReserva", SqlDbType.VarChar);
             comandoAReserva.Parameters.Add("@usuario", SqlDbType.VarChar);
+            comandoAReserva.Parameters.Add("@fechaDelSistema", SqlDbType.VarChar);
 
             comandoAReserva.Parameters[0].Value = codigoReserva;
             comandoAReserva.Parameters[1].Value = usuario;
+            comandoAReserva.Parameters[2].Value = Convert.ToString(fechaDelSistema);
 
             comandoAReserva.CommandText = "SQLECT.realizarCheckOut";
             conexion.ejecutarSP(comandoAReserva);

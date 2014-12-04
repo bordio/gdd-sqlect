@@ -33,12 +33,13 @@ namespace FrbaHotel.Registrar_Estadia
         private int cantNochesEstadia;
         private int cantHuespedes;
         private int estadoReservaActual;
-        private DateTime fechaActual = DateTime.Now;
+        private int fechaActual;
+        //private DateTime fechaActual = DateTime.Now;
 
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            fechaActual = funcionesReservas.devolverFechaAppConfig();
         }
 
         private void botonAceptar_Click(object sender, EventArgs e)
@@ -92,9 +93,9 @@ namespace FrbaHotel.Registrar_Estadia
 
                 if ((estadoReservaActual == 0) | (estadoReservaActual == 1))
                 {
-                    if (funcionesEstadias.chequearFechaDeIngreso(codigoReserva.Text))
+                    if (funcionesEstadias.chequearFechaDeIngreso(codigoReserva.Text,funcionesReservas.devolverFechaAppConfig()))
                     {
-                        funcionesEstadias.realizarCheckIn(codigoReserva.Text, usuarioDeSesionActual);
+                        funcionesEstadias.realizarCheckIn(codigoReserva.Text, usuarioDeSesionActual,funcionesReservas.devolverFechaAppConfig());
 
                         MessageBox.Show("Check-In realizado correctamente");
                         
@@ -109,7 +110,7 @@ namespace FrbaHotel.Registrar_Estadia
                     }
                     else
                     {
-                        funcionesEstadias.cancelarReservaPorNoShow(codigoReserva.Text);
+                        funcionesEstadias.cancelarReservaPorNoShow(codigoReserva.Text,funcionesReservas.devolverFechaAppConfig());
                         MessageBox.Show("La reserva ha sido cancelada por no presentarse en fecha.");
                     }
 
@@ -136,9 +137,9 @@ namespace FrbaHotel.Registrar_Estadia
             {
                 if (funcionesEstadias.chequearRealizacionDeCheckIn(codigoReserva.Text))
                 { 
-                  if(funcionesEstadias.chequearFechaDeEgreso(codigoReserva.Text))
+                  if(funcionesEstadias.chequearFechaDeEgreso(codigoReserva.Text,funcionesReservas.devolverFechaAppConfig()))
                   {
-                      funcionesEstadias.realizarCheckOut(codigoReserva.Text, usuarioDeSesionActual);
+                      funcionesEstadias.realizarCheckOut(codigoReserva.Text, usuarioDeSesionActual,funcionesReservas.devolverFechaAppConfig());
                       MessageBox.Show("Check-Out realizado correctamente");
 
                       FrbaHotel.Registrar_Consumible.Form1 formRegistrarConsumibles = new FrbaHotel.Registrar_Consumible.Form1(idHotelEnCuestion, codigoReserva.Text);
@@ -148,7 +149,7 @@ namespace FrbaHotel.Registrar_Estadia
                   }
                   else
                   {
-                      if (fechaActual < fechaInicioActual)
+                      if (fechaActual < funcionesReservas.pasarDateTimeAInt(fechaInicioActual))
                           MessageBox.Show(string.Format("Esta queriendo retirarse antes del inicio de la reserva que comienza el {0}",fechaInicioActual.ToShortDateString()));
                       else
                           MessageBox.Show("No se encuentra dentro del período de la reserva"); }
