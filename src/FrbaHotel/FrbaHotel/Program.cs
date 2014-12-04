@@ -30,6 +30,6 @@ namespace FrbaHotel
              //Application.Run(new FrbaHotel.Registrar_Estadia.Form1("admin", 1));
              Application.Run(new FrbaHotel.Registrar_Consumible.Form1(1, "11a4b1e0"));
             //Application.Run(new ABM_de_Cliente.ModificacionMain_Cliente());
-        }
+        }        }
     }
 }

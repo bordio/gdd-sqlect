@@ -33,7 +33,7 @@ namespace FrbaHotel.ABM_de_Hotel
 
         public void validarForm(Alta_Hotel formAlta, StringBuilder errores)
         {
-            if (formAlta.Nombre.Text == "" || formAlta.Email.Text == "" || formAlta.Cantidad_Estrellas.Text == "" || formAlta.Pais.Text == "" || formAlta.Ciudad.Text == "" || formAlta.Calle.Text == "" || formAlta.Nro_calle.Text == "")
+            if (formAlta.Nombre.Text == "" || formAlta.Email.Text == "" || formAlta.Cantidad_Estrellas.Text == "" || formAlta.cmbPais.SelectedItem.ToString() == "" || formAlta.Ciudad.Text == "" || formAlta.Calle.Text == "" || formAlta.Nro_calle.Text == "")
             {
                 errores.AppendLine("No debe dejar los campos obligatorios en blanco");
                 fallo_carga = true;
@@ -42,7 +42,7 @@ namespace FrbaHotel.ABM_de_Hotel
             {
                 errores.AppendLine("Email duplicado");
             }
-            if (!fallo_carga && this.hotelDuplicado(formAlta.Pais.Text,formAlta.Ciudad.Text,formAlta.Calle.Text,Int32.Parse(formAlta.Nro_calle.Text))) {
+            if (!fallo_carga && this.hotelDuplicado(formAlta.cmbPais.SelectedItem.ToString(),formAlta.Ciudad.Text,formAlta.Calle.Text,Int32.Parse(formAlta.Nro_calle.Text))) {
                 errores.AppendLine("Ya existe un hotel en ese pais, en esa ciudad y en la misma direccion.");
             }
             if (!fallo_carga && !this.seleccionoAlgunRegimen(formAlta.ckAllInclusive,formAlta.ckAllInclusiveModerado,formAlta.ckPensionCompleta,formAlta.ckMediaPension))
@@ -86,7 +86,7 @@ namespace FrbaHotel.ABM_de_Hotel
         public virtual bool hotelDuplicado(String pais, String ciudad, String calle, Int32 nro_calle)
         {
             StringBuilder sentece = new StringBuilder();
-            sentece.AppendFormat("SELECT id_hotel FROM SQLECT.Hoteles h WHERE UPPER(h.pais)=UPPER('{0}') AND UPPER(h.ciudad)=UPPER('{1}') AND UPPER(h.calle)=UPPER('{2}') AND h.nro_calle={3}", pais.ToString(),ciudad.ToString(),calle.ToString(),nro_calle);
+            sentece.AppendFormat("SELECT id_hotel FROM SQLECT.Hoteles h, SQLECT.Paises p WHERE UPPER(p.nombrePais)=UPPER('{0}') AND UPPER(h.ciudad)=UPPER('{1}') AND UPPER(h.calle)=UPPER('{2}') AND h.nro_calle={3} AND h.fk_pais = p.id_pais", pais.ToString(),ciudad.ToString(),calle.ToString(),nro_calle);
             return this.connSql.ejecutarQuery(sentece.ToString()).Rows.Count > 0;
         }
 
@@ -116,5 +116,27 @@ namespace FrbaHotel.ABM_de_Hotel
                 return false;
             }
         }
+
+        public virtual void cargarPaises(ComboBox cmbPais)
+        {
+            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT nombrePais FROM SQLECT.Paises");
+            DataTable tabla = Conexion.Instance.ejecutarQuery(sentence.ToString());
+
+            for (int i = 0; i < tabla.Rows.Count; i++)
+            {
+                cmbPais.Items.Add(tabla.Rows[i]["nombrePais"].ToString());
+            }
+            cmbPais.SelectedIndex = 0;
+        }
+
+        public virtual string getNombreSeleccionado() { return "";  }
+        public virtual string getPaisSeleccionado() { return ""; }
+        public virtual string getEmailSeleccionado() { return ""; }
+        public virtual string getFechaCreacionSeleccionado() { return ""; }
+        //public virtual string getPaisSeleccionado() { return ""; }
+        public virtual string getCiudadSeleccionado() { return ""; }
+        public virtual string getCalleSeleccionado() { return ""; }
+        public virtual string getNroCalleSeleccionado() { return ""; }
+        public virtual string getCantidadEstrellasSeleccionado() { return ""; }
     }
 }

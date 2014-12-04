@@ -18,6 +18,8 @@ namespace FrbaHotel.ABM_de_Hotel
             InitializeComponent();
             Text = "Gestor de hoteles";
             this.idUsuarioActual = idUsuario;
+            cmbPais.Items.Add("");
+            cargarPaises();
         }
         
         private int idUsuarioActual;
@@ -32,9 +34,22 @@ namespace FrbaHotel.ABM_de_Hotel
             lstHoteles.AllowUserToAddRows = false;
         }
 
+        private void cargarPaises()
+        {
+            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT nombrePais FROM SQLECT.Paises");
+            DataTable tabla = Conexion.Instance.ejecutarQuery(sentence.ToString());
+
+            for (int i = 0; i < tabla.Rows.Count; i++)
+            {
+                cmbPais.Items.Add(tabla.Rows[i]["nombrePais"].ToString());
+            }
+            cmbPais.SelectedIndex = 0;
+        }
+
         public static StringBuilder getAllInstances()
         {
-            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT nombre 'Nombre', pais 'Pais', ciudad 'Ciudad', calle 'Calle', nro_calle 'Nro Calle', cant_estrellas 'Cantidad de estrellas' FROM SQLECT.Hoteles");
+            StringBuilder sentence = new StringBuilder().Append("SELECT h.nombre 'Nombre', p.nombrePais 'Pais', h.ciudad 'Ciudad', h.calle 'Calle', h.nro_calle 'Nro Calle', h.cant_estrellas 'Cantidad de estrellas'");
+            sentence.Append("FROM SQLECT.Hoteles h, SQLECT.Paises p WHERE h.fk_pais=p.id_pais");
             return sentence;
         }
 
@@ -67,7 +82,7 @@ namespace FrbaHotel.ABM_de_Hotel
             Nombre.ResetText();
             CantidadEstrellas.ResetText();
             Ciudad.ResetText();
-            Pais.ResetText();
+            cmbPais.ResetText();
             lstHoteles.DataSource = null;
         }
 
@@ -76,9 +91,9 @@ namespace FrbaHotel.ABM_de_Hotel
             StringBuilder sentence = new StringBuilder();
             sentence = getAllInstances();
 
-            if ((Nombre.Text != "") || (CantidadEstrellas.Text != "") || (Ciudad.Text != "") || (Pais.Text != ""))
+            if ((Nombre.Text != "") || (CantidadEstrellas.Text != "") || (Ciudad.Text != "") || (cmbPais.SelectedItem.ToString() != ""))
             {
-                sentence.Append(" WHERE ");
+                sentence.Append(" AND ");
                 if (Nombre.Text != "") sentence.AppendFormat(" (nombre LIKE '%{0}%') AND ", Nombre.Text);
                 if (CantidadEstrellas.Text != "")
                 {
@@ -94,7 +109,7 @@ namespace FrbaHotel.ABM_de_Hotel
                     }
                 }
                 if (Ciudad.Text != "") sentence.AppendFormat(" (ciudad LIKE '%{0}%') AND ", Ciudad.Text);
-                if (Pais.Text != "") sentence.AppendFormat(" (pais LIKE '%{0}%') AND ", Pais.Text);
+                if (cmbPais.SelectedItem.ToString() != "") sentence.AppendFormat(" (nombrePais LIKE '%{0}%') AND ", cmbPais.SelectedItem.ToString());
                 StringBuilder sentenceFiltro = new StringBuilder().AppendFormat(sentence.ToString().Substring(0, sentence.Length - 5));
                 lstHoteles.DataSource = cargar_lista(sentenceFiltro).DefaultView;
                 lstHoteles.AllowUserToAddRows = false;

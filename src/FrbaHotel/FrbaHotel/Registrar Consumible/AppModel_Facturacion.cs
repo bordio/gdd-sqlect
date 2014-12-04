@@ -14,7 +14,7 @@ namespace FrbaHotel.Registrar_Consumible
         private Conexion sqlconexion = Conexion.Instance;
         Funcionalidades funcionesVarias = new Funcionalidades();
 
-        public void generarFactura(string codigoReserva, int idHotel)
+        public void generarFactura(string codigoReserva, int idHotel, int fechaDelSistema)
         {
             Conexion conexion = Conexion.Instance;
             System.Data.SqlClient.SqlCommand comandoAFactura = new System.Data.SqlClient.SqlCommand();
@@ -22,9 +22,11 @@ namespace FrbaHotel.Registrar_Consumible
 
             comandoAFactura.Parameters.Add("@codigoReserva", SqlDbType.VarChar);
             comandoAFactura.Parameters.Add("@idHotel", SqlDbType.Int);
-
+            comandoAFactura.Parameters.Add("@fechaDelSistema", SqlDbType.VarChar);
+            
             comandoAFactura.Parameters[0].Value = codigoReserva;
             comandoAFactura.Parameters[1].Value = idHotel;
+            comandoAFactura.Parameters[2].Value = Convert.ToString(fechaDelSistema);
 
             comandoAFactura.CommandText = "SQLECT.generarFactura";
             conexion.ejecutarSP(comandoAFactura);

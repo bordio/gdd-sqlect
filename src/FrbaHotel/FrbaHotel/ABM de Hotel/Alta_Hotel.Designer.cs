@@ -59,10 +59,10 @@
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.Ciudad = new System.Windows.Forms.TextBox();
-            this.Pais = new System.Windows.Forms.TextBox();
             this.btAlta = new System.Windows.Forms.Button();
             this.btVolver = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.cmbPais = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -319,11 +319,11 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.cmbPais);
             this.groupBox3.Controls.Add(this.label15);
             this.groupBox3.Controls.Add(this.label14);
             this.groupBox3.Controls.Add(this.label13);
             this.groupBox3.Controls.Add(this.Ciudad);
-            this.groupBox3.Controls.Add(this.Pais);
             this.groupBox3.Controls.Add(this.Calle);
             this.groupBox3.Controls.Add(this.label1);
             this.groupBox3.Controls.Add(this.label7);
@@ -375,13 +375,6 @@
             this.Ciudad.Size = new System.Drawing.Size(234, 20);
             this.Ciudad.TabIndex = 24;
             // 
-            // Pais
-            // 
-            this.Pais.Location = new System.Drawing.Point(111, 21);
-            this.Pais.Name = "Pais";
-            this.Pais.Size = new System.Drawing.Size(234, 20);
-            this.Pais.TabIndex = 23;
-            // 
             // btAlta
             // 
             this.btAlta.Location = new System.Drawing.Point(285, 372);
@@ -411,6 +404,15 @@
             this.button1.Text = "Limpiar";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // cmbPais
+            // 
+            this.cmbPais.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbPais.FormattingEnabled = true;
+            this.cmbPais.Location = new System.Drawing.Point(111, 16);
+            this.cmbPais.Name = "cmbPais";
+            this.cmbPais.Size = new System.Drawing.Size(233, 21);
+            this.cmbPais.TabIndex = 29;
             // 
             // Alta_Hotel
             // 
@@ -458,7 +460,6 @@
         public System.Windows.Forms.TextBox Email;
         public System.Windows.Forms.TextBox Cantidad_Estrellas;
         public System.Windows.Forms.GroupBox groupBox2;
-        public System.Windows.Forms.TextBox Pais;
         public System.Windows.Forms.GroupBox groupBox3;
         public System.Windows.Forms.TextBox Ciudad;
         public System.Windows.Forms.Button btAlta;
@@ -470,6 +471,7 @@
         public System.Windows.Forms.Label label15;
         public System.Windows.Forms.Label label14;
         public System.Windows.Forms.Label label13;
+        public System.Windows.Forms.ComboBox cmbPais;
 
     }
 }

@@ -46,7 +46,7 @@ namespace FrbaHotel.ABM_de_Hotel
             comando1.Parameters[3].Value = Int32.Parse(formAlta.Cantidad_Estrellas.Text);
             if (formAlta.Fecha_creacion.Text != "") comando1.Parameters[4].Value = DateTime.Parse(formAlta.Fecha_creacion.Text);
             else comando1.Parameters[4].Value = null;
-            comando1.Parameters[5].Value = formAlta.Pais.Text;
+            comando1.Parameters[5].Value = formAlta.cmbPais.SelectedItem.ToString();
             comando1.Parameters[6].Value = formAlta.Ciudad.Text;
             comando1.Parameters[7].Value = formAlta.Calle.Text;
             comando1.Parameters[8].Value = Int32.Parse(formAlta.Nro_calle.Text);
@@ -64,7 +64,7 @@ namespace FrbaHotel.ABM_de_Hotel
         public override bool hotelDuplicado(String pais, String ciudad, String calle, Int32 nro_calle)
         {
             StringBuilder sentece = new StringBuilder();
-            sentece.AppendFormat("SELECT id_hotel FROM SQLECT.Hoteles h WHERE UPPER(h.pais)=UPPER('{0}') AND UPPER(h.ciudad)=UPPER('{1}') AND UPPER(h.calle)=UPPER('{2}') AND h.nro_calle={3} AND id_hotel!={4}", pais.ToString(), ciudad.ToString(), calle.ToString(), nro_calle,this.idHotel);
+            sentece.AppendFormat("SELECT id_hotel FROM SQLECT.Hoteles h, SQLECT.Paises p WHERE UPPER(p.nombrePais)=UPPER('{0}') AND UPPER(h.ciudad)=UPPER('{1}') AND UPPER(h.calle)=UPPER('{2}') AND h.nro_calle={3} AND (p.id_pais = h.fk_pais) AND h.id_hotel!={4}", pais.ToString(), ciudad.ToString(), calle.ToString(), nro_calle,this.idHotel);
             return this.connSql.ejecutarQuery(sentece.ToString()).Rows.Count > 0;
         }
 
@@ -82,5 +82,29 @@ namespace FrbaHotel.ABM_de_Hotel
             sentece.AppendFormat("SELECT SQLECT.funcPuedoQuitarRegimen({0},'{1}','{2}')", idHotel, regimen, anioFormateado);
             return (Int32.Parse(this.connSql.ejecutarQuery(sentece.ToString()).Rows[0][0].ToString()) == 1);
         }
+
+        public override void cargarPaises(ComboBox cmbPais)
+        {
+            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT nombrePais FROM SQLECT.Paises");
+            DataTable tabla = Conexion.Instance.ejecutarQuery(sentence.ToString());
+
+            for (int i = 0; i < tabla.Rows.Count; i++)
+            {
+                cmbPais.Items.Add(tabla.Rows[i]["nombrePais"].ToString());
+                if (tabla.Rows[i]["nombrePais"].ToString() == this.rowHotel.Rows[0][4].ToString())
+                {
+                    cmbPais.SelectedIndex = i;
+                }
+            }
+        }
+
+        public override string getNombreSeleccionado() { return rowHotel.Rows[0][1].ToString(); }
+        public override string getEmailSeleccionado() { return rowHotel.Rows[0][2].ToString(); }
+        public override string getCantidadEstrellasSeleccionado() { return rowHotel.Rows[0][8].ToString(); }
+        public override string getFechaCreacionSeleccionado() { return rowHotel.Rows[0][3].ToString(); }
+        public override string getPaisSeleccionado() { return rowHotel.Rows[0][4].ToString(); }
+        public override string getCiudadSeleccionado() { return rowHotel.Rows[0][5].ToString(); }
+        public override string getCalleSeleccionado() { return rowHotel.Rows[0][6].ToString(); }
+        public override string getNroCalleSeleccionado() { return rowHotel.Rows[0][7].ToString(); }
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrbaHotel.Commons.Database;
+using FrbaHotel.Commons.FuncionalidadesVarias;
 
 namespace FrbaHotel.Registrar_Consumible
 {
@@ -23,12 +24,13 @@ namespace FrbaHotel.Registrar_Consumible
 
         int idHotelEnCuestion;
         string codigoReservaActual;
+         Funcionalidades funcionesVarias = new Funcionalidades();
         AppModel_Facturacion funcionesFacturacion = new AppModel_Facturacion();
 
         private void Facturacion_Load(object sender, EventArgs e)
         {
             DateTime fechaActual = DateTime.Now;
-            fecha.Text = fechaActual.ToShortDateString();
+            fecha.Text = funcionesVarias.pasarIntADatetime().ToString();
             hora.Text = fechaActual.ToShortTimeString();
 
             StringBuilder sentence = new StringBuilder().AppendFormat("SELECT nombre,calle+' '+CAST(nro_calle as varchar),cant_estrellas,mail FROM SQLECT.Hoteles WHERE id_hotel={0}",idHotelEnCuestion);
@@ -75,6 +77,7 @@ namespace FrbaHotel.Registrar_Consumible
             this.Close();
             formularioAnterior.Cerrate(false);
         }
+
 
        
     }

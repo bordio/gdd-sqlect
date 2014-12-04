@@ -41,7 +41,7 @@ namespace FrbaHotel.ABM_de_Hotel
             comando1.Parameters[2].Value = Int32.Parse(formAlta.Cantidad_Estrellas.Text);
             if (formAlta.Fecha_creacion.Text != "") comando1.Parameters[3].Value = DateTime.Parse(formAlta.Fecha_creacion.Text);
             else comando1.Parameters[3].Value = null;
-            comando1.Parameters[4].Value = formAlta.Pais.Text;
+            comando1.Parameters[4].Value = formAlta.cmbPais.SelectedItem.ToString();
             comando1.Parameters[5].Value = formAlta.Ciudad.Text;
             comando1.Parameters[6].Value = formAlta.Calle.Text;
             comando1.Parameters[7].Value = Int32.Parse(formAlta.Nro_calle.Text);
