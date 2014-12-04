@@ -13,11 +13,14 @@ namespace FrbaHotel.ABM_de_Hotel
 {
     public partial class MainHotel : Form
     {
-        public MainHotel()
+        public MainHotel(int idUsuario)
         {
             InitializeComponent();
             Text = "Gestor de hoteles";
+            this.idUsuarioActual = idUsuario;
         }
+        
+        private int idUsuarioActual;
         private StringBuilder paisSeleccionado = new StringBuilder();
         private StringBuilder ciudadSeleccionado = new StringBuilder();
         private StringBuilder calleSeleccionado = new StringBuilder();
@@ -55,7 +58,7 @@ namespace FrbaHotel.ABM_de_Hotel
 
         private void agregar_Click(object sender, EventArgs e)
         {
-            Alta_Hotel formAlta = new Alta_Hotel(this.lstHoteles);
+            Alta_Hotel formAlta = new Alta_Hotel(this.lstHoteles,this.idUsuarioActual);
             formAlta.Show();
         }
 

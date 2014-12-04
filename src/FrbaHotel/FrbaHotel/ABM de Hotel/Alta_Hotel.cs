@@ -11,14 +11,19 @@ namespace FrbaHotel.ABM_de_Hotel
 {
     public partial class Alta_Hotel : Form
     {
-        private HotelAppModel appModel;
+        public HotelAppModel appModel;
         private DataGridView listaHoteles;
 
-        public Alta_Hotel(DataGridView lsHoteles)
+        public bool ckPensionCompleta_old;
+        public bool ckMediaPension_old;
+        public bool ckAllInclusive_old;
+        public bool ckAllInclusiveModerado_old;
+
+        public Alta_Hotel(DataGridView lsHoteles,int id_usuario)
         {
             listaHoteles = lsHoteles;
             InitializeComponent();
-            appModel = new AltaHotelAppModel();
+            appModel = new AltaHotelAppModel(id_usuario);
             Text = "Alta de Hotel";
         }
 
@@ -47,6 +52,11 @@ namespace FrbaHotel.ABM_de_Hotel
                 if (fk_regimen==3) ckAllInclusive.Checked = true;
                 if (fk_regimen==4) ckAllInclusiveModerado.Checked = true;
             }
+
+            this.ckAllInclusive_old = ckAllInclusive.Checked;
+            this.ckAllInclusiveModerado_old = ckAllInclusiveModerado.Checked;
+            this.ckMediaPension_old = ckMediaPension.Checked;
+            this.ckPensionCompleta_old = ckPensionCompleta.Checked;
         }
 
         private void btSeleccionarFecha_Click(object sender, EventArgs e)
@@ -78,9 +88,7 @@ namespace FrbaHotel.ABM_de_Hotel
         private void btAlta_Click(object sender, EventArgs e)
         {
             StringBuilder errores = new StringBuilder();
-            bool retValue = this.appModel.actionHotel(Nombre, Email, Cantidad_Estrellas, Fecha_creacion,
-                this.ckAllInclusive.Checked, this.ckAllInclusiveModerado.Checked, this.ckPensionCompleta.Checked,
-                this.ckMediaPension.Checked, Pais, Ciudad, Calle, Nro_calle, errores);
+            bool retValue = this.appModel.actionHotel(this, errores);
 
             if (retValue)
             {

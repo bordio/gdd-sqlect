@@ -59,8 +59,8 @@ namespace FrbaHotel.ABM_de_Hotel
                 String fecha_desde = this.formatearFechaDateTime(Desde.Text);
                 String fecha_hasta = this.formatearFechaDateTime(Hasta.Text);
                 sentece.Append("SELECT res.id_reserva");
-                sentece.Append(" FROM SQLECT.Habitaciones hab, SQLECT.Habitaciones_Reservas habres, SQLECT.Reservas res");
-                sentece.AppendFormat(" WHERE (hab.fk_hotel = {0}) AND (hab.id_habitacion = habres.fk_habitacion) AND (habres.fk_reserva = res.id_reserva)",this.id_hotel);
+                sentece.Append(" FROM SQLECT.Reservas_Hoteles_Vista rhv, SQLECT.Reservas res");
+                sentece.AppendFormat(" WHERE (rhv.id_hotel = {0}) AND (rhv.id_reserva = res.id_reserva)", this.id_hotel);
                 sentece.Append(" AND ((NOT (res.estado_reserva in (2,3,4))");
                 sentece.AppendFormat(" AND (res.fecha_inicio BETWEEN '{0}' AND '{1}')", fecha_desde, fecha_hasta);
                 sentece.AppendFormat(" OR (res.fecha_inicio+res.cant_noches_reserva BETWEEN '{0}' AND '{1}')))", fecha_desde, fecha_hasta);

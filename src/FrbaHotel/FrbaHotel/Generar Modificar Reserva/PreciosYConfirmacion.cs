@@ -13,9 +13,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 {
     public partial class PreciosYConfirmacion : Form
     {
-        public PreciosYConfirmacion(string tipoRegimen, int idDelHotel, decimal cantHues, decimal cantSimples, decimal cantDobles, decimal cantTri, decimal cantCuadru, decimal cantQuin, string fechaDesde, string fechaHasta, string usuarioDeSesion)
+        Form formularioAnterior;
+        public PreciosYConfirmacion(string tipoRegimen, int idDelHotel, decimal cantHues, decimal cantSimples, decimal cantDobles, decimal cantTri, decimal cantCuadru, decimal cantQuin, string fechaDesde, string fechaHasta, string usuarioDeSesion, Form formulario)
         {
             InitializeComponent();
+            formularioAnterior = formulario;
             this.regimenElegido = tipoRegimen;
             this.idHotelEnCuestion = idDelHotel;
             this.cantidadHuespedes = cantHues;
@@ -87,7 +89,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         private void botonRealizarReserva_Click(object sender, EventArgs e)
         {
 
-            ElegirHabitaciones formFinal = new ElegirHabitaciones(idHotelEnCuestion, fechaDesde, fechaHasta, Convert.ToInt32(cantidadSimples), Convert.ToInt32(cantidadDobles),Convert.ToInt32(cantidadTriples),Convert.ToInt32(cantidadCuadruples) ,Convert.ToInt32(cantidadQuintuples),usuarioDeSesion,regimenElegido,Convert.ToInt32(cantidadHuespedes));
+            ElegirHabitaciones formFinal = new ElegirHabitaciones(idHotelEnCuestion, fechaDesde, fechaHasta, Convert.ToInt32(cantidadSimples), Convert.ToInt32(cantidadDobles),Convert.ToInt32(cantidadTriples),Convert.ToInt32(cantidadCuadruples) ,Convert.ToInt32(cantidadQuintuples),usuarioDeSesion,regimenElegido,Convert.ToInt32(cantidadHuespedes),this);
             formFinal.Show();
 
             
@@ -97,9 +99,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             bool reservaHecha = funcionesReservas.realizarReserva(fechaDesde, cantNoches, usuarioDeSesion, regimenElegido, idHotelEnCuestion, Convert.ToInt32(cantidadSimples), Convert.ToInt32(cantidadDobles), Convert.ToInt32(cantidadTriples), Convert.ToInt32(cantidadCuadruples), Convert.ToInt32(cantidadQuintuples));
             if (reservaHecha)
                 MessageBox.Show("Falta hacer el insert a la BD");*/
-            
+        }
 
-
+        public void Cerrate() {
+            this.Close();
+            formularioAnterior.Close();
         }
     }
 }

@@ -74,7 +74,8 @@ namespace FrbaHotel.ABM_de_Cliente
 
                 comandoACliente.CommandText = "SQLECT.altaCliente";
                 conexion.ejecutarQueryConSP(comandoACliente); //Pedimos la ejecucion del StoredProcedure SQLECT.altaCliente
-
+                conexion.ejecutarQuery("COMMIT");
+                
                 if (idReservaDelCliente != 0)
                   MessageBox.Show(string.Format("Alta exitosa, guarde el siguiente código para posteriores modificaciones: {0}", funcionesReservas.obtenerCodigoReserva(idReserva))); 
                 else           

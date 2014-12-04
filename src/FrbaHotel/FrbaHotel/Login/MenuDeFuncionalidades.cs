@@ -24,11 +24,13 @@ namespace FrbaHotel.Login
 
         string usuarioDeSesion;
         string nombreRolDeSesion;
+        private int idUsuario;
 
         private Funcionalidades funcionesVarias = new Funcionalidades();
 
         private void MenuDeFuncionalidades_Load(object sender, EventArgs e)
         {
+            idUsuario = funcionesVarias.obtenerIDUsuario(usuarioDeSesion);
             mostrarHotelesACargo();
         }
 
@@ -150,7 +152,7 @@ namespace FrbaHotel.Login
                     gestionarClientes.Show();
                     break;
                 case "Gestionar hoteles":
-                    FrbaHotel.ABM_de_Hotel.MainHotel gestionarHoteles = new FrbaHotel.ABM_de_Hotel.MainHotel();
+                    FrbaHotel.ABM_de_Hotel.MainHotel gestionarHoteles = new FrbaHotel.ABM_de_Hotel.MainHotel(idUsuario);
                     gestionarHoteles.Show();
                     break;
                 case "Gestionar habitaciones":

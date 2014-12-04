@@ -14,54 +14,72 @@ namespace FrbaHotel.ABM_de_Hotel
         protected bool fallo_carga = false;
         public DataTable rowHotel = new DataTable();
 
-        public abstract void doActionHotel(Control nombre, Control email, Control cant_estrellas, Control fecha_creacion, bool all_inclusive, bool all_inclusive_moderado, bool pension_completa, bool media_pension, Control pais, Control ciudad, Control calle, Control nro_calle);
+        public abstract void doActionHotel(Alta_Hotel formAlta);
+        public virtual bool puedeEliminarRegimen(string regimen) { return false; }
 
-        public bool actionHotel(Control nombre, Control email, Control cant_estrellas, Control fecha_creacion, bool all_inclusive, bool all_inclusive_moderado, bool pension_completa, bool media_pension, Control pais, Control ciudad, Control calle, Control nro_calle, StringBuilder errores)
+        public bool actionHotel(Alta_Hotel formAlta, StringBuilder errores)
         {
-            validarForm(nombre, email, cant_estrellas, fecha_creacion, all_inclusive, all_inclusive_moderado, pension_completa, media_pension, pais, ciudad, calle, nro_calle, errores);
+            validarForm(formAlta, errores);
             if (errores.Length > 0)
             {
                 return false;
             }
             else
             {
-                doActionHotel(nombre, email, cant_estrellas, fecha_creacion, all_inclusive, all_inclusive_moderado, pension_completa, media_pension, pais, ciudad, calle, nro_calle);
+                doActionHotel(formAlta);
                 return true;
             }
         }
 
-        public void validarForm(Control nombre, Control email, Control cant_estrellas, Control fecha_creacion, bool all_inclusive, bool all_inclusive_moderado, bool pension_completa, bool media_pension, Control pais, Control ciudad, Control calle, Control nro_calle, StringBuilder errores)
+        public void validarForm(Alta_Hotel formAlta, StringBuilder errores)
         {
-            if (nombre.Text == "" || email.Text == "" || cant_estrellas.Text == "" || pais.Text == "" || ciudad.Text == "" || calle.Text == "" || nro_calle.Text == "")
+            if (formAlta.Nombre.Text == "" || formAlta.Email.Text == "" || formAlta.Cantidad_Estrellas.Text == "" || formAlta.Pais.Text == "" || formAlta.Ciudad.Text == "" || formAlta.Calle.Text == "" || formAlta.Nro_calle.Text == "")
             {
                 errores.AppendLine("No debe dejar los campos obligatorios en blanco");
                 fallo_carga = true;
             }
-            if (!fallo_carga && this.existeEmail(email.Text))
+            if (!fallo_carga && this.existeEmail(formAlta.Email.Text))
             {
                 errores.AppendLine("Email duplicado");
             }
-            if (!fallo_carga && this.hotelDuplicado(pais.Text,ciudad.Text,calle.Text,Int32.Parse(nro_calle.Text))) {
+            if (!fallo_carga && this.hotelDuplicado(formAlta.Pais.Text,formAlta.Ciudad.Text,formAlta.Calle.Text,Int32.Parse(formAlta.Nro_calle.Text))) {
                 errores.AppendLine("Ya existe un hotel en ese pais, en esa ciudad y en la misma direccion.");
             }
-            if (!fallo_carga && !this.seleccionoAlgunRegimen(all_inclusive,all_inclusive_moderado,pension_completa,media_pension))
+            if (!fallo_carga && !this.seleccionoAlgunRegimen(formAlta.ckAllInclusive,formAlta.ckAllInclusiveModerado,formAlta.ckPensionCompleta,formAlta.ckMediaPension))
             {
                 errores.AppendLine("Debe seleccionar algun regimen");
             }
-            if (!fallo_carga && esNumerico(errores, cant_estrellas))
+            if (!fallo_carga && esNumerico(errores, formAlta.Cantidad_Estrellas))
             {
-                if (Int32.Parse(cant_estrellas.Text) < 0)
+                if (Int32.Parse(formAlta.Cantidad_Estrellas.Text) < 0)
                 {
                     errores.AppendLine("La cantidad de estrellas debe ser un numero positivo");
                 }
             }
-            if (!fallo_carga && esNumerico(errores, nro_calle))
+            if (!fallo_carga && esNumerico(errores, formAlta.Nro_calle))
             {
-                if (Int32.Parse(nro_calle.Text) < 0)
+                if (Int32.Parse(formAlta.Nro_calle.Text) < 0)
                 {
                     errores.AppendLine("El numero de calle debe ser un numero positivo");
                 }
             }
+            if (!fallo_carga && !formAlta.ckAllInclusive.Checked && (formAlta.ckAllInclusive_old != formAlta.ckAllInclusive.Checked) && !puedeEliminarRegimen("All inclusive"))
+            {
+                errores.AppendLine("El regimen All inclusive no se puede dar de baja debido a que ya existen reservas tomadas con este regimen.");
+            }
+            if (!fallo_carga && !formAlta.ckAllInclusiveModerado.Checked && (formAlta.ckAllInclusiveModerado_old != formAlta.ckAllInclusiveModerado.Checked) && !puedeEliminarRegimen("All Inclusive moderado"))
+            {
+                errores.AppendLine("El regimen All Inclusive moderado no se puede dar de baja debido a que ya existen reservas tomadas con este regimen.");
+            }
+            if (!fallo_carga && !formAlta.ckPensionCompleta.Checked && (formAlta.ckPensionCompleta_old != formAlta.ckPensionCompleta.Checked) && !puedeEliminarRegimen("Pension Completa"))
+            {
+                errores.AppendLine("El regimen Pension Completa no se puede dar de baja debido a que ya existen reservas tomadas con este regimen.");
+            }
+            if (!fallo_carga && !formAlta.ckMediaPension.Checked && (formAlta.ckMediaPension_old != formAlta.ckMediaPension.Checked) && !puedeEliminarRegimen("Media Pensión"))
+            {
+                errores.AppendLine("El regimen Media Pensión no se puede dar de baja debido a que ya existen reservas tomadas con este regimen.");
+            }
+
             fallo_carga = false;
         }
 
@@ -79,9 +97,9 @@ namespace FrbaHotel.ABM_de_Hotel
             return this.connSql.ejecutarQuery(sentece.ToString()).Rows.Count > 0;
         }
 
-        private bool seleccionoAlgunRegimen(bool all_inclusive, bool all_inclusive_moderado, bool pension_completa, bool media_pension)
+        private bool seleccionoAlgunRegimen(CheckBox all_inclusive, CheckBox all_inclusive_moderado, CheckBox pension_completa, CheckBox media_pension)
         {
-            if (all_inclusive || all_inclusive_moderado || pension_completa || media_pension) return true;
+            if (all_inclusive.Checked || all_inclusive_moderado.Checked || pension_completa.Checked || media_pension.Checked) return true;
             else return false;
         }
 

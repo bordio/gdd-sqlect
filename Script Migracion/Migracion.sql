@@ -870,6 +870,19 @@ GO
 
 /* ABM Hoteles */
 
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.Reservas_Hoteles_Vista'))
+DROP VIEW SQLECT.Reservas_Hoteles_Vista
+
+GO
+
+CREATE VIEW SQLECT.Reservas_Hoteles_Vista AS (
+SELECT res.id_reserva, hab.fk_hotel 'id_hotel'
+FROM SQLECT.Habitaciones hab, SQLECT.Habitaciones_Reservas habres, SQLECT.Reservas res
+WHERE (hab.id_habitacion = habres.fk_habitacion) AND (habres.fk_reserva = res.id_reserva))
+
+GO
+
+
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.altaHotel'))
 DROP PROCEDURE SQLECT.altaHotel
 
@@ -877,7 +890,7 @@ GO
 CREATE PROCEDURE SQLECT.altaHotel (@nombre VARCHAR(60), @email VARCHAR(255),
 									 @cant_estrellas INT, @fecha_creacion DATETIME = null, @pais VARCHAR(100),
 									 @ciudad VARCHAR(100), @calle VARCHAR(100), @nro_calle INT,
-									 @all_inclusive INT, @all_inclusive_moderado INT, @pension_completa INT, @media_pension INT)
+									 @all_inclusive INT, @all_inclusive_moderado INT, @pension_completa INT, @media_pension INT, @id_usuario INT)
 AS
 BEGIN
 
@@ -893,7 +906,7 @@ BEGIN
 	IF (@pension_completa=1) INSERT INTO SQLECT.Regimenes_Hoteles(fk_hotel,fk_regimen) VALUES (@HotelId,1)
 	IF (@media_pension=1) INSERT INTO SQLECT.Regimenes_Hoteles(fk_hotel,fk_regimen) VALUES (@HotelId,2)
 	
-	/*TO DO: Establecer relacion entre administrador y nuevo hotel*/
+	INSERT INTO SQLECT.Usuarios_Hoteles(fk_hotel,fk_usuario) VALUES (@HotelId,@id_usuario)
 	
 END
 GO
@@ -911,12 +924,11 @@ END
 GO
 
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.funcQuitarRegimen'))
-DROP FUNCTION SQLECT.funcQuitarRegimen
-
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.funcPuedoQuitarRegimen'))
+DROP FUNCTION SQLECT.funcPuedoQuitarRegimen
 
 GO
-CREATE FUNCTION SQLECT.funcQuitaRegimen (@id_hotel INT, @regimen VARCHAR(60), @fecha DATE)
+CREATE FUNCTION SQLECT.funcPuedoQuitarRegimen (@id_hotel INT, @regimen VARCHAR(60), @fecha DATETIME)
 RETURNS INT
 AS
 BEGIN
@@ -927,12 +939,16 @@ DECLARE @ret INT
 SET @idReg = (SELECT id_regimen FROM SQLECT.Regimenes WHERE descripcion = @regimen)
 
 IF EXISTS
-(SELECT id_reserva FROM SQLECT.Reservas
-WHERE fk_regimen = @idReg AND DATEADD(day,cant_noches_reserva,fecha_inicio) > @fecha AND estado_reserva IN (0,1,5))
+(SELECT * FROM SQLECT.Reservas res, SQLECT.Reservas_Hoteles_Vista rhv
+ WHERE (fk_regimen = @idReg) AND (rhv.id_hotel = @id_hotel) AND (rhv.id_reserva = res.id_reserva)
+ AND DATEADD(day,cant_noches_reserva,fecha_inicio) > @fecha AND estado_reserva IN (0,1,5))
+ BEGIN
 	SET @ret = 0
+ END
 ELSE
+ BEGIN
 	SET @ret = 1	
-	
+ END
 RETURN @ret
 END
 GO
@@ -2150,3 +2166,5 @@ BEGIN
 	
 END
 GO
+GO
+

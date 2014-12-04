@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrbaHotel.Generar_Modificar_Reserva;
 
 namespace FrbaHotel.ABM_de_Cliente
 {
@@ -18,6 +19,7 @@ namespace FrbaHotel.ABM_de_Cliente
         public StringBuilder mensajeValidacion;
         public AppModel_Base_Cliente appModel;
         public ABM_de_Cliente.ModificacionMain_Cliente pantallaAnteriorFiltros = null;
+        RegistroCliente formularioAnterior;
 
         public BaseAltaModificacion_Cliente() //Para altas sin reserva. Lo usa clase hija Alta_Cliente
         {
@@ -28,10 +30,11 @@ namespace FrbaHotel.ABM_de_Cliente
             appModel.cargarPaises(PaisOrigen);
         }
 
-        public BaseAltaModificacion_Cliente(int idReserva) //Para altas con reserva. Lo usa clase hija Alta_Cliente
+        public BaseAltaModificacion_Cliente(int idReserva, RegistroCliente formulario) //Para altas con reserva. Lo usa clase hija Alta_Cliente
         {
             InitializeComponent();
             this.idReservaDelCliente = idReserva;
+            formularioAnterior = formulario;
             appModel = new AppModel_Alta_Cliente(idReservaDelCliente);
             Text = "Alta de Cliente";
             llenarComboDocumentos();
@@ -140,6 +143,7 @@ namespace FrbaHotel.ABM_de_Cliente
                 }
                 this.appModel.refrescarPantalla(pantallaAnteriorFiltros);
                     this.Close();
+                    formularioAnterior.Cerrate(false);
                 }
             
         }   

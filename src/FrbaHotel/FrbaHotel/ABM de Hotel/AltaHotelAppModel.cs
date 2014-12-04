@@ -11,7 +11,12 @@ namespace FrbaHotel.ABM_de_Hotel
     class AltaHotelAppModel : HotelAppModel
     {
         private Conexion connSql = Conexion.Instance;
-        public override void doActionHotel(Control nombre, Control email, Control cant_estrellas, Control fecha_creacion, bool all_inclusive, bool all_inclusive_moderado, bool pension_completa, bool media_pension, Control pais, Control ciudad, Control calle, Control nro_calle)
+        private int id_usuario;
+        public AltaHotelAppModel(int id_usuario)
+        {
+            this.id_usuario = id_usuario;
+        }
+        public override void doActionHotel(Alta_Hotel formAlta)
         {
             Conexion cnn = Conexion.Instance;
             System.Data.SqlClient.SqlCommand comando1 = new System.Data.SqlClient.SqlCommand();
@@ -29,20 +34,22 @@ namespace FrbaHotel.ABM_de_Hotel
             comando1.Parameters.Add("@all_inclusive_moderado", SqlDbType.Int);
             comando1.Parameters.Add("@pension_completa", SqlDbType.Int);
             comando1.Parameters.Add("@media_pension", SqlDbType.Int);
+            comando1.Parameters.Add("@id_usuario", SqlDbType.Int);
 
-            comando1.Parameters[0].Value = nombre.Text;
-            comando1.Parameters[1].Value = email.Text;
-            comando1.Parameters[2].Value = Int32.Parse(cant_estrellas.Text);
-            if (fecha_creacion.Text != "") comando1.Parameters[3].Value = DateTime.Parse(fecha_creacion.Text);
+            comando1.Parameters[0].Value = formAlta.Nombre.Text;
+            comando1.Parameters[1].Value = formAlta.Email.Text;
+            comando1.Parameters[2].Value = Int32.Parse(formAlta.Cantidad_Estrellas.Text);
+            if (formAlta.Fecha_creacion.Text != "") comando1.Parameters[3].Value = DateTime.Parse(formAlta.Fecha_creacion.Text);
             else comando1.Parameters[3].Value = null;
-            comando1.Parameters[4].Value = pais.Text;
-            comando1.Parameters[5].Value = ciudad.Text;
-            comando1.Parameters[6].Value = calle.Text;
-            comando1.Parameters[7].Value = Int32.Parse(nro_calle.Text);
-            comando1.Parameters[8].Value = (all_inclusive ? 1 : 0);
-            comando1.Parameters[9].Value = (all_inclusive_moderado ? 1 : 0);
-            comando1.Parameters[10].Value = (pension_completa ? 1 : 0);
-            comando1.Parameters[11].Value = (media_pension ? 1 : 0);
+            comando1.Parameters[4].Value = formAlta.Pais.Text;
+            comando1.Parameters[5].Value = formAlta.Ciudad.Text;
+            comando1.Parameters[6].Value = formAlta.Calle.Text;
+            comando1.Parameters[7].Value = Int32.Parse(formAlta.Nro_calle.Text);
+            comando1.Parameters[8].Value = (formAlta.ckAllInclusive.Checked ? 1 : 0);
+            comando1.Parameters[9].Value = (formAlta.ckAllInclusiveModerado.Checked ? 1 : 0);
+            comando1.Parameters[10].Value = (formAlta.ckPensionCompleta.Checked ? 1 : 0);
+            comando1.Parameters[11].Value = (formAlta.ckMediaPension.Checked ? 1 : 0);
+            comando1.Parameters[12].Value = this.id_usuario;
 
             comando1.CommandText = "SQLECT.altaHotel";
             cnn.ejecutarQueryConSP(comando1);
