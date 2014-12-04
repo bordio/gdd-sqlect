@@ -13,9 +13,11 @@ namespace FrbaHotel.Registrar_Consumible
 {
     public partial class FormaDePago : Form
     {
-        public FormaDePago(string codigoReserva)
+        Facturacion formularioAnterior;
+        public FormaDePago(string codigoReserva, Facturacion formulario)
         {
             InitializeComponent();
+            this.formularioAnterior = formulario;
             this.codigoReservaActual = codigoReserva;
         }
 
@@ -37,18 +39,13 @@ namespace FrbaHotel.Registrar_Consumible
             {
                 funcionesFacturacion.registrarFormaDePago(codigoReservaActual, formaPago.Text, detalles.Text);
                 FrbaHotel.Registrar_Consumible.Agradecimiento formFinal = new Agradecimiento();
-                formFinal.Show();
-
-
+                formFinal.ShowDialog();
+                this.Close();
+                formularioAnterior.Cerrate();
             }
             else
                 MessageBox.Show(mensaje.ToString());
-
-            mensaje.Remove(0, mensaje.Length);
-            
-
-
-
+                mensaje.Remove(0, mensaje.Length);
         }
     }
 }

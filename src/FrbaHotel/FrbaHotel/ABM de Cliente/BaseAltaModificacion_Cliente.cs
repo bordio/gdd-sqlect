@@ -160,6 +160,7 @@ namespace FrbaHotel.ABM_de_Cliente
             this.Localidad.Text = null;
             this.Nacionalidad.Text = null;
             this.Documento.Text = null;
+            this.Depto.Text = null;
             this.cbTipoDoc.SelectedIndex = 0;
             this.PaisOrigen.SelectedItem = null;
             mensajeValidacion = null;

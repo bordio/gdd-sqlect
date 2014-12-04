@@ -42,8 +42,8 @@ namespace FrbaHotel.Registrar_Consumible
             funcionesFacturacion.generarFactura(codigoReservaActual, idHotelEnCuestion,funcionesReservas.devolverFechaAppConfig());
             funcionesFacturacion.descontarConsumiblesPorRegimen(codigoReservaActual);
            
-            FrbaHotel.Registrar_Consumible.Facturacion formFacturacion = new Facturacion(codigoReservaActual,idHotelEnCuestion);
-            formFacturacion.Show();
+            FrbaHotel.Registrar_Consumible.Facturacion formFacturacion = new Facturacion(codigoReservaActual,idHotelEnCuestion,this);
+            formFacturacion.ShowDialog();
         }
 
         private void botonRegistrarConsumible_Click(object sender, EventArgs e)
@@ -78,7 +78,22 @@ namespace FrbaHotel.Registrar_Consumible
             }
         }
 
-       
+        private void Form1_FormClosed(object sender, EventArgs e)
+        {
+            if (hacerRollBack)
+            {
+                Conexion.Instance.ejecutarQuery("ROLLBACK");
+            }
+        }
+
+        public bool hacerRollBack = true;
+
+        public void Cerrate(bool rollback)
+        {
+            this.hacerRollBack = rollback;
+            this.Close();
+        }
+
 
   
   }

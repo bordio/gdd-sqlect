@@ -40,7 +40,7 @@ namespace FrbaHotel.ABM_de_Cliente
             //Carga de paises al comboBox
             appModel.cargarPaises(PaisOrigen);
             //Se selecciona del comboBox el pais del Cliente seleccionado
-            PaisOrigen.SelectedIndex = Int32.Parse(appModel.rowCliente.Rows[0][15].ToString()) - 1; // El 15 es el fkHotel
+            if (appModel.rowCliente.Rows[0][15].ToString() != "") PaisOrigen.SelectedIndex = Int32.Parse(appModel.rowCliente.Rows[0][15].ToString()) - 1; // El 15 es el fkHotel
             
         }
 

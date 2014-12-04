@@ -98,13 +98,13 @@ namespace FrbaHotel.Registrar_Estadia
                         funcionesEstadias.realizarCheckIn(codigoReserva.Text, usuarioDeSesionActual,funcionesReservas.devolverFechaAppConfig());
 
                         MessageBox.Show("Check-In realizado correctamente");
-                        
+                        botonCheckIn.Enabled = false;
                         if (cantHuespedes > 1)
                         {
-                          MessageBox.Show(string.Format("Debe registrar a {0} huéspedes como clientes", cantHuespedes - 1));
-                          FrbaHotel.ABM_de_Cliente.BaseAltaModificacion_Cliente formRegistrarClientes = new FrbaHotel.ABM_de_Cliente.BaseAltaModificacion_Cliente();
-                          formRegistrarClientes.Show();
-                            
+                            MessageBox.Show(string.Format("Debe registrar a {0} huéspedes como clientes", cantHuespedes - 1));
+                            FrbaHotel.ABM_de_Cliente.BaseAltaModificacion_Cliente formRegistrarClientes = new FrbaHotel.ABM_de_Cliente.BaseAltaModificacion_Cliente();
+                            formRegistrarClientes.ShowDialog();
+
                         }
                         //this.Close();
                     }
@@ -118,21 +118,31 @@ namespace FrbaHotel.Registrar_Estadia
                             funcionesEstadias.cancelarReservaPorNoShow(codigoReserva.Text, funcionesReservas.devolverFechaAppConfig());
                             MessageBox.Show("La reserva ha sido cancelada por no presentarse en fecha.");
                         }
+                        botonCheckIn.Enabled = false;
+                        botonCheckOut.Enabled = false;
                     }
 
                 }
                 else
                 {
                     if ((estadoReservaActual == 2) | (estadoReservaActual == 3) | (estadoReservaActual == 4))
-
+                    {
                         MessageBox.Show("La reserva está cancelada");
+                        botonCheckOut.Enabled = false;
+                    }
                     else
+                    {
                         MessageBox.Show("La reserva se encuentra efectivizada");
+                        // botonCheckIn.Enabled = false;
+                    }
                 }
 
             }
-            else            
-             MessageBox.Show("Ya se ha realizado el Check-In");
+            else
+            {
+                MessageBox.Show("Ya se ha realizado el Check-In");
+                botonCheckIn.Enabled = false;
+            }
         }
 
         private void botonCheckOut_Click(object sender, EventArgs e)
@@ -149,7 +159,7 @@ namespace FrbaHotel.Registrar_Estadia
                       MessageBox.Show("Check-Out realizado correctamente");
 
                       FrbaHotel.Registrar_Consumible.Form1 formRegistrarConsumibles = new FrbaHotel.Registrar_Consumible.Form1(idHotelEnCuestion, codigoReserva.Text);
-                      formRegistrarConsumibles.Show();
+                      formRegistrarConsumibles.ShowDialog();
                       this.Close();
                   
                   }
