@@ -36,14 +36,13 @@ namespace FrbaHotel.ABM_de_Cliente
             appModel_Modificar = new AppModel_Modificacion_Cliente();
             this.idReservaDelCliente = idReserva;
             formularioAnterior = formulario;
-            this.label1.Visible = false;
-            this.label2.Visible = false;
-            this.labelNacionalidad.Visible = false;
-            this.Nombre.Visible = false;
-            this.Apellido.Visible = false;
-            this.Nacionalidad.Visible = false;
+            this.Nombre.Enabled = false;
+            this.Apellido.Enabled = false;
+            this.Nacionalidad.Enabled = false;
             this.btModificar.Text = "Seleccionar";
             this.btModificar.Visible = true;
+            this.btHabilitar.Visible = false;
+            this.btInhabilitar.Visible = false;
             llenarComboDocumentos();
 
         }
@@ -129,12 +128,12 @@ namespace FrbaHotel.ABM_de_Cliente
             if (btModificar.Text=="Seleccionar") // La reserva utiliza esta view tambien. Cambiando el nombre del boton "Modificar" por "Seleccionar"
             {
                 FrbaHotel.Generar_Modificar_Reserva.ConfirmarClienteReserva formConfirmarCliente = new FrbaHotel.Generar_Modificar_Reserva.ConfirmarClienteReserva(emailSeleccionado.ToString(), Convert.ToInt32(documentoSeleccionado.ToString()), idReservaDelCliente, this);
-                formConfirmarCliente.Show();
+                formConfirmarCliente.ShowDialog();
             }
             else // Se quiere modificar a un cliente de verdad
             {
                 BaseAltaModificacion_Cliente form = new Modificacion_Cliente(this,this.gridClientes, this.emailSeleccionado, this.documentoSeleccionado, this.tipodocSeleccionado); //Chequear despues si esta bien solo usar email
-                form.Show();
+                form.ShowDialog();
             }
         }
 

@@ -57,6 +57,12 @@
             this.fechaHasta = new System.Windows.Forms.TextBox();
             this.fechaDesde = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.maxSimples = new System.Windows.Forms.Label();
+            this.maxCuadruples = new System.Windows.Forms.Label();
+            this.maxTriples = new System.Windows.Forms.Label();
+            this.maxDobles = new System.Windows.Forms.Label();
+            this.maxQuintuples = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cantidadHuéspedes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cantidadSimples)).BeginInit();
@@ -68,6 +74,12 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.maxQuintuples);
+            this.groupBox1.Controls.Add(this.maxDobles);
+            this.groupBox1.Controls.Add(this.maxTriples);
+            this.groupBox1.Controls.Add(this.maxCuadruples);
+            this.groupBox1.Controls.Add(this.maxSimples);
+            this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.botonPrecio);
             this.groupBox1.Controls.Add(this.botonConsultarDispo);
@@ -360,6 +372,65 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(348, 133);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(36, 16);
+            this.label8.TabIndex = 30;
+            this.label8.Text = "Máx.";
+            // 
+            // maxSimples
+            // 
+            this.maxSimples.AutoSize = true;
+            this.maxSimples.Location = new System.Drawing.Point(348, 155);
+            this.maxSimples.Name = "maxSimples";
+            this.maxSimples.Size = new System.Drawing.Size(45, 16);
+            this.maxSimples.TabIndex = 31;
+            this.maxSimples.Text = "label9";
+            this.maxSimples.Visible = false;
+            // 
+            // maxCuadruples
+            // 
+            this.maxCuadruples.AutoSize = true;
+            this.maxCuadruples.Location = new System.Drawing.Point(348, 250);
+            this.maxCuadruples.Name = "maxCuadruples";
+            this.maxCuadruples.Size = new System.Drawing.Size(52, 16);
+            this.maxCuadruples.TabIndex = 32;
+            this.maxCuadruples.Text = "label10";
+            this.maxCuadruples.Visible = false;
+            // 
+            // maxTriples
+            // 
+            this.maxTriples.AutoSize = true;
+            this.maxTriples.Location = new System.Drawing.Point(348, 219);
+            this.maxTriples.Name = "maxTriples";
+            this.maxTriples.Size = new System.Drawing.Size(52, 16);
+            this.maxTriples.TabIndex = 33;
+            this.maxTriples.Text = "label11";
+            this.maxTriples.Visible = false;
+            // 
+            // maxDobles
+            // 
+            this.maxDobles.AutoSize = true;
+            this.maxDobles.Location = new System.Drawing.Point(348, 187);
+            this.maxDobles.Name = "maxDobles";
+            this.maxDobles.Size = new System.Drawing.Size(52, 16);
+            this.maxDobles.TabIndex = 34;
+            this.maxDobles.Text = "label13";
+            this.maxDobles.Visible = false;
+            // 
+            // maxQuintuples
+            // 
+            this.maxQuintuples.AutoSize = true;
+            this.maxQuintuples.Location = new System.Drawing.Point(348, 284);
+            this.maxQuintuples.Name = "maxQuintuples";
+            this.maxQuintuples.Size = new System.Drawing.Size(52, 16);
+            this.maxQuintuples.TabIndex = 35;
+            this.maxQuintuples.Text = "label14";
+            this.maxQuintuples.Visible = false;
+            // 
             // GenerarReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -413,5 +484,11 @@
         private System.Windows.Forms.Button botonConsultarDispo;
         private System.Windows.Forms.Button botonPrecio;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label maxQuintuples;
+        private System.Windows.Forms.Label maxDobles;
+        private System.Windows.Forms.Label maxTriples;
+        private System.Windows.Forms.Label maxCuadruples;
+        private System.Windows.Forms.Label maxSimples;
+        private System.Windows.Forms.Label label8;
     }
 }
