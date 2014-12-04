@@ -99,6 +99,12 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             cantidadQuíntuples.Enabled = false;
             cantidadHuéspedes.Enabled = false;
 
+            maxSimples.Visible = false;
+            maxDobles.Visible = false;
+            maxTriples.Visible = false;
+            maxCuadruples.Visible = false;
+            maxQuintuples.Visible = false;
+
             cantidadHuéspedes.Value = 0;
             cantidadSimples.Value = 0;
             cantidadDobles.Value = 0;
@@ -182,6 +188,18 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     comboRegimen.Enabled = true;
 
                     botonPrecio.Enabled = true;
+
+                    maxSimples.Visible = true;
+                    maxDobles.Visible = true;
+                    maxTriples.Visible = true;
+                    maxCuadruples.Visible = true;
+                    maxQuintuples.Visible = true;
+
+                    maxSimples.Text = cantidadSimples.Maximum.ToString();
+                    maxDobles.Text = cantidadDobles.Maximum.ToString();
+                    maxTriples.Text = cantidadTriples.Maximum.ToString();
+                    maxCuadruples.Text = cantidadCuádruples.Maximum.ToString();
+                    maxQuintuples.Text = cantidadQuíntuples.Maximum.ToString();
                 }
             
             }
