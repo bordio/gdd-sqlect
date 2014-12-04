@@ -13,8 +13,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 {
     public partial class PreciosYConfirmacion : Form
     {
-        Form formularioAnterior;
-        public PreciosYConfirmacion(string tipoRegimen, int idDelHotel, decimal cantHues, decimal cantSimples, decimal cantDobles, decimal cantTri, decimal cantCuadru, decimal cantQuin, string fechaDesde, string fechaHasta, string usuarioDeSesion, Form formulario)
+        GenerarReserva formularioAnterior;
+        public PreciosYConfirmacion(string tipoRegimen, int idDelHotel, decimal cantHues, decimal cantSimples, decimal cantDobles, decimal cantTri, decimal cantCuadru, decimal cantQuin, string fechaDesde, string fechaHasta, string usuarioDeSesion, GenerarReserva formulario)
         {
             InitializeComponent();
             formularioAnterior = formulario;
@@ -90,7 +90,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         {
 
             ElegirHabitaciones formFinal = new ElegirHabitaciones(idHotelEnCuestion, fechaDesde, fechaHasta, Convert.ToInt32(cantidadSimples), Convert.ToInt32(cantidadDobles),Convert.ToInt32(cantidadTriples),Convert.ToInt32(cantidadCuadruples) ,Convert.ToInt32(cantidadQuintuples),usuarioDeSesion,regimenElegido,Convert.ToInt32(cantidadHuespedes),this);
-            formFinal.Show();
+            formFinal.ShowDialog();
 
             
             /*TimeSpan difFech = DateTime.Parse(fechaHasta) - DateTime.Parse(fechaDesde);

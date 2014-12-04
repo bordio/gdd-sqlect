@@ -157,7 +157,7 @@ namespace FrbaHotel.ABM_de_Cliente {
 
             if ((control.SelectedItem != null))
             {
-                sentence.AppendFormat(" ({0} LIKE '%{1}%') AND ", campo, control.ToString());
+                sentence.AppendFormat(" ({0} LIKE '%{1}%') AND ", campo, control.SelectedItem.ToString());
             }
 
         }

@@ -213,7 +213,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             else
             {
                 PreciosYConfirmacion formularioPrecios = new PreciosYConfirmacion(comboRegimen.SelectedItem.ToString(), idHotelEnCuestion, cantidadHuéspedes.Value, cantidadSimples.Value, cantidadDobles.Value, cantidadTriples.Value, cantidadCuádruples.Value, cantidadQuíntuples.Value,fechaDesde.Text.ToString(),fechaHasta.Text.ToString(), usuarioDeSesion, this);
-                formularioPrecios.Show();
+                formularioPrecios.ShowDialog();
             }
         }
 
