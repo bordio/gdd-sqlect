@@ -916,7 +916,7 @@ DROP FUNCTION SQLECT.funcQuitarRegimen
 
 
 GO
-CREATE FUNCTION SQLECT.funcQuitaRegimen (@id_hotel INT, @regimen VARCHAR(60), @fecha DATE)
+CREATE FUNCTION SQLECT.funcQuitarRegimen (@id_hotel INT, @regimen VARCHAR(60), @fecha DATE)
 RETURNS INT
 AS
 BEGIN
@@ -1244,7 +1244,7 @@ CREATE PROCEDURE SQLECT.obtenerMaximasHabitacionesDisponibles(@fechaDesde dateti
 AS
 BEGIN
       
-SELECT tipo_habitacion 'Tipo', COUNT(DISTINCT id_habitacion) 'Cant.' FROM SQLECT.Habitaciones
+SELECT h.tipo_habitacion 'Tipo', COUNT(DISTINCT h.id_habitacion) 'Cant.' FROM SQLECT.Habitaciones h LEFT JOIN SQLECT.Bajas_por_hotel bh ON (h.fk_hotel=bh.fk_hotel)
       WHERE id_habitacion NOT IN
 		(
 			SELECT DISTINCT h.id_habitacion FROM SQLECT.Habitaciones h
@@ -1261,8 +1261,8 @@ SELECT tipo_habitacion 'Tipo', COUNT(DISTINCT id_habitacion) 'Cant.' FROM SQLECT
 							
 							
 						) 
-		) AND fk_hotel = @idHotel AND estado_habitacion=1
-	GROUP BY tipo_habitacion
+		) AND h.fk_hotel = @idHotel AND estado_habitacion=1 AND ( ( (@fechaDesde NOT BETWEEN bh.fecha_inicio AND bh.fecha_fin) AND (@fechaHasta NOT BETWEEN bh.fecha_inicio AND bh.fecha_fin) AND (@fechaDesde>bh.fecha_fin OR @fechaHasta<bh.fecha_inicio) ) OR (bh.fecha_inicio IS NULL AND bh.fecha_fin IS NULL) )
+	 GROUP BY tipo_habitacion
 	ORDER BY 1
 END
 GO	
@@ -1304,7 +1304,7 @@ AS
 
 BEGIN
 
-SELECT DISTINCT hot.nombre'Hotel',tipHab.descripcion'Tipo Habitacion',ha.nro_habitacion'Numero',ha.piso'Piso',ha.frente'Frente' FROM SQLECT.Habitaciones ha JOIN SQLECT.Hoteles hot ON (hot.id_hotel=ha.fk_hotel) JOIN SQLECT.Tipos_Habitaciones tipHab ON (ha.tipo_habitacion=tipHab.id_tipo_habitacion)
+SELECT DISTINCT hot.nombre'Hotel',tipHab.descripcion'Tipo Habitacion',ha.nro_habitacion'Numero',ha.piso'Piso',ha.frente'Frente' FROM SQLECT.Habitaciones ha LEFT JOIN SQLECT.Bajas_por_hotel bh ON (ha.fk_hotel=bh.fk_hotel) JOIN SQLECT.Hoteles hot ON (hot.id_hotel=ha.fk_hotel) JOIN SQLECT.Tipos_Habitaciones tipHab ON (ha.tipo_habitacion=tipHab.id_tipo_habitacion)
       WHERE id_habitacion NOT IN
 		(
 			SELECT DISTINCT h.id_habitacion FROM SQLECT.Habitaciones h
@@ -1319,7 +1319,7 @@ SELECT DISTINCT hot.nombre'Hotel',tipHab.descripcion'Tipo Habitacion',ha.nro_hab
 							( fecha_inicio<=@fechaHasta and @fechaHasta<=DATEADD(day,r.cant_noches_reserva-1,r.fecha_inicio)) OR
 							( @fechaDesde<=fecha_inicio and @fechaHasta>=DATEADD(day,r.cant_noches_reserva-1,r.fecha_inicio))
 						) )
-		 AND ha.fk_hotel = @idHotel AND ha.estado_habitacion=1
+		 AND ha.fk_hotel = @idHotel AND ha.estado_habitacion=1 AND ( ( (@fechaDesde NOT BETWEEN bh.fecha_inicio AND bh.fecha_fin) AND (@fechaHasta NOT BETWEEN bh.fecha_inicio AND bh.fecha_fin) AND (@fechaDesde>bh.fecha_fin OR @fechaHasta<bh.fecha_inicio) ) OR (bh.fecha_inicio IS NULL AND bh.fecha_fin IS NULL) )
 	ORDER BY 1
 END
 GO	
