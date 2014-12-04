@@ -17,7 +17,7 @@ namespace FrbaHotel.ABM_de_Hotel
         public int id_hotel;
         public BajaAppModel(String pais, String ciudad, String calle, Int32 nro_calle)
         {
-            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT id_hotel FROM SQLECT.Hoteles WHERE pais='{0}' AND ciudad='{1}' AND calle='{2}' AND nro_calle={3}", pais, ciudad, calle, nro_calle);
+            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT h.id_hotel FROM SQLECT.Hoteles h, SQLECT.Paises p WHERE p.nombrePais='{0}' AND h.ciudad='{1}' AND h.calle='{2}' AND h.nro_calle={3} AND h.fk_pais = p.id_pais", pais, ciudad, calle, nro_calle);
             DataTable row_id_hotel = Conexion.Instance.ejecutarQuery(sentence.ToString());
             this.id_hotel = Int32.Parse(row_id_hotel.Rows[0][0].ToString());
         }

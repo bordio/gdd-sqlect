@@ -25,6 +25,7 @@ namespace FrbaHotel.ABM_de_Hotel
             InitializeComponent();
             appModel = new AltaHotelAppModel(id_usuario);
             Text = "Alta de Hotel";
+            appModel.cargarPaises(cmbPais);
         }
 
         public Alta_Hotel(DataGridView lsHoteles, StringBuilder pais, StringBuilder ciudad, StringBuilder calle, Int32 nro_calle)
@@ -32,17 +33,19 @@ namespace FrbaHotel.ABM_de_Hotel
             listaHoteles = lsHoteles;
             InitializeComponent();
             Text = "Modificacion de Hotel";
-            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT h.id_hotel,h.nombre,h.mail,h.fecha_creacion,h.pais,h.ciudad,h.calle,h.nro_calle,h.cant_estrellas,rh.fk_regimen FROM SQLECT.Hoteles h, SQLECT.Regimenes_Hoteles rh WHERE h.pais='{0}' AND h.ciudad='{1}' AND h.calle='{2}' AND h.nro_calle={3} AND h.id_hotel=rh.fk_hotel", pais.ToString(), ciudad.ToString(), calle.ToString(), nro_calle);
+            StringBuilder sentence = new StringBuilder().Append("SELECT h.id_hotel,h.nombre,h.mail,h.fecha_creacion,p.nombrePais 'pais',h.ciudad,h.calle,h.nro_calle,h.cant_estrellas,rh.fk_regimen");
+            sentence.Append(" FROM SQLECT.Hoteles h, SQLECT.Regimenes_Hoteles rh, SQLECT.Paises p");
+            sentence.AppendFormat(" WHERE p.nombrePais='{0}' AND h.ciudad='{1}' AND h.calle='{2}' AND h.nro_calle={3} AND h.id_hotel=rh.fk_hotel AND h.fk_pais = p.id_pais", pais.ToString(), ciudad.ToString(), calle.ToString(), nro_calle);
             appModel = new ModificacionAppModel(sentence);
-            
-            Nombre.Text = appModel.rowHotel.Rows[0][1].ToString();
-            Email.Text = appModel.rowHotel.Rows[0][2].ToString();
-            Fecha_creacion.Text = appModel.rowHotel.Rows[0][3].ToString();
-            Pais.Text = appModel.rowHotel.Rows[0][4].ToString();
-            Ciudad.Text = appModel.rowHotel.Rows[0][5].ToString();
-            Calle.Text = appModel.rowHotel.Rows[0][6].ToString();
-            Nro_calle.Text = appModel.rowHotel.Rows[0][7].ToString();
-            Cantidad_Estrellas.Text = appModel.rowHotel.Rows[0][8].ToString();
+          
+            Nombre.Text = this.appModel.getNombreSeleccionado();
+            Email.Text = this.appModel.getEmailSeleccionado();
+            Fecha_creacion.Text = this.appModel.getFechaCreacionSeleccionado();
+            Ciudad.Text = this.appModel.getCiudadSeleccionado();
+            Calle.Text = this.appModel.getCalleSeleccionado();
+            Nro_calle.Text = this.appModel.getNroCalleSeleccionado();
+            Cantidad_Estrellas.Text = this.appModel.getCantidadEstrellasSeleccionado();
+            appModel.cargarPaises(cmbPais);
 
             int i;
             for (i = 0; i<appModel.rowHotel.Rows.Count;i++) {
@@ -76,7 +79,7 @@ namespace FrbaHotel.ABM_de_Hotel
             Fecha_creacion.ResetText();
             Calle.ResetText();
             Nro_calle.ResetText();
-            Pais.ResetText();
+            cmbPais.ResetText();
             Ciudad.ResetText();
             Cantidad_Estrellas.ResetText();
             ckAllInclusive.Checked = false;

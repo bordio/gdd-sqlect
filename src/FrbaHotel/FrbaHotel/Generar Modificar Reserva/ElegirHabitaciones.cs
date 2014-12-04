@@ -16,8 +16,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 {
     public partial class ElegirHabitaciones : Form
     {
-        Form formularioAnterior;
-        public ElegirHabitaciones(int idHotelEnCuestion, string fechaDesde, string fechaHasta, int cantSimples, int cantDobles, int cantTriples, int cantCuadruples, int cantQuintuples, string usuarioDeSesion, string regimenElegido, int cantHuespedes, Form formulario)
+        PreciosYConfirmacion formularioAnterior;
+        public ElegirHabitaciones(int idHotelEnCuestion, string fechaDesde, string fechaHasta, int cantSimples, int cantDobles, int cantTriples, int cantCuadruples, int cantQuintuples, string usuarioDeSesion, string regimenElegido, int cantHuespedes, PreciosYConfirmacion formulario)
         {
             InitializeComponent();
             formularioAnterior = formulario;
@@ -135,7 +135,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     //this.Close();
 
                     FrbaHotel.Generar_Modificar_Reserva.RegistroCliente formRegistroCliente = new FrbaHotel.Generar_Modificar_Reserva.RegistroCliente(idReserva, this);
-                    formRegistroCliente.Show();
+                    formRegistroCliente.ShowDialog();
                 }
             }
             else
@@ -182,7 +182,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
         public void Cerrate(){
             this.Close();
-            formularioAnterior.Close();
+            formularioAnterior.Cerrate();
         }
       
     }
