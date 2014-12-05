@@ -171,6 +171,7 @@
             this.tablaDeUsuarios.MultiSelect = false;
             this.tablaDeUsuarios.Name = "tablaDeUsuarios";
             this.tablaDeUsuarios.ReadOnly = true;
+            this.tablaDeUsuarios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.tablaDeUsuarios.Size = new System.Drawing.Size(597, 213);
             this.tablaDeUsuarios.TabIndex = 4;
             this.tablaDeUsuarios.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tablaDeUsuarios_CellContentClick);
