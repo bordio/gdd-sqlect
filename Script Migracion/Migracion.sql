@@ -231,7 +231,7 @@ CREATE TABLE SQLECT.Items(
 CREATE TABLE SQLECT.Reservas_Canceladas (
 	fk_reserva integer PRIMARY KEY REFERENCES SQLECT.Reservas(id_reserva),
 	motivo varchar(120),
-	fecha_cancelacion datetime DEFAULT getdate()
+	fecha_cancelacion datetime
 )
 
 CREATE TABLE SQLECT.Habitaciones_Reservas (

@@ -97,7 +97,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 else
                     idHotelElegido = idDeHotelDeSesion;
 
-                FrbaHotel.Cancelar_Reserva.Form1 formModificarReserva = new FrbaHotel.Cancelar_Reserva.Form1(idDeHotelDeSesion, usuarioDeSesion, false);
+                FrbaHotel.Cancelar_Reserva.Form1 formModificarReserva = new FrbaHotel.Cancelar_Reserva.Form1(idHotelElegido, usuarioDeSesion, false);
                 formModificarReserva.Show();
             }
 
