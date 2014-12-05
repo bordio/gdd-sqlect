@@ -100,7 +100,7 @@ namespace FrbaHotel.ABM_de_Cliente
           pantallaAnteriorFiltros.refrescarPantalla();
           }
 
-          public void AccionarbtModificar(ModificacionMain_Cliente modificacionMain,DataGridView gridClientes, StringBuilder emailSeleccionado, StringBuilder documentoSeleccionado, StringBuilder tipodocSeleccionado)
+          public override void AccionarbtModificar(ModificacionMain_Cliente modificacionMain,DataGridView gridClientes, StringBuilder emailSeleccionado, StringBuilder documentoSeleccionado, StringBuilder tipodocSeleccionado)
           {
               BaseAltaModificacion_Cliente form = new Modificacion_Cliente(modificacionMain, gridClientes,emailSeleccionado,documentoSeleccionado,tipodocSeleccionado);
               form.ShowDialog();
