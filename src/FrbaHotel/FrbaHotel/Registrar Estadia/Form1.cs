@@ -72,8 +72,6 @@ namespace FrbaHotel.Registrar_Estadia
                         /* MessageBox.Show(string.Format("id={0},fechaInicio={1},cantNochesReserva={2},cantNochesEstadia={3},cantHuespedes={4}", idReservaActual, fechaInicioActual, cantNochesReserva, cantNochesEstadia, cantHuespedes)); */
                         botonCheckIn.Visible = true;
                         botonCheckOut.Visible = true;
-                        botonAceptar.Enabled = false;
-                        codigoReserva.Enabled = false;
                     }
                 }
                 else
@@ -97,20 +95,14 @@ namespace FrbaHotel.Registrar_Estadia
                     {
                         funcionesEstadias.realizarCheckIn(codigoReserva.Text, usuarioDeSesionActual,funcionesReservas.devolverFechaAppConfig());
 
-
-                        botonCheckIn.Enabled = false;
-                        MessageBox.Show(string.Format("Debe registrar a {0} huéspedes como clientes", cantHuespedes - 1));
+                        
+                        MessageBox.Show(string.Format("Debe registrar a {0} huésped/es como cliente/s", cantHuespedes - 1));
                         if (cantHuespedes > 1)
                         {
-                            for (int i = 1; i <= cantHuespedes; i++)
-                            {
-                                
-                                FrbaHotel.ABM_de_Cliente.BaseAltaModificacion_Cliente formRegistrarClientes = new FrbaHotel.ABM_de_Cliente.Alta_Cliente();
-                                formRegistrarClientes.ShowDialog();
-                            }
+                            FrbaHotel.ABM_de_Cliente.ModificacionMain_Cliente formRegistrarHuespedes = new FrbaHotel.ABM_de_Cliente.ModificacionMain_Cliente(cantHuespedes-1, this);
+                            formRegistrarHuespedes.ShowDialog();
                         }
-                        MessageBox.Show("Check-In realizado correctamente");
-                        //this.Close();
+                        else { TerminarCheckIn(); }
                     }
                     else
                     {
@@ -137,7 +129,6 @@ namespace FrbaHotel.Registrar_Estadia
                     else
                     {
                         MessageBox.Show("La reserva se encuentra efectivizada");
-                        // botonCheckIn.Enabled = false;
                     }
                 }
 
@@ -191,7 +182,17 @@ namespace FrbaHotel.Registrar_Estadia
                           
             }
         
-        }        
+        }
+
+        public void TerminarCheckIn() {
+            Conexion.Instance.ejecutarQuery("COMMIT");
+            MessageBox.Show("Check-In realizado correctamente");
+            this.botonCheckIn.Visible = false;
+            this.botonCheckOut.Visible = false;
+            this.codigoReserva.Enabled = true;
+            this.codigoReserva.Text = "";
+            this.botonAceptar.Enabled = true;
+        }
 
         }
     }

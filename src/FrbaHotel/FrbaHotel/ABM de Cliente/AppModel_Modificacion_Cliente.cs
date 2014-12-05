@@ -11,7 +11,7 @@ namespace FrbaHotel.ABM_de_Cliente
     class AppModel_Modificacion_Cliente : AppModel_Base_Cliente
     {
         private Conexion sqlconexion = Conexion.Instance;
-        public Int32 idCliente;
+        //public Int32 idCliente;
 
           public override void abmlCliente(string nombre, string apellido, string mail, string dom_Calle, string nro_Calle, string piso, string depto, String fecha_Nac, string nacionalidad, string documento_Nro, int idReserva, string tipo_documento, string telefono, string localidad, ComboBox pais)
         {
@@ -72,8 +72,8 @@ namespace FrbaHotel.ABM_de_Cliente
 
           public override void levantar(StringBuilder sentence, int posicionId)
          {
-             rowCliente = Conexion.Instance.ejecutarQuery(sentence.ToString());
-             idCliente = Int32.Parse(rowCliente.Rows[0][posicionId].ToString());
+            rowCliente = Conexion.Instance.ejecutarQuery(sentence.ToString());
+            idCliente = Int32.Parse(rowCliente.Rows[0][posicionId].ToString());
          }
 
           public override void validarDocumento(Control documento, string tipo, StringBuilder mensajeValidacion)

@@ -467,7 +467,6 @@ SET @idCliente = SCOPE_IDENTITY();
 		UPDATE SQLECT.Reservas SET fk_cliente=@idCliente
 			WHERE id_reserva=@idReserva
 	END
-
 END
 GO
 

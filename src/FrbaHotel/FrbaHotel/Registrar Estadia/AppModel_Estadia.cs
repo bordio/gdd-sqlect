@@ -69,6 +69,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             comandoAReserva.Parameters[2].Value= Convert.ToString(fechaDelSistema);
 
             comandoAReserva.CommandText = "SQLECT.realizarCheckIn";
+            conexion.ejecutarQuery("BEGIN TRANSACTION"); // Comienza transaccion del CheckIn. La misma termina con el metodo TerminarCheckIn()
             conexion.ejecutarSP(comandoAReserva);
         
         }

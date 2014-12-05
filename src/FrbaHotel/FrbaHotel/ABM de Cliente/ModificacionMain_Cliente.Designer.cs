@@ -52,6 +52,7 @@
             this.HuespedesCant = new System.Windows.Forms.Label();
             this.btNuevo_Huesped = new System.Windows.Forms.Button();
             this.btQuitar_Huesped = new System.Windows.Forms.Button();
+            this.btTerminarCheckIn = new System.Windows.Forms.Button();
             this.filtrosBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridClientes)).BeginInit();
             this.SuspendLayout();
@@ -217,7 +218,7 @@
             // 
             this.btModificar.Location = new System.Drawing.Point(42, 356);
             this.btModificar.Name = "btModificar";
-            this.btModificar.Size = new System.Drawing.Size(156, 23);
+            this.btModificar.Size = new System.Drawing.Size(156, 53);
             this.btModificar.TabIndex = 9;
             this.btModificar.Text = "Modificar";
             this.btModificar.UseVisualStyleBackColor = true;
@@ -225,7 +226,7 @@
             // 
             // btInhabilitar
             // 
-            this.btInhabilitar.Location = new System.Drawing.Point(404, 356);
+            this.btInhabilitar.Location = new System.Drawing.Point(404, 383);
             this.btInhabilitar.Name = "btInhabilitar";
             this.btInhabilitar.Size = new System.Drawing.Size(155, 23);
             this.btInhabilitar.TabIndex = 11;
@@ -235,7 +236,7 @@
             // 
             // btHabilitar
             // 
-            this.btHabilitar.Location = new System.Drawing.Point(228, 357);
+            this.btHabilitar.Location = new System.Drawing.Point(228, 383);
             this.btHabilitar.Name = "btHabilitar";
             this.btHabilitar.Size = new System.Drawing.Size(155, 23);
             this.btHabilitar.TabIndex = 10;
@@ -245,7 +246,7 @@
             // 
             // btCancelar
             // 
-            this.btCancelar.Location = new System.Drawing.Point(588, 355);
+            this.btCancelar.Location = new System.Drawing.Point(588, 383);
             this.btCancelar.Name = "btCancelar";
             this.btCancelar.Size = new System.Drawing.Size(155, 23);
             this.btCancelar.TabIndex = 12;
@@ -278,30 +279,47 @@
             // 
             // btNuevo_Huesped
             // 
+            this.btNuevo_Huesped.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.btNuevo_Huesped.Location = new System.Drawing.Point(403, 354);
             this.btNuevo_Huesped.Name = "btNuevo_Huesped";
             this.btNuevo_Huesped.Size = new System.Drawing.Size(156, 25);
             this.btNuevo_Huesped.TabIndex = 15;
             this.btNuevo_Huesped.Text = "Crear nuevo Cliente";
-            this.btNuevo_Huesped.UseVisualStyleBackColor = true;
+            this.btNuevo_Huesped.UseVisualStyleBackColor = false;
             this.btNuevo_Huesped.Visible = false;
             this.btNuevo_Huesped.Click += new System.EventHandler(this.btNuevo_Huesped_Click);
             // 
             // btQuitar_Huesped
             // 
-            this.btQuitar_Huesped.Location = new System.Drawing.Point(228, 357);
+            this.btQuitar_Huesped.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.btQuitar_Huesped.Location = new System.Drawing.Point(228, 354);
             this.btQuitar_Huesped.Name = "btQuitar_Huesped";
             this.btQuitar_Huesped.Size = new System.Drawing.Size(155, 23);
             this.btQuitar_Huesped.TabIndex = 16;
             this.btQuitar_Huesped.Text = "Quitar Huesped";
-            this.btQuitar_Huesped.UseVisualStyleBackColor = true;
+            this.btQuitar_Huesped.UseVisualStyleBackColor = false;
             this.btQuitar_Huesped.Visible = false;
+            this.btQuitar_Huesped.Click += new System.EventHandler(this.btQuitar_Huesped_Click);
+            // 
+            // btTerminarCheckIn
+            // 
+            this.btTerminarCheckIn.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.btTerminarCheckIn.Enabled = false;
+            this.btTerminarCheckIn.Location = new System.Drawing.Point(588, 354);
+            this.btTerminarCheckIn.Name = "btTerminarCheckIn";
+            this.btTerminarCheckIn.Size = new System.Drawing.Size(155, 23);
+            this.btTerminarCheckIn.TabIndex = 17;
+            this.btTerminarCheckIn.Text = "TERMINAR CHECK-IN";
+            this.btTerminarCheckIn.UseVisualStyleBackColor = false;
+            this.btTerminarCheckIn.Visible = false;
+            this.btTerminarCheckIn.Click += new System.EventHandler(this.btTerminarCheckIn_Click);
             // 
             // ModificacionMain_Cliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(813, 392);
+            this.ClientSize = new System.Drawing.Size(813, 418);
+            this.Controls.Add(this.btTerminarCheckIn);
             this.Controls.Add(this.btQuitar_Huesped);
             this.Controls.Add(this.btNuevo_Huesped);
             this.Controls.Add(this.HuespedesCant);
@@ -314,6 +332,7 @@
             this.Controls.Add(this.filtrosBusqueda);
             this.Name = "ModificacionMain_Cliente";
             this.Text = "Modificacion/Habilitacion Clientes";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(ModificacionMain_Cliente_FormClosed);
             this.filtrosBusqueda.ResumeLayout(false);
             this.filtrosBusqueda.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridClientes)).EndInit();
@@ -347,6 +366,7 @@
         private System.Windows.Forms.Label lbHuespedes;
         public System.Windows.Forms.Label HuespedesCant;
         private System.Windows.Forms.Button btNuevo_Huesped;
-        private System.Windows.Forms.Button btQuitar_Huesped;
+        public System.Windows.Forms.Button btQuitar_Huesped;
+        private System.Windows.Forms.Button btTerminarCheckIn;
     }
 }

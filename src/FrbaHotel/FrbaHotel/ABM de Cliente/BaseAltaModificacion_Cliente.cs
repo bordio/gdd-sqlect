@@ -31,10 +31,10 @@ namespace FrbaHotel.ABM_de_Cliente
             this.idReservaDelCliente = 0;
         }
 
-        public BaseAltaModificacion_Cliente(int cantHuespedes, ModificacionMain_Cliente modificacionMain) //Alta desde checkIn
+        public BaseAltaModificacion_Cliente(int cantHuespedes, ModificacionMain_Cliente modificacionMain, AppModel_Base_Cliente appmodelHuesped) //Alta desde checkIn
         {
             InitializeComponent();
-            appModel = new AppModel_Agregar_Huesped(cantHuespedes,modificacionMain);
+            appModel = appmodelHuesped;
             Text = "Alta de Cliente";
             llenarComboDocumentos();
             appModel.cargarPaises(PaisOrigen);
@@ -141,7 +141,7 @@ namespace FrbaHotel.ABM_de_Cliente
                        this.Telefono.Text, this.Localidad.Text, this.PaisOrigen);
                 
                 this.appModel.refrescarPantalla(pantallaAnteriorFiltros);
-                this.appModel.Accionarbt_AgregarHuesped();
+                //this.appModel.Accionarbt_GuardarHuesped();
                 this.Close();
             }
         }

@@ -20,8 +20,8 @@ namespace FrbaHotel.ABM_de_Cliente
         {  
         }
 
-        public Alta_Cliente(int cantHuespedes, ModificacionMain_Cliente modificacionMain) //Alta desde checkIn
-            : base(cantHuespedes, modificacionMain)
+        public Alta_Cliente(int cantHuespedes, ModificacionMain_Cliente modificacionMain, AppModel_Base_Cliente appmodel) //Alta desde checkIn
+            : base(cantHuespedes, modificacionMain, appmodel)
         {
         }
 

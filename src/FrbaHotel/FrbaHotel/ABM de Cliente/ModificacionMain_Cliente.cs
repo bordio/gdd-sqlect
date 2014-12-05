@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrbaHotel.Commons.Database;
 
 namespace FrbaHotel.ABM_de_Cliente
 {
@@ -16,9 +17,12 @@ namespace FrbaHotel.ABM_de_Cliente
         public StringBuilder emailSeleccionado = new StringBuilder();
         public StringBuilder documentoSeleccionado = new StringBuilder();
         public StringBuilder tipodocSeleccionado = new StringBuilder();
+        public StringBuilder idSeleccionado = new StringBuilder();
         int cantHuespedes;
-        
+        bool hacerRollBackCheckIn = false;
+     
         FrbaHotel.Generar_Modificar_Reserva.RegistroCliente formularioAnterior;
+        FrbaHotel.Registrar_Estadia.Form1 formularioAnteriorCheck;
 
         public ModificacionMain_Cliente()
         {
@@ -30,17 +34,21 @@ namespace FrbaHotel.ABM_de_Cliente
             llenarComboDocumentos();
         }
 
-        public ModificacionMain_Cliente(int cantHues) // Se ingresa al resto de los huespedes en el checkIn
+        public ModificacionMain_Cliente(int cantHues, FrbaHotel.Registrar_Estadia.Form1 formulario) // Se ingresa al resto de los huespedes en el checkIn
         {
             InitializeComponent();
             appModel = new AppModel_Agregar_Huesped(cantHues, this);
             this.cantHuespedes = cantHues;
+            formularioAnteriorCheck = formulario;
+            hacerRollBackCheckIn = true;
             btHabilitar.Visible = false;
             btInhabilitar.Visible = false;
             btModificar.Text = "Ingresar Huesped al CheckIn";
             btModificar.Enabled = false;
+            btQuitar_Huesped.Enabled = false;
             btQuitar_Huesped.Visible = true;
             btNuevo_Huesped.Visible = true;
+            btTerminarCheckIn.Visible = true;
             HuespedesCant.Visible = true;
             HuespedesCant.Text = cantHues.ToString();
             lbHuespedes.Visible = true;
@@ -77,8 +85,8 @@ namespace FrbaHotel.ABM_de_Cliente
         {
             StringBuilder sentence = new StringBuilder();
 
-            string select = "SELECT c.nombre 'Nombre', c.apellido 'Apellido',c.mail 'Email',c.telefono 'Telefono',c.fecha_Nac 'Fecha Nacimiento', c.dom_Calle 'Calle', c.nro_calle 'Nro Calle', c.piso 'Piso',c.depto 'Departamento', c.localidad 'Localidad', p.nombrePais 'Pais', c.nacionalidad 'Nacionalidad', c.tipoDocumento 'Tipo de Documento',c.documento_Nro 'Número de Documento', c.habilitado 'Habilitado', c.fk_paisOrigen FROM SQLECT.Clientes c LEFT JOIN SQLECT.Paises p ON (p.id_pais = c.fk_paisOrigen)";
-
+            string select = "SELECT c.nombre 'Nombre', c.apellido 'Apellido',c.mail 'Email',c.telefono 'Telefono',c.fecha_Nac 'Fecha Nacimiento', c.dom_Calle 'Calle', c.nro_calle 'Nro Calle', c.piso 'Piso',c.depto 'Departamento', c.localidad 'Localidad', p.nombrePais 'Pais', c.nacionalidad 'Nacionalidad', c.tipoDocumento 'Tipo de Documento',c.documento_Nro 'Número de Documento', case c.habilitado when 1 then 'SI' else 'NO' end as 'Habilitado', c.fk_paisOrigen, c.id_Cliente FROM SQLECT.Clientes c LEFT JOIN SQLECT.Paises p ON (p.id_pais = c.fk_paisOrigen)";
+             
             sentence = this.appModel.getAllInstances(select);
 
             if ((Nombre.Text != "") || (Apellido.Text != "") || (Email.Text != "") || (Nacionalidad.Text != "") || (Documento.Text != "") || (cbTipoDoc.SelectedItem != null))
@@ -94,11 +102,13 @@ namespace FrbaHotel.ABM_de_Cliente
                 StringBuilder sentenceFiltro = new StringBuilder().AppendFormat(sentence.ToString().Substring(0, sentence.Length - 4));
                 gridClientes.DataSource = this.appModel.cargar_lista(sentenceFiltro).DefaultView;
                 gridClientes.Columns[15].Visible = false; //columna del fkPais
+                gridClientes.Columns[16].Visible = false; //columna del idCliente. Lo usamos para el CheckIn
                 gridClientes.AllowUserToAddRows = false;
-
+                
                 btHabilitar.Enabled = true;
                 btInhabilitar.Enabled = true;
                 btModificar.Enabled = true;
+                btNuevo_Huesped.Enabled = true;
             
             }
 
@@ -130,12 +140,14 @@ namespace FrbaHotel.ABM_de_Cliente
             emailSeleccionado.Remove(0, emailSeleccionado.Length);
             documentoSeleccionado.Remove(0, documentoSeleccionado.Length);
             tipodocSeleccionado.Remove(0, tipodocSeleccionado.Length);
+            idSeleccionado.Remove(0, idSeleccionado.Length);
 
             if (celda_actual != null)
             {
                 emailSeleccionado.AppendFormat("{0}", celda_actual.Cells[2].Value.ToString());
                 documentoSeleccionado.AppendFormat("{0}", celda_actual.Cells[13].Value.ToString());
                 tipodocSeleccionado.AppendFormat("{0}", celda_actual.Cells[12].Value.ToString());
+                idSeleccionado.AppendFormat("{0}", celda_actual.Cells[16].Value.ToString());
             }
         }
 
@@ -143,7 +155,9 @@ namespace FrbaHotel.ABM_de_Cliente
         {
             appModel.Accionarbt_ConfirmarReserva(emailSeleccionado.ToString(), Convert.ToInt32(documentoSeleccionado.ToString()), this); //Para confirmar Cliente existente desde Reserva
             appModel.Accionarbt_Modificar(this, this.gridClientes, this.emailSeleccionado, this.documentoSeleccionado, this.tipodocSeleccionado); //Para modificar un cliente desde menu ppal de Clientes
-            appModel.Accionarbt_AgregarHuesped(); // Para el check in
+           // appModel.Accionarbt_AgregarHuesped(); // Para el check in. Creo q lo saco y q lo llame el Guardar
+            appModel.Accionarbt_GuardarHuesped(this.idSeleccionado);
+            this.btQuitar_Huesped.Enabled = true;
         }
 
         public void btInhabilitar_Click(object sender, EventArgs e)
@@ -191,15 +205,56 @@ namespace FrbaHotel.ABM_de_Cliente
 
         private void btNuevo_Huesped_Click(object sender, EventArgs e)
         {
-            BaseAltaModificacion_Cliente form = new Alta_Cliente(cantHuespedes,this);
+            BaseAltaModificacion_Cliente form = new Alta_Cliente(cantHuespedes,this,appModel);
             form.ShowDialog();
         }
         public void cambiarLabelHuespedes(int cant) {
             this.HuespedesCant.Text = cant.ToString();
         }
 
+        public void comprobarCantidadHuespedes()
+        {
+            if ((this.HuespedesCant.Text) == "0") {
+                btTerminarCheckIn.Enabled = true;
+                btNuevo_Huesped.Enabled = false;
+                btModificar.Enabled = false;
+            }
+        }
 
+        private void btTerminarCheckIn_Click(object sender, EventArgs e)
+        {
+            hacerRollBackCheckIn = false;
+            this.formularioAnteriorCheck.TerminarCheckIn();
+            this.Close();
+        }
 
+        private void ModificacionMain_Cliente_FormClosed(object sender, EventArgs e)
+        {
+            if (hacerRollBackCheckIn)
+            {
+                Conexion.Instance.ejecutarQuery("ROLLBACK");
+            }
+        }
+        public void remarcarHuesped(Int32 id)
+        {
+            gridClientes.CurrentRow.DefaultCellStyle.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+        }
 
-}
+        public void desmarcarHuesped(Int32 id)
+        {
+            gridClientes.CurrentRow.DefaultCellStyle.BackColor = System.Drawing.SystemColors.Window;
+        }
+
+        private void btQuitar_Huesped_Click(object sender, EventArgs e)
+        {
+            int cantActual = Int32.Parse(HuespedesCant.Text);
+            if (appModel.quitarIdHuesped(Int32.Parse(idSeleccionado.ToString()))) {
+                if (cantActual < cantHuespedes)
+                {
+                    cambiarLabelHuespedes(++(cantActual));
+                }
+            }
+        }
+
+    }
 }
