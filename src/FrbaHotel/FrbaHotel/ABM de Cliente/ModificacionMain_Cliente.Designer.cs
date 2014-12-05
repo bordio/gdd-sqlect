@@ -48,6 +48,8 @@
             this.btInhabilitar = new System.Windows.Forms.Button();
             this.btHabilitar = new System.Windows.Forms.Button();
             this.btCancelar = new System.Windows.Forms.Button();
+            this.lbHuespedes = new System.Windows.Forms.Label();
+            this.HuespedesCant = new System.Windows.Forms.Label();
             this.filtrosBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridClientes)).BeginInit();
             this.SuspendLayout();
@@ -100,7 +102,7 @@
             this.filtrosBusqueda.Controls.Add(this.labelNacionalidad);
             this.filtrosBusqueda.Controls.Add(this.labelEmail);
             this.filtrosBusqueda.Controls.Add(this.label1);
-            this.filtrosBusqueda.Location = new System.Drawing.Point(12, 12);
+            this.filtrosBusqueda.Location = new System.Drawing.Point(12, 40);
             this.filtrosBusqueda.Name = "filtrosBusqueda";
             this.filtrosBusqueda.Size = new System.Drawing.Size(789, 152);
             this.filtrosBusqueda.TabIndex = 0;
@@ -201,7 +203,7 @@
             this.gridClientes.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.gridClientes.BackgroundColor = System.Drawing.SystemColors.Control;
             this.gridClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridClientes.Location = new System.Drawing.Point(12, 182);
+            this.gridClientes.Location = new System.Drawing.Point(12, 201);
             this.gridClientes.Name = "gridClientes";
             this.gridClientes.ReadOnly = true;
             this.gridClientes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -211,7 +213,7 @@
             // 
             // btModificar
             // 
-            this.btModificar.Location = new System.Drawing.Point(42, 348);
+            this.btModificar.Location = new System.Drawing.Point(42, 356);
             this.btModificar.Name = "btModificar";
             this.btModificar.Size = new System.Drawing.Size(156, 23);
             this.btModificar.TabIndex = 9;
@@ -221,7 +223,7 @@
             // 
             // btInhabilitar
             // 
-            this.btInhabilitar.Location = new System.Drawing.Point(404, 348);
+            this.btInhabilitar.Location = new System.Drawing.Point(404, 356);
             this.btInhabilitar.Name = "btInhabilitar";
             this.btInhabilitar.Size = new System.Drawing.Size(155, 23);
             this.btInhabilitar.TabIndex = 11;
@@ -231,7 +233,7 @@
             // 
             // btHabilitar
             // 
-            this.btHabilitar.Location = new System.Drawing.Point(228, 348);
+            this.btHabilitar.Location = new System.Drawing.Point(228, 357);
             this.btHabilitar.Name = "btHabilitar";
             this.btHabilitar.Size = new System.Drawing.Size(155, 23);
             this.btHabilitar.TabIndex = 10;
@@ -241,7 +243,7 @@
             // 
             // btCancelar
             // 
-            this.btCancelar.Location = new System.Drawing.Point(588, 348);
+            this.btCancelar.Location = new System.Drawing.Point(588, 355);
             this.btCancelar.Name = "btCancelar";
             this.btCancelar.Size = new System.Drawing.Size(155, 23);
             this.btCancelar.TabIndex = 12;
@@ -249,11 +251,36 @@
             this.btCancelar.UseVisualStyleBackColor = true;
             this.btCancelar.Click += new System.EventHandler(this.btCancelar_Click);
             // 
+            // lbHuespedes
+            // 
+            this.lbHuespedes.AutoSize = true;
+            this.lbHuespedes.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.lbHuespedes.Location = new System.Drawing.Point(7, 13);
+            this.lbHuespedes.Name = "lbHuespedes";
+            this.lbHuespedes.Size = new System.Drawing.Size(113, 13);
+            this.lbHuespedes.TabIndex = 13;
+            this.lbHuespedes.Text = "Huespedes a registrar:";
+            this.lbHuespedes.Visible = false;
+            // 
+            // HuespedesCant
+            // 
+            this.HuespedesCant.AutoSize = true;
+            this.HuespedesCant.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.HuespedesCant.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HuespedesCant.Location = new System.Drawing.Point(122, 10);
+            this.HuespedesCant.Name = "HuespedesCant";
+            this.HuespedesCant.Size = new System.Drawing.Size(65, 18);
+            this.HuespedesCant.TabIndex = 14;
+            this.HuespedesCant.Text = "numero";
+            this.HuespedesCant.Visible = false;
+            // 
             // ModificacionMain_Cliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(813, 392);
+            this.Controls.Add(this.HuespedesCant);
+            this.Controls.Add(this.lbHuespedes);
             this.Controls.Add(this.btCancelar);
             this.Controls.Add(this.btHabilitar);
             this.Controls.Add(this.btInhabilitar);
@@ -266,6 +293,7 @@
             this.filtrosBusqueda.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridClientes)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -291,5 +319,7 @@
         private System.Windows.Forms.Button btCancelar;
         private System.Windows.Forms.ComboBox cbTipoDoc;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lbHuespedes;
+        private System.Windows.Forms.Label HuespedesCant;
     }
 }
