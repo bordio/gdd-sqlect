@@ -12,12 +12,17 @@ namespace FrbaHotel.ABM_de_Cliente
     public partial class Alta_Cliente : BaseAltaModificacion_Cliente
 
     {
-        public Alta_Cliente() : base()
+        public Alta_Cliente() : base() // Alta comun
         { 
         }
 
-        public Alta_Cliente(int idReserva, FrbaHotel.Generar_Modificar_Reserva.RegistroCliente formulario) : base(idReserva, formulario)
+        public Alta_Cliente(int idReserva, FrbaHotel.Generar_Modificar_Reserva.RegistroCliente formulario) : base(idReserva, formulario) //Alta desde proceso de Reserva
         {  
+        }
+
+        public Alta_Cliente(int cantHuespedes, ModificacionMain_Cliente modificacionMain) //Alta desde checkIn
+            : base(cantHuespedes, modificacionMain)
+        {
         }
 
         public override void validacionesAlGuardar()

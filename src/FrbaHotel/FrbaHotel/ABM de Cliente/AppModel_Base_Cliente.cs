@@ -166,6 +166,9 @@ namespace FrbaHotel.ABM_de_Cliente {
         public virtual void refrescarPantalla(ABM_de_Cliente.ModificacionMain_Cliente pantallaAnteriorFiltros){}
         public virtual void Accionarbt_Modificar(ModificacionMain_Cliente modificacionMain, DataGridView gridClientes, StringBuilder emailSeleccionado, StringBuilder documentoSeleccionado, StringBuilder tipodocSeleccionado) { }
         public virtual void Accionarbt_ConfirmarReserva(string emailSeleccionado, int documentoSeleccionado, ModificacionMain_Cliente modificacionMain) { }
-        public virtual void Accionarbt_AltaHuesped() { }
+        public virtual void Accionarbt_AgregarHuesped()
+        { 
+           
+        }
     }
 }

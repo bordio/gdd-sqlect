@@ -50,6 +50,8 @@
             this.btCancelar = new System.Windows.Forms.Button();
             this.lbHuespedes = new System.Windows.Forms.Label();
             this.HuespedesCant = new System.Windows.Forms.Label();
+            this.btNuevo_Huesped = new System.Windows.Forms.Button();
+            this.btQuitar_Huesped = new System.Windows.Forms.Button();
             this.filtrosBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridClientes)).BeginInit();
             this.SuspendLayout();
@@ -274,11 +276,34 @@
             this.HuespedesCant.Text = "numero";
             this.HuespedesCant.Visible = false;
             // 
+            // btNuevo_Huesped
+            // 
+            this.btNuevo_Huesped.Location = new System.Drawing.Point(403, 354);
+            this.btNuevo_Huesped.Name = "btNuevo_Huesped";
+            this.btNuevo_Huesped.Size = new System.Drawing.Size(156, 25);
+            this.btNuevo_Huesped.TabIndex = 15;
+            this.btNuevo_Huesped.Text = "Crear nuevo Cliente";
+            this.btNuevo_Huesped.UseVisualStyleBackColor = true;
+            this.btNuevo_Huesped.Visible = false;
+            this.btNuevo_Huesped.Click += new System.EventHandler(this.btNuevo_Huesped_Click);
+            // 
+            // btQuitar_Huesped
+            // 
+            this.btQuitar_Huesped.Location = new System.Drawing.Point(228, 357);
+            this.btQuitar_Huesped.Name = "btQuitar_Huesped";
+            this.btQuitar_Huesped.Size = new System.Drawing.Size(155, 23);
+            this.btQuitar_Huesped.TabIndex = 16;
+            this.btQuitar_Huesped.Text = "Quitar Huesped";
+            this.btQuitar_Huesped.UseVisualStyleBackColor = true;
+            this.btQuitar_Huesped.Visible = false;
+            // 
             // ModificacionMain_Cliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(813, 392);
+            this.Controls.Add(this.btQuitar_Huesped);
+            this.Controls.Add(this.btNuevo_Huesped);
             this.Controls.Add(this.HuespedesCant);
             this.Controls.Add(this.lbHuespedes);
             this.Controls.Add(this.btCancelar);
@@ -320,6 +345,8 @@
         private System.Windows.Forms.ComboBox cbTipoDoc;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lbHuespedes;
-        private System.Windows.Forms.Label HuespedesCant;
+        public System.Windows.Forms.Label HuespedesCant;
+        private System.Windows.Forms.Button btNuevo_Huesped;
+        private System.Windows.Forms.Button btQuitar_Huesped;
     }
 }

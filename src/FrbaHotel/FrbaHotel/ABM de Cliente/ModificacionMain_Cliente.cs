@@ -16,7 +16,7 @@ namespace FrbaHotel.ABM_de_Cliente
         public StringBuilder emailSeleccionado = new StringBuilder();
         public StringBuilder documentoSeleccionado = new StringBuilder();
         public StringBuilder tipodocSeleccionado = new StringBuilder();
-
+        int cantHuespedes;
         
         FrbaHotel.Generar_Modificar_Reserva.RegistroCliente formularioAnterior;
 
@@ -30,16 +30,19 @@ namespace FrbaHotel.ABM_de_Cliente
             llenarComboDocumentos();
         }
 
-        public ModificacionMain_Cliente(int cantHuespedes) // Se ingresa al resto de los huespedes en el checkIn
+        public ModificacionMain_Cliente(int cantHues) // Se ingresa al resto de los huespedes en el checkIn
         {
             InitializeComponent();
-            appModel = new AppModel_Alta_Huesped(cantHuespedes);
+            appModel = new AppModel_Agregar_Huesped(cantHues, this);
+            this.cantHuespedes = cantHues;
             btHabilitar.Visible = false;
             btInhabilitar.Visible = false;
-            btModificar.Text = "Ingresar Huesped Nuevo";
+            btModificar.Text = "Ingresar Huesped al CheckIn";
             btModificar.Enabled = false;
+            btQuitar_Huesped.Visible = true;
+            btNuevo_Huesped.Visible = true;
             HuespedesCant.Visible = true;
-            HuespedesCant.Text = cantHuespedes.ToString();
+            HuespedesCant.Text = cantHues.ToString();
             lbHuespedes.Visible = true;
             llenarComboDocumentos();
         }
@@ -47,7 +50,7 @@ namespace FrbaHotel.ABM_de_Cliente
         public ModificacionMain_Cliente(int idReserva, FrbaHotel.Generar_Modificar_Reserva.RegistroCliente formulario)
         {
             InitializeComponent();
-            appModel = new appModel_ConfirmarReserva_Cliente(idReserva);
+            appModel = new appModel_AltaOConfirmacion_ClienteReserva(idReserva, formulario);
             formularioAnterior = formulario;
             this.Nombre.Enabled = false;
             this.Apellido.Enabled = false;
@@ -138,16 +141,9 @@ namespace FrbaHotel.ABM_de_Cliente
 
         private void btModificar_Click(object sender, EventArgs e)
         {
-
-            appModel.Accionarbt_ConfirmarReserva(emailSeleccionado.ToString(), Convert.ToInt32(documentoSeleccionado.ToString()), this);
-            appModel.Accionarbt_Modificar(this, this.gridClientes, this.emailSeleccionado, this.documentoSeleccionado, this.tipodocSeleccionado);
-           // appModel.Accionarbt_AltaHuesped();
-            
-          /*  if (btModificar.Text=="Seleccionar") // La reserva utiliza esta view tambien. Cambiando el nombre del boton "Modificar" por "Seleccionar"
-            {
-                FrbaHotel.Generar_Modificar_Reserva.ConfirmarClienteReserva formConfirmarCliente = new FrbaHotel.Generar_Modificar_Reserva.ConfirmarClienteReserva(emailSeleccionado.ToString(), Convert.ToInt32(documentoSeleccionado.ToString()), idReservaDelCliente, this);
-                formConfirmarCliente.ShowDialog();
-            }*/
+            appModel.Accionarbt_ConfirmarReserva(emailSeleccionado.ToString(), Convert.ToInt32(documentoSeleccionado.ToString()), this); //Para confirmar Cliente existente desde Reserva
+            appModel.Accionarbt_Modificar(this, this.gridClientes, this.emailSeleccionado, this.documentoSeleccionado, this.tipodocSeleccionado); //Para modificar un cliente desde menu ppal de Clientes
+            appModel.Accionarbt_AgregarHuesped(); // Para el check in
         }
 
         public void btInhabilitar_Click(object sender, EventArgs e)
@@ -167,10 +163,10 @@ namespace FrbaHotel.ABM_de_Cliente
 
         public void btHabilitar_Click(object sender, EventArgs e)
         {
-            AppModel_Baja_Cliente appModel;
-            appModel = new AppModel_Baja_Cliente();
+            AppModel_Baja_Cliente appModelB;
+            appModelB = new AppModel_Baja_Cliente();
             if(validacionesAlBorrar()){
-                appModel.habilitarCliente(this.emailSeleccionado, this.documentoSeleccionado, this.tipodocSeleccionado);
+                appModelB.habilitarCliente(this.emailSeleccionado, this.documentoSeleccionado, this.tipodocSeleccionado);
                 this.refrescarPantalla();
             }
         }
@@ -191,6 +187,15 @@ namespace FrbaHotel.ABM_de_Cliente
         private void btCancelar_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btNuevo_Huesped_Click(object sender, EventArgs e)
+        {
+            BaseAltaModificacion_Cliente form = new Alta_Cliente(cantHuespedes,this);
+            form.ShowDialog();
+        }
+        public void cambiarLabelHuespedes(int cant) {
+            this.HuespedesCant.Text = cant.ToString();
         }
 
 

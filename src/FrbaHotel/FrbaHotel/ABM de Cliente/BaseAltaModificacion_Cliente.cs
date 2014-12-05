@@ -19,7 +19,7 @@ namespace FrbaHotel.ABM_de_Cliente
         public StringBuilder mensajeValidacion;
         public AppModel_Base_Cliente appModel;
         public ABM_de_Cliente.ModificacionMain_Cliente pantallaAnteriorFiltros = null;
-        RegistroCliente formularioAnterior;
+        
 
         public BaseAltaModificacion_Cliente() //Para altas sin reserva. Lo usa clase hija Alta_Cliente
         {
@@ -28,14 +28,24 @@ namespace FrbaHotel.ABM_de_Cliente
             Text = "Alta de Cliente";
             llenarComboDocumentos();
             appModel.cargarPaises(PaisOrigen);
+            this.idReservaDelCliente = 0;
+        }
+
+        public BaseAltaModificacion_Cliente(int cantHuespedes, ModificacionMain_Cliente modificacionMain) //Alta desde checkIn
+        {
+            InitializeComponent();
+            appModel = new AppModel_Agregar_Huesped(cantHuespedes,modificacionMain);
+            Text = "Alta de Cliente";
+            llenarComboDocumentos();
+            appModel.cargarPaises(PaisOrigen);
+            this.idReservaDelCliente = 0;
         }
 
         public BaseAltaModificacion_Cliente(int idReserva, RegistroCliente formulario) //Para altas con reserva. Lo usa clase hija Alta_Cliente
         {
             InitializeComponent();
             this.idReservaDelCliente = idReserva;
-            formularioAnterior = formulario;
-            appModel = new AppModel_Alta_Cliente(idReservaDelCliente);
+            appModel = new appModel_AltaOConfirmacion_ClienteReserva(idReservaDelCliente, formulario);
             Text = "Alta de Cliente";
             llenarComboDocumentos();
             appModel.cargarPaises(PaisOrigen);
@@ -48,7 +58,7 @@ namespace FrbaHotel.ABM_de_Cliente
             llenarComboDocumentos();
             btGuardar.Text = "Guardar Cambios";
             pantallaAnteriorFiltros = pantallaFiltros;
-            
+            this.idReservaDelCliente = 0;
         }
 
         public void llenarComboDocumentos()
@@ -123,30 +133,18 @@ namespace FrbaHotel.ABM_de_Cliente
             //CONEXION BD
             if (validaciones)
             {
-                if (idReservaDelCliente != 0)
-                {
-                    this.appModel.abmlCliente(
+               this.appModel.abmlCliente(
                        this.Nombre.Text, this.Apellido.Text, this.Email.Text,
                        this.Calle.Text, this.Numero.Text, this.Piso.Text, this.Depto.Text,
                        this.Fecha.Text, this.Nacionalidad.Text, this.Documento.Text,
-                       this.idReservaDelCliente, this.cbTipoDoc.SelectedItem.ToString(), this.Telefono.Text, this.Localidad.Text, this.PaisOrigen); /* Cliente CON reserva*/
-                }
-                else
-                {
-                    {
-                        this.appModel.abmlCliente(
-                               this.Nombre.Text, this.Apellido.Text, this.Email.Text, this.Calle.Text,
-                               this.Numero.Text, this.Piso.Text, this.Depto.Text,
-                               this.Fecha.Text, this.Nacionalidad.Text, this.Documento.Text, 0,
-                               this.cbTipoDoc.SelectedItem.ToString(), this.Telefono.Text, this.Localidad.Text, this.PaisOrigen); /*Cliente SIN reserva*/
-                    }
-                }
+                       this.idReservaDelCliente, this.cbTipoDoc.SelectedItem.ToString(), 
+                       this.Telefono.Text, this.Localidad.Text, this.PaisOrigen);
+                
                 this.appModel.refrescarPantalla(pantallaAnteriorFiltros);
-                    this.Close();
-                    if (formularioAnterior != null) formularioAnterior.Cerrate(false);
-                }
-            
-        }   
+                this.appModel.Accionarbt_AgregarHuesped();
+                this.Close();
+            }
+        }
 
 
         private void btLimpiar_Click(object sender, EventArgs e) {
