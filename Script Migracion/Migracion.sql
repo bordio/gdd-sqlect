@@ -423,6 +423,13 @@ INSERT INTO SQLECT.Consumibles_Estadias_Habitaciones(fk_estadia,fk_habitacion,fk
 							 JOIN SQLECT.Habitaciones_Reservas hr ON (e.fk_reserva=hr.fk_reserva)							
 	   WHERE m.Consumible_Codigo IS NOT NULL )
 
+INSERT INTO SQLECT.Reservas_Canceladas(fk_reserva,fecha_cancelacion,motivo)
+ (SELECT id_reserva,NULL,'Por no presentarse en fecha' FROM SQLECT.Reservas 
+   WHERE id_reserva NOT IN (SELECT fk_reserva FROM SQLECT.Estadias) )
+
+	   
+
+
 /*INSERT INTO SQLECT.Consumibles_Estadias_Habitaciones(fk_consumible,fk_estadia)
  (SELECT DISTINCT m.Consumible_Codigo,e.id_estadia
    FROM gd_esquema.Maestra m JOIN SQLECT.Estadias e ON (m.Reserva_Codigo=e.fk_reserva)
@@ -655,7 +662,7 @@ CREATE PROCEDURE SQLECT.top5HotelesFueraDeServicio (@año int, @inicioTri int, @f
 AS
 
  BEGIN
-SELECT TOP 5 h.nombre,b.fk_hotel'Id',SUM(DATEDIFF(day,b.fecha_fin,b.fecha_inicio))'Días fuera de servicio'
+SELECT TOP 5 h.nombre'Nombre',b.fk_hotel'Id',SUM(DATEDIFF(day,b.fecha_inicio,b.fecha_fin)+1)'Días fuera de servicio'
    FROM SQLECT.Bajas_por_hotel b JOIN SQLECT.Hoteles h ON (h.id_hotel=b.fk_hotel)
     WHERE ( (YEAR(b.fecha_inicio)=YEAR(b.fecha_fin)) AND (MONTH(b.fecha_inicio) >= @inicioTri AND MONTH(b.fecha_fin)<= @finTri) )
     
@@ -2178,10 +2185,4 @@ BEGIN
 END
 GO
 GO
-
-/*SELECT * FROM SQLECT.Usuarios_Hoteles
-SELECT * FROM SQLECT.Hoteles
-
-SELECT * FROM SQLECT.Roles LEFT JOIN SQLECT.Roles_Usuarios ON (id_rol=fk_rol) LEFT JOIN  SQLECT.Usuarios ON (id_usuario=fk_usuario)
-*/
 

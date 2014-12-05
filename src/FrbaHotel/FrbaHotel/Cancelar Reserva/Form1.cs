@@ -95,5 +95,10 @@ namespace FrbaHotel.Cancelar_Reserva
             { MessageBox.Show(mensaje.ToString()); }
             mensaje.Remove(0, mensaje.Length);
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

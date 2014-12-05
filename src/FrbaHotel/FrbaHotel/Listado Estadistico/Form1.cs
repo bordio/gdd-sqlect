@@ -19,7 +19,7 @@ namespace FrbaHotel.Listado_Estadistico
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT DISTINCT YEAR(Reservas.fecha_inicio) FROM SQLECT.Reservas");
+            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT DISTINCT YEAR(fecha_inicio) FROM SQLECT.Reservas UNION (SELECT DISTINCT YEAR(fecha_inicio) FROM SQLECT.Bajas_por_hotel)");
             DataTable tabla = Conexion.Instance.ejecutarQuery(sentence.ToString());
 
             foreach (DataRow dat in tabla.Rows)
