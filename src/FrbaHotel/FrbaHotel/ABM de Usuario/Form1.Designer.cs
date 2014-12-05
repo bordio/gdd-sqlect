@@ -61,7 +61,7 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(60, 32);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(714, 151);
+            this.groupBox1.Size = new System.Drawing.Size(696, 121);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros";
@@ -88,7 +88,7 @@
             // radioInhabilitado
             // 
             this.radioInhabilitado.AutoSize = true;
-            this.radioInhabilitado.Location = new System.Drawing.Point(209, 117);
+            this.radioInhabilitado.Location = new System.Drawing.Point(215, 87);
             this.radioInhabilitado.Name = "radioInhabilitado";
             this.radioInhabilitado.Size = new System.Drawing.Size(79, 17);
             this.radioInhabilitado.TabIndex = 4;
@@ -99,7 +99,7 @@
             // radioHabilitado
             // 
             this.radioHabilitado.AutoSize = true;
-            this.radioHabilitado.Location = new System.Drawing.Point(97, 117);
+            this.radioHabilitado.Location = new System.Drawing.Point(97, 87);
             this.radioHabilitado.Name = "radioHabilitado";
             this.radioHabilitado.Size = new System.Drawing.Size(72, 17);
             this.radioHabilitado.TabIndex = 3;
@@ -111,7 +111,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(26, 103);
+            this.label3.Location = new System.Drawing.Point(26, 85);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(59, 18);
             this.label3.TabIndex = 2;
@@ -145,7 +145,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(60, 222);
+            this.button1.Location = new System.Drawing.Point(60, 169);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(90, 35);
             this.button1.TabIndex = 2;
@@ -155,7 +155,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(684, 222);
+            this.button2.Location = new System.Drawing.Point(666, 169);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(90, 35);
             this.button2.TabIndex = 3;
@@ -170,7 +170,7 @@
             this.tablaDeUsuarios.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.tablaDeUsuarios.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.tablaDeUsuarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tablaDeUsuarios.Location = new System.Drawing.Point(60, 313);
+            this.tablaDeUsuarios.Location = new System.Drawing.Point(60, 228);
             this.tablaDeUsuarios.MultiSelect = false;
             this.tablaDeUsuarios.Name = "tablaDeUsuarios";
             this.tablaDeUsuarios.ReadOnly = true;
@@ -180,7 +180,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(60, 581);
+            this.button3.Location = new System.Drawing.Point(60, 461);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(95, 40);
             this.button3.TabIndex = 5;
@@ -191,7 +191,7 @@
             // botonBaja
             // 
             this.botonBaja.Enabled = false;
-            this.botonBaja.Location = new System.Drawing.Point(321, 581);
+            this.botonBaja.Location = new System.Drawing.Point(312, 461);
             this.botonBaja.Name = "botonBaja";
             this.botonBaja.Size = new System.Drawing.Size(95, 40);
             this.botonBaja.TabIndex = 6;
@@ -202,7 +202,7 @@
             // botonModificar
             // 
             this.botonModificar.Enabled = false;
-            this.botonModificar.Location = new System.Drawing.Point(562, 581);
+            this.botonModificar.Location = new System.Drawing.Point(562, 461);
             this.botonModificar.Name = "botonModificar";
             this.botonModificar.Size = new System.Drawing.Size(95, 40);
             this.botonModificar.TabIndex = 7;
@@ -213,7 +213,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(764, 408);
+            this.label5.Location = new System.Drawing.Point(764, 299);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(43, 13);
             this.label5.TabIndex = 8;
@@ -222,7 +222,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(764, 449);
+            this.label6.Location = new System.Drawing.Point(764, 333);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(63, 13);
             this.label6.TabIndex = 9;
@@ -231,7 +231,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(764, 482);
+            this.label7.Location = new System.Drawing.Point(764, 370);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(70, 13);
             this.label7.TabIndex = 10;
@@ -241,7 +241,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(975, 745);
+            this.ClientSize = new System.Drawing.Size(985, 541);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);

@@ -33,7 +33,7 @@ namespace FrbaHotel.ABM_de_Usuario
                 comboRol.Items.Add(dat[0]);
             }
 
-            StringBuilder sentencia = new StringBuilder().AppendFormat("SELECT DISTINCT h.nombre FROM SQLECT.Hoteles h WHERE h.estado_hotel =1 ");
+            StringBuilder sentencia = new StringBuilder().AppendFormat("SELECT DISTINCT h.nombre FROM SQLECT.Hoteles h LEFT JOIN SQLECT.Bajas_por_hotel bh ON (h.id_hotel=bh.fk_hotel) WHERE ( ( ('{0}' NOT BETWEEN bh.fecha_inicio AND bh.fecha_fin) AND ('{0}' NOT BETWEEN bh.fecha_inicio AND bh.fecha_fin) AND ('{0}'>bh.fecha_fin OR '{0}'<bh.fecha_inicio) ) OR (bh.fecha_inicio IS NULL AND bh.fecha_fin IS NULL) ) ", funciones.devolverFechaAppConfig());
             DataTable tablaHoteles = Conexion.Instance.ejecutarQuery(sentencia.ToString());
 
             foreach (DataRow dat in tablaHoteles.Rows)

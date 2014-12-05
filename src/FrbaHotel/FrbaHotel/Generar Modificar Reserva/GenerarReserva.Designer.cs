@@ -29,6 +29,12 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.maxQuintuples = new System.Windows.Forms.Label();
+            this.maxDobles = new System.Windows.Forms.Label();
+            this.maxTriples = new System.Windows.Forms.Label();
+            this.maxCuadruples = new System.Windows.Forms.Label();
+            this.maxSimples = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.botonPrecio = new System.Windows.Forms.Button();
             this.botonConsultarDispo = new System.Windows.Forms.Button();
@@ -57,12 +63,6 @@
             this.fechaHasta = new System.Windows.Forms.TextBox();
             this.fechaDesde = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
-            this.maxSimples = new System.Windows.Forms.Label();
-            this.maxCuadruples = new System.Windows.Forms.Label();
-            this.maxTriples = new System.Windows.Forms.Label();
-            this.maxDobles = new System.Windows.Forms.Label();
-            this.maxQuintuples = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cantidadHuéspedes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cantidadSimples)).BeginInit();
@@ -114,6 +114,65 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Reserva";
+            // 
+            // maxQuintuples
+            // 
+            this.maxQuintuples.AutoSize = true;
+            this.maxQuintuples.Location = new System.Drawing.Point(348, 284);
+            this.maxQuintuples.Name = "maxQuintuples";
+            this.maxQuintuples.Size = new System.Drawing.Size(52, 16);
+            this.maxQuintuples.TabIndex = 35;
+            this.maxQuintuples.Text = "label14";
+            this.maxQuintuples.Visible = false;
+            // 
+            // maxDobles
+            // 
+            this.maxDobles.AutoSize = true;
+            this.maxDobles.Location = new System.Drawing.Point(348, 187);
+            this.maxDobles.Name = "maxDobles";
+            this.maxDobles.Size = new System.Drawing.Size(52, 16);
+            this.maxDobles.TabIndex = 34;
+            this.maxDobles.Text = "label13";
+            this.maxDobles.Visible = false;
+            // 
+            // maxTriples
+            // 
+            this.maxTriples.AutoSize = true;
+            this.maxTriples.Location = new System.Drawing.Point(348, 219);
+            this.maxTriples.Name = "maxTriples";
+            this.maxTriples.Size = new System.Drawing.Size(52, 16);
+            this.maxTriples.TabIndex = 33;
+            this.maxTriples.Text = "label11";
+            this.maxTriples.Visible = false;
+            // 
+            // maxCuadruples
+            // 
+            this.maxCuadruples.AutoSize = true;
+            this.maxCuadruples.Location = new System.Drawing.Point(348, 250);
+            this.maxCuadruples.Name = "maxCuadruples";
+            this.maxCuadruples.Size = new System.Drawing.Size(52, 16);
+            this.maxCuadruples.TabIndex = 32;
+            this.maxCuadruples.Text = "label10";
+            this.maxCuadruples.Visible = false;
+            // 
+            // maxSimples
+            // 
+            this.maxSimples.AutoSize = true;
+            this.maxSimples.Location = new System.Drawing.Point(348, 155);
+            this.maxSimples.Name = "maxSimples";
+            this.maxSimples.Size = new System.Drawing.Size(45, 16);
+            this.maxSimples.TabIndex = 31;
+            this.maxSimples.Text = "label9";
+            this.maxSimples.Visible = false;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(348, 133);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(36, 16);
+            this.label8.TabIndex = 30;
+            this.label8.Text = "Máx.";
             // 
             // label7
             // 
@@ -366,76 +425,17 @@
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.Location = new System.Drawing.Point(747, 451);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(147, 52);
+            this.button1.Size = new System.Drawing.Size(119, 33);
             this.button1.TabIndex = 1;
             this.button1.Text = "Limpiar";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(348, 133);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(36, 16);
-            this.label8.TabIndex = 30;
-            this.label8.Text = "Máx.";
-            // 
-            // maxSimples
-            // 
-            this.maxSimples.AutoSize = true;
-            this.maxSimples.Location = new System.Drawing.Point(348, 155);
-            this.maxSimples.Name = "maxSimples";
-            this.maxSimples.Size = new System.Drawing.Size(45, 16);
-            this.maxSimples.TabIndex = 31;
-            this.maxSimples.Text = "label9";
-            this.maxSimples.Visible = false;
-            // 
-            // maxCuadruples
-            // 
-            this.maxCuadruples.AutoSize = true;
-            this.maxCuadruples.Location = new System.Drawing.Point(348, 250);
-            this.maxCuadruples.Name = "maxCuadruples";
-            this.maxCuadruples.Size = new System.Drawing.Size(52, 16);
-            this.maxCuadruples.TabIndex = 32;
-            this.maxCuadruples.Text = "label10";
-            this.maxCuadruples.Visible = false;
-            // 
-            // maxTriples
-            // 
-            this.maxTriples.AutoSize = true;
-            this.maxTriples.Location = new System.Drawing.Point(348, 219);
-            this.maxTriples.Name = "maxTriples";
-            this.maxTriples.Size = new System.Drawing.Size(52, 16);
-            this.maxTriples.TabIndex = 33;
-            this.maxTriples.Text = "label11";
-            this.maxTriples.Visible = false;
-            // 
-            // maxDobles
-            // 
-            this.maxDobles.AutoSize = true;
-            this.maxDobles.Location = new System.Drawing.Point(348, 187);
-            this.maxDobles.Name = "maxDobles";
-            this.maxDobles.Size = new System.Drawing.Size(52, 16);
-            this.maxDobles.TabIndex = 34;
-            this.maxDobles.Text = "label13";
-            this.maxDobles.Visible = false;
-            // 
-            // maxQuintuples
-            // 
-            this.maxQuintuples.AutoSize = true;
-            this.maxQuintuples.Location = new System.Drawing.Point(348, 284);
-            this.maxQuintuples.Name = "maxQuintuples";
-            this.maxQuintuples.Size = new System.Drawing.Size(52, 16);
-            this.maxQuintuples.TabIndex = 35;
-            this.maxQuintuples.Text = "label14";
-            this.maxQuintuples.Visible = false;
-            // 
             // GenerarReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1011, 528);
+            this.ClientSize = new System.Drawing.Size(905, 487);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
             this.Name = "GenerarReserva";

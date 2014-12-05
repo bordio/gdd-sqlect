@@ -64,7 +64,7 @@
             this.tablaHabitacionesDisponibles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tablaHabitacionesDisponibles.Location = new System.Drawing.Point(12, 220);
             this.tablaHabitacionesDisponibles.Name = "tablaHabitacionesDisponibles";
-            this.tablaHabitacionesDisponibles.Size = new System.Drawing.Size(515, 164);
+            this.tablaHabitacionesDisponibles.Size = new System.Drawing.Size(567, 114);
             this.tablaHabitacionesDisponibles.TabIndex = 1;
             this.tablaHabitacionesDisponibles.CurrentCellDirtyStateChanged += new System.EventHandler(this.tablaHabitacionesDisponibles_CurrentCellDirtyStateChanged);
             this.tablaHabitacionesDisponibles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tablaHabitacionesDisponibles_CellContentClick);
@@ -94,7 +94,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(23, 440);
+            this.label3.Location = new System.Drawing.Point(9, 402);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(137, 15);
             this.label3.TabIndex = 4;
@@ -102,14 +102,14 @@
             // 
             // numericCantHuespedes
             // 
-            this.numericCantHuespedes.Location = new System.Drawing.Point(185, 440);
+            this.numericCantHuespedes.Location = new System.Drawing.Point(180, 402);
             this.numericCantHuespedes.Name = "numericCantHuespedes";
             this.numericCantHuespedes.Size = new System.Drawing.Size(59, 20);
             this.numericCantHuespedes.TabIndex = 5;
             // 
             // botonContinuar
             // 
-            this.botonContinuar.Location = new System.Drawing.Point(861, 483);
+            this.botonContinuar.Location = new System.Drawing.Point(721, 444);
             this.botonContinuar.Name = "botonContinuar";
             this.botonContinuar.Size = new System.Drawing.Size(120, 47);
             this.botonContinuar.TabIndex = 6;
@@ -121,7 +121,7 @@
             // 
             this.textoDelRegimen.AutoSize = true;
             this.textoDelRegimen.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textoDelRegimen.Location = new System.Drawing.Point(392, 444);
+            this.textoDelRegimen.Location = new System.Drawing.Point(389, 406);
             this.textoDelRegimen.Name = "textoDelRegimen";
             this.textoDelRegimen.Size = new System.Drawing.Size(135, 16);
             this.textoDelRegimen.TabIndex = 7;
@@ -129,7 +129,7 @@
             // 
             // botonVolver
             // 
-            this.botonVolver.Location = new System.Drawing.Point(12, 483);
+            this.botonVolver.Location = new System.Drawing.Point(12, 444);
             this.botonVolver.Name = "botonVolver";
             this.botonVolver.Size = new System.Drawing.Size(120, 47);
             this.botonVolver.TabIndex = 9;
@@ -141,7 +141,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1077, 542);
+            this.ClientSize = new System.Drawing.Size(897, 495);
             this.Controls.Add(this.botonVolver);
             this.Controls.Add(this.textoDelRegimen);
             this.Controls.Add(this.botonContinuar);

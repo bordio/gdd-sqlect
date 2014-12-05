@@ -57,7 +57,7 @@ namespace FrbaHotel.ABM_de_Usuario
         private void ModificacionUsuario_Load(object sender, EventArgs e)
         {
 
-            StringBuilder sentencia = new StringBuilder().AppendFormat("SELECT DISTINCT h.nombre FROM SQLECT.Hoteles h JOIN SQLECT.Usuarios_Hoteles uh ON (h.id_hotel=uh.fk_hotel) JOIN SQLECT.Usuarios u ON (u.id_usuario = uh.fk_usuario) WHERE h.estado_hotel=1 AND u.usr_name<>'{0}' ",usuarioActual.ToString());
+            StringBuilder sentencia = new StringBuilder().AppendFormat("SELECT DISTINCT h.nombre FROM SQLECT.Hoteles h LEFT JOIN SQLECT.Bajas_por_hotel bh ON (h.id_hotel=bh.fk_hotel) JOIN SQLECT.Usuarios_Hoteles uh ON (h.id_hotel=uh.fk_hotel) JOIN SQLECT.Usuarios u ON (u.id_usuario = uh.fk_usuario) WHERE h.estado_hotel=1 AND u.usr_name<>'{0}' ",usuarioActual.ToString());
             DataTable tablaHoteles = Conexion.Instance.ejecutarQuery(sentencia.ToString());
 
             foreach (DataRow dat in tablaHoteles.Rows)
