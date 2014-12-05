@@ -123,14 +123,19 @@ namespace FrbaHotel.ABM_de_Usuario
             botonModificar.Enabled = false;
             botonBaja.Enabled = false;
 
-            if (estadoDelUsuario.ToString() == "1")
+            if (usuarioSeleccionado.ToString() != "guest")
             {
-                tablaDeUsuarios.DataSource = null;
-                BajaUsuario formularioBaja = new BajaUsuario(usuarioSeleccionado.ToString());
-                formularioBaja.Show();
+                if (estadoDelUsuario.ToString() == "1")
+                {
+                    tablaDeUsuarios.DataSource = null;
+                    BajaUsuario formularioBaja = new BajaUsuario(usuarioSeleccionado.ToString());
+                    formularioBaja.Show();
+                }
+                else
+                    MessageBox.Show("El usuario ya se encuentra dado de baja");
             }
             else
-                MessageBox.Show("El usuario ya se encuentra dado de baja");
+                MessageBox.Show("El usuario genérico no se puede dar de baja", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void tablaDeUsuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -175,13 +180,17 @@ namespace FrbaHotel.ABM_de_Usuario
                 MessageBox.Show("Todos los hoteles están sin nombre", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else*/
+            if (usuarioSeleccionado.ToString() != "guest")
             {
+
                 botonModificar.Enabled = false;
                 botonBaja.Enabled = false;
                 tablaDeUsuarios.DataSource = null;
-                ModificacionUsuario formModificacion = new ModificacionUsuario(usuarioSeleccionado.ToString(), nombre.ToString(), apellido.ToString(), tipoDoc.ToString(), numeroDoc.ToString(),mailSeleccionado.ToString() , telefono.ToString(), direccion.ToString(), fechaNacimiento.ToString(), hotelSeleccionado.ToString(),rolSeleccionado.ToString());
+                ModificacionUsuario formModificacion = new ModificacionUsuario(usuarioSeleccionado.ToString(), nombre.ToString(), apellido.ToString(), tipoDoc.ToString(), numeroDoc.ToString(), mailSeleccionado.ToString(), telefono.ToString(), direccion.ToString(), fechaNacimiento.ToString(), hotelSeleccionado.ToString(), rolSeleccionado.ToString());
                 formModificacion.Show();
             }
+            else
+                MessageBox.Show("El usuario genérico no se puede modificar", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
     }

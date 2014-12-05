@@ -16,8 +16,10 @@ namespace FrbaHotel.ABM_de_Usuario
         {
             InitializeComponent();
             usuarioADarDeBaja.Text = usuario;
+            this.usuarioActual = usuario;
         }
 
+        string usuarioActual;
         private void BajaUsuario_Load(object sender, EventArgs e)
         {
 
@@ -32,6 +34,7 @@ namespace FrbaHotel.ABM_de_Usuario
         {
             inhabilitarUsuario(usuarioADarDeBaja.Text);
             MessageBox.Show("Usuario dado de baja","Operacion confirmada",MessageBoxButtons.OK,MessageBoxIcon.None);
+            this.Close();
         }
 
         public void inhabilitarUsuario(string usuario)

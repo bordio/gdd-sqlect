@@ -81,7 +81,7 @@ namespace FrbaHotel.Commons.FuncionalidadesVarias
             return output.ToString();
         }
 
-        public void inhabilitarUsuario(string usuario, string rol)
+        public void inhabilitarUsuario(string usuario)
         {
             Conexion cnn = Conexion.Instance;
 
@@ -92,10 +92,6 @@ namespace FrbaHotel.Commons.FuncionalidadesVarias
 
             comandoInhabilitarUsuario.Parameters.Add("@usuario", SqlDbType.VarChar);
             comandoInhabilitarUsuario.Parameters[contador].Value = usuario;
-            contador++;
-
-            comandoInhabilitarUsuario.Parameters.Add("@rol", SqlDbType.VarChar);
-            comandoInhabilitarUsuario.Parameters[contador].Value = rol;
             contador++;
 
             comandoInhabilitarUsuario.CommandText = "SQLECT.inhabilitarUsuario";

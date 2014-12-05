@@ -829,7 +829,7 @@ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.inhab
 DROP PROCEDURE SQLECT.inhabilitarUsuario
 
 GO
-CREATE PROCEDURE SQLECT.inhabilitarUsuario (@usuario varchar(30) ,@rol varchar(30))
+CREATE PROCEDURE SQLECT.inhabilitarUsuario (@usuario varchar(30))
 AS
 BEGIN
 UPDATE SQLECT.Usuarios SET estado_usr=0
@@ -1132,7 +1132,8 @@ AS
 BEGIN
 DECLARE @id_usuario int
  
- UPDATE SQLECT.Usuarios SET estado_usr=0 WHERE usr_name=@usuario
+ UPDATE SQLECT.Usuarios SET estado_usr=0 
+  WHERE usr_name=@usuario
  
  SET @id_usuario= (SELECT id_usuario FROM SQLECT.Usuarios WHERE usr_name=@usuario)
  DELETE FROM SQLECT.Usuarios_Hoteles WHERE fk_usuario=@id_usuario
@@ -1233,6 +1234,12 @@ DECLARE @id_usuaio int,@id_rol int
 SET @id_usuaio=(SELECT id_usuario FROM SQLECT.Usuarios WHERE usr_name=@username)
 SET @id_rol= (SELECT id_rol FROM SQLECT.Roles WHERE nombre=@rol)
 
+IF NOT EXISTS(SELECT id_usuario FROM SQLECT.Usuarios u JOIN SQLECT.Roles_Usuarios ru ON (u.id_usuario=ru.fk_usuario) WHERE u.usr_name=@username AND ru.fk_rol<>@id_rol AND u.estado_usr=1)
+ BEGIN
+  UPDATE SQLECT.Usuarios SET estado_usr=0
+   WHERE usr_name=@username
+ END
+
 DELETE FROM SQLECT.Roles_Usuarios WHERE fk_rol=@id_rol AND fk_usuario=@id_usuaio
 END
 GO
@@ -1250,8 +1257,13 @@ SET @id_usuaio=(SELECT id_usuario FROM SQLECT.Usuarios WHERE usr_name=@username)
 SET @id_rol =(SELECT id_rol FROM SQLECT.Roles WHERE nombre=@nombreRol)
 
 IF NOT EXISTS (SELECT * FROM SQLECT.Roles_Usuarios WHERE fk_rol=@id_rol AND fk_usuario=@id_usuaio)
+ BEGIN
  INSERT INTO SQLECT.Roles_Usuarios(fk_usuario,fk_rol) VALUES (@id_usuaio,@id_rol)
- 
+
+UPDATE SQLECT.Usuarios SET estado_usr=1
+ WHERE usr_name=@username
+
+ END
 END
 GO
 
@@ -2166,3 +2178,10 @@ BEGIN
 END
 GO
 GO
+
+/*SELECT * FROM SQLECT.Usuarios_Hoteles
+SELECT * FROM SQLECT.Hoteles
+
+SELECT * FROM SQLECT.Roles LEFT JOIN SQLECT.Roles_Usuarios ON (id_rol=fk_rol) LEFT JOIN  SQLECT.Usuarios ON (id_usuario=fk_usuario)
+*/
+
