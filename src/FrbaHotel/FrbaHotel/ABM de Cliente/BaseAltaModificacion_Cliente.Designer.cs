@@ -60,6 +60,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.labeltelAdvertencia = new System.Windows.Forms.Label();
             this.Email = new System.Windows.Forms.TextBox();
+            this.labelAdvertencia = new System.Windows.Forms.Label();
             this.groupBoxDomicilio.SuspendLayout();
             this.groupBoxDatosPersonales.SuspendLayout();
             this.SuspendLayout();
@@ -165,7 +166,7 @@
             // labelFechaNaci
             // 
             this.labelFechaNaci.AutoSize = true;
-            this.labelFechaNaci.Location = new System.Drawing.Point(19, 123);
+            this.labelFechaNaci.Location = new System.Drawing.Point(19, 130);
             this.labelFechaNaci.Name = "labelFechaNaci";
             this.labelFechaNaci.Size = new System.Drawing.Size(93, 13);
             this.labelFechaNaci.TabIndex = 0;
@@ -310,7 +311,7 @@
             this.groupBoxDatosPersonales.Controls.Add(this.Documento);
             this.groupBoxDatosPersonales.Controls.Add(this.label2);
             this.groupBoxDatosPersonales.Controls.Add(this.labeltelAdvertencia);
-            this.groupBoxDatosPersonales.Location = new System.Drawing.Point(7, 12);
+            this.groupBoxDatosPersonales.Location = new System.Drawing.Point(7, 19);
             this.groupBoxDatosPersonales.Name = "groupBoxDatosPersonales";
             this.groupBoxDatosPersonales.Size = new System.Drawing.Size(508, 532);
             this.groupBoxDatosPersonales.TabIndex = 0;
@@ -476,11 +477,23 @@
             this.Email.Size = new System.Drawing.Size(199, 20);
             this.Email.TabIndex = 3;
             // 
+            // labelAdvertencia
+            // 
+            this.labelAdvertencia.AutoSize = true;
+            this.labelAdvertencia.ForeColor = System.Drawing.Color.Red;
+            this.labelAdvertencia.Location = new System.Drawing.Point(39, 3);
+            this.labelAdvertencia.Name = "labelAdvertencia";
+            this.labelAdvertencia.Size = new System.Drawing.Size(405, 13);
+            this.labelAdvertencia.TabIndex = 18;
+            this.labelAdvertencia.Text = "ADVERTENCIA: DATOS INCONSISTENTES. PROBABLES DATOS DUPLICADOS";
+            this.labelAdvertencia.Visible = false;
+            // 
             // BaseAltaModificacion_Cliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(520, 549);
+            this.ClientSize = new System.Drawing.Size(520, 561);
+            this.Controls.Add(this.labelAdvertencia);
             this.Controls.Add(this.labelNombre);
             this.Controls.Add(this.labelFechaNaci);
             this.Controls.Add(this.labelEmail);
@@ -546,6 +559,7 @@
         private System.Windows.Forms.Label labelTel;
         private System.Windows.Forms.Label label2;
         public System.Windows.Forms.ComboBox PaisOrigen;
+        public System.Windows.Forms.Label labelAdvertencia;
     }
   
 }

@@ -27,8 +27,4 @@ namespace FrbaHotel
             //Application.Run(new FrbaHotel.Generar_Modificar_Reserva.GenerarReserva(1,"admin"));
             //Application.Run(new FrbaHotel.Generar_Modificar_Reserva.ModificarReserva("admin","761e2028",1));
             //Application.Run( new FrbaHotel.Registrar_Consumible.Form1(1,"11111111"));
-            //Application.Run(new ABM_de_Cliente.ModificacionMain_Cliente());            
-            //Application.Run(new ABM_de_Cliente.Alta_Cliente());
-        }
-    }
-}
+            }

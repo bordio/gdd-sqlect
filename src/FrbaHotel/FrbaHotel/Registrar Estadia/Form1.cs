@@ -97,15 +97,19 @@ namespace FrbaHotel.Registrar_Estadia
                     {
                         funcionesEstadias.realizarCheckIn(codigoReserva.Text, usuarioDeSesionActual,funcionesReservas.devolverFechaAppConfig());
 
-                        MessageBox.Show("Check-In realizado correctamente");
+
                         botonCheckIn.Enabled = false;
+                        MessageBox.Show(string.Format("Debe registrar a {0} huéspedes como clientes", cantHuespedes - 1));
                         if (cantHuespedes > 1)
                         {
-                            MessageBox.Show(string.Format("Debe registrar a {0} huéspedes como clientes", cantHuespedes - 1));
-                            FrbaHotel.ABM_de_Cliente.BaseAltaModificacion_Cliente formRegistrarClientes = new FrbaHotel.ABM_de_Cliente.BaseAltaModificacion_Cliente();
-                            formRegistrarClientes.ShowDialog();
-
+                            for (int i = 1; i <= cantHuespedes; i++)
+                            {
+                                
+                                FrbaHotel.ABM_de_Cliente.BaseAltaModificacion_Cliente formRegistrarClientes = new FrbaHotel.ABM_de_Cliente.Alta_Cliente();
+                                formRegistrarClientes.ShowDialog();
+                            }
                         }
+                        MessageBox.Show("Check-In realizado correctamente");
                         //this.Close();
                     }
                     else
@@ -140,7 +144,7 @@ namespace FrbaHotel.Registrar_Estadia
             }
             else
             {
-                MessageBox.Show("Ya se ha realizado el Check-In");
+                MessageBox.Show("El Check-In no puede realizarse porque ya fue hecho con anterioridad");
                 botonCheckIn.Enabled = false;
             }
         }

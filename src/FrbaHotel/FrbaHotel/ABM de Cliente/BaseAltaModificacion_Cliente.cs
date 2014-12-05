@@ -143,7 +143,7 @@ namespace FrbaHotel.ABM_de_Cliente
                 }
                 this.appModel.refrescarPantalla(pantallaAnteriorFiltros);
                     this.Close();
-                    formularioAnterior.Cerrate(false);
+                    if (formularioAnterior != null) formularioAnterior.Cerrate(false);
                 }
             
         }   
