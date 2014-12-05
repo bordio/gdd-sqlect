@@ -24,7 +24,7 @@ namespace FrbaHotel.ABM_de_Usuario
 
         private void AltaUsuario_Load(object sender, EventArgs e)
         {
-            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT DISTINCT r.nombre FROM SQLECT.Roles r WHERE r.estado_rol=1 AND r.nombre NOT IN('Administrador General','Guest')");
+            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT DISTINCT r.nombre FROM SQLECT.Roles r WHERE r.estado_rol=1 AND r.nombre NOT IN('Guest')");
             DataTable tabla = Conexion.Instance.ejecutarQuery(sentence.ToString()); 
 
             foreach (DataRow dat in tabla.Rows)

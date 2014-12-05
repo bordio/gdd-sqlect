@@ -96,6 +96,7 @@
             // comboRol
             // 
             this.comboRol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboRol.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboRol.FormattingEnabled = true;
             this.comboRol.Location = new System.Drawing.Point(168, 525);
             this.comboRol.Name = "comboRol";
@@ -185,6 +186,7 @@
             // comboHoteles
             // 
             this.comboHoteles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboHoteles.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboHoteles.FormattingEnabled = true;
             this.comboHoteles.Location = new System.Drawing.Point(219, 386);
             this.comboHoteles.Name = "comboHoteles";
@@ -231,6 +233,7 @@
             // hotelDondeTrabaja
             // 
             this.hotelDondeTrabaja.Enabled = false;
+            this.hotelDondeTrabaja.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.hotelDondeTrabaja.Location = new System.Drawing.Point(219, 324);
             this.hotelDondeTrabaja.Name = "hotelDondeTrabaja";
             this.hotelDondeTrabaja.Size = new System.Drawing.Size(100, 22);

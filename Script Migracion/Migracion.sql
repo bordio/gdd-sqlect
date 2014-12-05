@@ -423,6 +423,13 @@ INSERT INTO SQLECT.Consumibles_Estadias_Habitaciones(fk_estadia,fk_habitacion,fk
 							 JOIN SQLECT.Habitaciones_Reservas hr ON (e.fk_reserva=hr.fk_reserva)							
 	   WHERE m.Consumible_Codigo IS NOT NULL )
 
+INSERT INTO SQLECT.Reservas_Canceladas(fk_reserva,fecha_cancelacion,motivo)
+ (SELECT id_reserva,NULL,'Por no presentarse en fecha' FROM SQLECT.Reservas 
+   WHERE id_reserva NOT IN (SELECT fk_reserva FROM SQLECT.Estadias) )
+
+	   
+
+
 /*INSERT INTO SQLECT.Consumibles_Estadias_Habitaciones(fk_consumible,fk_estadia)
  (SELECT DISTINCT m.Consumible_Codigo,e.id_estadia
    FROM gd_esquema.Maestra m JOIN SQLECT.Estadias e ON (m.Reserva_Codigo=e.fk_reserva)
@@ -654,7 +661,7 @@ CREATE PROCEDURE SQLECT.top5HotelesFueraDeServicio (@año int, @inicioTri int, @f
 AS
 
  BEGIN
-SELECT TOP 5 h.nombre,b.fk_hotel'Id',SUM(DATEDIFF(day,b.fecha_fin,b.fecha_inicio))'Días fuera de servicio'
+SELECT TOP 5 h.nombre'Nombre',b.fk_hotel'Id',SUM(DATEDIFF(day,b.fecha_inicio,b.fecha_fin)+1)'Días fuera de servicio'
    FROM SQLECT.Bajas_por_hotel b JOIN SQLECT.Hoteles h ON (h.id_hotel=b.fk_hotel)
     WHERE ( (YEAR(b.fecha_inicio)=YEAR(b.fecha_fin)) AND (MONTH(b.fecha_inicio) >= @inicioTri AND MONTH(b.fecha_fin)<= @finTri) )
     
@@ -828,7 +835,7 @@ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.inhab
 DROP PROCEDURE SQLECT.inhabilitarUsuario
 
 GO
-CREATE PROCEDURE SQLECT.inhabilitarUsuario (@usuario varchar(30) ,@rol varchar(30))
+CREATE PROCEDURE SQLECT.inhabilitarUsuario (@usuario varchar(30))
 AS
 BEGIN
 UPDATE SQLECT.Usuarios SET estado_usr=0
@@ -1131,7 +1138,8 @@ AS
 BEGIN
 DECLARE @id_usuario int
  
- UPDATE SQLECT.Usuarios SET estado_usr=0 WHERE usr_name=@usuario
+ UPDATE SQLECT.Usuarios SET estado_usr=0 
+  WHERE usr_name=@usuario
  
  SET @id_usuario= (SELECT id_usuario FROM SQLECT.Usuarios WHERE usr_name=@usuario)
  DELETE FROM SQLECT.Usuarios_Hoteles WHERE fk_usuario=@id_usuario
@@ -1232,6 +1240,12 @@ DECLARE @id_usuaio int,@id_rol int
 SET @id_usuaio=(SELECT id_usuario FROM SQLECT.Usuarios WHERE usr_name=@username)
 SET @id_rol= (SELECT id_rol FROM SQLECT.Roles WHERE nombre=@rol)
 
+IF NOT EXISTS(SELECT id_usuario FROM SQLECT.Usuarios u JOIN SQLECT.Roles_Usuarios ru ON (u.id_usuario=ru.fk_usuario) WHERE u.usr_name=@username AND ru.fk_rol<>@id_rol AND u.estado_usr=1)
+ BEGIN
+  UPDATE SQLECT.Usuarios SET estado_usr=0
+   WHERE usr_name=@username
+ END
+
 DELETE FROM SQLECT.Roles_Usuarios WHERE fk_rol=@id_rol AND fk_usuario=@id_usuaio
 END
 GO
@@ -1249,8 +1263,13 @@ SET @id_usuaio=(SELECT id_usuario FROM SQLECT.Usuarios WHERE usr_name=@username)
 SET @id_rol =(SELECT id_rol FROM SQLECT.Roles WHERE nombre=@nombreRol)
 
 IF NOT EXISTS (SELECT * FROM SQLECT.Roles_Usuarios WHERE fk_rol=@id_rol AND fk_usuario=@id_usuaio)
+ BEGIN
  INSERT INTO SQLECT.Roles_Usuarios(fk_usuario,fk_rol) VALUES (@id_usuaio,@id_rol)
- 
+
+UPDATE SQLECT.Usuarios SET estado_usr=1
+ WHERE usr_name=@username
+
+ END
 END
 GO
 
@@ -2165,3 +2184,4 @@ BEGIN
 END
 GO
 GO
+

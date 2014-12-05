@@ -90,6 +90,28 @@ namespace FrbaHotel.ABM_de_Usuario
                 mensajeValidacion.AppendLine(string.Format(" El usuario {0} ya existe.", usuario.Text));
             };
         }
+        
+       /* public DataTable buscarHotelesDisponibles(string nombreUsuario, string fechaDelSistema)
+        {
+            Conexion cnn = Conexion.Instance;
+
+            System.Data.SqlClient.SqlCommand comandoHotelesDisponibles = new System.Data.SqlClient.SqlCommand();
+
+            comandoHotelesDisponibles.CommandType = CommandType.StoredProcedure;
+            int contador = 0;
+
+            comandoHotelesDisponibles.Parameters.Add("@usuario", SqlDbType.VarChar);
+            comandoHotelesDisponibles.Parameters[contador].Value = nombreUsuario;
+            contador++;
+
+            comandoHotelesDisponibles.Parameters.Add("@fechaDelSistema", SqlDbType.VarChar);
+            comandoHotelesDisponibles.Parameters[contador].Value = fechaDelSistema;
+            contador++;
+
+            comandoHotelesDisponibles.CommandText = "SQLECT.buscarHotelesDisponibles";
+            DataTable tablaHoteles = cnn.ejecutarQueryConSP(comandoHotelesDisponibles);
+            return tablaHoteles;
+        }*/
 
 
 

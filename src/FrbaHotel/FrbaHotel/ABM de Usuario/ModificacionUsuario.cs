@@ -33,6 +33,7 @@ namespace FrbaHotel.ABM_de_Usuario
         }
         private AppModel_Modifiacion_Usuario funciones = new AppModel_Modifiacion_Usuario();
         private AppModel_Alta_Usuario funcionesUsuarios = new AppModel_Alta_Usuario();
+        private Funcionalidades funcionesVarias = new Funcionalidades();
         
         string usuarioActual;
         string nombreActual;
@@ -56,8 +57,10 @@ namespace FrbaHotel.ABM_de_Usuario
 
         private void ModificacionUsuario_Load(object sender, EventArgs e)
         {
+            
 
-            StringBuilder sentencia = new StringBuilder().AppendFormat("SELECT DISTINCT h.nombre FROM SQLECT.Hoteles h LEFT JOIN SQLECT.Bajas_por_hotel bh ON (h.id_hotel=bh.fk_hotel) JOIN SQLECT.Usuarios_Hoteles uh ON (h.id_hotel=uh.fk_hotel) JOIN SQLECT.Usuarios u ON (u.id_usuario = uh.fk_usuario) WHERE h.estado_hotel=1 AND u.usr_name<>'{0}' ",usuarioActual.ToString());
+
+            StringBuilder sentencia = new StringBuilder().AppendFormat("SELECT DISTINCT h.nombre FROM SQLECT.Hoteles h LEFT JOIN SQLECT.Bajas_por_hotel bh ON (h.id_hotel=bh.fk_hotel) WHERE h.nombre<>'{0}' ",hotelActual);
             DataTable tablaHoteles = Conexion.Instance.ejecutarQuery(sentencia.ToString());
 
             foreach (DataRow dat in tablaHoteles.Rows)
@@ -66,7 +69,7 @@ namespace FrbaHotel.ABM_de_Usuario
                 comboHoteles.Items.Add(dat[0]);
             }
 
-            StringBuilder sentenciaRoles = new StringBuilder().AppendFormat("SELECT DISTINCT r.nombre FROM SQLECT.Roles r WHERE r.estado_rol=1 AND r.nombre<>'{0}' AND r.nombre<>'Guest'",idDeRolActual,usuarioActual);
+            StringBuilder sentenciaRoles = new StringBuilder().AppendFormat("SELECT DISTINCT r.nombre FROM SQLECT.Roles r LEFT JOIN SQLECT.Roles_Usuarios ru ON (r.id_rol=ru.fk_rol) LEFT JOIN SQLECT.Usuarios u ON (u.id_usuario=ru.fk_usuario) WHERE r.estado_rol=1 AND r.nombre NOT IN ('Guest','{0}') ",idDeRolActual);
             DataTable tablaRoles = Conexion.Instance.ejecutarQuery(sentenciaRoles.ToString());
 
             foreach (DataRow dat in tablaRoles.Rows)
@@ -91,7 +94,11 @@ namespace FrbaHotel.ABM_de_Usuario
             mail.Text = mailActual;
             telefono.Text = telefonoActual;
             direccion.Text = direccionActual;
-            fechaNacimiento.Text = fechaNacActual;
+            if (!string.IsNullOrEmpty(fechaNacActual))
+            { fechaNacimiento.Text = DateTime.Parse(fechaNacActual).ToShortDateString(); }
+            else
+                fechaNacimiento.Text = fechaNacActual.ToString();
+           
             hotelDondeTrabaja.Text = hotelActual;
             radioMantener.Checked = true;
 
@@ -222,8 +229,10 @@ namespace FrbaHotel.ABM_de_Usuario
             }
 
             if (usuarioModificado)
+            {
                 MessageBox.Show("Usuario modificado", "", MessageBoxButtons.OK, MessageBoxIcon.None);
-
+                this.Close();
+            }
             
         }
 

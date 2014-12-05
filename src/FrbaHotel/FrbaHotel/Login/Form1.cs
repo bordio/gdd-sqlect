@@ -68,8 +68,8 @@ namespace FrbaHotel.Login
                           actualizarIntentosFallidos(textUsuario.Text, comboBoxRol.SelectedItem.ToString());
                           if (intentosActual == numeroDeIntentos)
                           {
-                              funciones.inhabilitarUsuario(textUsuario.Text,null);
-                              MessageBox.Show(string.Format("El usuario {0}, para el rol de {0} quedo bloqueado", textUsuario.Text, comboBoxRol.SelectedItem.ToString()));
+                              funciones.inhabilitarUsuario(textUsuario.Text);
+                              MessageBox.Show(string.Format("El usuario {0} quedó bloqueado", textUsuario.Text));
                           }
                           else
                           {
@@ -102,7 +102,7 @@ namespace FrbaHotel.Login
                 labelUsuario.Visible = true; labelPass.Visible = true; labelRol.Visible = true;
                 textUsuario.Visible = true; textPass.Visible = true; comboBoxRol.Visible = true;
 
-                StringBuilder sentence = new StringBuilder().AppendFormat("SELECT DISTINCT r.nombre FROM SQLECT.Roles r WHERE r.estado_rol=1");
+                StringBuilder sentence = new StringBuilder().AppendFormat("SELECT DISTINCT r.nombre FROM SQLECT.Roles r WHERE r.estado_rol=1 AND r.nombre<>'Guest'");
                 DataTable tabla = Conexion.Instance.ejecutarQuery(sentence.ToString());
 
                 foreach (DataRow dat in tabla.Rows)

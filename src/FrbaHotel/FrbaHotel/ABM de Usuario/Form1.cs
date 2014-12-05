@@ -54,9 +54,9 @@ namespace FrbaHotel.ABM_de_Usuario
         }
         public static StringBuilder getAllInstances()
         {
-            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT u.usr_name 'Usuario', r.nombre 'Rol',u.estado_usr 'Estado',h.nombre 'Hotel a cargo',e.nombre'Nombre',e.apellido'Apellido',e.email'Mail',e.dni_tipo'Tipo Doc',e.dni_nro 'Numero Doc',e.telefono'Telefono',e.direccion'Direccion',e.fecha_nacimiento'Fecha' FROM SQLECT.Usuarios u LEFT JOIN SQLECT.Roles_Usuarios ru ON (u.id_usuario=ru.fk_usuario) LEFT JOIN SQLECT.Roles r ON (r.id_rol = ru.fk_rol) LEFT JOIN SQLECT.Usuarios_Hoteles uh ON (u.id_usuario=uh.fk_usuario) LEFT JOIN SQLECT.Hoteles h ON (h.id_hotel=uh.fk_hotel) LEFT JOIN SQLECT.Empleados e ON (e.id_empleado=u.fk_empleado) ");
+            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT u.usr_name 'Usuario', r.nombre 'Rol',CASE u.estado_usr WHEN 1 THEN 'Habilitado' ELSE 'Inhabilitado' END 'Estado',h.nombre 'Hotel a cargo',e.nombre'Nombre',e.apellido'Apellido',e.email'Mail',e.dni_tipo'Tipo Doc',e.dni_nro 'Numero Doc',e.telefono'Telefono',e.direccion'Direccion',e.fecha_nacimiento'Fecha' FROM SQLECT.Usuarios u LEFT JOIN SQLECT.Roles_Usuarios ru ON (u.id_usuario=ru.fk_usuario) LEFT JOIN SQLECT.Roles r ON (r.id_rol = ru.fk_rol) LEFT JOIN SQLECT.Usuarios_Hoteles uh ON (u.id_usuario=uh.fk_usuario) LEFT JOIN SQLECT.Hoteles h ON (h.id_hotel=uh.fk_hotel) LEFT JOIN SQLECT.Empleados e ON (e.id_empleado=u.fk_empleado) ");
             return sentence;
-        }
+        } 
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -123,14 +123,19 @@ namespace FrbaHotel.ABM_de_Usuario
             botonModificar.Enabled = false;
             botonBaja.Enabled = false;
 
-            if (estadoDelUsuario.ToString() == "1")
+            if (usuarioSeleccionado.ToString() != "guest")
             {
-                tablaDeUsuarios.DataSource = null;
-                BajaUsuario formularioBaja = new BajaUsuario(usuarioSeleccionado.ToString());
-                formularioBaja.Show();
+                if (estadoDelUsuario.ToString() == "Habilitado")
+                {
+                    tablaDeUsuarios.DataSource = null;
+                    BajaUsuario formularioBaja = new BajaUsuario(usuarioSeleccionado.ToString());
+                    formularioBaja.Show();
+                }
+                else
+                    MessageBox.Show("El usuario ya se encuentra dado de baja");
             }
             else
-                MessageBox.Show("El usuario ya se encuentra dado de baja");
+                MessageBox.Show("El usuario genérico no se puede dar de baja", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void tablaDeUsuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -175,13 +180,17 @@ namespace FrbaHotel.ABM_de_Usuario
                 MessageBox.Show("Todos los hoteles están sin nombre", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else*/
+            if (usuarioSeleccionado.ToString() != "guest")
             {
+
                 botonModificar.Enabled = false;
                 botonBaja.Enabled = false;
                 tablaDeUsuarios.DataSource = null;
-                ModificacionUsuario formModificacion = new ModificacionUsuario(usuarioSeleccionado.ToString(), nombre.ToString(), apellido.ToString(), tipoDoc.ToString(), numeroDoc.ToString(),mailSeleccionado.ToString() , telefono.ToString(), direccion.ToString(), fechaNacimiento.ToString(), hotelSeleccionado.ToString(),rolSeleccionado.ToString());
+                ModificacionUsuario formModificacion = new ModificacionUsuario(usuarioSeleccionado.ToString(), nombre.ToString(), apellido.ToString(), tipoDoc.ToString(), numeroDoc.ToString(), mailSeleccionado.ToString(), telefono.ToString(), direccion.ToString(), fechaNacimiento.ToString(), hotelSeleccionado.ToString(), rolSeleccionado.ToString());
                 formModificacion.Show();
             }
+            else
+                MessageBox.Show("El usuario genérico no se puede modificar", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
     }
