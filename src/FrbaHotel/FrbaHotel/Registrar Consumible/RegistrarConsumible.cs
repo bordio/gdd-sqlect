@@ -20,7 +20,6 @@ namespace FrbaHotel.Registrar_Consumible
             InitializeComponent();
             this.codigoReservaActual = codigoReserva;
             this.operacionActual = tipoOperacion;
-
         }
 
         string codigoReservaActual;

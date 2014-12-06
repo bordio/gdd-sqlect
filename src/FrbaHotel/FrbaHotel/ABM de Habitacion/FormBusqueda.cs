@@ -26,6 +26,7 @@ namespace FrbaHotel.ABM_de_Habitacion
             this.appModel.cargarTipoHabitaciones(cmbTipoHabitacion);
             lstHabitaciones.AllowUserToAddRows = false;
             btAccion.Enabled = false;
+            this.Text = this.appModel.getTitulo();
         }
 
         private void button1_Click(object sender, EventArgs e)

@@ -87,7 +87,7 @@
             // 
             this.nroHabitacion.Location = new System.Drawing.Point(68, 136);
             this.nroHabitacion.Name = "nroHabitacion";
-            this.nroHabitacion.Size = new System.Drawing.Size(100, 20);
+            this.nroHabitacion.Size = new System.Drawing.Size(68, 20);
             this.nroHabitacion.TabIndex = 4;
             // 
             // cantidadConsumible

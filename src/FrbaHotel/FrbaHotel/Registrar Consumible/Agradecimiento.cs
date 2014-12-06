@@ -15,5 +15,12 @@ namespace FrbaHotel.Registrar_Consumible
         {
             InitializeComponent();
         }
+
+        private void Agradecimiento_Load(object sender, EventArgs e)
+        {
+
+        }
+
+       
     }
 }

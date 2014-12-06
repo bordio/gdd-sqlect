@@ -36,5 +36,9 @@ namespace FrbaHotel.ABM_de_Habitacion
 
             MessageBox.Show("Alta exitosa", "Alta de Habitacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+        public override string getTitulo()
+        {
+            return "Formulario de alta de habitacion";
+        }
     }
 }

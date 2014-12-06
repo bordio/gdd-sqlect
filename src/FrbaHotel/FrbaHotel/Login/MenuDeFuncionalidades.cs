@@ -185,7 +185,7 @@ namespace FrbaHotel.Login
                     listadoEstadistico.ShowDialog();
                     break;
             }
-            this.Hide();
+            cargarFuncionalidades(nombreRolDeSesion);
         }
 
         private void button2_Click(object sender, EventArgs e)

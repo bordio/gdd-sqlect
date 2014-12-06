@@ -56,5 +56,9 @@ namespace FrbaHotel.ABM_de_Habitacion
             MessageBox.Show("Actualizacion de estado exitosa", "Actualizacion de estado de Habitacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
             formBusq.filtrar();
         }
+        public override string getTitulo()
+        {
+            return "Formulario de baja/activacion de habitacion";
+        }
     }
 }

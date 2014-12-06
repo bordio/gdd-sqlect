@@ -46,6 +46,7 @@
             this.chkBxGestEstad = new System.Windows.Forms.CheckBox();
             this.chkBxGestFactu = new System.Windows.Forms.CheckBox();
             this.chkBxListados = new System.Windows.Forms.CheckBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblTitulo
@@ -223,11 +224,22 @@
             this.chkBxListados.Text = "Listado estadístico";
             this.chkBxListados.UseVisualStyleBackColor = true;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(17, 144);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(108, 16);
+            this.label3.TabIndex = 15;
+            this.label3.Text = "Funcionalidades";
+            // 
             // AgregarModificarRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(326, 347);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.chkBxListados);
             this.Controls.Add(this.chkBxGestFactu);
             this.Controls.Add(this.chkBxGestEstad);
@@ -273,6 +285,7 @@
         private System.Windows.Forms.CheckBox chkBxGestEstad;
         private System.Windows.Forms.CheckBox chkBxGestFactu;
         private System.Windows.Forms.CheckBox chkBxListados;
+        private System.Windows.Forms.Label label3;
 
     }
 }
