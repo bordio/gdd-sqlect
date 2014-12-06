@@ -113,10 +113,9 @@
             this.Controls.Add(this.botonConfirmarOperacion);
             this.Controls.Add(this.tablaDeConsumibles);
             this.Name = "Form1";
-            this.Text = "Registrar Conumibles";
+            this.Text = "Registrar Consumibles";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.tablaDeConsumibles)).EndInit();
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(Form1_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

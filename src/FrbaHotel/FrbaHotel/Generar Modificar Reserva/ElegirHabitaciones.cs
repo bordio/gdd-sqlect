@@ -110,7 +110,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             {
                 int idReserva;
 
-                bool reservaHecha = funcionesReservas.realizarReserva(fechaDesdeActual, cantNoches, usuarioDeSesion, regimenActual, idHotelActual,cantHuespedes);
+                bool reservaHecha = funcionesReservas.realizarReserva(fechaDesdeActual, cantNoches, usuarioDeSesion, regimenActual, idHotelActual, cantHuespedes);
 
 
                 if (reservaHecha)
@@ -123,10 +123,10 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     }
 
                     string codigoReserva = funcionesReservas.generarCodigoReserva(); /*Generamos un código alfanumérico aleatorio de 8 caracteres*/
-                    
-                    while(funcionesReservas.verificarCodigoReservaRepetido(codigoReserva))
+
+                    while (funcionesReservas.verificarCodigoReservaRepetido(codigoReserva))
                     {
-                    codigoReserva= funcionesReservas.generarCodigoReserva();
+                        codigoReserva = funcionesReservas.generarCodigoReserva();
                     }
 
                     funcionesReservas.adjuntarCodigoALaReserva(idReserva, codigoReserva); /* Asignamos el código a la reserva*/
@@ -139,7 +139,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 }
             }
             else
-                MessageBox.Show("La cantidad de habitaciones elegidas difieren de las cantidades que selecciono al comienzo de la reserva");
+                MessageBox.Show("No ha elegido el mismo tipo de habitaciones que el esperado", "Cuidado", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
                 listaHabitaciones.Clear();
                 contadorSimples = 0;

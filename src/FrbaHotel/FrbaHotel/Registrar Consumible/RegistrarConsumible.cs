@@ -20,7 +20,6 @@ namespace FrbaHotel.Registrar_Consumible
             InitializeComponent();
             this.codigoReservaActual = codigoReserva;
             this.operacionActual = tipoOperacion;
-
         }
 
         string codigoReservaActual;
@@ -96,7 +95,7 @@ namespace FrbaHotel.Registrar_Consumible
                     }
                  }
                 else
-                    MessageBox.Show("El numero de habitación no pertence a la reserva");
+                    MessageBox.Show("El numero de habitación no pertence a la reserva","Error",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
             
             }
 

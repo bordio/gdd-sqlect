@@ -40,7 +40,7 @@ namespace FrbaHotel.ABM_de_Usuario
         
     private void Form1_Load(object sender, EventArgs e)
         {
-            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT DISTINCT nombre FROM SQLECT.Roles");
+            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT DISTINCT nombre FROM SQLECT.Roles WHERE nombre<>'Guest'");
             DataTable tabla = Conexion.Instance.ejecutarQuery(sentence.ToString());
 
             foreach (DataRow dat in tabla.Rows)

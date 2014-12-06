@@ -63,6 +63,7 @@
             this.fechaHasta = new System.Windows.Forms.TextBox();
             this.fechaDesde = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cantidadHuéspedes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cantidadSimples)).BeginInit();
@@ -431,11 +432,23 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Location = new System.Drawing.Point(34, 451);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(119, 33);
+            this.button2.TabIndex = 2;
+            this.button2.Text = "Cerrar";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click_2);
+            // 
             // GenerarReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(905, 487);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
             this.Name = "GenerarReserva";
@@ -490,5 +503,6 @@
         private System.Windows.Forms.Label maxCuadruples;
         private System.Windows.Forms.Label maxSimples;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button button2;
     }
 }

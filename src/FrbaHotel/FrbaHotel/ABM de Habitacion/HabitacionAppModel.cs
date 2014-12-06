@@ -107,5 +107,7 @@ namespace FrbaHotel.ABM_de_Habitacion
                 return false;
             }
         }
+
+        public abstract string getTitulo();
     }
 }

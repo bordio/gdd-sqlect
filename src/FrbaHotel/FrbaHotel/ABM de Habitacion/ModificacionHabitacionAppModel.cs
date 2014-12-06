@@ -112,5 +112,9 @@ namespace FrbaHotel.ABM_de_Habitacion
             sentece.AppendFormat("SELECT id_habitacion FROM SQLECT.Habitaciones WHERE fk_hotel={0} AND nro_habitacion={1} AND id_habitacion != {2}", id_hotels[cmb_hotel.SelectedIndex], Int32.Parse(numero_habitacion.Text), this.id_habitacion);
             return this.connSql.ejecutarQuery(sentece.ToString()).Rows.Count > 0;
         }
+        public override string getTitulo()
+        {
+            return "Formulario de modificacion de habitacion";
+        }
     }
 }

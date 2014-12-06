@@ -37,12 +37,12 @@ namespace FrbaHotel.Cancelar_Reserva
 
                 if (reservaCancelada)
                 {
-                    MessageBox.Show("Reserva cancelada", "Operación correcta", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                    MessageBox.Show("Reserva cancelada", "Operación exitosa", MessageBoxButtons.OK, MessageBoxIcon.None);
                     this.Close();
                 }
                 else
                 {
-                    MessageBox.Show("Ha ocurrido un error"); 
+                    MessageBox.Show("Ha ocurrido un error","Error",MessageBoxButtons.OK,MessageBoxIcon.Error); 
                 }
             
             }
