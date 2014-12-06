@@ -22,7 +22,7 @@ namespace FrbaHotel
             //Application.Run(new FrbaHotel.Generar_Modificar_Reserva.RegistroCliente(27501));            
             //Application.Run(new Listado_Estadistico.Form1());
             //Application.Run(new FrbaHotel.ABM_de_Hotel.MainHotel(1));
-            Application.Run(new FrbaHotel.ABM_de_Habitacion.MainHabitacion());            
+            //Application.Run(new FrbaHotel.ABM_de_Habitacion.MainHabitacion());            
             //Application.Run(new FrbaHotel.Cancelar_Reserva.Form1(1,"admin","Administrador General",true));
             //Application.Run(new FrbaHotel.Generar_Modificar_Reserva.GenerarReserva(1,"guest"));
             //Application.Run(new FrbaHotel.Generar_Modificar_Reserva.GenerarReserva(1,"guest"));

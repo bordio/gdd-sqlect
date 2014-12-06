@@ -32,11 +32,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.nroHabitacion = new System.Windows.Forms.TextBox();
             this.cantidadConsumible = new System.Windows.Forms.TextBox();
             this.botonGenerico = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.botonVolver = new System.Windows.Forms.Button();
+            this.nroHabitacion = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // comboConsumibles
@@ -83,13 +83,6 @@
             this.label3.TabIndex = 3;
             this.label3.Text = "Número de habitacion";
             // 
-            // nroHabitacion
-            // 
-            this.nroHabitacion.Location = new System.Drawing.Point(68, 136);
-            this.nroHabitacion.Name = "nroHabitacion";
-            this.nroHabitacion.Size = new System.Drawing.Size(68, 20);
-            this.nroHabitacion.TabIndex = 4;
-            // 
             // cantidadConsumible
             // 
             this.cantidadConsumible.Location = new System.Drawing.Point(596, 136);
@@ -127,16 +120,25 @@
             this.botonVolver.UseVisualStyleBackColor = true;
             this.botonVolver.Click += new System.EventHandler(this.botonVolver_Click);
             // 
+            // nroHabitacion
+            // 
+            this.nroHabitacion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.nroHabitacion.FormattingEnabled = true;
+            this.nroHabitacion.Location = new System.Drawing.Point(77, 136);
+            this.nroHabitacion.Name = "nroHabitacion";
+            this.nroHabitacion.Size = new System.Drawing.Size(121, 21);
+            this.nroHabitacion.TabIndex = 9;
+            // 
             // RegistrarConsumible
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(840, 345);
+            this.Controls.Add(this.nroHabitacion);
             this.Controls.Add(this.botonVolver);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.botonGenerico);
             this.Controls.Add(this.cantidadConsumible);
-            this.Controls.Add(this.nroHabitacion);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -155,10 +157,10 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox nroHabitacion;
         private System.Windows.Forms.TextBox cantidadConsumible;
         private System.Windows.Forms.Button botonGenerico;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button botonVolver;
+        private System.Windows.Forms.ComboBox nroHabitacion;
     }
 }
