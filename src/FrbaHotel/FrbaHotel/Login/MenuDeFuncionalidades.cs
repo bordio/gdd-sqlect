@@ -134,7 +134,7 @@ namespace FrbaHotel.Login
 
         private void tablaDeFuncionalidades_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            tareaARealizar.Text = tablaDeFuncionalidades.CurrentRow.Cells[0].Value.ToString();
+            /*tareaARealizar.Text = tablaDeFuncionalidades.CurrentRow.Cells[0].Value.ToString();*/
         }
         public void dirigirABMElegida(string funcionalidad, string usuarioDeSesion)
         {
@@ -144,35 +144,35 @@ namespace FrbaHotel.Login
             {
                 case "Gestionar roles": 
                    FrbaHotel.ABM_de_Rol.MainRol gestionarRoles = new FrbaHotel.ABM_de_Rol.MainRol(this);
-                   gestionarRoles.Show();
+                   gestionarRoles.ShowDialog();
                     break;
                 case "Gestionar usuarios":
                     FrbaHotel.ABM_de_Usuario.Form1 gestionarUsuarios = new FrbaHotel.ABM_de_Usuario.Form1();
-                    gestionarUsuarios.Show();
+                    gestionarUsuarios.ShowDialog();
                     break;
                 case "Gestionar clientes":
                     FrbaHotel.ABM_de_Cliente.Clientes gestionarClientes = new FrbaHotel.ABM_de_Cliente.Clientes();
-                    gestionarClientes.Show();
+                    gestionarClientes.ShowDialog();
                     break;
                 case "Gestionar hoteles":
                     FrbaHotel.ABM_de_Hotel.MainHotel gestionarHoteles = new FrbaHotel.ABM_de_Hotel.MainHotel(idUsuario);
-                    gestionarHoteles.Show();
+                    gestionarHoteles.ShowDialog();
                     break;
                 case "Gestionar habitaciones":
                     FrbaHotel.ABM_de_Habitacion.MainHabitacion gestionarHabitaciones = new FrbaHotel.ABM_de_Habitacion.MainHabitacion();
-                    gestionarHabitaciones.Show();
+                    gestionarHabitaciones.ShowDialog();
                     break;
                 case "Generar/modificar reservas":
                     FrbaHotel.Generar_Modificar_Reserva.Form1 gestionarReservas = new FrbaHotel.Generar_Modificar_Reserva.Form1(idDeHotelElegido,usuarioDeSesion);
-                    gestionarReservas.Show();
+                    gestionarReservas.ShowDialog();
                     break;
                 case "Cancelar reservas":
                     FrbaHotel.Cancelar_Reserva.Form1 cancelarReservas = new FrbaHotel.Cancelar_Reserva.Form1(idDeHotelElegido,usuarioDeSesion,nombreRolDeSesion,true);
-                    cancelarReservas.Show();
+                    cancelarReservas.ShowDialog();
                     break;
                 case "Gestionar estadías":
                     FrbaHotel.Registrar_Estadia.Form1 registrarEstadias = new FrbaHotel.Registrar_Estadia.Form1(usuarioDeSesion, idDeHotelElegido);
-                    registrarEstadias.Show();
+                    registrarEstadias.ShowDialog();
                     break;
                 case "Gestionar consumibles":
                     MessageBox.Show("Debe realizar primero el Check-Out");
@@ -182,7 +182,7 @@ namespace FrbaHotel.Login
                     break;
                 case "Listado estadístico":
                     FrbaHotel.Listado_Estadistico.Form1 listadoEstadistico = new FrbaHotel.Listado_Estadistico.Form1();
-                    listadoEstadistico.Show();
+                    listadoEstadistico.ShowDialog();
                     break;
             }
             this.Hide();
@@ -194,6 +194,11 @@ namespace FrbaHotel.Login
             modificarContraseña.Show();
 
 
+        }
+
+        private void tablaDeFuncionalidades_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            tareaARealizar.Text = tablaDeFuncionalidades.CurrentRow.Cells[0].Value.ToString();
         }
 
        

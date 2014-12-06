@@ -124,7 +124,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
                 if (numericCantHuespedes.Value > cantidadHuespedes) 
                 {
-                    MessageBox.Show("Hay más huespedes que la cantidad máxima de alojamiento de habitaciones que eligio");
+                    MessageBox.Show("Hay más huespedes que la cantidad esperada","Advertencia",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                }
                 else
                 {
@@ -140,7 +140,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                         {
                             funcionesReservas.modificarHabitacionDeReserva(codigoReservaActual, numeroHabitacion, idHotelEnCuestion);
                         }
-                        MessageBox.Show("Modificación exitosa");
+                        MessageBox.Show("Modificación exitosa","Operación exitosa",MessageBoxButtons.OK,MessageBoxIcon.None);
                       
                         this.Close();
                     }

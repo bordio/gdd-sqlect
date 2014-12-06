@@ -64,6 +64,7 @@
             this.Controls.Add(this.label1);
             this.Name = "Agradecimiento";
             this.Text = "Agradecimiento";
+            this.Load += new System.EventHandler(this.Agradecimiento_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

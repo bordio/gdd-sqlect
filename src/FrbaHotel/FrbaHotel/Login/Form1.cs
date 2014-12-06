@@ -29,7 +29,7 @@ namespace FrbaHotel.Login
             if (!checkUsuarioRegis.Checked)
             {
                 Generar_Modificar_Reserva.Form1 generarReserva = new Generar_Modificar_Reserva.Form1(0,"guest");
-                generarReserva.Show();
+                generarReserva.ShowDialog();
 
             }
 
@@ -58,7 +58,7 @@ namespace FrbaHotel.Login
                          
                           
                           Login.MenuDeFuncionalidades listadoDeFuncionalidades = new MenuDeFuncionalidades(textUsuario.Text,comboBoxRol.SelectedItem.ToString());
-                          listadoDeFuncionalidades.Show();
+                          listadoDeFuncionalidades.ShowDialog();
                           
                           
                       }

@@ -87,14 +87,14 @@
             // 
             this.nroHabitacion.Location = new System.Drawing.Point(68, 136);
             this.nroHabitacion.Name = "nroHabitacion";
-            this.nroHabitacion.Size = new System.Drawing.Size(100, 20);
+            this.nroHabitacion.Size = new System.Drawing.Size(68, 20);
             this.nroHabitacion.TabIndex = 4;
             // 
             // cantidadConsumible
             // 
             this.cantidadConsumible.Location = new System.Drawing.Point(596, 136);
             this.cantidadConsumible.Name = "cantidadConsumible";
-            this.cantidadConsumible.Size = new System.Drawing.Size(100, 20);
+            this.cantidadConsumible.Size = new System.Drawing.Size(53, 20);
             this.cantidadConsumible.TabIndex = 5;
             // 
             // botonGenerico

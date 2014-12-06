@@ -48,7 +48,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 {
                     string codigoReserva = funcionesReservas.obtenerCodigoReserva(idReserva);
                     MessageBox.Show("Operación exitosa", "Cliente registrado", MessageBoxButtons.OK, MessageBoxIcon.None);
-                    MessageBox.Show("Código de reserva para futuras modificaciones: {0}",codigoReserva.ToString());
+                    MessageBox.Show(codigoReserva.ToString(), "Código de reserva",MessageBoxButtons.OK,MessageBoxIcon.Information);
                     this.Close();
                     this.formAnterior.cerrate();
                 }
