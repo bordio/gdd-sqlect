@@ -81,7 +81,7 @@
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1000, 630);
+            this.groupBox1.Size = new System.Drawing.Size(1000, 492);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Factura";
@@ -100,7 +100,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(173, 566);
+            this.label8.Location = new System.Drawing.Point(173, 459);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(48, 20);
             this.label8.TabIndex = 1;
@@ -109,7 +109,7 @@
             // totalFactura
             // 
             this.totalFactura.Enabled = false;
-            this.totalFactura.Location = new System.Drawing.Point(294, 564);
+            this.totalFactura.Location = new System.Drawing.Point(294, 457);
             this.totalFactura.Name = "totalFactura";
             this.totalFactura.Size = new System.Drawing.Size(137, 22);
             this.totalFactura.TabIndex = 2;
@@ -181,7 +181,7 @@
             this.tablaFactura.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.tablaFactura.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tablaFactura.GridColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.tablaFactura.Location = new System.Drawing.Point(27, 359);
+            this.tablaFactura.Location = new System.Drawing.Point(27, 287);
             this.tablaFactura.Name = "tablaFactura";
             this.tablaFactura.ReadOnly = true;
             this.tablaFactura.Size = new System.Drawing.Size(612, 160);
@@ -198,7 +198,7 @@
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox3.Location = new System.Drawing.Point(527, 129);
+            this.groupBox3.Location = new System.Drawing.Point(527, 86);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(452, 195);
             this.groupBox3.TabIndex = 1;
@@ -284,7 +284,7 @@
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.Nombre);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(27, 129);
+            this.groupBox2.Location = new System.Drawing.Point(27, 86);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(461, 195);
             this.groupBox2.TabIndex = 0;
@@ -362,7 +362,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(735, 648);
+            this.button1.Location = new System.Drawing.Point(714, 510);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(173, 50);
             this.button1.TabIndex = 3;
@@ -374,7 +374,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1089, 710);
+            this.ClientSize = new System.Drawing.Size(1028, 574);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
             this.Name = "Facturacion";

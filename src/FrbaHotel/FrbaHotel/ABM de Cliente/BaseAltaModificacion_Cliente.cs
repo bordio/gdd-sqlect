@@ -155,6 +155,7 @@ namespace FrbaHotel.ABM_de_Cliente
             this.Calle.Text = null;
             this.Numero.Text = null;
             this.Piso.Text = null;
+            this.Telefono.Text = null;
             this.Localidad.Text = null;
             this.Nacionalidad.Text = null;
             this.Documento.Text = null;

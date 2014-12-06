@@ -82,7 +82,5 @@ namespace FrbaHotel.Registrar_Consumible
             formularioAnterior.Cerrate(false);
         }
 
-
-       
     }
 }
