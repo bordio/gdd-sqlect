@@ -19,13 +19,13 @@ namespace FrbaHotel.ABM_de_Cliente
         private void btAlta_Click(object sender, EventArgs e)
         {
             BaseAltaModificacion_Cliente formAlta = new Alta_Cliente();
-            formAlta.Show();
+            formAlta.ShowDialog();
         }
 
         private void btModifBaja_Click(object sender, EventArgs e)
         {
             ModificacionMain_Cliente formModifBaja = new ModificacionMain_Cliente();
-            formModifBaja.Show();
+            formModifBaja.ShowDialog();
         }
 
         private void btSalir_Click(object sender, EventArgs e)

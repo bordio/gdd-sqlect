@@ -37,6 +37,7 @@ namespace FrbaHotel.ABM_de_Cliente
         public ModificacionMain_Cliente(int cantHues, FrbaHotel.Registrar_Estadia.Form1 formulario) // Se ingresa al resto de los huespedes en el checkIn
         {
             InitializeComponent();
+            Text = "Ingreso de Huespedes";
             appModel = new AppModel_Agregar_Huesped(cantHues, this);
             this.cantHuespedes = cantHues;
             formularioAnteriorCheck = formulario;
@@ -70,12 +71,14 @@ namespace FrbaHotel.ABM_de_Cliente
             llenarComboDocumentos();
 
         }
+        
         public void llenarComboDocumentos()
         {
             cbTipoDoc.Items.Add("DNI");
             cbTipoDoc.Items.Add("PASAPORTE");
             
         }
+        
         public void refrescarPantalla() { //Para refrescar la pantalla de Busqueda luego de una Modificacion. Lo llama la Pantalla de Modificaciones, pero la responsabilidad sigue siendo de ModificacionMain_Cliente
             this.btBuscar_Click("Buscar",null);
             gridClientes.Columns[15].Visible = false;
@@ -88,6 +91,11 @@ namespace FrbaHotel.ABM_de_Cliente
             string select = "SELECT c.nombre 'Nombre', c.apellido 'Apellido',c.mail 'Email',c.telefono 'Telefono',c.fecha_Nac 'Fecha Nacimiento', c.dom_Calle 'Calle', c.nro_calle 'Nro Calle', c.piso 'Piso',c.depto 'Departamento', c.localidad 'Localidad', p.nombrePais 'Pais', c.nacionalidad 'Nacionalidad', c.tipoDocumento 'Tipo de Documento',c.documento_Nro 'Número de Documento', case c.habilitado when 1 then 'SI' else 'NO' end as 'Habilitado', c.fk_paisOrigen, c.id_Cliente FROM SQLECT.Clientes c LEFT JOIN SQLECT.Paises p ON (p.id_pais = c.fk_paisOrigen)";
              
             sentence = this.appModel.getAllInstances(select);
+
+            btHabilitar.Enabled = true;
+            btInhabilitar.Enabled = true;
+            btModificar.Enabled = true;
+            btNuevo_Huesped.Enabled = true;
 
             if ((Nombre.Text != "") || (Apellido.Text != "") || (Email.Text != "") || (Nacionalidad.Text != "") || (Documento.Text != "") || (cbTipoDoc.SelectedItem != null))
             {
@@ -104,12 +112,7 @@ namespace FrbaHotel.ABM_de_Cliente
                 gridClientes.Columns[15].Visible = false; //columna del fkPais
                 gridClientes.Columns[16].Visible = false; //columna del idCliente. Lo usamos para el CheckIn
                 gridClientes.AllowUserToAddRows = false;
-                
-                btHabilitar.Enabled = true;
-                btInhabilitar.Enabled = true;
-                btModificar.Enabled = true;
-                btNuevo_Huesped.Enabled = true;
-            
+ 
             }
 
             else
@@ -155,8 +158,7 @@ namespace FrbaHotel.ABM_de_Cliente
         {
             appModel.Accionarbt_ConfirmarReserva(emailSeleccionado.ToString(), Convert.ToInt32(documentoSeleccionado.ToString()), this); //Para confirmar Cliente existente desde Reserva
             appModel.Accionarbt_Modificar(this, this.gridClientes, this.emailSeleccionado, this.documentoSeleccionado, this.tipodocSeleccionado); //Para modificar un cliente desde menu ppal de Clientes
-           // appModel.Accionarbt_AgregarHuesped(); // Para el check in. Creo q lo saco y q lo llame el Guardar
-            appModel.Accionarbt_GuardarHuesped(this.idSeleccionado);
+            appModel.Accionarbt_GuardarHuesped(this.idSeleccionado); // Manejo del agregado de huespedes restantes en el checkIn
             this.btQuitar_Huesped.Enabled = true;
         }
 
@@ -185,8 +187,6 @@ namespace FrbaHotel.ABM_de_Cliente
             }
         }
 
-       // public StringBuilder mensajeValidacion = new StringBuilder();
-
         public Boolean validacionesAlBorrar()
         {
             //Segun enunciado:
@@ -208,6 +208,7 @@ namespace FrbaHotel.ABM_de_Cliente
             BaseAltaModificacion_Cliente form = new Alta_Cliente(cantHuespedes,this,appModel);
             form.ShowDialog();
         }
+
         public void cambiarLabelHuespedes(int cant) {
             this.HuespedesCant.Text = cant.ToString();
         }
@@ -235,6 +236,7 @@ namespace FrbaHotel.ABM_de_Cliente
                 Conexion.Instance.ejecutarQuery("ROLLBACK");
             }
         }
+
         public void remarcarHuesped(Int32 id)
         {
             gridClientes.CurrentRow.DefaultCellStyle.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
