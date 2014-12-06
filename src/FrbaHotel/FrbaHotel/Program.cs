@@ -15,9 +15,9 @@ namespace FrbaHotel
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            // Application.Run(new FrbaHotel.ABM_de_Rol.MainRol());
-            Application.Run(new FrbaHotel.Login.Form1());
-            //Application.Run(new FrbaHotel.ABM_de_Usuario.Form1());
+			Application.Run(new Login.MenuDeFuncionalidades("admin","Administrador General"));
+            //Application.Run(new FrbaHotel.ABM_de_Rol.MainRol());
+            //Application.Run(new FrbaHotel.Login.Form1());            //Application.Run(new FrbaHotel.ABM_de_Usuario.Form1());
             //Application.Run(new FrbaHotel.Generar_Modificar_Reserva.RegistroCliente(27501));            
             //Application.Run(new Listado_Estadistico.Form1());
             //Application.Run(new FrbaHotel.ABM_de_Hotel.MainHotel(1));
@@ -30,7 +30,7 @@ namespace FrbaHotel
             //Application.Run( new FrbaHotel.Registrar_Consumible.Form1(1,"11111111"));
             //Application.Run(new FrbaHotel.ABM_de_Cliente.ModificacionMain_Cliente(3, new FrbaHotel.Registrar_Estadia.Form1("admin",1)));
             //Application.Run(new FrbaHotel.Registrar_Estadia.Form1("admin",1));
-            //Application.Run(new FrbaHotel.ABM_de_Cliente.ModificacionMain_Cliente());
+            Application.Run(new FrbaHotel.ABM_de_Cliente.Clientes());
         }
 
     }

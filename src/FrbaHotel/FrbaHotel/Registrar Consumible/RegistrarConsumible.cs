@@ -20,7 +20,6 @@ namespace FrbaHotel.Registrar_Consumible
             InitializeComponent();
             this.codigoReservaActual = codigoReserva;
             this.operacionActual = tipoOperacion;
-
         }
 
         string codigoReservaActual;
@@ -33,6 +32,7 @@ namespace FrbaHotel.Registrar_Consumible
 
         private void RegistrarConsumible_Load(object sender, EventArgs e)
         {
+            this.cargarHabitaciones();
            switch (operacionActual)
            {
                case "modificar": botonGenerico.Text = "Modificar Consumible";
@@ -46,15 +46,27 @@ namespace FrbaHotel.Registrar_Consumible
 
         }
 
+        private void cargarHabitaciones()
+        {
+            StringBuilder sentence = new StringBuilder().AppendFormat("SELECT DISTINCT h.nro_habitacion FROM SQLECT.Habitaciones h JOIN SQLECT.Habitaciones_Reservas hr ON (hr.fk_habitacion=h.id_habitacion) JOIN SQLECT.Reservas r ON (hr.fk_reserva=r.id_reserva) WHERE r.codigo_reserva='{0}'", this.codigoReservaActual);
+            DataTable tabla = Conexion.Instance.ejecutarQuery(sentence.ToString());
+
+            for (int i = 0; i < tabla.Rows.Count; i++)
+            {
+                nroHabitacion.Items.Add(tabla.Rows[i]["nro_habitacion"].ToString());
+            }
+            nroHabitacion.SelectedIndex = 0;
+        }
+
         private void botonRegistrarConsumible_Click(object sender, EventArgs e)
         {
           /*Validamos campos vacíos*/
 
-            bool habitacionOk = funcionesVarias.validarNoVacio(nroHabitacion, mensajeValidacion);
+            //bool habitacionOk = funcionesVarias.validarNoVacio(nroHabitacion.SelectedItem.ToString(), mensajeValidacion);
             bool comboOk = funcionesVarias.validarComboVacio(comboConsumibles, mensajeValidacion);
             bool cantidadOk = funcionesVarias.validarNoVacio(cantidadConsumible, mensajeValidacion);
 
-            habitacionOk = funcionesVarias.validarNumerico(nroHabitacion, mensajeValidacion);
+            //habitacionOk = funcionesVarias.validarNumerico(nroHabitacion.SelectedItem.ToString(), mensajeValidacion);
             cantidadOk = funcionesVarias.validarNumerico(cantidadConsumible, mensajeValidacion);
 
             if (comboOk == false)
@@ -65,7 +77,7 @@ namespace FrbaHotel.Registrar_Consumible
             if (operacionActual == "borrar")
             {
                 cantidadOk = true;
-                if (habitacionOk & comboOk)
+                if (comboOk)
                     mensajeValidacion.Remove(0, mensajeValidacion.Length);
             
             }
@@ -76,21 +88,21 @@ namespace FrbaHotel.Registrar_Consumible
             else /*Validamos que esa habitacion pertenezca a la reserva*/
             {
 
-                if (funcionesConsumibles.verificarHabitacionDeReserva(codigoReservaActual, Convert.ToInt32(nroHabitacion.Text.ToString())))
+                if (funcionesConsumibles.verificarHabitacionDeReserva(codigoReservaActual, Convert.ToInt32(nroHabitacion.SelectedItem.ToString())))
                 {
 
                     switch (operacionActual)
                     {
                         case "agregar":
-                            funcionesConsumibles.registrarConsumible(codigoReservaActual, Convert.ToInt32(nroHabitacion.Text.ToString()), comboConsumibles.SelectedItem.ToString(), Convert.ToInt32(cantidadConsumible.Text.ToString()));
+                            funcionesConsumibles.registrarConsumible(codigoReservaActual, Convert.ToInt32(nroHabitacion.SelectedItem.ToString()), comboConsumibles.SelectedItem.ToString(), Convert.ToInt32(cantidadConsumible.Text.ToString()));
                             this.DialogResult = DialogResult.OK;
                             break;
                         case "modificar":
-                            funcionesConsumibles.modificarConsumible(codigoReservaActual, Convert.ToInt32(nroHabitacion.Text.ToString()), comboConsumibles.SelectedItem.ToString(), Convert.ToInt32(cantidadConsumible.Text.ToString()));
+                            funcionesConsumibles.modificarConsumible(codigoReservaActual, Convert.ToInt32(nroHabitacion.SelectedItem.ToString()), comboConsumibles.SelectedItem.ToString(), Convert.ToInt32(cantidadConsumible.Text.ToString()));
                             this.DialogResult = DialogResult.OK;
                             break;
                         case "borrar":
-                            funcionesConsumibles.eliminarConsumible(codigoReservaActual,Convert.ToInt32(nroHabitacion.Text.ToString()),comboConsumibles.SelectedItem.ToString());
+                            funcionesConsumibles.eliminarConsumible(codigoReservaActual, Convert.ToInt32(nroHabitacion.SelectedItem.ToString()), comboConsumibles.SelectedItem.ToString());
                             this.DialogResult = DialogResult.OK;
                             break;
                     }

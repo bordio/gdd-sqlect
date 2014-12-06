@@ -20,5 +20,9 @@ namespace FrbaHotel.ABM_de_Habitacion
             if (Estado == "SI") btAccion.Text = "Dar de baja";
             else btAccion.Text = "Activar";
         }
+        public override string getTitulo()
+        {
+            return "Formulario de busqueda de baja/activacion de habitacion";
+        }
     }
 }

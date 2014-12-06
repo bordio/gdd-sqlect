@@ -216,9 +216,9 @@
             // 
             // btModificar
             // 
-            this.btModificar.Location = new System.Drawing.Point(42, 356);
+            this.btModificar.Location = new System.Drawing.Point(41, 357);
             this.btModificar.Name = "btModificar";
-            this.btModificar.Size = new System.Drawing.Size(156, 53);
+            this.btModificar.Size = new System.Drawing.Size(156, 23);
             this.btModificar.TabIndex = 9;
             this.btModificar.Text = "Modificar";
             this.btModificar.UseVisualStyleBackColor = true;
@@ -226,7 +226,7 @@
             // 
             // btInhabilitar
             // 
-            this.btInhabilitar.Location = new System.Drawing.Point(404, 383);
+            this.btInhabilitar.Location = new System.Drawing.Point(404, 359);
             this.btInhabilitar.Name = "btInhabilitar";
             this.btInhabilitar.Size = new System.Drawing.Size(155, 23);
             this.btInhabilitar.TabIndex = 11;
@@ -236,7 +236,7 @@
             // 
             // btHabilitar
             // 
-            this.btHabilitar.Location = new System.Drawing.Point(228, 383);
+            this.btHabilitar.Location = new System.Drawing.Point(228, 357);
             this.btHabilitar.Name = "btHabilitar";
             this.btHabilitar.Size = new System.Drawing.Size(155, 23);
             this.btHabilitar.TabIndex = 10;
@@ -280,7 +280,7 @@
             // btNuevo_Huesped
             // 
             this.btNuevo_Huesped.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.btNuevo_Huesped.Location = new System.Drawing.Point(403, 354);
+            this.btNuevo_Huesped.Location = new System.Drawing.Point(403, 357);
             this.btNuevo_Huesped.Name = "btNuevo_Huesped";
             this.btNuevo_Huesped.Size = new System.Drawing.Size(156, 25);
             this.btNuevo_Huesped.TabIndex = 15;
@@ -292,7 +292,7 @@
             // btQuitar_Huesped
             // 
             this.btQuitar_Huesped.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.btQuitar_Huesped.Location = new System.Drawing.Point(228, 354);
+            this.btQuitar_Huesped.Location = new System.Drawing.Point(228, 357);
             this.btQuitar_Huesped.Name = "btQuitar_Huesped";
             this.btQuitar_Huesped.Size = new System.Drawing.Size(155, 23);
             this.btQuitar_Huesped.TabIndex = 16;
@@ -332,7 +332,6 @@
             this.Controls.Add(this.filtrosBusqueda);
             this.Name = "ModificacionMain_Cliente";
             this.Text = "Modificacion/Habilitacion Clientes";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(ModificacionMain_Cliente_FormClosed);
             this.filtrosBusqueda.ResumeLayout(false);
             this.filtrosBusqueda.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridClientes)).EndInit();

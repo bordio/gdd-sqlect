@@ -20,6 +20,7 @@ namespace FrbaHotel.ABM_de_Habitacion
             appModel.cargarTipoHabitaciones(cmbTipoHabitacion);
             rdExterior.Checked = true;
             appModel.preload(this);
+            this.Text = appModel.getTitulo();
         }
 
         private void Volver_Click(object sender, EventArgs e)

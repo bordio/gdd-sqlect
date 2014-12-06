@@ -36,6 +36,7 @@ namespace FrbaHotel.ABM_de_Rol
             txtDescrip.Text = descripcion;
             funcsRol = funciones;
             checkFunciones();
+            lblTitulo.Text = "Modificar rol";
         }
 
         private void checkFunciones()
