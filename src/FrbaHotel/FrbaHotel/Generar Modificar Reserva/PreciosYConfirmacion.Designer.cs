@@ -62,9 +62,10 @@
             // textoInformativo
             // 
             this.textoInformativo.AutoSize = true;
+            this.textoInformativo.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textoInformativo.Location = new System.Drawing.Point(487, 109);
             this.textoInformativo.Name = "textoInformativo";
-            this.textoInformativo.Size = new System.Drawing.Size(35, 13);
+            this.textoInformativo.Size = new System.Drawing.Size(44, 18);
             this.textoInformativo.TabIndex = 2;
             this.textoInformativo.Text = "label1";
             // 
@@ -101,9 +102,10 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(490, 183);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(483, 179);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(103, 13);
+            this.label1.Size = new System.Drawing.Size(141, 18);
             this.label1.TabIndex = 6;
             this.label1.Text = "Precio de la estadia:";
             // 

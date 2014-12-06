@@ -60,7 +60,7 @@
             this.listaHotelAElegir.FormattingEnabled = true;
             this.listaHotelAElegir.Location = new System.Drawing.Point(411, 18);
             this.listaHotelAElegir.Name = "listaHotelAElegir";
-            this.listaHotelAElegir.Size = new System.Drawing.Size(174, 21);
+            this.listaHotelAElegir.Size = new System.Drawing.Size(261, 21);
             this.listaHotelAElegir.TabIndex = 2;
             this.listaHotelAElegir.Visible = false;
             // 
