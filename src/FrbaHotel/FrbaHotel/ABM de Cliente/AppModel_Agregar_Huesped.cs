@@ -20,7 +20,7 @@ namespace FrbaHotel.ABM_de_Cliente
             base.abmlCliente(nombre, apellido, mail, dom_Calle, nro_Calle, piso, depto, fecha_Nac, nacionalidad, documento_Nro, idReserva, tipo_documento, telefono, localidad, pais);
             StringBuilder sentence = new StringBuilder().AppendFormat("SELECT id_cliente FROM SQLECT.Clientes WHERE mail='{0}' AND documento_Nro='{1}' AND tipodocumento='{2}' ", mail.ToString(), documento_Nro.ToString(), tipo_documento.ToString());
             this.levantar(sentence, 0);
-            formulario.btQuitar_Huesped.Enabled = true;
+            //formulario.btQuitar_Huesped.Enabled = true;
             this.Accionarbt_AgregarHuesped(Int32.Parse(idCliente.ToString()));
         }
 

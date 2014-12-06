@@ -141,7 +141,6 @@ namespace FrbaHotel.ABM_de_Cliente
                        this.Telefono.Text, this.Localidad.Text, this.PaisOrigen);
                 
                 this.appModel.refrescarPantalla(pantallaAnteriorFiltros);
-                //this.appModel.Accionarbt_GuardarHuesped();
                 this.Close();
             }
         }
