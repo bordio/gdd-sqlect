@@ -94,7 +94,7 @@
             // 
             this.cantidadConsumible.Location = new System.Drawing.Point(596, 136);
             this.cantidadConsumible.Name = "cantidadConsumible";
-            this.cantidadConsumible.Size = new System.Drawing.Size(100, 20);
+            this.cantidadConsumible.Size = new System.Drawing.Size(53, 20);
             this.cantidadConsumible.TabIndex = 5;
             // 
             // botonGenerico

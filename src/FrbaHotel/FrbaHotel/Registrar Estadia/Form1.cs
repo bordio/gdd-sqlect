@@ -94,7 +94,7 @@ namespace FrbaHotel.Registrar_Estadia
                     if (funcionesEstadias.chequearFechaDeIngreso(codigoReserva.Text,funcionesReservas.devolverFechaAppConfig()))
                     {
                         funcionesEstadias.realizarCheckIn(codigoReserva.Text, usuarioDeSesionActual,funcionesReservas.devolverFechaAppConfig());
-
+         
                         
                         MessageBox.Show(string.Format("Debe registrar a {0} huésped/es como cliente/s", cantHuespedes - 1));
                         if (cantHuespedes > 1)
@@ -112,7 +112,7 @@ namespace FrbaHotel.Registrar_Estadia
                         else
                         {
                             funcionesEstadias.cancelarReservaPorNoShow(codigoReserva.Text, funcionesReservas.devolverFechaAppConfig());
-                            MessageBox.Show("La reserva ha sido cancelada por no presentarse en fecha.");
+                            MessageBox.Show("La reserva ha sido cancelada por no presentarse en fecha","Información",MessageBoxButtons.OK,MessageBoxIcon.Information);
                         }
                         botonCheckIn.Enabled = false;
                         botonCheckOut.Enabled = false;
@@ -123,12 +123,12 @@ namespace FrbaHotel.Registrar_Estadia
                 {
                     if ((estadoReservaActual == 2) | (estadoReservaActual == 3) | (estadoReservaActual == 4))
                     {
-                        MessageBox.Show("La reserva está cancelada");
+                        MessageBox.Show("La reserva está cancelada","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
                         botonCheckOut.Enabled = false;
                     }
                     else
                     {
-                        MessageBox.Show("La reserva se encuentra efectivizada");
+                        MessageBox.Show("La reserva se encuentra efectivizada","!",MessageBoxButtons.OK,MessageBoxIcon.Information);
                     }
                 }
 
@@ -144,7 +144,7 @@ namespace FrbaHotel.Registrar_Estadia
         {                        
             if(!funcionesEstadias.chequearRealizacionDeCheckOut(codigoReserva.Text))
            {
-            if (estadoReservaActual == 5)
+               if ((estadoReservaActual == 5) | (estadoReservaActual == 0) | (estadoReservaActual == 1))
             {
                 if (funcionesEstadias.chequearRealizacionDeCheckIn(codigoReserva.Text))
                 { 
@@ -173,10 +173,15 @@ namespace FrbaHotel.Registrar_Estadia
         }
             else
             {
-             if ((estadoReservaActual == 2) | (estadoReservaActual == 3) | (estadoReservaActual == 4))
-                  MessageBox.Show("La reserva está cancelada","Advertencia",MessageBoxButtons.OK,MessageBoxIcon.Stop);  
-             else
-                 MessageBox.Show("Ya se ha realizado el Check-Out","Error",MessageBoxButtons.OK,MessageBoxIcon.Stop);  
+                if ((estadoReservaActual == 2) | (estadoReservaActual == 3) | (estadoReservaActual == 4))
+                {
+                    MessageBox.Show("La reserva está cancelada", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    botonCheckIn.Enabled = false;
+                }
+                else
+                    MessageBox.Show("Ya se ha realizado el Check-Out", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                botonCheckIn.Enabled = false;
+                botonCheckOut.Enabled = false;
                           
             }
         

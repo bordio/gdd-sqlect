@@ -134,7 +134,7 @@ namespace FrbaHotel.Login
 
         private void tablaDeFuncionalidades_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            tareaARealizar.Text = tablaDeFuncionalidades.CurrentRow.Cells[0].Value.ToString();
+            /*tareaARealizar.Text = tablaDeFuncionalidades.CurrentRow.Cells[0].Value.ToString();*/
         }
         public void dirigirABMElegida(string funcionalidad, string usuarioDeSesion)
         {
@@ -194,6 +194,11 @@ namespace FrbaHotel.Login
             modificarContraseña.Show();
 
 
+        }
+
+        private void tablaDeFuncionalidades_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            tareaARealizar.Text = tablaDeFuncionalidades.CurrentRow.Cells[0].Value.ToString();
         }
 
        

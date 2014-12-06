@@ -65,6 +65,7 @@
             this.tablaDeFuncionalidades.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.tablaDeFuncionalidades.Size = new System.Drawing.Size(542, 186);
             this.tablaDeFuncionalidades.TabIndex = 1;
+            this.tablaDeFuncionalidades.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tablaDeFuncionalidades_CellMouseClick);
             this.tablaDeFuncionalidades.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tablaDeFuncionalidades_CellMouseDoubleClick);
             this.tablaDeFuncionalidades.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tablaDeFuncionalidades_CellContentClick);
             // 
@@ -85,9 +86,9 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(272, 297);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(261, 16);
+            this.label3.Size = new System.Drawing.Size(185, 16);
             this.label3.TabIndex = 4;
-            this.label3.Text = "Seleccione la tarea a realizar (doble click):";
+            this.label3.Text = "Seleccione la tarea a realizar:";
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // button1
@@ -115,7 +116,7 @@
             // tareaARealizar
             // 
             this.tareaARealizar.Enabled = false;
-            this.tareaARealizar.Location = new System.Drawing.Point(554, 293);
+            this.tareaARealizar.Location = new System.Drawing.Point(477, 296);
             this.tareaARealizar.Name = "tareaARealizar";
             this.tareaARealizar.Size = new System.Drawing.Size(168, 20);
             this.tareaARealizar.TabIndex = 7;

@@ -28,7 +28,7 @@ namespace FrbaHotel.ABM_de_Cliente
             Conexion.Instance.ejecutarQuery("COMMIT");
 
             MessageBox.Show("Alta exitosa","Cliente registrado",MessageBoxButtons.OK,MessageBoxIcon.Information);
-            MessageBox.Show("Código para futuras modificaciones: {0}", funcionesReservas.obtenerCodigoReserva(idReserva));
+            MessageBox.Show(funcionesReservas.obtenerCodigoReserva(idReserva), "Código para futuras modificaciones",MessageBoxButtons.OK,MessageBoxIcon.Information);
             formularioAnterior.Cerrate(false);
         }
 

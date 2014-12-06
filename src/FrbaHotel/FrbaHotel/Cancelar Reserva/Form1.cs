@@ -61,12 +61,12 @@ namespace FrbaHotel.Cancelar_Reserva
                         if (esCancelarReserva)
                         {
                             FrbaHotel.Cancelar_Reserva.CancelarLaReserva formCancelarReserva = new FrbaHotel.Cancelar_Reserva.CancelarLaReserva(usuarioActual, nombreRolActual, NumeroReserva.Text);
-                            formCancelarReserva.Show();
+                            formCancelarReserva.ShowDialog();
                         }
                         else
                         {
                             FrbaHotel.Generar_Modificar_Reserva.ModificarReserva formModificarReserva = new FrbaHotel.Generar_Modificar_Reserva.ModificarReserva(usuarioActual,NumeroReserva.Text,idHotelEnCuestion);
-                            formModificarReserva.Show();
+                            formModificarReserva.ShowDialog();
                         }
                     }
 
@@ -83,7 +83,7 @@ namespace FrbaHotel.Cancelar_Reserva
                         MessageBox.Show("Numero de reserva inválido","Error",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
                     else
                     {
-                        if (esCancelarReserva)
+                        if (!noSeEfectivizo)
                           MessageBox.Show("Reserva cancelada,finalizada o falta menos de un día para su ingreso","Error",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                        
                     }
