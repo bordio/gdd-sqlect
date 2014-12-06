@@ -76,7 +76,7 @@ namespace FrbaHotel.Registrar_Estadia
                 }
                 else
                 {
-                    MessageBox.Show("Numero inválido o no corresponde al hotel de la sesión");
+                    MessageBox.Show("Numero inválido o no corresponde al hotel de la sesión", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
             }
@@ -163,22 +163,20 @@ namespace FrbaHotel.Registrar_Estadia
                       if (fechaActual < funcionesReservas.pasarDateTimeAInt(fechaInicioActual))
                           MessageBox.Show(string.Format("Esta queriendo retirarse antes del inicio de la reserva que comienza el {0}",fechaInicioActual.ToShortDateString()));
                       else
-                          MessageBox.Show("No se encuentra dentro del período de la reserva"); }
+                          MessageBox.Show("Error","No se encuentra dentro del período de la reserva",MessageBoxButtons.OK,MessageBoxIcon.None); }
                                   
                   }
                 else
-                    MessageBox.Show("No puede retirarse antes de hacer el Check-In");  
+                    MessageBox.Show("No puede retirarse antes de hacer el Check-In","Advertencia",MessageBoxButtons.OK,MessageBoxIcon.Stop);  
                       
               }
         }
             else
             {
-
-
              if ((estadoReservaActual == 2) | (estadoReservaActual == 3) | (estadoReservaActual == 4))
-                  MessageBox.Show("La reserva está cancelada");  
+                  MessageBox.Show("La reserva está cancelada","Advertencia",MessageBoxButtons.OK,MessageBoxIcon.Stop);  
              else
-                 MessageBox.Show("Ya se ha realizado el Check-Out");  
+                 MessageBox.Show("Ya se ha realizado el Check-Out","Error",MessageBoxButtons.OK,MessageBoxIcon.Stop);  
                           
             }
         

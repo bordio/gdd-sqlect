@@ -188,7 +188,7 @@
             this.comboHoteles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboHoteles.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboHoteles.FormattingEnabled = true;
-            this.comboHoteles.Location = new System.Drawing.Point(219, 386);
+            this.comboHoteles.Location = new System.Drawing.Point(499, 358);
             this.comboHoteles.Name = "comboHoteles";
             this.comboHoteles.Size = new System.Drawing.Size(182, 24);
             this.comboHoteles.TabIndex = 37;
@@ -198,7 +198,7 @@
             // 
             this.hotelAgregado.AutoSize = true;
             this.hotelAgregado.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.hotelAgregado.Location = new System.Drawing.Point(24, 386);
+            this.hotelAgregado.Location = new System.Drawing.Point(333, 361);
             this.hotelAgregado.Name = "hotelAgregado";
             this.hotelAgregado.Size = new System.Drawing.Size(129, 16);
             this.hotelAgregado.TabIndex = 36;
@@ -208,7 +208,7 @@
             // 
             this.radioQuitar.AutoSize = true;
             this.radioQuitar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioQuitar.Location = new System.Drawing.Point(358, 358);
+            this.radioQuitar.Location = new System.Drawing.Point(444, 329);
             this.radioQuitar.Name = "radioQuitar";
             this.radioQuitar.Size = new System.Drawing.Size(67, 20);
             this.radioQuitar.TabIndex = 35;
@@ -221,7 +221,7 @@
             // 
             this.radioMantener.AutoSize = true;
             this.radioMantener.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioMantener.Location = new System.Drawing.Point(219, 358);
+            this.radioMantener.Location = new System.Drawing.Point(336, 329);
             this.radioMantener.Name = "radioMantener";
             this.radioMantener.Size = new System.Drawing.Size(90, 20);
             this.radioMantener.TabIndex = 34;
@@ -252,7 +252,7 @@
             // 
             // monthCalendar
             // 
-            this.monthCalendar.Location = new System.Drawing.Point(454, 178);
+            this.monthCalendar.Location = new System.Drawing.Point(454, 93);
             this.monthCalendar.Name = "monthCalendar";
             this.monthCalendar.TabIndex = 31;
             this.monthCalendar.Visible = false;

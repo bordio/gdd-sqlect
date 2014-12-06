@@ -153,13 +153,19 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
                 }
             }
-
-            if (!fechasValidas)
+            else
             {
                 MessageBox.Show(mensajeValidacion.ToString());
                 mensajeValidacion.Remove(0, mensajeValidacion.Length);
             }
-            else
+
+
+            /*if (!fechasValidas)
+            {
+                MessageBox.Show(mensajeValidacion.ToString());
+                mensajeValidacion.Remove(0, mensajeValidacion.Length);
+            }*/
+            if(fechasValidas)
             {
                 //Cargo los máximos disponibles por cada tipo de habitación            
                 
@@ -218,6 +224,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                 PreciosYConfirmacion formularioPrecios = new PreciosYConfirmacion(comboRegimen.SelectedItem.ToString(), idHotelEnCuestion, cantidadHuéspedes.Value, cantidadSimples.Value, cantidadDobles.Value, cantidadTriples.Value, cantidadCuádruples.Value, cantidadQuíntuples.Value,fechaDesde.Text.ToString(),fechaHasta.Text.ToString(), usuarioDeSesion, this);
                 formularioPrecios.ShowDialog();
             }
+        }
+
+        private void button2_Click_2(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
       

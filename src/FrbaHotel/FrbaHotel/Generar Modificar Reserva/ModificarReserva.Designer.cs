@@ -45,12 +45,16 @@
             this.label1 = new System.Windows.Forms.Label();
             this.fechaHasta = new System.Windows.Forms.TextBox();
             this.fechaDesde = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tablaPreciosRegimenes)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button2);
+            this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.tablaPreciosRegimenes);
             this.groupBox1.Controls.Add(this.comboRegimen);
             this.groupBox1.Controls.Add(this.botonPreciosRegimen);
@@ -233,6 +237,27 @@
             this.fechaDesde.Size = new System.Drawing.Size(120, 22);
             this.fechaDesde.TabIndex = 0;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(606, 381);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(107, 37);
+            this.button1.TabIndex = 33;
+            this.button1.Text = "Cerrar listado";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Location = new System.Drawing.Point(6, 373);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(128, 52);
+            this.button2.TabIndex = 34;
+            this.button2.Text = "Salir";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // ModificarReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -268,6 +293,8 @@
         private System.Windows.Forms.TextBox regimenActual;
         private System.Windows.Forms.ComboBox comboRegimen;
         private System.Windows.Forms.DataGridView tablaPreciosRegimenes;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
 
     }
 }

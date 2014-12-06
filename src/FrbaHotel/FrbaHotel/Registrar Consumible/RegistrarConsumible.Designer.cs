@@ -79,9 +79,9 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(65, 88);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(66, 15);
+            this.label3.Size = new System.Drawing.Size(129, 15);
             this.label3.TabIndex = 3;
-            this.label3.Text = "Habitacion";
+            this.label3.Text = "Número de habitacion";
             // 
             // nroHabitacion
             // 

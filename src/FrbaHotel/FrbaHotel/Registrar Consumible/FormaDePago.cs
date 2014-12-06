@@ -32,12 +32,12 @@ namespace FrbaHotel.Registrar_Consumible
 
         private void button1_Click(object sender, EventArgs e)
         {
-            bool formaDePagoOk = funcionesValidacion.validarNoVacio(formaPago, mensaje);
+            bool formaDePagoOk = funcionesValidacion.validarComboVacio(formaPago, mensaje);
             bool detallesDePagoOk = funcionesValidacion.validarNoVacio(detalles, mensaje);
 
             if (formaDePagoOk & detallesDePagoOk)
             {
-                funcionesFacturacion.registrarFormaDePago(codigoReservaActual, formaPago.Text, detalles.Text);
+                funcionesFacturacion.registrarFormaDePago(codigoReservaActual, formaPago.SelectedItem.ToString(), detalles.Text);
                 FrbaHotel.Registrar_Consumible.Agradecimiento formFinal = new Agradecimiento();
                 formFinal.ShowDialog();
                 this.Close();

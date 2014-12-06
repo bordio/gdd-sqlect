@@ -140,13 +140,13 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             if (fechaDesdeOK & fechaHastaOK)
             {
                 if ( (funcionesReservas.pasarDateTimeAInt(DateTime.Parse(fechaDesde.Text)) < fechaActual) | (funcionesReservas.pasarDateTimeAInt(DateTime.Parse(fechaHasta.Text)) < fechaActual) )
-                    MessageBox.Show("No puede elegir fechas anterior a la actual");
+                    MessageBox.Show("No puede elegir fechas anterior a la actual","Advertencia",MessageBoxButtons.OK,MessageBoxIcon.Warning);
 
                 else
                 {
 
                     if (Convert.ToDateTime(fechaDesde.Text) > Convert.ToDateTime(fechaHasta.Text))
-                        MessageBox.Show("El check-in es posterior al check-out");
+                        MessageBox.Show("El check-in es posterior al check-out","Advertencia",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                     else
 
                         fechasValidas = true;
@@ -174,6 +174,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             else
             { regimenModificado = regimenActual.Text; }
 
+                tablaPreciosRegimenes.Visible = false;
                 FrbaHotel.Generar_Modificar_Reserva.ModificarHabitaciones formModificarHabitaciones = new ModificarHabitaciones(codigoReservaActual,regimenModificado,fechaDesde.Text,fechaHasta.Text,cambioDeFecha,idHotelEnCuestion,usuarioDeSesionActual);
                 formModificarHabitaciones.Show();
 
@@ -194,6 +195,16 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             }
             else
                 MessageBox.Show("No selecciono ningún regimen");
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            tablaPreciosRegimenes.Visible = false;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

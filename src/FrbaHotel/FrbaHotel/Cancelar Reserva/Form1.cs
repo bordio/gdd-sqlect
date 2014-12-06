@@ -72,7 +72,7 @@ namespace FrbaHotel.Cancelar_Reserva
 
                     else
                     {
-                        MessageBox.Show("No tiene acceso a cancelar/modificar reservas de otros hoteles");
+                        MessageBox.Show("No tiene acceso a cancelar/modificar reservas de otros hoteles","Advertencia",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
                         this.Close();
                     }
 
@@ -80,13 +80,11 @@ namespace FrbaHotel.Cancelar_Reserva
                 else
                 {
                     if (!existeCodigo)
-                        MessageBox.Show("Numero de reserva inválido");
+                        MessageBox.Show("Numero de reserva inválido","Error",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
                     else
                     {
                         if (esCancelarReserva)
-                             MessageBox.Show("No puede cancelar la reserva, ya que esta se encuentra cancelada,finalizada o falta menos de un día para su ingreso");
-                        this.Close();
-                            
+                          MessageBox.Show("Reserva cancelada,finalizada o falta menos de un día para su ingreso","Error",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                        
                     }
                 }

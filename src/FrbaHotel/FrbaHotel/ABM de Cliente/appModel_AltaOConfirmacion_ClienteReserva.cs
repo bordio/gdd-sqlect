@@ -27,7 +27,8 @@ namespace FrbaHotel.ABM_de_Cliente
             base.abmlCliente(nombre, apellido, mail, dom_Calle, nro_Calle, piso, depto, fecha_Nac, nacionalidad, documento_Nro, idReserva, tipo_documento, telefono, localidad, pais);
             Conexion.Instance.ejecutarQuery("COMMIT");
 
-            MessageBox.Show(string.Format("Alta exitosa, guarde el siguiente código para posteriores modificaciones: {0}", funcionesReservas.obtenerCodigoReserva(idReserva)));
+            MessageBox.Show("Alta exitosa","Cliente registrado",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            MessageBox.Show("Código para futuras modificaciones: {0}", funcionesReservas.obtenerCodigoReserva(idReserva));
             formularioAnterior.Cerrate(false);
         }
 
