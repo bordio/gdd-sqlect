@@ -11,7 +11,10 @@ namespace FrbaHotel.ABM_de_Habitacion
         {
             FormHabitacion formModificacion = new FormHabitacion(new ModificacionHabitacionAppModel(id_habitacion,hotelSeleccionado,tipo_habitacionSeleccionado,formBusq));
             formModificacion.ShowDialog(formBusq);
-            formModificacion.Text = "Modificacion de habitacion";
+        }
+        public override string getTitulo()
+        {
+            return "Formulario de busqueda de modificacion de habitacion";
         }
     }
 }

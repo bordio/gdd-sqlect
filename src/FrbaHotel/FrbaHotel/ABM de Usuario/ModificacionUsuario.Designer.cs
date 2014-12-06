@@ -88,7 +88,7 @@
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(21, 1);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(888, 553);
+            this.groupBox1.Size = new System.Drawing.Size(885, 530);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Usuario";
@@ -98,7 +98,7 @@
             this.comboRol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboRol.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboRol.FormattingEnabled = true;
-            this.comboRol.Location = new System.Drawing.Point(168, 525);
+            this.comboRol.Location = new System.Drawing.Point(168, 498);
             this.comboRol.Name = "comboRol";
             this.comboRol.Size = new System.Drawing.Size(243, 24);
             this.comboRol.TabIndex = 40;
@@ -107,7 +107,7 @@
             // radioAgregarRol
             // 
             this.radioAgregarRol.AutoSize = true;
-            this.radioAgregarRol.Location = new System.Drawing.Point(44, 525);
+            this.radioAgregarRol.Location = new System.Drawing.Point(44, 498);
             this.radioAgregarRol.Name = "radioAgregarRol";
             this.radioAgregarRol.Size = new System.Drawing.Size(110, 20);
             this.radioAgregarRol.TabIndex = 39;
@@ -119,7 +119,7 @@
             // radioQuitarRol
             // 
             this.radioQuitarRol.AutoSize = true;
-            this.radioQuitarRol.Location = new System.Drawing.Point(44, 489);
+            this.radioQuitarRol.Location = new System.Drawing.Point(44, 472);
             this.radioQuitarRol.Name = "radioQuitarRol";
             this.radioQuitarRol.Size = new System.Drawing.Size(95, 20);
             this.radioQuitarRol.TabIndex = 38;
@@ -132,7 +132,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(165, 493);
+            this.label3.Location = new System.Drawing.Point(165, 476);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(558, 16);
             this.label3.TabIndex = 37;
@@ -178,7 +178,7 @@
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(19, 64);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(849, 419);
+            this.groupBox2.Size = new System.Drawing.Size(827, 393);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Datos identificatorios a la persona";
@@ -549,7 +549,7 @@
             // 
             // botonLimpiar
             // 
-            this.botonLimpiar.Location = new System.Drawing.Point(65, 560);
+            this.botonLimpiar.Location = new System.Drawing.Point(32, 551);
             this.botonLimpiar.Name = "botonLimpiar";
             this.botonLimpiar.Size = new System.Drawing.Size(128, 29);
             this.botonLimpiar.TabIndex = 2;
@@ -559,7 +559,7 @@
             // 
             // botonConfirmar
             // 
-            this.botonConfirmar.Location = new System.Drawing.Point(695, 560);
+            this.botonConfirmar.Location = new System.Drawing.Point(695, 551);
             this.botonConfirmar.Name = "botonConfirmar";
             this.botonConfirmar.Size = new System.Drawing.Size(114, 29);
             this.botonConfirmar.TabIndex = 3;
@@ -571,7 +571,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(963, 592);
+            this.ClientSize = new System.Drawing.Size(961, 586);
             this.Controls.Add(this.botonConfirmar);
             this.Controls.Add(this.botonLimpiar);
             this.Controls.Add(this.groupBox1);

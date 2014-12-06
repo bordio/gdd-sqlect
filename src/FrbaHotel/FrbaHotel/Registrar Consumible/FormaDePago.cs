@@ -46,9 +46,11 @@ namespace FrbaHotel.Registrar_Consumible
             else
                 if (!formaDePagoOk)
                 { mensaje.AppendLine("Debe seleccionar una forma de pago"); }
-
+            if (mensaje.Length > 0)
+            {
                 MessageBox.Show(mensaje.ToString());
                 mensaje.Remove(0, mensaje.Length);
+            }
         }
     }
 }

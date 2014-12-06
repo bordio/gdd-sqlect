@@ -95,10 +95,10 @@ namespace FrbaHotel.Registrar_Estadia
                     {
                         funcionesEstadias.realizarCheckIn(codigoReserva.Text, usuarioDeSesionActual,funcionesReservas.devolverFechaAppConfig());
          
-                        
-                        MessageBox.Show(string.Format("Debe registrar a {0} huésped/es como cliente/s", cantHuespedes - 1));
+                                                
                         if (cantHuespedes > 1)
                         {
+                            MessageBox.Show(string.Format("Debe registrar a {0} huésped/es como cliente/s", cantHuespedes - 1));
                             FrbaHotel.ABM_de_Cliente.ModificacionMain_Cliente formRegistrarHuespedes = new FrbaHotel.ABM_de_Cliente.ModificacionMain_Cliente(cantHuespedes-1, this);
                             formRegistrarHuespedes.ShowDialog();
                         }
