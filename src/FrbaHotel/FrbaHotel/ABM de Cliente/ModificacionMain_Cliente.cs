@@ -86,16 +86,17 @@ namespace FrbaHotel.ABM_de_Cliente
 
         public void btBuscar_Click(object sender, EventArgs e)
         {
+            btHabilitar.Enabled = false;
+            btInhabilitar.Enabled = false;
+            btModificar.Enabled = false;
+            btQuitar_Huesped.Enabled = false;
+            btTerminarCheckIn.Enabled = false;
+            
             StringBuilder sentence = new StringBuilder();
 
             string select = "SELECT c.nombre 'Nombre', c.apellido 'Apellido',c.mail 'Email',c.telefono 'Telefono',c.fecha_Nac 'Fecha Nacimiento', c.dom_Calle 'Calle', c.nro_calle 'Nro Calle', c.piso 'Piso',c.depto 'Departamento', c.localidad 'Localidad', p.nombrePais 'Pais', c.nacionalidad 'Nacionalidad', c.tipoDocumento 'Tipo de Documento',c.documento_Nro 'Número de Documento', case c.habilitado when 1 then 'SI' else 'NO' end as 'Habilitado', c.fk_paisOrigen, c.id_Cliente FROM SQLECT.Clientes c LEFT JOIN SQLECT.Paises p ON (p.id_pais = c.fk_paisOrigen)";
              
             sentence = this.appModel.getAllInstances(select);
-
-            btHabilitar.Enabled = true;
-            btInhabilitar.Enabled = true;
-            btModificar.Enabled = true;
-            btNuevo_Huesped.Enabled = true;
 
             if ((Nombre.Text != "") || (Apellido.Text != "") || (Email.Text != "") || (Nacionalidad.Text != "") || (Documento.Text != "") || (cbTipoDoc.SelectedItem != null))
             {
@@ -121,6 +122,14 @@ namespace FrbaHotel.ABM_de_Cliente
                 gridClientes.AllowUserToAddRows = false;
             }
 
+            if (gridClientes.RowCount != 0)
+            {
+                btHabilitar.Enabled = true;
+                btInhabilitar.Enabled = true;
+                btModificar.Enabled = true;
+                btNuevo_Huesped.Enabled = true;
+                btQuitar_Huesped.Enabled = true;
+            }
         }
 
         private void btLimpiar_Click(object sender, EventArgs e)
@@ -135,6 +144,7 @@ namespace FrbaHotel.ABM_de_Cliente
             btHabilitar.Enabled = false;
             btInhabilitar.Enabled = false;
             btModificar.Enabled = false;
+            btQuitar_Huesped.Enabled = true;
         }
 
         private void gridClientes_CellContentClick(object sender, EventArgs e)
@@ -250,10 +260,14 @@ namespace FrbaHotel.ABM_de_Cliente
         private void btQuitar_Huesped_Click(object sender, EventArgs e)
         {
             int cantActual = Int32.Parse(HuespedesCant.Text);
-            if (appModel.quitarIdHuesped(Int32.Parse(idSeleccionado.ToString()))) {
-                if (cantActual < cantHuespedes)
+            if (idSeleccionado.ToString() != "")
+            {
+                if (appModel.quitarIdHuesped(Int32.Parse(idSeleccionado.ToString())))
                 {
-                    cambiarLabelHuespedes(++(cantActual));
+                    if (cantActual < cantHuespedes)
+                    {
+                        cambiarLabelHuespedes(++(cantActual));
+                    }
                 }
             }
         }
