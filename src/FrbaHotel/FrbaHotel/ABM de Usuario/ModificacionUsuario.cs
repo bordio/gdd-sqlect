@@ -240,6 +240,8 @@ namespace FrbaHotel.ABM_de_Usuario
         {
             
             quitarRol = true;
+            agregarRol = false;
+            
             /*radioAgregarRol.Checked = false;*/
             comboRol.Enabled = false;
             
@@ -248,6 +250,8 @@ namespace FrbaHotel.ABM_de_Usuario
         private void radioAgregarRol_CheckedChanged(object sender, EventArgs e)
         {
             agregarRol = true;
+            quitarRol = false;
+            
             comboRol.Enabled = true;
             /*radioQuitarRol.Checked = false;*/
             if (comboRol.SelectedIndex > -1)
