@@ -19,6 +19,11 @@ namespace FrbaHotel.ABM_de_Rol
             padre = owner;
         }
 
+        public MainRol()
+        {
+            InitializeComponent();
+        }
+
         private Login.MenuDeFuncionalidades padre;
         private Int32 idRolSelecc = -1;
         private DataTable funcionesRolSelecc = new DataTable();
@@ -80,7 +85,6 @@ namespace FrbaHotel.ABM_de_Rol
 
         private void bttnVolver_Click(object sender, EventArgs e)
         {
-            padre.Show();
             this.Close();
         }
 
