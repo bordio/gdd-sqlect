@@ -332,6 +332,7 @@
             this.Controls.Add(this.filtrosBusqueda);
             this.Name = "ModificacionMain_Cliente";
             this.Text = "Modificacion/Habilitacion Clientes";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ModificacionMain_Cliente_FormClosed);
             this.filtrosBusqueda.ResumeLayout(false);
             this.filtrosBusqueda.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridClientes)).EndInit();

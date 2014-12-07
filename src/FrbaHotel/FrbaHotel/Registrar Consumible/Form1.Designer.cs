@@ -115,6 +115,7 @@
             this.Name = "Form1";
             this.Text = "Registrar Consumibles";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.tablaDeConsumibles)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

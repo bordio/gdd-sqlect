@@ -78,20 +78,20 @@ namespace FrbaHotel.Registrar_Consumible
             }
         }
 
-        private void Form1_FormClosed(object sender, EventArgs e)
-        {
-            if (hacerRollBack)
-            {
-                Conexion.Instance.ejecutarQuery("ROLLBACK");
-            }
-        }
-
         public bool hacerRollBack = true;
 
         public void Cerrate(bool rollback)
         {
             this.hacerRollBack = rollback;
             this.Close();
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (hacerRollBack)
+            {
+                Conexion.Instance.ejecutarQuery("ROLLBACK");
+            }
         }
 
 

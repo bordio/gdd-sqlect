@@ -230,6 +230,11 @@ namespace FrbaHotel.ABM_de_Cliente
                 btNuevo_Huesped.Enabled = false;
                 btModificar.Enabled = false;
             }
+            else{
+                btTerminarCheckIn.Enabled = false;
+                btNuevo_Huesped.Enabled = true;
+                btModificar.Enabled = true;
+            }
         }
 
         private void btTerminarCheckIn_Click(object sender, EventArgs e)
@@ -237,14 +242,6 @@ namespace FrbaHotel.ABM_de_Cliente
             hacerRollBackCheckIn = false;
             this.formularioAnteriorCheck.TerminarCheckIn();
             this.Close();
-        }
-
-        private void ModificacionMain_Cliente_FormClosed(object sender, EventArgs e)
-        {
-            if (hacerRollBackCheckIn)
-            {
-                Conexion.Instance.ejecutarQuery("ROLLBACK");
-            }
         }
 
         public void remarcarHuesped(Int32 id)
@@ -267,8 +264,18 @@ namespace FrbaHotel.ABM_de_Cliente
                     if (cantActual < cantHuespedes)
                     {
                         cambiarLabelHuespedes(++(cantActual));
+                        comprobarCantidadHuespedes();
+
                     }
                 }
+            }
+        }
+
+        private void ModificacionMain_Cliente_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (hacerRollBackCheckIn)
+            {
+                Conexion.Instance.ejecutarQuery("ROLLBACK");
             }
         }
 

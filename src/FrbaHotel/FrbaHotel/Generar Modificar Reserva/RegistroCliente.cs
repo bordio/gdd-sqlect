@@ -42,7 +42,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             formularioAnterior.Cerrate();
        }
 
-        private void RegistroCliente_FormClosed(object sender, EventArgs e) {
+        private void RegistroCliente_FormClosed(object sender, FormClosedEventArgs e)
+        {
             if (hacerRollBack)
             {
                 Conexion.Instance.ejecutarQuery("ROLLBACK");

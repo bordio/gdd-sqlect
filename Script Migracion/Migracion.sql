@@ -2016,8 +2016,9 @@ SET @nochesFaltantes = (SELECT (cant_noches_reserva-@nochesEfectivas) FROM SQLEC
 SET @idReserva = (SELECT id_reserva FROM SQLECT.Reservas WHERE codigo_reserva=@codigoReserva)
 SET @recargoHotel = (SELECT (cant_estrellas*recarga_estrella) FROM SQLECT.Hoteles WHERE id_hotel=@idHotel)
 
-SET @montoEstadia = (SELECT SUM((@precioRegimen*(ha.tipo_habitacion-1000)*t.porcentual)+@recargoHotel) FROM SQLECT.Habitaciones_Reservas hr JOIN SQLECT.Habitaciones ha ON (ha.id_habitacion=hr.fk_habitacion)
-																												JOIN SQLECT.Tipos_Habitaciones t ON (t.id_tipo_habitacion=ha.tipo_habitacion)
+SET @montoEstadia = (SELECT SUM(((@precioRegimen*(ha.tipo_habitacion-1000)*t.porcentual)+@recargoHotel)*r.cant_noches_reserva) FROM SQLECT.Habitaciones_Reservas hr JOIN SQLECT.Habitaciones ha ON (ha.id_habitacion=hr.fk_habitacion)
+																																			JOIN SQLECT.Tipos_Habitaciones t ON (t.id_tipo_habitacion=ha.tipo_habitacion)
+																																			JOIN SQLECT.Reservas r ON (hr.fk_reserva=r.id_reserva)
                              WHERE hr.fk_reserva=@idReserva
                              GROUP BY hr.fk_reserva)
 
