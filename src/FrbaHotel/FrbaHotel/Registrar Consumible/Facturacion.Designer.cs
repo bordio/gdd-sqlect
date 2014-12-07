@@ -109,9 +109,10 @@
             // totalFactura
             // 
             this.totalFactura.Enabled = false;
-            this.totalFactura.Location = new System.Drawing.Point(294, 457);
+            this.totalFactura.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.totalFactura.Location = new System.Drawing.Point(287, 456);
             this.totalFactura.Name = "totalFactura";
-            this.totalFactura.Size = new System.Drawing.Size(137, 22);
+            this.totalFactura.Size = new System.Drawing.Size(137, 26);
             this.totalFactura.TabIndex = 2;
             // 
             // label10
@@ -157,6 +158,7 @@
             // numeroFactura
             // 
             this.numeroFactura.Enabled = false;
+            this.numeroFactura.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.numeroFactura.Location = new System.Drawing.Point(85, 56);
             this.numeroFactura.Name = "numeroFactura";
             this.numeroFactura.Size = new System.Drawing.Size(100, 22);
@@ -208,6 +210,7 @@
             // domicilioCliente
             // 
             this.domicilioCliente.Enabled = false;
+            this.domicilioCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.domicilioCliente.Location = new System.Drawing.Point(196, 66);
             this.domicilioCliente.Name = "domicilioCliente";
             this.domicilioCliente.Size = new System.Drawing.Size(210, 22);
@@ -225,6 +228,7 @@
             // contactoCliente
             // 
             this.contactoCliente.Enabled = false;
+            this.contactoCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.contactoCliente.Location = new System.Drawing.Point(196, 143);
             this.contactoCliente.Name = "contactoCliente";
             this.contactoCliente.Size = new System.Drawing.Size(210, 22);
@@ -233,6 +237,7 @@
             // documentoCliente
             // 
             this.documentoCliente.Enabled = false;
+            this.documentoCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.documentoCliente.Location = new System.Drawing.Point(196, 107);
             this.documentoCliente.Name = "documentoCliente";
             this.documentoCliente.Size = new System.Drawing.Size(210, 22);
@@ -241,6 +246,7 @@
             // nombreYapellidoCliente
             // 
             this.nombreYapellidoCliente.Enabled = false;
+            this.nombreYapellidoCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nombreYapellidoCliente.Location = new System.Drawing.Point(196, 25);
             this.nombreYapellidoCliente.Name = "nombreYapellidoCliente";
             this.nombreYapellidoCliente.Size = new System.Drawing.Size(210, 22);
@@ -294,6 +300,7 @@
             // contactoHotel
             // 
             this.contactoHotel.Enabled = false;
+            this.contactoHotel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.contactoHotel.Location = new System.Drawing.Point(150, 146);
             this.contactoHotel.Name = "contactoHotel";
             this.contactoHotel.Size = new System.Drawing.Size(279, 22);
@@ -311,6 +318,7 @@
             // estrellasHotel
             // 
             this.estrellasHotel.Enabled = false;
+            this.estrellasHotel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.estrellasHotel.Location = new System.Drawing.Point(150, 110);
             this.estrellasHotel.Name = "estrellasHotel";
             this.estrellasHotel.Size = new System.Drawing.Size(100, 22);
@@ -319,6 +327,7 @@
             // domicilioHotel
             // 
             this.domicilioHotel.Enabled = false;
+            this.domicilioHotel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.domicilioHotel.Location = new System.Drawing.Point(150, 72);
             this.domicilioHotel.Name = "domicilioHotel";
             this.domicilioHotel.Size = new System.Drawing.Size(279, 22);
@@ -327,6 +336,7 @@
             // nombreHotel
             // 
             this.nombreHotel.Enabled = false;
+            this.nombreHotel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nombreHotel.Location = new System.Drawing.Point(150, 25);
             this.nombreHotel.Name = "nombreHotel";
             this.nombreHotel.Size = new System.Drawing.Size(279, 22);

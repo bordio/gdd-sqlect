@@ -150,7 +150,9 @@ namespace FrbaHotel.Registrar_Estadia
                 { 
                   if(funcionesEstadias.chequearFechaDeEgreso(codigoReserva.Text,funcionesReservas.devolverFechaAppConfig()))
                   {
+                      funcionesReservas.borrarHabitacionesViejas(codigoReserva.Text);
                       funcionesEstadias.realizarCheckOut(codigoReserva.Text, usuarioDeSesionActual,funcionesReservas.devolverFechaAppConfig());
+                      
                       MessageBox.Show("Check-Out realizado correctamente");
 
                       FrbaHotel.Registrar_Consumible.Form1 formRegistrarConsumibles = new FrbaHotel.Registrar_Consumible.Form1(idHotelEnCuestion, codigoReserva.Text);

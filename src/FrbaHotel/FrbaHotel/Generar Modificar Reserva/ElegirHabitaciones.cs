@@ -175,11 +175,6 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                               
         }
 
-        private void botonVolver_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         public void Cerrate(){
             this.Close();
             formularioAnterior.Cerrate();

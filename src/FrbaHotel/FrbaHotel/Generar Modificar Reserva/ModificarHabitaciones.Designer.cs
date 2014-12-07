@@ -28,32 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tablaHabitacionesActuales = new System.Windows.Forms.DataGridView();
             this.tablaHabitacionesDisponibles = new System.Windows.Forms.DataGridView();
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.numericCantHuespedes = new System.Windows.Forms.NumericUpDown();
             this.botonContinuar = new System.Windows.Forms.Button();
             this.textoDelRegimen = new System.Windows.Forms.Label();
             this.botonVolver = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.tablaHabitacionesActuales)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tablaHabitacionesDisponibles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericCantHuespedes)).BeginInit();
             this.SuspendLayout();
-            // 
-            // tablaHabitacionesActuales
-            // 
-            this.tablaHabitacionesActuales.AllowUserToAddRows = false;
-            this.tablaHabitacionesActuales.AllowUserToDeleteRows = false;
-            this.tablaHabitacionesActuales.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.tablaHabitacionesActuales.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.tablaHabitacionesActuales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tablaHabitacionesActuales.Location = new System.Drawing.Point(12, 44);
-            this.tablaHabitacionesActuales.Name = "tablaHabitacionesActuales";
-            this.tablaHabitacionesActuales.ReadOnly = true;
-            this.tablaHabitacionesActuales.Size = new System.Drawing.Size(472, 112);
-            this.tablaHabitacionesActuales.TabIndex = 0;
             // 
             // tablaHabitacionesDisponibles
             // 
@@ -62,33 +46,23 @@
             this.tablaHabitacionesDisponibles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.tablaHabitacionesDisponibles.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.tablaHabitacionesDisponibles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tablaHabitacionesDisponibles.Location = new System.Drawing.Point(12, 220);
+            this.tablaHabitacionesDisponibles.Location = new System.Drawing.Point(15, 60);
             this.tablaHabitacionesDisponibles.Name = "tablaHabitacionesDisponibles";
-            this.tablaHabitacionesDisponibles.Size = new System.Drawing.Size(567, 114);
+            this.tablaHabitacionesDisponibles.Size = new System.Drawing.Size(653, 291);
             this.tablaHabitacionesDisponibles.TabIndex = 1;
             this.tablaHabitacionesDisponibles.CurrentCellDirtyStateChanged += new System.EventHandler(this.tablaHabitacionesDisponibles_CurrentCellDirtyStateChanged);
             this.tablaHabitacionesDisponibles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tablaHabitacionesDisponibles_CellContentClick);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(23, 18);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(295, 15);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Habitaciones que dispuso de su última modificación.";
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(23, 183);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(12, 25);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(461, 15);
+            this.label2.Size = new System.Drawing.Size(590, 18);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Seleccione las nuevas habitaciones, incluyendo o no las anteriores, que va a toma" +
-                "r.";
+            this.label2.Text = "Seleccione las nuevas habitaciones, incluyendo o no las que tenía antes, que va a" +
+                " tomar.";
             // 
             // label3
             // 
@@ -148,13 +122,11 @@
             this.Controls.Add(this.numericCantHuespedes);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.tablaHabitacionesDisponibles);
-            this.Controls.Add(this.tablaHabitacionesActuales);
             this.Name = "ModificarHabitaciones";
             this.Text = "Modificacion de Habitaciones";
             this.Load += new System.EventHandler(this.ModificarHabitaciones_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.tablaHabitacionesActuales)).EndInit();
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ModificarHabitaciones_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.tablaHabitacionesDisponibles)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericCantHuespedes)).EndInit();
             this.ResumeLayout(false);
@@ -164,9 +136,7 @@
 
         #endregion
 
-        private System.Windows.Forms.DataGridView tablaHabitacionesActuales;
         private System.Windows.Forms.DataGridView tablaHabitacionesDisponibles;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown numericCantHuespedes;

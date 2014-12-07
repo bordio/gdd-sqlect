@@ -444,6 +444,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             comandoAReserva.Parameters[0].Value = codigoReserva;
             
             comandoAReserva.CommandText = "SQLECT.desocuparHabitacionesDeReserva";
+            conexion.ejecutarQuery("BEGIN TRANSACTION");
+            
             conexion.ejecutarSP(comandoAReserva);
        
         }
@@ -466,8 +468,40 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             conexion.ejecutarSP(comandoAReserva);
         
         }
+
+        public void borrarHabitacionesViejas(string codigoReserva)
+
+        {
+            Conexion conexion = Conexion.Instance;
+            System.Data.SqlClient.SqlCommand comandoAReserva = new System.Data.SqlClient.SqlCommand();
+            comandoAReserva.CommandType = CommandType.StoredProcedure;
+
+            comandoAReserva.Parameters.Add("@codigoReserva", SqlDbType.VarChar);
+   
+            comandoAReserva.Parameters[0].Value = codigoReserva;
+
+            comandoAReserva.CommandText = "SQLECT.borrarHabitacionesViejas";
+            conexion.ejecutarQuery("BEGIN TRANSACTION");
+            conexion.ejecutarSP(comandoAReserva);
+        
+        }
+
+        public void confirmarModificacionDeReserva()
+        {
+            Conexion conexion = Conexion.Instance;
+            conexion.ejecutarQuery("COMMIT TRANSACTION");
+        }
+        public void terminarModificacion()
+        {
+            Conexion conexion = Conexion.Instance;
+            conexion.ejecutarQuery("ROLLBACK");
+        
+        }
+    
     
     }
+
+
    
 }
 

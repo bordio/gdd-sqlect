@@ -62,10 +62,10 @@
             // textoInformativo
             // 
             this.textoInformativo.AutoSize = true;
-            this.textoInformativo.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textoInformativo.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textoInformativo.Location = new System.Drawing.Point(487, 109);
             this.textoInformativo.Name = "textoInformativo";
-            this.textoInformativo.Size = new System.Drawing.Size(44, 18);
+            this.textoInformativo.Size = new System.Drawing.Size(42, 16);
             this.textoInformativo.TabIndex = 2;
             this.textoInformativo.Text = "label1";
             // 

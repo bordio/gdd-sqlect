@@ -1853,6 +1853,26 @@ UPDATE SQLECT.Reservas SET codigo_reserva=11111111
   
   SELECT * FROM SQLECT.Consumibles	  */
   
+  
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.borrarHabitacionesViejas'))
+DROP PROCEDURE SQLECT.borrarHabitacionesViejas
+  
+GO
+CREATE PROCEDURE SQLECT.borrarHabitacionesViejas(@codigoReserva varchar(9))
+AS
+BEGIN
+
+DECLARE @idReserva int 
+SET @idReserva=(SELECT id_reserva FROM SQLECT.Reservas WHERE codigo_reserva=@codigoReserva)
+
+ BEGIN
+DELETE FROM SQLECT.Habitaciones_Reservas 
+ WHERE fk_reserva=@idReserva AND estado_ocupacion='D'
+  END
+
+END
+GO 
+  
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'SQLECT.verificarHabitacionDeReserva'))
 DROP PROCEDURE SQLECT.verificarHabitacionDeReserva	
 
@@ -2185,3 +2205,4 @@ BEGIN
 END
 GO
 GO
+

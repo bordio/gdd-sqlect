@@ -175,8 +175,11 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             { regimenModificado = regimenActual.Text; }
 
                 tablaPreciosRegimenes.Visible = false;
+                
+                funcionesReservas.desocuparHabitacionesDeReserva(codigoReservaActual);
+                
                 FrbaHotel.Generar_Modificar_Reserva.ModificarHabitaciones formModificarHabitaciones = new ModificarHabitaciones(codigoReservaActual,regimenModificado,fechaDesde.Text,fechaHasta.Text,cambioDeFecha,idHotelEnCuestion,usuarioDeSesionActual);
-                formModificarHabitaciones.Show();
+                formModificarHabitaciones.ShowDialog(); 
 
             }
 
@@ -192,6 +195,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
 
                 tablaPreciosRegimenes.DataSource = tablaDePreciosDelRegimen.DefaultView;
                 tablaPreciosRegimenes.Visible = true;
+                button1.Enabled = true;
             }
             else
                 MessageBox.Show("No selecciono ningún regimen");
@@ -200,6 +204,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         private void button1_Click(object sender, EventArgs e)
         {
             tablaPreciosRegimenes.Visible = false;
+            button1.Enabled = false;
         }
 
         private void button2_Click(object sender, EventArgs e)

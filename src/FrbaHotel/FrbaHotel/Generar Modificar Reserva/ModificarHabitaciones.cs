@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrbaHotel.Commons.Database;
 
 namespace FrbaHotel.Generar_Modificar_Reserva
 {
@@ -39,6 +40,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         int contadorQuintuples;
         bool cambioDeFechaActual;
 
+        bool hacerRollBack = true;
+
         List<Int32> listaHabitaciones = new List<int>();
 
         private void ModificarHabitaciones_Load(object sender, EventArgs e)
@@ -46,8 +49,8 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                       
             textoDelRegimen.Text = string.Format("Está con el régimen:{0}", regimenModificadoActual);
             
-            DataTable tablaHabAct = funcionesReservas.obtenerHabitacionesActualesDeReserva(codigoReservaActual);
-            tablaHabitacionesActuales.DataSource = tablaHabAct.DefaultView;
+            /*DataTable tablaHabAct = funcionesReservas.obtenerHabitacionesActualesDeReserva(codigoReservaActual);
+            tablaHabitacionesActuales.DataSource = tablaHabAct.DefaultView;*/
 
             DataTable tablaHabDisp = new DataTable();
             tablaHabDisp = funcionesReservas.obtenerHabitacionesDisponibles(idHotelEnCuestion, fechaDesdeActual, fechaHastaActual);
@@ -56,8 +59,23 @@ namespace FrbaHotel.Generar_Modificar_Reserva
             checkBox.Name = "Seleccion";
             tablaHabitacionesDisponibles.Columns.Add(checkBox);
 
-           
-            if (cambioDeFechaActual)           
+            if (tablaHabDisp.Rows.Count > 0)
+            {
+                tablaHabitacionesDisponibles.DataSource = tablaHabDisp.DefaultView;
+
+                tablaHabitacionesDisponibles.Columns[1].ReadOnly = true;
+                tablaHabitacionesDisponibles.Columns[2].ReadOnly = true;
+                tablaHabitacionesDisponibles.Columns[3].ReadOnly = true;
+                tablaHabitacionesDisponibles.Columns[4].ReadOnly = true;
+            }
+
+            else
+              MessageBox.Show(string.Format("No hay habitaciones disponibles desde el {0} hasta el {1}", fechaDesdeActual, fechaHastaActual));
+            
+
+            
+            
+          /*  if (cambioDeFechaActual)           
             
             {
                 if (tablaHabDisp.Rows.Count > 0)
@@ -90,11 +108,14 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                    tablaHabitacionesDisponibles.Columns[3].ReadOnly = true;
                    tablaHabitacionesDisponibles.Columns[4].ReadOnly = true;
 
-                }        
+                } */       
     }
 
         private void botonContinuar_Click(object sender, EventArgs e)
         {
+             TimeSpan fechaDif = DateTime.Parse(fechaHastaActual) - DateTime.Parse(fechaDesdeActual);
+            int nochesReservadas = fechaDif.Days + 1;
+
             foreach (DataGridViewRow fila in tablaHabitacionesDisponibles.Rows)
             {
                 if (Convert.ToBoolean(fila.Cells[0].Value))
@@ -132,7 +153,7 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                     if (funcionesReservas.modificarReserva(codigoReservaActual, usuarioDeSesionActual, Convert.ToInt32(numericCantHuespedes.Value), regimenModificadoActual, fechaDesdeActual, fechaHastaActual))
                     {
                       /*Desocupo las habitaciones que tenía la reserva hasta este momento*/
-                        funcionesReservas.desocuparHabitacionesDeReserva(codigoReservaActual);
+                       // funcionesReservas.desocuparHabitacionesDeReserva(codigoReservaActual);
 
                         /*Ocupo las habitaciones nuevas o modificadas*/
 
@@ -140,8 +161,15 @@ namespace FrbaHotel.Generar_Modificar_Reserva
                         {
                             funcionesReservas.modificarHabitacionDeReserva(codigoReservaActual, numeroHabitacion, idHotelEnCuestion);
                         }
+
+                        funcionesReservas.confirmarModificacionDeReserva();
+
+                        hacerRollBack = false;
+
                         MessageBox.Show("Modificación exitosa","Operación exitosa",MessageBoxButtons.OK,MessageBoxIcon.None);
-                      
+                        string nuevoPrecioReserva = funcionesReservas.calcularPrecioReserva(funcionesReservas.obtenerPreciosDeHabtitaciones(regimenModificadoActual, idHotelEnCuestion), nochesReservadas, contadorSimples, contadorDobles, contadorTriples, contadorCuadruples, contadorQuintuples).ToString();
+                        MessageBox.Show(string.Format("Precio: U$S {0}", nuevoPrecioReserva), "Precio", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                         this.Close();
                     }
 
@@ -198,8 +226,16 @@ namespace FrbaHotel.Generar_Modificar_Reserva
         private void botonVolver_Click(object sender, EventArgs e)
         {
             tablaHabitacionesDisponibles.DataSource = null;
-            tablaHabitacionesActuales.DataSource = null;
+            //tablaHabitacionesActuales.DataSource = null;
+            
             this.Close();
+        }
+
+        private void ModificarHabitaciones_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            
+            if(hacerRollBack)
+             funcionesReservas.terminarModificacion();
         }
     }
 }
